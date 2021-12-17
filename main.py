@@ -1,4 +1,4 @@
-#Hebrew Dictionary mobile aplication python file
+#Hebrew Dictionary mobile aplication python file (Phone Version)
 #==============================================================================
 
 #This file displays the UI, and the main fuction buttons and input text field, while the .kv file
@@ -25,7 +25,7 @@ import os
 import sys
 import unicodedata
 
-Display_Size = 22
+Display_Size = 50
 
 #color values
 red = [1, 0, 0, 1]
@@ -840,7 +840,7 @@ class DisplayWords(GridLayout):
         dRoot = ScrollView(size_hint=(5, 1), size=(Window.width, Window.height))
         dRoot.add_widget(self.display)
         self.SubPanal = GridLayout(rows=1, size_hint=[5, 0.1])
-        self.closeB = Button(text='[color=FFFFFF]Close[color=FFFFFF]', font_name='data/fonts/times', font_size=20, markup=True)
+        self.closeB = Button(text='[color=FFFFFF]Close[color=FFFFFF]', font_name='data/fonts/times', font_size=50, markup=True)
         self.closeB.bind(on_press=instance.closeAction)
         self.SubPanal.add_widget(self.closeB)
         self.add_widget(self.readText)
@@ -854,14 +854,14 @@ class AddWord(GridLayout):
         super(AddWord, self).__init__(**kwargs)
         self.cols = 2
         
-        self.wLabel = Label(text='[color=3333ff]Word[color=3333ff]', outline_color=black, font_size=30, markup=True)
-        self.dLabel = Label(text='[color=3333ff]Diffinition[color=3333ff]', outline_color=black, font_size=30, markup=True)
+        self.wLabel = Label(text='[color=3333ff]Word[color=3333ff]', outline_color=black, font_size=50, markup=True)
+        self.dLabel = Label(text='[color=3333ff]Diffinition[color=3333ff]', outline_color=black, font_size=50, markup=True)
         self.Word = TextInput(text="", readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         self.Definition= TextInput(text="", readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         
-        self.enterB = Button(text='[color=000000]Enter[color=000000]', font_name='data/fonts/times', font_size=20, markup=True)
+        self.enterB = Button(text='[color=000000]Enter[color=000000]', font_name='data/fonts/times', font_size=50, markup=True)
         self.enterB.bind(on_press=instance.enterAction) 
-        self.cancelB = Button(text='[color=000000]Cancel[color=000000]', font_name='data/fonts/times', font_size=20, markup=True)
+        self.cancelB = Button(text='[color=000000]Cancel[color=000000]', font_name='data/fonts/times', font_size=50, markup=True)
         self.cancelB.bind(on_press=instance.cancelAction)
         
         self.add_widget(self.wLabel)
@@ -895,15 +895,15 @@ class HebrewDictionary(App):
         self.UserInterface = GridLayout(cols=1)
         self.MainPanal = GridLayout(cols=1)
         self.Input = TextInput(readonly=False, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=Display_Size)
-        self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+        self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=50, markup=True)
         self.findB.bind(on_press=self.findAction)
-        self.addB = Button(text='AddW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+        self.addB = Button(text='AddW', border=[1,1,1,1], font_name='data/fonts/times', font_size=50, markup=True)
         self.addB.bind(on_press=self.addAction)
-        self.editB = Button(text='EditW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+        self.editB = Button(text='EditW', border=[1,1,1,1], font_name='data/fonts/times', font_size=50, markup=True)
         self.editB.bind(on_press=self.editAction)
-        self.removeB = Button(text='RemoveW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+        self.removeB = Button(text='RemoveW', border=[1,1,1,1], font_name='data/fonts/times', font_size=50, markup=True)
         self.removeB.bind(on_press=self.removeAction)
-        self.exitB = Button(text='Exit', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+        self.exitB = Button(text='Exit', border=[1,1,1,1], font_name='data/fonts/times', font_size=50, markup=True)
         self.exitB.bind(on_press=self.exitAction)
         self.KeyboardPanal = Keyboard(self)
         self.MainPanal.add_widget(Label(text='[color=3333ff]Hebrew Dictionary[color=3333ff]', font_name='data/fonts/times', outline_color=white, outline_width=1, font_size=45, markup=True))
@@ -1018,7 +1018,7 @@ class HebrewDictionary(App):
             self.getWList(words, i, tk, k, 0)
             if not(i == len(words)):
                 self.wText += '\n'
-                self.wText += "*"*160
+                self.wText += "*"*125
                 self.wText += '\n\n'
         
         #self.y_end = self.DWords.display.cursor_col
@@ -1240,7 +1240,7 @@ class HebrewDictionary(App):
             self.wText += '\n'
             
         if k > 1:
-            self.wText += '\t\t'*(n+1) + "-"*244
+            self.wText += '\t\t'*(n+1) + "-"*177
             self.wText += '\n'
             Lwords = []
             t1 = text[i].split('-')[0]
@@ -1252,12 +1252,12 @@ class HebrewDictionary(App):
                 if (len(Lwords[lw]) == 1) and (k == 2):
                     self.wText += '\t\t'*(n+1) + Lwords[lw] + " " + "(prefix)"
                     if not(lw == len(Lwords)-1):
-                        self.wText += '\t\t'*(n+1) + "-"*244
+                        self.wText += '\t\t'*(n+1) + "-"*177
                     self.wText += '\n'
                 else:
                     self.getWList(Lwords, lw, len(Lwords), len(Lwords[lw].split('-')), n+1)
                     if not(lw == len(Lwords)-1):
-                        self.wText += '\t\t'*(n+1) + "-"*244
+                        self.wText += '\t\t'*(n+1) + "-"*177
                         self.wText += '\n'
             
         #self.wText += "*********" + self.CurrentWord.last2() + "*********"
@@ -1280,7 +1280,7 @@ class HebrewDictionary(App):
     def fixDef(self, definition, spaces):
         words = definition.split()
         fixedL = words
-        n = 200
+        n = 150
         diff = 0
         for i in range(len(words)):
             diff += len(words[i]) + 1
