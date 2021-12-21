@@ -1697,7 +1697,6 @@ class HebrewDictionary(App):
             hishtaphelW = Word("","")
             hishtaphelW.equalTo(word)
             hishtaphelW.setText(word.getText()[:-3])
-            #hishtaphelW.setVerb()
             hishtaphelW.setVerbform(7)
             look.find(hishtaphelW, self.Dict)
             return hishtaphelW
@@ -1742,11 +1741,13 @@ class HebrewDictionary(App):
                 f = look.find(perfW, self.Dict)
                 self.algorithm(look, perfW)
                 
-                perfWh = Word("","")
-                perfWh.equalTo(perfW)
-                fh = perfWh.setText('ה' + self.unFinal(perfW.getText()))
-                look.find(perfWh, self.Dict)
-                self.algorithm(look, perfWh)
+                fh = False
+                if(not ('ה' in word.getSufxList())):
+                    perfWh = Word("","")
+                    perfWh.equalTo(perfW)
+                    fh = perfWh.setText('ה' + self.unFinal(perfW.getText()))
+                    look.find(perfWh, self.Dict)
+                    self.algorithm(look, perfWh)
                 
                 if ((f == True) or (fh == True)):
                     return perfW
@@ -1769,11 +1770,13 @@ class HebrewDictionary(App):
                 f = look.find(perfW, self.Dict)
                 self.algorithm(look, perfW)
                 
-                perfWh = Word("","")
-                perfWh.equalTo(perfW)
-                perfWh.setText('ה' + self.unFinal(perfW.getText()))
-                fh = look.find(perfWh, self.Dict)
-                self.algorithm(look, perfWh)
+                fh = False
+                if(not ('ה' in word.getSufxList())):
+                    perfWh = Word("","")
+                    perfWh.equalTo(perfW)
+                    perfWh.setText('ה' + self.unFinal(perfW.getText()))
+                    fh = look.find(perfWh, self.Dict)
+                    self.algorithm(look, perfWh)
                 
                 if ((f == True) or (fh == True)):
                     return perfW
@@ -1796,11 +1799,13 @@ class HebrewDictionary(App):
                 f = look.find(perfW, self.Dict)
                 self.algorithm(look, perfW)
                 
-                perfWh = Word("","")
-                perfWh.equalTo(perfW)
-                perfWh.setText('ה' + self.unFinal(perfW.getText()))
-                fh = look.find(perfWh, self.Dict)
-                self.algorithm(look, perfWh)
+                fh = False
+                if(not ('ה' in word.getSufxList())):
+                    perfWh = Word("","")
+                    perfWh.equalTo(perfW)
+                    perfWh.setText('ה' + self.unFinal(perfW.getText()))
+                    fh = look.find(perfWh, self.Dict)
+                    self.algorithm(look, perfWh)
                 
                 if ((f == True) or (fh == True)):
                     return perfW
@@ -1823,11 +1828,13 @@ class HebrewDictionary(App):
                 f = look.find(perfW, self.Dict)
                 self.algorithm(look, perfW)
                 
-                perfWh = Word("","")
-                perfWh.equalTo(perfW)
-                perfWh.setText('ה' + self.unFinal(perfW.getText()))
-                fh = look.find(perfWh, self.Dict)
-                self.algorithm(look, perfWh)
+                fh = False
+                if(not ('ה' in word.getSufxList())):
+                    perfWh = Word("","")
+                    perfWh.equalTo(perfW)
+                    perfWh.setText('ה' + self.unFinal(perfW.getText()))
+                    fh = look.find(perfWh, self.Dict)
+                    self.algorithm(look, perfWh)
                 
                 if ((f == True) or (fh == True)):
                     return perfW
@@ -1879,11 +1886,13 @@ class HebrewDictionary(App):
             f = look.find(perfW, self.Dict)
             self.algorithm(look, perfW)
             
-            perfWh = Word("","")
-            perfWh.equalTo(perfW)
-            perfWh.setText('ה' + self.unFinal(perfW.getText()))
-            fh = look.find(perfWh, self.Dict)
-            self.algorithm(look, perfWh)
+            fh = False
+            if(not ('ה' in word.getSufxList())):
+                perfWh = Word("","")
+                perfWh.equalTo(perfW)
+                perfWh.setText('ה' + self.unFinal(perfW.getText()))
+                fh = look.find(perfWh, self.Dict)
+                self.algorithm(look, perfWh)
               
             if ((f == True) or (fh == True)):
                 return perfW
@@ -1913,11 +1922,13 @@ class HebrewDictionary(App):
                 irreg.setText(self.Final(perfW.getText()[1:]))
                 self.irreg(look, irreg)
                 
-                perfWh = Word("","")
-                perfWh.equalTo(perfW)
-                perfWh.setText('ה' + perfW.getText()[1:])
-                fh = look.find(perfWh, self.Dict)
-                self.algorithm(look, perfWh)
+                fh = False
+                if(not ('ה' in word.getSufxList())):
+                    perfWh = Word("","")
+                    perfWh.equalTo(perfW)
+                    perfWh.setText('ה' + perfW.getText()[1:])
+                    fh = look.find(perfWh, self.Dict)
+                    self.algorithm(look, perfWh)
             
             if ((f == True) or (fh == True)):
                 return perfW
@@ -1954,11 +1965,13 @@ class HebrewDictionary(App):
                         futurW.setText(futurW.last() + futurW.getText()[2:])   
                     f = look.find(futurW, self.Dict)
                     self.algorithm(look, futurW)
-                    futurWh = Word("","")
-                    futurWh.equalTo(futurW)
-                    futurWh.setText('ה' + self.unFinal(futurW.getText()))
-                    fh = look.find(futurWh, self.Dict)
-                    self.algorithm(look, futurWh)
+                    fh = False
+                    if(not ('ה' in word.getSufxList())):
+                        futurWh = Word("","")
+                        futurWh.equalTo(futurW)
+                        futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                        fh = look.find(futurWh, self.Dict)
+                        self.algorithm(look, futurWh)
                 
                 futurW2 = Word("","")
                 futurW2.equalTo(futurW)
@@ -1973,11 +1986,13 @@ class HebrewDictionary(App):
                 if(futurW2.getLen() > 1):
                     f2 = look.find(futurW2, self.Dict)
                     self.algorithm(look, futurW2)
-                    futurW2h = Word("","")
-                    futurW2h.equalTo(futurW2)
-                    futurW2h.setText('ה' + self.unFinal(futurW2.getText()))
-                    f2h = look.find(futurW2h, self.Dict)
-                    self.algorithm(look, futurW2h)
+                    f2h = False
+                    if(not ('ה' in word.getSufxList())):
+                        futurW2h = Word("","")
+                        futurW2h.equalTo(futurW2)
+                        futurW2h.setText('ה' + self.unFinal(futurW2.getText()))
+                        f2h = look.find(futurW2h, self.Dict)
+                        self.algorithm(look, futurW2h)
                     
                     if (f == True) or (f2 == True) or (fh == True) or (f2h == True):
                         return futurW
@@ -2075,11 +2090,13 @@ class HebrewDictionary(App):
                 if(futurW.getLen() > 1):
                     f = look.find(futurW, self.Dict)
                     self.algorithm(look, futurW)
-                    futurWh = Word("","")
-                    futurWh.equalTo(futurW)
-                    futurWh.setText('ה' + self.unFinal(futurW.getText()))
-                    fh = look.find(futurWh, self.Dict)
-                    self.algorithm(look, futurWh)
+                    fh = False
+                    if(not ('ה' in word.getSufxList())):
+                        futurWh = Word("","")
+                        futurWh.equalTo(futurW)
+                        futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                        fh = look.find(futurWh, self.Dict)
+                        self.algorithm(look, futurWh)
                     
                     if (f == True) or (fh == True):
                         return futurW
@@ -2106,11 +2123,13 @@ class HebrewDictionary(App):
                 if(futurW.getLen() > 1):
                     f = look.find(futurW, self.Dict)
                     self.algorithm(look, futurW)
-                    futurWh = Word("","")
-                    futurWh.equalTo(futurW)
-                    futurWh.setText('ה' + self.unFinal(futurW.getText()))
-                    fh = look.find(futurWh, self.Dict)
-                    self.algorithm(look, futurWh)
+                    fh = False
+                    if(not ('ה' in word.getSufxList())):
+                        futurWh = Word("","")
+                        futurWh.equalTo(futurW)
+                        futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                        fh = look.find(futurWh, self.Dict)
+                        self.algorithm(look, futurWh)
                     
                     if (f == True) or (fh == True):
                         return futurW
@@ -2137,11 +2156,13 @@ class HebrewDictionary(App):
                 if(futurW.getLen() > 1):
                     f = look.find(futurW, self.Dict)
                     self.algorithm(look, futurW)
-                    futurWh = Word("","")
-                    futurWh.equalTo(futurW)
-                    futurWh.setText('ה' + self.unFinal(futurW.getText()))
-                    fh = look.find(futurWh, self.Dict)
-                    self.algorithm(look, futurWh)
+                    fh = False
+                    if(not ('ה' in word.getSufxList())):
+                        futurWh = Word("","")
+                        futurWh.equalTo(futurW)
+                        futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                        fh = look.find(futurWh, self.Dict)
+                        self.algorithm(look, futurWh)
                     
                     if (f == True) or (fh == True):
                         return futurW
@@ -2608,7 +2629,7 @@ class HebrewDictionary(App):
                     suffW2.setText(self.revPhWords(suffW2.getText(), "-"))
                     look.find(suffW2, self.Dict)
                     self.algorithm(look, suffW2)
-                    return suffW2
+                    #return suffW2
             
             suffW.addSuff(cPhraseSuf.last())    
             suffW.setText(self.revPhWords(suffW.getText(), "-"))
@@ -2652,7 +2673,7 @@ class HebrewDictionary(App):
                     suffW3.setText(self.revPhWords(suffW3.getText(), "-"))
                     look.find(suffW3, self.Dict)
                     self.algorithm(look, suffW3)
-                    return suffW3
+                    #return suffW3
 
             suffW.addSuff(cPhraseSuf.last2())    
             suffW.setText(self.revPhWords(suffW.getText(), "-"))
