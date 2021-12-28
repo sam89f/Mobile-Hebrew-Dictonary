@@ -906,7 +906,7 @@ class HebrewDictionary(App):
         self.exitB = Button(text='Exit', border=[1,1,1,1], font_name='data/fonts/times', font_size=50, markup=True)
         self.exitB.bind(on_press=self.exitAction)
         self.KeyboardPanal = Keyboard(self)
-        self.MainPanal.add_widget(Label(text='[color=3333ff]Hebrew Dictionary[color=3333ff]', font_name='data/fonts/times', outline_color=white, outline_width=1, font_size=45, markup=True))
+        self.MainPanal.add_widget(Label(text='[color=3333ff]Hebrew Dictionary[color=3333ff]', font_name='data/fonts/times', outline_color=white, outline_width=1, font_size=70, markup=True))
         self.MainPanal.add_widget(self.Input)
         self.SubPanal = GridLayout(cols=5)
         self.SubPanal.add_widget(self.findB)
