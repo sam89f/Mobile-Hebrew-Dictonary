@@ -1898,8 +1898,8 @@ class HebrewDictionary(App):
                 return perfW
             else:
                 return Word("", "") 
-            
-        if(word.last() == 'ה'):
+        #may have to be changed later upon further knowledge    
+        if(word.last() == 'ה') and (self.CurrentWord.last() == 'ה'):
             f = False
             perfW = Word("","")
             perfW.equalTo(word)
