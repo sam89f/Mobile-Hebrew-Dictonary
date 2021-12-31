@@ -40,10 +40,10 @@ finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
 unFinals = {'ך':'כ', 'ם':'מ', 'ן':'נ', 'ף':'פ', 'ץ':'צ'}
 suffix = ['וני', 'ונ', 'םכי', 'םכ', 'ןכי', 'ןכ', 'םהי', 'םה', 'ם', 'ןהי', 'ןה', 'ן', 'ית', 'ינ', 'יי', 'י', 'הי', 'ה', 'הנ', 'וה', 'וי', 'ו', 'ךי', 'ך']
 suffixObj = ['וה', 'וי', 'ינ', 'ה', 'ו', 'ך']
-prefixL = ['ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
+prefixL = ['תת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
+modernL = ['קינ', 'רטמ', 'הקס', 'םינו', 'דיאו', 'ןמ', 'הינמ', 'סיזניק', 'פוקס', 'היפרג', 'היצ', 'ןקי', 'הקי', 'טסי', 'םזי', 'הז', 'יל', 'יא', 'תי']
 prephrase = ['ת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
 plural = ['תו', 'םי', 'םיי']
-modern = ['קינ', 'רטמ', 'הקס', 'םינו', 'דיאו', 'ןמ', 'הינמ', 'סיזניק', 'פוקס', 'היפרג', 'היצ', 'ןקי', 'הקי', 'טסי', 'םזי', 'הז', 'יל', 'יא']
 metathesis = ['ס', 'ש', 'צ']
 Obj = ['ןתוא', 'ךתוא', 'התוא', 'ותוא', 'ונתוא', 'םהתא', 'ןהתא', 'םכתא', 'ןכתא']
 punctuation = [',', '.', ';', ':', '-', ')', '(', '[', ']', '}', '{', '*', '!']
@@ -60,6 +60,8 @@ class Word:
         self.prefix = 0
         self.preW = []
         self.sufW = []
+        self.mdrnW = 'sddgfges'
+        self.partiW = -1
         self.suffix1 = 0
         self.suffix2 = 0
         self.irreg = 0
@@ -73,12 +75,13 @@ class Word:
         self.gender = -1
         self.Verb = False
         self.Noun = False
-        self.prefixD = {"ה":"the", "ו":"and", "ב":"in", "מ":"from", "ל":"to", "כ":"as", "ש":"which"}
+        self.prefixD = {"תת":"sub", "ה":"the", "ו":"and", "ב":"in", "מ":"from", "ל":"to", "כ":"as", "ש":"which"}
         self.suffix = {"ןהי":"their/them(f)", "ןה":"their/them(f)", "ן":"their/them(f)", "םהי":"their/them(m)", "םה":"their/them(m)", "ם":"their/them(m)", "הי":"her", "ה":"her", "הנ":"her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you(pl. f)", "ןכ":"your/you(pl. f)", "םכי":"your/you(pl.)", "םכ":"your/you(pl.)", "ךי":"you/your(m)", "ך":"you/your(m)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
         self.suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
         self.Gender = ['m.', 'f.', '', '']
         self.Person = ['1st, sg.', '1st, pl.', '2nd, sg.', '2nd, pl.', '3rd, sg.', '3rd, pl.', '']
-        self.tenses = ['Perfect', 'Imperfect', 'Particible', 'Infinitive', 'Imperative', '']
+        self.tenses = ['Perfect', 'Imperfect', 'Participle', 'Infinitive', 'Imperative', '']
+        self.parti = {1:'Active', 0:'Passive'}
         self.tenseVals = [4, 4, 4, 4, 4, 1]
         self.verbforms = ['Qal', 'Niphal', 'Piel', 'Pual', 'Hiphil', 'Hophal', 'Hithpeal', 'hishtaphel', 'pilpel', '']
         self.verbformVals = [7, 7, 7, 7, 7, 7, 2, 2, 3, 1]
@@ -91,6 +94,7 @@ class Word:
     def __assign__(self, value):
         self.value = value.value
         self.text = value.text
+        self.partiW = value.partiW
         self.definition = value.definition
         self.Verb = value.Verb
         self.Noun = value.Noun
@@ -99,6 +103,7 @@ class Word:
         self.suffix2 = value.suffix2
         self.irreg = value.irreg
         self.modern = value.modern
+        self.mdrnW = value.mdrnW
         self.plural = value.plural
         self.daul = value.daul
         self.construct = value.construct
@@ -112,6 +117,7 @@ class Word:
     def equalTo(self, newWord):
         self.value = newWord.value
         self.text = newWord.text
+        self.partiW = newWord.partiW
         self.definition = newWord.definition
         self.Verb = newWord.Verb
         self.Noun = newWord.Noun
@@ -120,6 +126,7 @@ class Word:
         self.suffix2 = newWord.suffix2
         self.irreg = newWord.irreg
         self.modern = newWord.modern
+        self.mdrnW = newWord.mdrnW
         self.plural = newWord.plural
         self.daul = newWord.daul
         self.construct = newWord.construct
@@ -135,11 +142,15 @@ class Word:
             return False
         if not (self.getPrefix() == newWord.getPrefix()):
             return False
+        if not (self.partiW == newWord.partiW):
+            return False
         if not (self.getSuffix() == newWord.getSuffix()):
             return False
         #if not (self.getIrreg() == newWord.getIrreg()):
             #return False
         if not (self.getModern() == newWord.getModern()):
+            return False
+        if not (self.getModernW() == newWord.getModernW()):
             return False
         if not (self.getPlural() == newWord.getPlural()):
             return False
@@ -170,11 +181,15 @@ class Word:
             return False
         if not (self.getPrefix() == newWord.getPrefix()):
             return False
+        if not (self.partiW == newWord.partiW):
+            return False
         if not (self.getSuffix() == newWord.getSuffix()):
             return False
         #if not (self.getIrreg() == newWord.getIrreg()):
             #return False
         if not (self.getModern() == newWord.getModern()):
+            return False
+        if not (self.getModernW() == newWord.getModernW()):
             return False
         if not (self.getPlural() == newWord.getPlural()):
             return False
@@ -306,6 +321,9 @@ class Word:
             return True
         return False
         
+    def getPar(self):
+        return self.parti[self.partiW]
+        
     def getPrefixVal(self):
         return self.prefix
         
@@ -338,6 +356,9 @@ class Word:
             
     def getModernVal(self):
         return self.modern
+        
+    def getModernW(self):
+        return self.mdrnW
         
     def getPluralVal(self):
         return self.plural
@@ -543,6 +564,9 @@ class Word:
         self.tense = t
         isTense = True
         
+    def setPar(self, p):
+        self.partiW = p
+        
     def setPerson(self, p):
         self.person = p
         isPerson = True
@@ -569,6 +593,9 @@ class Word:
         
     def addSuff(self, suff):
         self.sufW.append(suff)
+        
+    def setMdrn(self, modr):
+        self.mdrnW = modr
         
     def rm(self, pre):
         self.preW.remove(pre)
@@ -1179,9 +1206,9 @@ class HebrewDictionary(App):
                     gr = True
                 if w.getModern() == True:
                     if gr == True:
-                        modern = "modern word: "
+                        modern = "modern suffix:" + " [" + w.getModernW() + ']' + " "
                     else:
-                        modern = "modern word:"
+                        modern = "modern suffix:" + " [" + w.getModernW() + ']'
                 if (not(w.getVerbform() == '')):
                     if(w.getPlural() == True) or (w.getDaul() == True) or (not(w.getTenseVal() == -1)) or (w.getSuffix() == True) or (w.getConstruct() == True) or (w.isGender() == True) or (w.isPerson() == True):
                         s1 = " "
@@ -1223,7 +1250,15 @@ class HebrewDictionary(App):
                     prR = ')'
                     
                 verbform = w.getVerbform()
-                tense = w.getTense()
+                mult = 1
+                if(w.getTense() == 'Participle'):
+                    tense = w.getPar() + " " + w.getTense()
+                    tense2 = w.getPar() + "        "
+                    #mult = 2
+                else:
+                    tense = w.getTense()
+                    tense2 = tense
+                    mult = 6
                 person = w.getPerson()
                 gender = w.getGender()
                 
@@ -1232,9 +1267,9 @@ class HebrewDictionary(App):
                 if (w.getConstruct() == True) and (w.getSuffix() == True):
                     cn = 5
                 
-                script = TAB2*n + TAB2 + val + (modern[:-3])*2 + prL + (pre) + (s6[:-(preN-1)])*(2) + preSP + (verbform)*2 + s1 + (tense)*(2) + s2*6 + person + s3 + gender + s4 + (constr[:-1])*2 + s5 + (suff) + (s7[:-1])*(2) + suffSP + pl*2 + prR + "- " + (w.getText()[:-1])*(2) + TAB + '-' + TAB
+                script = TAB2*n + TAB2 + val + (modern[:-3])*2 + prL + (pre) + (s6[:-(preN-1)])*(2) + preSP + (verbform)*2 + s1 + (tense2)*(2) + s2*mult + person + s3 + gender + s4 + (constr[:-1])*2 + s5 + (suff) + (s7[:-1])*(2) + suffSP + pl*2 + prR + "- " + (w.getText()[:-1])*(2) + TAB + '-' + TAB
                 spaces = len(script) - cn
-                self.wText += '\t\t'*n +  '\t\t' + val + modern + prL + pre + s6 + preSP + w.getVerbform() + s1 + w.getTense() + s2 + w.getPerson() + s3 + w.getGender() + s4 + constr + s5 + suff + s7 + suffSP + pl + prR + "- " + w.getText() + '\t' + '-' + '\t' + self.fixDef(definition, spaces) + ';' + ' gmra. = ' + str(w.getGemontria()) + '\n'
+                self.wText += '\t\t'*n +  '\t\t' + val + modern + prL + pre + s6 + preSP + w.getVerbform() + s1 + tense + s2 + w.getPerson() + s3 + w.getGender() + s4 + constr + s5 + suff + s7 + suffSP + pl + prR + "- " + w.getText() + '\t' + '-' + '\t' + self.fixDef(definition, spaces) + ';' + ' gmra. = ' + str(w.getGemontria()) + '\n'
         else:
             self.wText += '\t\t'*n +  "No words found"
             self.wText += '\n'
@@ -1339,54 +1374,56 @@ class HebrewDictionary(App):
     def modern(self, look, word):
         if(word.getLen() < 3) or (word.isTense() == True) or (word.isVerbf() == True):
             return Word("", "")
-
-        if(word.getLen() > 3):
-            if(word.last2() == 'תי'): 
+                
+            if (word.first2() == 'תת') and (word.getSuffix() == False):
                 mdrnW = Word("","")
                 mdrnW.equalTo(word)
-                mdrnW.setText(self.Final(word.getText()[2:]))
-                mdrnW.setModern()
+                mdrnW.setText(word.getText()[:-2])
+                #mdrnW.setModern()
+                mdrnW.setPrefix()
+                mdrnW.addPre('תת')
                 look.find(mdrnW, self.Dict)
                 self.algorithm(look, mdrnW)
                 return mdrnW
                 
-        if(word.getLen() > 4):
-            if word.last3() in modern:
+        if(word.getTense() == 'Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Passive Participle'):
+                return Word("","")
+                
+        if(word.getLen() > 4) and (word.getSuffix() == False):
+            if word.last3() in modernL:
                 mdrnW = Word("","")
                 mdrnW.equalTo(word)
                 mdrnW.setText(self.Final(word.getText()[2:]))
                 mdrnW.setModern()
+                mdrnW.setMdrn(word.last2())
                 look.find(mdrnW, self.Dict)
                 mdrnW2 = Word("","")
                 mdrnW2.equalTo(word)
                 mdrnW2.setText(self.Final(word.getText()[3:]))
                 mdrnW2.setModern()
+                mdrnW2.setMdrn(word.last3())
                 look.find(mdrnW2, self.Dict)
                 self.algorithm(look, mdrnW2)
                 return mdrnW2
                 
         if(word.getLen() > 3):
-            if word.last2() in modern:
+            if (word.last2() in modernL) and (word.getSuffix() == False):
                 mdrnW = Word("","")
                 mdrnW.equalTo(word)
                 mdrnW.setText(self.Final(word.getText()[2:]))
                 mdrnW.setModern()
+                mdrnW.setMdrn(word.last2())
                 look.find(mdrnW, self.Dict)
                 self.algorithm(look, mdrnW)
                 return mdrnW
-            if word.first2() == 'תת':
-                mdrnW = Word("","")
-                mdrnW.equalTo(word)
-                mdrnW.setText(word.getText()[:-2])
-                mdrnW.setModern()
-                look.find(mdrnW, self.Dict)
-                self.algorithm(look, mdrnW)
-                return mdrnW
-        if word.last() in modern:
+            
+        if (word.last() in modernL) and (word.getSuffix() == False):
             mdrnW = Word("","")
             mdrnW.equalTo(word)
             mdrnW.setText(self.Final(word.getText()[1:]))
             mdrnW.setModern()
+            mdrnW.setMdrn(word.last())
             look.find(mdrnW, self.Dict)
             self.algorithm(look, mdrnW)
             return mdrnW
@@ -1578,6 +1615,10 @@ class HebrewDictionary(App):
         if(word.getLen() < 4):
             return Word("","")
 
+        if(word.getTense() == 'Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Active Participle'):
+                return Word("","")
+                
         if(((word.first() == 'ה')) and ((word.nextToLast() == 'י')and(word.thirdFromLast() == 'י'))):
             hifilW = Word("","")
             hifilW.equalTo(word)
@@ -1632,6 +1673,10 @@ class HebrewDictionary(App):
     def hufal(self, look, word):
         if(len(word.getText()) < 4):
             return Word("","")
+            
+        if(word.getTense() == 'Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Active Participle'):
+                return Word("","")
        
         if(word.first2() == 'וה'):
             hufalW = Word("","")
@@ -1646,6 +1691,10 @@ class HebrewDictionary(App):
     def hitpael(self, look, word):
         if(len(word.getText()) < 4):
             return Word("","")
+        
+        if(word.getTense() == 'Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Active Participle'):
+                return Word("","")
         
         if((word.nextToFirst() == "ש") or (word.nextToFirst() == "ס") or (word.nextToFirst() == "צ")) and (word.first() in prefixL):
             metaW = Word("","")
@@ -1687,19 +1736,6 @@ class HebrewDictionary(App):
             self.infinitive(look, hitpaelW)
             self.prefix(look, hitpaelW)
             return hitpaelW
-        return Word("", "")
-        
-    def hishtaphel(self, look, word):
-        if(len(word.getText()) < 5):
-            return Word("","")
-        
-        if(word.first3() == 'תשה'):
-            hishtaphelW = Word("","")
-            hishtaphelW.equalTo(word)
-            hishtaphelW.setText(word.getText()[:-3])
-            hishtaphelW.setVerbform(7)
-            look.find(hishtaphelW, self.Dict)
-            return hishtaphelW
         return Word("", "")
        
     def metathesis(self, look, word):
@@ -2305,7 +2341,7 @@ class HebrewDictionary(App):
         return Word("", "")
         
     def imperative(self, look, word):
-        if(word.getLen() < 3) or (not(word.getTenseVal() == -1))or (word.isNoun() == True):
+        if(word.getLen() < 3) or (not(word.getTenseVal() == -1))or (word.isNoun() == True) or (word.getModern == True):
             return Word("","")
 
         if(word.getLen() > 3):
@@ -2360,7 +2396,7 @@ class HebrewDictionary(App):
         return Word("", "")
         
     def plural(self, look, word):
-        if(word.getLen() < 3) or (word.isVerb() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True):
+        if(word.getLen() < 3) or (word.isVerb() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True):
              return Word("", "")
             
         cPhrasePl = Word("","")
@@ -2445,6 +2481,10 @@ class HebrewDictionary(App):
         if(word.getLen() < 2) or (self.CurrentWord.first() == 'נ'):
             return Word("","")
             
+        if(word.getTense() == 'Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Active Participle'):
+                return Word("","")
+            
         cPhrasePre = Word("","")
         cPhrasePre.equalTo(word)
         cPhrasePre.setText(self.revPhWords(word.getText(), "-"))     
@@ -2482,8 +2522,12 @@ class HebrewDictionary(App):
         return Word("", "")
         
     def smPrefix(self, look, word):
-        if(len(word.getText()) < 2):
+        if(word.getLen() < 2) or (word.getModern == True):
             return Word("","")
+        if(word.getTense() == 'Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Active Participle'):
+                return Word("","")
+                
         if word.first() in prefixL:
             preW = Word("","")
             preW.equalTo(word)
@@ -2501,8 +2545,13 @@ class HebrewDictionary(App):
         return Word("", "")  
 
     def suffixObj(self, look, word):
-        if(word.getLen() < 2) or (word.isTense() == True) or (word.isNoun() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True):
+        if(word.getLen() < 2) or (word.isTense() == True) or (word.isNoun() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True):
             return Word("","")
+            
+        if(word.getTense() == 'Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Passive Participle'):
+                return Word("","")
+            
         if word.getLen() > 2:
             if(word.last2() == 'םי'):
                 return Word("","")
@@ -2578,8 +2627,12 @@ class HebrewDictionary(App):
         return Word("", "")
     
     def suffix(self, look, word, p):
-        if(word.getLen() < 3) or (word.getConstruct() == True)or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (not (word.getTenseVal() == -1)):
+        if(word.getLen() < 3) or (word.getConstruct() == True)or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (not (word.getTenseVal() == -1)) or (word.getModern == True):
             return Word("","")
+            
+        if(word.getTense() == 'Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Passive Participle'):
+                return Word("","")
             
         suff1 = Word("","")
         suff2 = Word("","")
@@ -2604,9 +2657,13 @@ class HebrewDictionary(App):
         return Word("","")
         
     def suffix1(self, look, word):
-        if(word.getLen() < 2) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.last2() == 'םי') or (word.last3() == 'םיי'):
+        if(word.getLen() < 2) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.last2() == 'םי') or (word.last3() == 'םיי') or (word.getModern == True):
             return Word("","")
   
+        if(word.getTense() == 'Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Passive Participle'):
+                return Word("","")
+                
         cPhraseSuf = Word("","")
         cPhraseSuf.equalTo(word)
         cPhraseSuf.setText(self.revPhWords(word.getText(), "-"))
@@ -2650,8 +2707,12 @@ class HebrewDictionary(App):
         return Word("","")
 
     def suffix2(self, look, word):
-        if(len(word.getText()) < 3) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True):
+        if(word.getLen() < 3) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True):
             return Word("","")
+
+        if(word.getTense() == 'Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Passive Participle'):
+                return Word("","")
 
         cPhraseSuf = Word("","")
         cPhraseSuf.equalTo(word)
@@ -2704,6 +2765,7 @@ class HebrewDictionary(App):
             if word.isNoun() == False:
                 pword.setVerb()
             pword.setTense(2)
+            pword.setPar(1)
             look.find(pword, self.Dict)
             self.verbForms(look, pword)
             return pword        
@@ -2714,6 +2776,7 @@ class HebrewDictionary(App):
             if word.isNoun() == False:
                 pword.setVerb()
             pword.setTense(2)
+            pword.setPar(0)
             look.find(pword, self.Dict)
             self.algorithm(look, pword)
             return pword
@@ -2729,6 +2792,7 @@ class HebrewDictionary(App):
                 if word.isNoun() == False:
                     pfimW.setVerb()
                 pfimW.setTense(2)
+                pword.setPar(1)
                 look.find(pfimW, self.Dict)
                 self.verbForms(look, pfimW)
                 return pfimW        
@@ -2740,6 +2804,7 @@ class HebrewDictionary(App):
                 if word.isNoun() == False:
                     pfimW.setVerb()
                 pfimW.setTense(2)
+                pword.setPar(0)
                 look.find(pfimW, self.Dict)
                 self.verbForms(look, pfimW)
                 return pfimW
@@ -2891,7 +2956,7 @@ class HebrewDictionary(App):
                 return Word("", "")
         
         if(word.getLen() == 2):
-            if(not(word.getTense() == 'Particible')) and (not(word.getVerbform() == 'Pual')):
+            if(not(word.getTense() == 'Participle')) and (not(word.getVerbform() == 'Pual')):
                 irreg1 = Word("","")
                 irreg1.equalTo(word)
                 irreg1.setText(word.last() + 'ו' + word.first())
