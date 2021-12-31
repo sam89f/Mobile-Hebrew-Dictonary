@@ -2792,7 +2792,7 @@ class HebrewDictionary(App):
                 if word.isNoun() == False:
                     pfimW.setVerb()
                 pfimW.setTense(2)
-                pword.setPar(1)
+                pfimW.setPar(1)
                 look.find(pfimW, self.Dict)
                 self.verbForms(look, pfimW)
                 return pfimW        
@@ -2804,7 +2804,7 @@ class HebrewDictionary(App):
                 if word.isNoun() == False:
                     pfimW.setVerb()
                 pfimW.setTense(2)
-                pword.setPar(0)
+                pfimW.setPar(0)
                 look.find(pfimW, self.Dict)
                 self.verbForms(look, pfimW)
                 return pfimW
