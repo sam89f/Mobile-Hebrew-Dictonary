@@ -2769,7 +2769,7 @@ class HebrewDictionary(App):
             look.find(pword, self.Dict)
             self.verbForms(look, pword)
             return pword        
-        if(word.nextToLast() == 'ו') and (not (word.last() == 'ת')) and (word.getConstruct() == False):
+        if(word.nextToLast() == 'ו') and (not (word.last() == 'ת')) and (not(word.last() == 'י')) and (word.getConstruct() == False):
             pword = Word("","")
             pword.equalTo(word)
             pword.setText(word.last() + word.getText()[2:])
@@ -2796,7 +2796,7 @@ class HebrewDictionary(App):
                 look.find(pfimW, self.Dict)
                 self.verbForms(look, pfimW)
                 return pfimW        
-            if(fimW.nextToLast() == 'ו'):
+            if(fimW.nextToLast() == 'ו') and (not(word.last() == 'י')):
                 pfimW = Word("","")
                 pfimW.equalTo(fimW)
                 pfimW.setText('ה' + self.unFinal(fimW.last() + fimW.getText()[2:]))
