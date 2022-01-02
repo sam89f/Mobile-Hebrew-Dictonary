@@ -1435,9 +1435,9 @@ class HebrewDictionary(App):
         
         parti = Word("","")
         parti.equalTo(self.participle(look, word))
-        if not (parti.getText() == ""):
-            if alg == True:
-                self.algorithm(look, parti)
+        #if not (parti.getText() == ""):
+            #if alg == True:
+                #self.algorithm(look, parti)
             #return True
             
         if(word.isNoun() == True):
@@ -2757,35 +2757,15 @@ class HebrewDictionary(App):
     def participle(self, look, word):
         if(word.getLen() < 4) or (word.isTense() == True):
             return Word("","")
-     
-        if(word.nextToFirst() == 'ו'):
-            pword = Word("","")
-            pword.equalTo(word)
-            pword.setText(word.getText()[:-2] + word.first())
-            if word.isNoun() == False:
-                pword.setVerb()
-            pword.setTense(2)
-            pword.setPar(1)
-            look.find(pword, self.Dict)
-            self.verbForms(look, pword)
-            return pword        
-        if(word.nextToLast() == 'ו') and (not (word.last() == 'ת')) and (not(word.last() == 'י')) and (word.getConstruct() == False):
-            pword = Word("","")
-            pword.equalTo(word)
-            pword.setText(word.last() + word.getText()[2:])
-            if word.isNoun() == False:
-                pword.setVerb()
-            pword.setTense(2)
-            pword.setPar(0)
-            look.find(pword, self.Dict)
-            self.algorithm(look, pword)
-            return pword
-        if(word.last() == 'ת'):
+            
+        isPar = False
+        if(word.last() == 'ת') and (not(word.nextToLast() == 'ו')):
             fimW = Word("","")
             fimW.equalTo(word)
             fimW.setText(self.Final(word.getText()[1:]))
+            pfimW = Word("","")
             if(fimW.nextToFirst() == 'ו'):
-                pfimW = Word("","")
+                isPar = True
                 pfimW.equalTo(fimW)
                 pfimW.setText('ה' + self.unFinal(fimW.getText()[:-2] + fimW.first()))
                 pfimW.setConstruct()
@@ -2794,20 +2774,50 @@ class HebrewDictionary(App):
                 pfimW.setTense(2)
                 pfimW.setPar(1)
                 look.find(pfimW, self.Dict)
-                self.verbForms(look, pfimW)
-                return pfimW        
-            if(fimW.nextToLast() == 'ו') and (not(word.last() == 'י')):
-                pfimW = Word("","")
-                pfimW.equalTo(fimW)
-                pfimW.setText('ה' + self.unFinal(fimW.last() + fimW.getText()[2:]))
-                pfimW.setConstruct()
+                self.algorithm(look, pfimW)        
+            if(fimW.nextToLast() == 'ו') and (not(fimW.last() == 'י')) and (not(fimW.last() == 'ו')):
+                isPar = True
+                pfimW2 = Word("","")
+                pfimW2.equalTo(fimW)
+                pfimW2.setText('ה' + self.unFinal(fimW.last() + fimW.getText()[2:]))
+                pfimW2.setConstruct()
                 if word.isNoun() == False:
-                    pfimW.setVerb()
-                pfimW.setTense(2)
-                pfimW.setPar(0)
-                look.find(pfimW, self.Dict)
-                self.verbForms(look, pfimW)
+                    pfimW2.setVerb()
+                pfimW2.setTense(2)
+                pfimW2.setPar(0)
+                look.find(pfimW2, self.Dict)
+                self.algorithm(look, pfimW2)
+                return pfimW2
+                
+            if isPar == True:
                 return pfimW
+        else:
+            pword = Word("","")
+            if(word.nextToFirst() == 'ו'):
+                isPar = True
+                pword.equalTo(word)
+                pword.setText(word.getText()[:-2] + word.first())
+                if word.isNoun() == False:
+                    pword.setVerb()
+                pword.setTense(2)
+                pword.setPar(1)
+                look.find(pword, self.Dict)
+                self.algorithm(look, pword)      
+            if(word.nextToLast() == 'ו') and (not(word.last() == 'י')) and (not(word.last() == 'ה')) and (not(word.last() == 'ו')) and (word.getConstruct() == False):
+                isPar = True
+                pword2 = Word("","")
+                pword2.equalTo(word)
+                pword2.setText(word.last() + word.getText()[2:])
+                if word.isNoun() == False:
+                    pword2.setVerb()
+                pword2.setTense(2)
+                pword2.setPar(0)
+                look.find(pword2, self.Dict)
+                self.algorithm(look, pword2)
+                return pword2
+                
+            if isPar == True:
+                return pword
         return Word("", "")
     
     def infinitive(self, look, word):
