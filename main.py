@@ -2803,7 +2803,7 @@ class HebrewDictionary(App):
                 pword.setPar(1)
                 look.find(pword, self.Dict)
                 self.algorithm(look, pword)      
-            if(word.nextToLast() == 'ו') and (not(word.last() == 'י')) and (not(word.last() == 'ה')) and (not(word.last() == 'ו')) and (word.getConstruct() == False):
+            if(word.nextToLast() == 'ו') and (not(word.last() == 'י')) and (not((word.last() == 'ה')and(not(self.CurrentWord.last() == 'ה')))) and (not(word.last() == 'ו')) and (word.getConstruct() == False):
                 isPar = True
                 pword2 = Word("","")
                 pword2.equalTo(word)
