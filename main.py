@@ -3035,7 +3035,7 @@ class HebrewDictionary(App):
                 irregW.equalTo(word)
                 irregW.setText('ה' + self.unFinal(word.getText()))
                 look.find(irregW, self.Dict)
-            elif (word.getTense() == "Perfect") and (not(self.CurrentWord.last3() == (word.last3()))):
+            elif (word.getTense() == "Perfect") and (not(self.CurrentWord.last3() == word.last3())):
                 if((word.last3() == 'יוו') or (word.last3() == 'ווי') or (word.last3() == 'ויו')):
                     irregWa = Word("","")
                     irregWa.equalTo(word)
