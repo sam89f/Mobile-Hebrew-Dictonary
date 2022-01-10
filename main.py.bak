@@ -25,7 +25,11 @@ import os
 import sys
 import unicodedata
 
+<<<<<<< HEAD
 Display_Size = 30
+=======
+Display_Size = 22
+>>>>>>> main
 
 #color values
 red = [1, 0, 0, 1]
@@ -862,6 +866,10 @@ class DisplayWords(GridLayout):
         self.X = 0
         self.Y = 0
         self.readText = TextInput(readonly=True, multiline=True, size_hint=[5, 0.3], focus=False, font_name='data/fonts/times', font_size=Display_Size)
+<<<<<<< HEAD
+=======
+        #self.readText.halign = kwargs.get("halign", "right")
+>>>>>>> main
         self.display = TextInput(readonly=True, multiline=True, focus=False, size_hint_x=5, size_hint_y=None, font_name='data/fonts/times', font_size=Display_Size)
         self.display.bind(minimum_height=self.display.setter('height'))
         dRoot = ScrollView(size_hint=(5, 1), size=(Window.width, Window.height))
@@ -881,8 +889,13 @@ class AddWord(GridLayout):
         super(AddWord, self).__init__(**kwargs)
         self.cols = 2
         
+<<<<<<< HEAD
         self.wLabel = Label(text='[color=3333ff]Word[color=3333ff]', outline_color=black, font_size=50, markup=True)
         self.dLabel = Label(text='[color=3333ff]Diffinition[color=3333ff]', outline_color=black, font_size=50, markup=True)
+=======
+        self.wLabel = Label(text='[color=3333ff]Word[color=3333ff]', outline_color=black, font_size=30, markup=True)
+        self.dLabel = Label(text='[color=3333ff]Diffinition[color=3333ff]', outline_color=black, font_size=30, markup=True)
+>>>>>>> main
         self.Word = TextInput(text="", readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         self.Definition= TextInput(text="", readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         
@@ -901,7 +914,11 @@ class AddWord(GridLayout):
 #top level of app.  
 class HebrewDictionary(App):
     
+<<<<<<< HEAD
     def startInterface(self):
+=======
+    def startInterface(self, **kwargs):
+>>>>>>> main
     
         self.Dict = {}
         self.AlefBet = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ת', 'ך', 'ם', 'ן', 'ף', 'ץ']
@@ -922,6 +939,10 @@ class HebrewDictionary(App):
         self.UserInterface = GridLayout(cols=1)
         self.MainPanal = GridLayout(cols=1)
         self.Input = TextInput(readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
+<<<<<<< HEAD
+=======
+        #self.Input.halign = kwargs.get("halign", "right")
+>>>>>>> main
         self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
         self.findB.bind(on_press=self.findAction)
         self.addB = Button(text='AddW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
@@ -1045,7 +1066,11 @@ class HebrewDictionary(App):
             self.getWList(words, i, tk, k, 0)
             if not(i == len(words)):
                 self.wText += '\n'
+<<<<<<< HEAD
                 self.wText += "*"*125
+=======
+                self.wText += "*"*160
+>>>>>>> main
                 self.wText += '\n\n'
         
         #self.y_end = self.DWords.display.cursor_col
@@ -1275,7 +1300,11 @@ class HebrewDictionary(App):
             self.wText += '\n'
             
         if k > 1:
+<<<<<<< HEAD
             self.wText += '\t\t'*(n+1) + "-"*181
+=======
+            self.wText += '\t\t'*(n+1) + "-"*244
+>>>>>>> main
             self.wText += '\n'
             Lwords = []
             t1 = text[i].split('-')[0]
@@ -1287,12 +1316,20 @@ class HebrewDictionary(App):
                 if (len(Lwords[lw]) == 1) and (k == 2):
                     self.wText += '\t\t'*(n+1) + Lwords[lw] + " " + "(prefix)"
                     if not(lw == len(Lwords)-1):
+<<<<<<< HEAD
                         self.wText += '\t\t'*(n+1) + "-"*181
+=======
+                        self.wText += '\t\t'*(n+1) + "-"*244
+>>>>>>> main
                     self.wText += '\n'
                 else:
                     self.getWList(Lwords, lw, len(Lwords), len(Lwords[lw].split('-')), n+1)
                     if not(lw == len(Lwords)-1):
+<<<<<<< HEAD
                         self.wText += '\t\t'*(n+1) + "-"*181
+=======
+                        self.wText += '\t\t'*(n+1) + "-"*244
+>>>>>>> main
                         self.wText += '\n'
             
         #self.wText += "*********" + self.CurrentWord.last2() + "*********"
@@ -1315,7 +1352,11 @@ class HebrewDictionary(App):
     def fixDef(self, definition, spaces):
         words = definition.split()
         fixedL = words
+<<<<<<< HEAD
         n = 150
+=======
+        n = 200
+>>>>>>> main
         diff = 0
         for i in range(len(words)):
             diff += len(words[i]) + 1
