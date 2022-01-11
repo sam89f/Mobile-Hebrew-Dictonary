@@ -2094,7 +2094,7 @@ class HebrewDictionary(App):
                     f = look.find(futurW, self.Dict)
                     self.algorithm(look, futurW)
                     fh = False
-                    if(not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())):
+                    if(not('וה' in word.getSufxList())) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
