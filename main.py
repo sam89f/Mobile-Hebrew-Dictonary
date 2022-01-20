@@ -1049,7 +1049,7 @@ class HebrewDictionary(App):
                 self.wText += '\n\n'
         
         #self.y_end = self.DWords.display.cursor_col
-        self.DWords.display.cursor = (0, 0)
+        #self.DWords.display.cursor = (0, 0)
         #Popup(title='Word', content=TextInput(text=str(words), readonly=True, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=25)).open()
     def revPhWords(self, phrase, s):
         lph = phrase.split(s)
