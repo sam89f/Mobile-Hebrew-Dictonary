@@ -1500,7 +1500,7 @@ class HebrewDictionary(App):
         pielW = Word("","")
         pielW.equalTo(self.piel(look, word))
         if not (pielW.getText() == ""):
-            self.irreg(look, pielW)
+            self.algorithm(look, pielW)
             #return pielW
         pualW = Word("","")
         pualW.equalTo(self.pual(look, word))
@@ -1510,7 +1510,7 @@ class HebrewDictionary(App):
         hifilW = Word("","")
         hifilW.equalTo(self.hifil(look, word))
         if not(hifilW.getText() == ""):
-            self.irreg(look, hifilW)
+            self.algorithm(look, hifilW)
             #return hifilW 
         hufalW = Word("","")
         hufalW.equalTo(self.hufal(look, word))
