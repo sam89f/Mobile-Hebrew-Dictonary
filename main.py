@@ -1497,7 +1497,7 @@ class HebrewDictionary(App):
         nifalW = Word("","")
         nifalW.equalTo(self.nifal(look, word))
         if not (nifalW.getText() == ""):
-            self.irreg(look, nifalW)
+            self.algorithm(look, nifalW)
             #return nifalW
         pilpelW = Word("","")
         pilpelW.equalTo(self.pilpel(look, word))
@@ -1512,7 +1512,7 @@ class HebrewDictionary(App):
         pualW = Word("","")
         pualW.equalTo(self.pual(look, word))
         if not (pualW.getText() == ""):
-            self.irreg(look, pualW)
+            self.algorithm(look, pualW)
             #return pualW
         hifilW = Word("","")
         hifilW.equalTo(self.hifil(look, word))
@@ -1522,12 +1522,12 @@ class HebrewDictionary(App):
         hufalW = Word("","")
         hufalW.equalTo(self.hufal(look, word))
         if not (hufalW.getText() == ""):
-            self.irreg(look, hufalW)
+            self.algorithm(look, hufalW)
             #return hufalW
         hitpaelW = Word("","")
         hitpaelW.equalTo(self.hitpael(look, word))
         if not (hitpaelW.getText() == ""):
-            self.irreg(look, hitpaelW)
+            self.algorithm(look, hitpaelW)
             #return hitpaelW
         #hishtaphelW = Word("","")
         #hishtaphelW.equalTo(self.hishtaphel(look, word))
