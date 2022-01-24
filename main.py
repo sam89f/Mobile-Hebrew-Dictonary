@@ -1387,10 +1387,44 @@ class HebrewDictionary(App):
                 return mdrnW
                 
         if(word.getTense() == 'Participle'):
-            if(word.getPar() + " " + word.getTense() == 'Passive Participle'):
+            if(word.getPar() + " " + word.getTense() == 'Passive Participle') or (word.getSuffix() == True):
                 return Word("","")
                 
-        if(word.getLen() > 4) and (word.getSuffix() == False):
+        if(word.getLen() > 6):
+            if word.lastX(5) in modernL:
+                mdrnW = Word("","")
+                mdrnW.equalTo(word)
+                mdrnW.setText(self.Final(word.getText()[5:]))
+                mdrnW.setModern()
+                mdrnW.setMdrn(word.lastX(5))
+                look.find(mdrnW, self.Dict)
+                self.algorithm(look, mdrnW)
+                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())):
+                    mdrnWh = Word("","")
+                    mdrnWh.equalTo(mdrnW)
+                    mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
+                    look.find(mdrnWh, self.Dict)
+                    #self.algorithm(look, mdrnWh)
+                return mdrnW
+                
+        if(word.getLen() > 5):
+            if word.lastX(4) in modernL:
+                mdrnW = Word("","")
+                mdrnW.equalTo(word)
+                mdrnW.setText(self.Final(word.getText()[4:]))
+                mdrnW.setModern()
+                mdrnW.setMdrn(word.lastX(4))
+                look.find(mdrnW, self.Dict)
+                self.algorithm(look, mdrnW)
+                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())):
+                    mdrnWh = Word("","")
+                    mdrnWh.equalTo(mdrnW)
+                    mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
+                    look.find(mdrnWh, self.Dict)
+                    #self.algorithm(look, mdrnWh)
+                return mdrnW
+                
+        if(word.getLen() > 4):
             if word.last3() in modernL:
                 mdrnW = Word("","")
                 mdrnW.equalTo(word)
@@ -1405,10 +1439,16 @@ class HebrewDictionary(App):
                 mdrnW2.setMdrn(word.last3())
                 look.find(mdrnW2, self.Dict)
                 self.algorithm(look, mdrnW2)
+                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())):
+                    mdrnWh = Word("","")
+                    mdrnWh.equalTo(mdrnW2)
+                    mdrnWh.setText('ה' + self.unFinal(mdrnW2.getText()))
+                    look.find(mdrnWh, self.Dict)
+                    #self.algorithm(look, mdrnWh)
                 return mdrnW2
                 
         if(word.getLen() > 3):
-            if (word.last2() in modernL) and (word.getSuffix() == False):
+            if (word.last2() in modernL):
                 mdrnW = Word("","")
                 mdrnW.equalTo(word)
                 mdrnW.setText(self.Final(word.getText()[2:]))
@@ -1416,9 +1456,15 @@ class HebrewDictionary(App):
                 mdrnW.setMdrn(word.last2())
                 look.find(mdrnW, self.Dict)
                 self.algorithm(look, mdrnW)
+                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())):
+                    mdrnWh = Word("","")
+                    mdrnWh.equalTo(mdrnW)
+                    mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
+                    look.find(mdrnWh, self.Dict)
+                    #self.algorithm(look, mdrnWh)
                 return mdrnW
             
-        if (word.last() in modernL) and (word.getSuffix() == False):
+        if (word.last() in modernL):
             mdrnW = Word("","")
             mdrnW.equalTo(word)
             mdrnW.setText(self.Final(word.getText()[1:]))
@@ -1426,7 +1472,15 @@ class HebrewDictionary(App):
             mdrnW.setMdrn(word.last())
             look.find(mdrnW, self.Dict)
             self.algorithm(look, mdrnW)
+            if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())):
+                mdrnWh = Word("","")
+                mdrnWh.equalTo(mdrnW)
+                mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
+                look.find(mdrnWh, self.Dict)
+                #self.algorithm(look, mdrnWh)
+                
             return mdrnW
+            
         return Word("", "")
 
     def tense(self, look, word, alg):
@@ -1785,7 +1839,7 @@ class HebrewDictionary(App):
                 #self.algorithm(look, perfW)
                 
                 fh = False
-                if(not (perfW.last() == 'ה')):
+                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
                     perfWh = Word("","")
                     perfWh.equalTo(perfW)
                     perfWh.setText('ה' + self.unFinal(perfW.getText()))
@@ -1837,7 +1891,7 @@ class HebrewDictionary(App):
                 #self.algorithm(look, perfW)
                 
                 fh = False
-                if(not (perfW.last() == 'ה')):
+                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
                     perfWh = Word("","")
                     perfWh.equalTo(perfW)
                     perfWh.setText('ה' + self.unFinal(perfW.getText()))
@@ -1863,7 +1917,7 @@ class HebrewDictionary(App):
                 #self.algorithm(look, perfW)
                 
                 fh = False
-                if(not (perfW.last() == 'ה')):
+                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
                     perfWh = Word("","")
                     perfWh.equalTo(perfW)
                     perfWh.setText('ה' + self.unFinal(perfW.getText()))
@@ -1889,7 +1943,7 @@ class HebrewDictionary(App):
             #self.algorithm(look, perfW)
             
             fh = False
-            if(not (perfW.last() == 'ה')):
+            if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
                 perfWh = Word("","")
                 perfWh.equalTo(perfW)
                 perfWh.setText('ה' + self.unFinal(perfW.getText()))
@@ -1915,7 +1969,7 @@ class HebrewDictionary(App):
             #self.algorithm(look, perfW)
             
             fh = False
-            if(not (perfW.last() == 'ה')):
+            if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
                 perfWh = Word("","")
                 perfWh.equalTo(perfW)
                 perfWh.setText('ה' + self.unFinal(perfW.getText()))
@@ -2270,12 +2324,12 @@ class HebrewDictionary(App):
         return Word("", "")
     
     def imperRules(self, word, l):
-        if ('ה' in word.getPrixList()) or ('ל' in word.getPrixList()):
+        if ('ה' in word.getPrixList()) or ((('ל' in word.getPrixList()) or ('מ' in word.getPrixList()) or ('ב' in word.getPrixList())) and (not('ש' in word.getPrixList()))):
             return False
         return True
     
     def imperative(self, look, word):
-        if(word.getLen() < 3) or (not(word.getTenseVal() == -1))or (word.isNoun() == True) or (word.getModern == True):
+        if(word.getLen() < 3) or (len(word.getPrixList()) > 0) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getModern == True):
             return Word("","")
         
         if word.last() == 'ו':
@@ -2501,7 +2555,7 @@ class HebrewDictionary(App):
         return True
             
     def prefix(self, look, word):
-        if(word.getLen() < 2) or (self.CurrentWord.first() == 'נ'):
+        if(word.getLen() < 2) or (word.isVerbf() == True) or (self.CurrentWord.first() == 'נ'):
             return Word("","")
             
         if(word.getTense() == 'Participle'):
@@ -2545,7 +2599,7 @@ class HebrewDictionary(App):
         return Word("", "")
         
     def smPrefix(self, look, word):
-        if(word.getLen() < 2) or (word.getModern == True):
+        if(word.getLen() < 2) or (word.isVerbf() == True) or (word.getModern == True):
             return Word("","")
         if(word.getTense() == 'Participle'):
             if(word.getPar() + " " + word.getTense() == 'Active Participle'):
