@@ -1349,7 +1349,7 @@ class HebrewDictionary(App):
     def algorithm(self, look, word):
         if word.getLen() < 2:
             return Word("", "")
-     
+        plural = False
         self.prefix(look, word)
         
         self.participle(look, word)
@@ -1364,7 +1364,8 @@ class HebrewDictionary(App):
         
         if(word.isNoun() == False):
             #self.suffixObj(look, word)
-            self.tense(look, word, True)
+            if self.plural(look, word) == Word("", ""):
+                self.tense(look, word, True)
         self.verbForms(look, word)
             
         
@@ -1484,7 +1485,7 @@ class HebrewDictionary(App):
         return Word("", "")
 
     def tense(self, look, word, alg):
-        if(word.getLen() < 3) or (word.isTense() == True):
+        if(word.getLen() < 3) or (word.isTense() == True) or ((word.getVerbform() == 'Niphal')or(word.getVerbform() == 'Hophal')or(word.getVerbform() == 'Hiphil')or(word.getVerbform() == 'Hithpeal')):
             return False
         
         parti = Word("","")
@@ -2489,11 +2490,7 @@ class HebrewDictionary(App):
                 plW.setDaul()
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 look.find(plW, self.Dict)
-                self.prefix(look, plW)
-                self.verbForms(look, plW)
-                self.modern(look, plW)
-                self.tense(look, plW, True)
-                return plW
+                self.algorithm(look, plW)
         if(cPhrasePl.getLen() > 2):
             if(cPhrasePl.last2() == 'םי') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')):
                 plW = Word("","")
@@ -2503,10 +2500,7 @@ class HebrewDictionary(App):
                 plW.setPlural()
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 look.find(plW, self.Dict)
-                self.prefix(look, plW)
-                self.verbForms(look, plW)
-                self.modern(look, plW)
-                self.tense(look, plW, True)
+                self.algorithm(look, plW)
                 return plW
             if(cPhrasePl.last2() == 'תו') and (not (cPhrasePl.getTense() == 'Perfect')) and (not (cPhrasePl.getTense() == 'Imperfect')) and (not (cPhrasePl.getTense() == 'Imperative')) and (not (cPhrasePl.getTense() == 'Infinitive')):
                 plW = Word("","")
@@ -2528,7 +2522,8 @@ class HebrewDictionary(App):
         constr.equalTo(self.constr(look, cPhrasePl))
         if not (constr.getText() == ""):
             self.algorithm(look, constr)
-        return constr
+        #return constr
+        return Word("","")
             
     def prefixRuls(self, word, p):
         if (word.isTense() == True) or ((word.getTense() == 'Perfect') and ('ו' in word.getPrixList())) or (word.getTense() == 'Infinitive') or (word.getVerbform == 'Niphal') or (word.getVerbform == 'Hiphil') or (word.getVerbform == 'Hophal') or (word.getVerbform == 'Hithpeal') or (word.getVerbform == 'hishtaphel'): 
