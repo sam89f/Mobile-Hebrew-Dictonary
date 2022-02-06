@@ -48,7 +48,6 @@ metathesis = ['ס', 'ש', 'צ']
 Obj = ['ןתוא', 'ךתוא', 'התוא', 'ותוא', 'ונתוא', 'םהתא', 'ןהתא', 'םכתא', 'ןכתא']
 punctuation = [',', '.', ';', ':', '-', ')', '(', '[', ']', '}', '{', '*', '!']
 vowels = ['ֵ']
-roots = ['ס', 'פ', 'צ', 'ק']
 
 #This class defines all the properties and methods that a Word object needs to have in order
 #use the proper metrics in searching and ordering words.
