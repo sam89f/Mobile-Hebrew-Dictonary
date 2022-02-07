@@ -469,18 +469,30 @@ class Word:
         else:
             return self.text[2:3]
         
+    def fourthFromLast(self):
+        if len(self.text) < 4:
+            raise Exception('Word object must not be less then 4')
+        else:
+            return self.text[3:4]
+            
     def nextToFirst(self):
         if len(self.text) < 2:
             raise Exception('Word object must not be less then 2')
         else:
             return self.text[-2:-1]
     
+    def fourth(self):
+        if len(self.text) < 4:
+            raise Exception('Word object must not be less then 4')
+        else:
+            return self.text[-4:-3]
+        
     def third(self):
         if len(self.text) < 3:
             raise Exception('Word object must not be less then 3')
         else:
             return self.text[-3:-2]
-        
+            
     def second(self):
         if len(self.text) < 2:
             raise Exception('Word object must not be less then 2')
@@ -1548,7 +1560,7 @@ class HebrewDictionary(App):
         return Word("", "")
 
     def tense(self, look, word, alg):
-        if(word.getLen() < 3) or (word.isTense() == True) or ((word.getVerbform() == 'Niphal')or(word.getVerbform() == 'Hophal')or(word.getVerbform() == 'Hiphil')or(word.getVerbform() == 'Hithpeal')):
+        if(word.getLen() < 3) or (word.isTense() == True) or ((word.getVerbform() == 'Niphal')or(word.getVerbform() == 'Hophal')or((word.getVerbform() == 'Hiphil') and (self.CurrentWord.first() == 'ה'))or(word.getVerbform() == 'Hithpeal')):
             return False
         
         parti = Word("","")
@@ -1744,6 +1756,61 @@ class HebrewDictionary(App):
             if(word.getPar() + " " + word.getTense() == 'Active Participle'):
                 return Word("","")
                 
+        if (word.last() == 'ה'):
+            if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'א')) and ((word.thirdFromLast() == 'י')and(word.fourthFromLast() == 'י')):
+                hifilW = Word("","")
+                hifilW.equalTo(word)
+                hifilW.setText(word.last() + word.nextToLast()  + word.getText()[4:])
+                #hifilW.setVerb()
+                hifilW.setVerbform(4)
+                look.find(hifilW, self.Dict)
+                return hifilW
+        
+            if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'א')) and (word.thirdFromLast() == 'י'):
+                hifilW = Word("","")
+                hifilW.equalTo(word)
+                hifilW.setText(word.last() + word.nextToLast()  + word.getText()[3:])
+                #hifilW.setVerb()
+                hifilW.setVerbform(4)
+                look.find(hifilW, self.Dict)
+                return hifilW
+                
+            if(((word.first() == 'ה')) and ((word.thirdFromLast() == 'י')and(word.fourthFromLast() == 'י'))):
+                hifilW = Word("","")
+                hifilW.equalTo(word)
+                hifilW.setText(word.last() + word.nextToLast() + word.getText()[4:-1])
+                #hifilW.setVerb()
+                hifilW.setVerbform(4)
+                look.find(hifilW, self.Dict)
+                return hifilW
+                
+            if(((word.first() == 'ה')) and (word.thirdFromLast() == 'י')):
+                hifilW = Word("","")
+                hifilW.equalTo(word)
+                hifilW.setText(word.last() + word.nextToLast()  + word.getText()[3:-1])
+                #hifilW.setVerb()
+                hifilW.setVerbform(4)
+                look.find(hifilW, self.Dict)
+                return hifilW
+                
+        if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'א')) and ((word.nextToLast() == 'י')and(word.thirdFromLast() == 'י')):
+            hifilW = Word("","")
+            hifilW.equalTo(word)
+            hifilW.setText(word.last() + word.getText()[3:])
+            #hifilW.setVerb()
+            hifilW.setVerbform(4)
+            look.find(hifilW, self.Dict)
+            return hifilW
+            
+        if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'א')) and (word.nextToLast() == 'י'):
+            hifilW = Word("","")
+            hifilW.equalTo(word)
+            hifilW.setText(word.last() + word.getText()[2:])
+            #hifilW.setVerb()
+            hifilW.setVerbform(4)
+            look.find(hifilW, self.Dict)
+            return hifilW
+                
         if(((word.first() == 'ה')) and ((word.nextToLast() == 'י')and(word.thirdFromLast() == 'י'))):
             hifilW = Word("","")
             hifilW.equalTo(word)
@@ -1760,7 +1827,7 @@ class HebrewDictionary(App):
                 hifilW2.setVerbform(4)
                 look.find(hifilW2, self.Dict)
             return hifilW
-
+            
         if(((word.first() == 'ה')) and (word.nextToLast() == 'י')):
             hifilW = Word("","")
             hifilW.equalTo(word)
@@ -2506,8 +2573,10 @@ class HebrewDictionary(App):
                 cohorW.setGender(2)
                 
                 if(cohorW.getLen() > 1):
+                    if cohorW.nextToLast() == 'ו':
+                        cohorW.setText(cohorW.last() + cohorW.getText()[2:])
                     look.find(cohorW, self.Dict)
-                    return cohorW
+                    return cohorW          
                 elif 'ו' in word.getPrixList():
                     return self.irreg(look, cohorW)
                 
@@ -2524,6 +2593,8 @@ class HebrewDictionary(App):
                 cohorW.setGender(2)
                 
                 if(cohorW.getLen() > 1):
+                    if cohorW.nextToLast() == 'ו':
+                        cohorW.setText(cohorW.last() + cohorW.getText()[2:])
                     look.find(cohorW, self.Dict)
                     return cohorW
                 elif 'ו' in word.getPrixList():
