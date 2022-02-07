@@ -1364,11 +1364,16 @@ class HebrewDictionary(App):
     def num_of_a_roots(self, s):
         if len(s) == 0:
             return 0
+            suf = ['ה', 'ת']
         n = 0
+        temp = 0
         for i in s:
             if i in a_roots:
-                n = n+1
-                
+                n = n+1 + temp
+                temp = 0
+            elif i in suf:
+                temp = temp+1
+                          
         return n
       
       
