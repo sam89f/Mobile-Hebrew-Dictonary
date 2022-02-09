@@ -1566,7 +1566,7 @@ class HebrewDictionary(App):
         revCW = self.rev(self.CurrentWord.getText())
         posTov = revCW.find("ת", 0, 4)
         if not posTov == -1:
-            if(revCW[posTov-1] == 'ה') and (word.getVerbform == 'Hitpael'):
+            if(revCW[posTov-1] == 'ה') and (word.getVerbform() == 'Hithpeal'):
                 return False
                 
         parti = Word("","")
@@ -2687,7 +2687,7 @@ class HebrewDictionary(App):
         revCW = self.rev(self.CurrentWord.getText())
         posTov = revCW.find("ת", 0, 4)
         if not posTov == -1:
-            if(revCW[posTov-1] == 'ה') and (word.getVerbform == 'Hitpael'):
+            if(revCW[posTov-1] == 'ה') and (word.getVerbform() == 'Hithpeal'):
                 return False
         if (word.isTense() == True) or ((word.getTense() == 'Perfect') and ('ו' in word.getPrixList())) or (word.getTense() == 'Infinitive') or (word.getVerbform == 'Niphal') or (word.getVerbform == 'Hiphil') or (word.getVerbform == 'hishtaphel'): 
             return False
