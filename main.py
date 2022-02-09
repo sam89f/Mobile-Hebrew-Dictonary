@@ -1560,9 +1560,15 @@ class HebrewDictionary(App):
         return Word("", "")
 
     def tense(self, look, word, alg):
-        if(word.getLen() < 3) or (word.isTense() == True) or ((word.getVerbform() == 'Niphal')or(word.getVerbform() == 'Hophal')or((word.getVerbform() == 'Hiphil') and (self.CurrentWord.first() == 'ה'))or(word.getVerbform() == 'Hithpeal')):
+        if(word.getLen() < 3) or (word.isTense() == True) or ((word.getVerbform() == 'Niphal')or(word.getVerbform() == 'Hophal')or((word.getVerbform() == 'Hiphil') and (self.CurrentWord.first() == 'ה'))):
             return False
-        
+            
+        revCW = self.rev(self.CurrentWord.getText())
+        posTov = revCW.find("ת", 0, 4)
+        if not posTov == -1:
+            if(revCW[posTov-1] == 'ה') and (word.getVerbform == 'Hitpael'):
+                return False
+                
         parti = Word("","")
         parti.equalTo(self.participle(look, word))
         #if not (parti.getText() == ""):
@@ -1756,7 +1762,7 @@ class HebrewDictionary(App):
             if(word.getPar() + " " + word.getTense() == 'Active Participle'):
                 return Word("","")
                 
-        if (word.last() == 'ה'):
+        if(word.last() == 'ה') or ((word.last() == 'ת')and(not (word.last2() in plural))):
             if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'א')) and ((word.thirdFromLast() == 'י')and(word.fourthFromLast() == 'י')):
                 hifilW = Word("","")
                 hifilW.equalTo(word)
@@ -1782,6 +1788,15 @@ class HebrewDictionary(App):
                 #hifilW.setVerb()
                 hifilW.setVerbform(4)
                 look.find(hifilW, self.Dict)
+                
+                if(word.first2() == 'יה'):
+                    hifilW2 = Word("","")
+                    hifilW2.equalTo(word)
+                    hifilW2.setText(word.last() + word.nextToLast() + word.getText()[4:-2])
+                    #hifilW2.setVerb()
+                    hifilW2.setVerbform(4)
+                    look.find(hifilW2, self.Dict)
+                    return hifilW2
                 return hifilW
                 
             if(((word.first() == 'ה')) and (word.thirdFromLast() == 'י')):
@@ -1791,6 +1806,15 @@ class HebrewDictionary(App):
                 #hifilW.setVerb()
                 hifilW.setVerbform(4)
                 look.find(hifilW, self.Dict)
+                
+                if(word.first2() == 'יה'):
+                    hifilW2 = Word("","")
+                    hifilW2.equalTo(word)
+                    hifilW2.setText(word.last() + word.nextToLast() + word.getText()[3:-2])
+                    #hifilW2.setVerb()
+                    hifilW2.setVerbform(4)
+                    look.find(hifilW2, self.Dict)
+                    return hifilW2
                 return hifilW
                 
         if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'א')) and ((word.nextToLast() == 'י')and(word.thirdFromLast() == 'י')):
@@ -1826,6 +1850,7 @@ class HebrewDictionary(App):
                 #hifilW2.setVerb()
                 hifilW2.setVerbform(4)
                 look.find(hifilW2, self.Dict)
+                return hifilW2
             return hifilW
             
         if(((word.first() == 'ה')) and (word.nextToLast() == 'י')):
@@ -1843,23 +1868,25 @@ class HebrewDictionary(App):
                 #hifilW2.setVerb()
                 hifilW2.setVerbform(4)
                 look.find(hifilW2, self.Dict)
+                return hifilW2
             return hifilW
-        if((word.first() == 'ה') and (word.last() == 'ת') and (not (word.last2() in plural))):
-            hifilW = Word("","")
-            hifilW.equalTo(word)
-            hifilW.setText(self.Final(word.getText()[1:-1]))
-            #hifilW.setVerb()
-            hifilW.setVerbform(4)
-            look.find(hifilW, self.Dict)
+        #if((word.first() == 'ה') and (word.last() == 'ת') and (not (word.last2() in plural))):
+            #hifilW = Word("","")
+            #hifilW.equalTo(word)
+            #hifilW.setText(self.Final(word.getText()[1:-1]))
+            ##hifilW.setVerb()
+            #hifilW.setVerbform(4)
+            #look.find(hifilW, self.Dict)
             
-            if(word.first2() == 'יה'):
-                hifilW2 = Word("","")
-                hifilW2.equalTo(word)
-                hifilW2.setText(word.last() + word.getText()[1:-2])
-               # hifilW2.setVerb()
-                hifilW2.setVerbform(4)
-                look.find(hifilW2, self.Dict)
-            return hifilW
+            #if(word.first2() == 'יה'):
+                #hifilW2 = Word("","")
+                #hifilW2.equalTo(word)
+                #hifilW2.setText(word.last() + word.getText()[2:-2])
+                ##hifilW2.setVerb()
+                #hifilW2.setVerbform(4)
+                #look.find(hifilW2, self.Dict)
+                #return hifilW2
+            #return hifilW
         return Word("", "")
     
     def hufal(self, look, word):
@@ -2658,9 +2685,9 @@ class HebrewDictionary(App):
             
     def prefixRuls(self, word, p):
         revCW = self.rev(self.CurrentWord.getText())
-        posTov = revCW.find("ת")
+        posTov = revCW.find("ת", 0, 4)
         if not posTov == -1:
-            if revCW[posTov-1] == 'ה':
+            if(revCW[posTov-1] == 'ה') and (word.getVerbform == 'Hitpael'):
                 return False
         if (word.isTense() == True) or ((word.getTense() == 'Perfect') and ('ו' in word.getPrixList())) or (word.getTense() == 'Infinitive') or (word.getVerbform == 'Niphal') or (word.getVerbform == 'Hiphil') or (word.getVerbform == 'hishtaphel'): 
             return False
