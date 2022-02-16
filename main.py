@@ -757,6 +757,8 @@ class SearchWord:
                 return i
                 
     def find(self, w, Dict):
+        if ((w.getLen() < 3) and (w.getTense() == 'Participle')):
+            return False
         if  w in self.getWords():
             index = self.indexWords(w)
             if self.Words[index].getValue() < w.getValue():
@@ -3057,7 +3059,7 @@ class HebrewDictionary(App):
             return Word("","")
             
         isPar = False
-        if((word.last() == 'ת') or (word.last() == 'ה')) and (not(word.nextToLast() == 'ו')):
+        if((word.last() == 'ת') or (word.last() == 'ה')) and (not(word.nextToLast() == 'ו')) and (word.getLen() > 4):
             fimW = Word("","")
             fimW.equalTo(word)
             fimW.setText(self.Final(word.getText()[1:]))
@@ -3076,7 +3078,7 @@ class HebrewDictionary(App):
                 pfimW.setPar(1)
                 look.find(pfimW, self.Dict)
                 self.algorithm(look, pfimW)        
-            if(fimW.nextToLast() == 'ו') and (self.num_of_p_roots(fimW.getText()[2:]) < 3)  and (not(fimW.last() == 'י')) and (not(fimW.last() == 'ו')):
+            if(fimW.nextToLast() == 'ו') and (self.num_of_p_roots(fimW.getText()[2:]) < 3) and (not(fimW.last() == 'י')) and (not(fimW.last() == 'ו')):
                 isPar = True
                 pfimW2 = Word("","")
                 pfimW2.equalTo(fimW)
