@@ -1961,6 +1961,15 @@ class HebrewDictionary(App):
             return Word("","")
        
         if(word.nextToFirst() == 'ו'):
+            if(word.first() == 'ה'):
+                hufalW = Word("","")
+                hufalW.equalTo(word)
+                hufalW.setText(word.getText()[:-2])
+                #hufalW.setVerb()
+                hufalW.setVerbform(5)
+                look.find(hufalW, self.Dict)
+                return hufalW
+        
             if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א') or (word.first() in prefixL)):
                 hufalW = Word("","")
                 hufalW.equalTo(word)
@@ -1970,14 +1979,6 @@ class HebrewDictionary(App):
                 look.find(hufalW, self.Dict)
                 return hufalW
                 
-            if(word.first() == 'ה'):
-                hufalW = Word("","")
-                hufalW.equalTo(word)
-                hufalW.setText(word.getText()[:-2])
-                #hufalW.setVerb()
-                hufalW.setVerbform(5)
-                look.find(hufalW, self.Dict)
-                return hufalW
         return Word("", "")
     
     def hitpael(self, look, word):
