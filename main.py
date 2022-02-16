@@ -3132,7 +3132,7 @@ class HebrewDictionary(App):
             return Word("", "")
 
         if(word.getLen() > 2):
-            if(not ('י' in word.getSufxList())) and (self.CurrentWord.last() == 'י') and (word.last() == 'י') and (not('ם' in word.getSufxList())):
+            if(not ('י' in word.getSufxList())) and (word.last() == 'י') and ((self.CurrentWord.last() == 'י')or(word.getSuffix() == True)) and (not('ם' in word.getSufxList())):
                 constW = Word("","")
                 constW.equalTo(word)
                 constW.setText(self.Final(constW.getText()[1:]))
