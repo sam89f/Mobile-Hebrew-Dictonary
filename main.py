@@ -1773,10 +1773,7 @@ class HebrewDictionary(App):
         return Word("", "")
     
     def hifil(self, look, word):
-        if(word.getLen() < 5):
-            return Word("","")
-
-        if(word.getPartiVal() == 1):
+        if(word.getLen() < 5) or (word.getPartiVal() == 1) or (word.getTenseVal() == 0) or (word.getConstruct() == True):
             return Word("","")
         
         if((self.num_of_a_roots(word.last3()) < 2)and(not (word.last3() in plural))):
@@ -2586,7 +2583,7 @@ class HebrewDictionary(App):
         return True
     
     def imperative(self, look, word):
-        if(word.getLen() < 3) or (len(word.getPrixList()) > 0) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getModern == True) or (word.getRL2() == word.last2()):
+        if(word.getLen() < 3) or (self.imperRules(word, word.last()) == False) or (len(word.getPrixList()) > 0) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getModern == True) or (word.getRL2() == word.last2()):
             return Word("","")
         
         if word.last() == 'ו':
@@ -3157,7 +3154,7 @@ class HebrewDictionary(App):
         return Word("", "")
        
     def constr(self, look, word):
-        if(word.getLen() < 2) or (word.getConstruct() == True) or (word.isVerb() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getTense() == 'Perfect') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Imperative') or (word.getTense() == 'Infinitive') or (word.getPartiVal() == 0) or (word.getRL2() == word.last2()):
+        if(word.getLen() < 2) or (word.getConstruct() == True) or (word.isVerb() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getTense() == 'Perfect') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Imperative') or (word.getTense() == 'Infinitive') or (word.getPartiVal() == 0) or (word.getRL2() == word.last2()) or (word.getPartiVal() == 0):
             return Word("", "")
 
         if(word.getLen() > 2):
