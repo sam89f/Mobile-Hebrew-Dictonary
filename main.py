@@ -3171,7 +3171,7 @@ class HebrewDictionary(App):
                 look.find(irregW5, self.Dict)
                 self.irreg(look, irregW5)
                 
-            if(word.last() == 'י') and (not(self.CurrentWord.last() == 'י')) and (not(word.getRL2() == word.last2)) and (not(word.getPartiVal() == 0)):
+            if(word.last() == 'י') and (not(word.getConstruct() == True)) and (not(self.CurrentWord.last() == 'י')) and (not(word.getRL2() == word.last2)) and (not(word.getPartiVal() == 0)):
                 irregW6 = Word("","")
                 irregW6.equalTo(word)
                 irregW6.setText('ה' + word.getText()[1:])
