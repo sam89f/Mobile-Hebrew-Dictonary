@@ -1799,7 +1799,7 @@ class HebrewDictionary(App):
                     hifilW.equalTo(word)
                     hifilW.setText(word.last3() + word.getText()[4:])
                     hifilW.setRL2(hifilW.thirdFromLast() + hifilW.fourthFromLast())
-                    hifilW.setVerbform(4))
+                    hifilW.setVerbform(4)
                     return self.future(look, hifilW)
                 
                 if(((word.first() == 'ה')) and (word.fourthFromLast() == 'י')) and (self.num_of_p_roots(word.getText()[4:-1]) < 3):
