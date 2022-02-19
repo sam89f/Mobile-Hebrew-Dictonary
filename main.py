@@ -1774,7 +1774,6 @@ class HebrewDictionary(App):
                     hifilW.setText(word.last3() + word.getText()[5:])
                     hifilW.setRL2(hifilW.thirdFromLast() + hifilW.fourthFromLast())
                     hifilW.setVerbform(4)
-                    #look.find(hifilW, self.Dict)
                     return self.future(look, hifilW)
                     
                 if(((word.first() == 'ה')) and ((word.fourthFromLast() == 'י')and(word.XfromLast(5) == 'י'))) and (self.num_of_p_roots(word.getText()[5:-1]) < 3):
@@ -1791,7 +1790,6 @@ class HebrewDictionary(App):
                         hifilW2.setText(word.last3() + word.getText()[5:-2])
                         hifilW2.setRL2(hifilW2.thirdFromLast() + hifilW2.fourthFromLast())
                         hifilW2.setVerbform(4)
-                        #look.find(hifilW2, self.Dict)
                         return self.suffix(look, hifilW, 2)
                     return hifilW
                     
@@ -1801,8 +1799,7 @@ class HebrewDictionary(App):
                     hifilW.equalTo(word)
                     hifilW.setText(word.last3() + word.getText()[4:])
                     hifilW.setRL2(hifilW.thirdFromLast() + hifilW.fourthFromLast())
-                    hifilW.setVerbform(4)
-                    #look.find(hifilW, self.Dict)
+                    hifilW.setVerbform(4))
                     return self.future(look, hifilW)
                 
                 if(((word.first() == 'ה')) and (word.fourthFromLast() == 'י')) and (self.num_of_p_roots(word.getText()[4:-1]) < 3):
@@ -1811,7 +1808,6 @@ class HebrewDictionary(App):
                     hifilW.setText(word.last3() + word.getText()[4:-1])
                     hifilW.setRL2(hifilW.thirdFromLast() + hifilW.fourthFromLast())
                     hifilW.setVerbform(4)
-                    #look.find(hifilW, self.Dict)
                     self.suffix(look, hifilW, 2)
                     
                     if(word.first2() == 'יה'):
@@ -1832,7 +1828,6 @@ class HebrewDictionary(App):
                     hifilW.setText(word.last2() + word.getText()[4:])
                     hifilW.setRL2(hifilW.nextToLast() + hifilW.thirdFromLast())
                     hifilW.setVerbform(4)
-                    #look.find(hifilW, self.Dict)
                     return self.future(look, hifilW)
                     
                 if(((word.first() == 'ה')) and ((word.thirdFromLast() == 'י')and(word.fourthFromLast() == 'י'))) and (self.num_of_p_roots(word.getText()[4:-1]) < 3):
@@ -1860,7 +1855,6 @@ class HebrewDictionary(App):
                     hifilW.setText(word.last2() + word.getText()[3:])
                     hifilW.setRL2(hifilW.nextToLast() + hifilW.thirdFromLast())
                     hifilW.setVerbform(4)
-                    #look.find(hifilW, self.Dict)
                     return self.future(look, hifilW)
                 
                 if(((word.first() == 'ה')) and (word.thirdFromLast() == 'י')) and (self.num_of_p_roots(word.getText()[3:-1]) < 3):
@@ -1869,7 +1863,6 @@ class HebrewDictionary(App):
                     hifilW.setText(word.last2() + word.getText()[3:-1])
                     hifilW.setRL2(hifilW.nextToLast() + hifilW.thirdFromLast())
                     hifilW.setVerbform(4)
-                    #look.find(hifilW, self.Dict)
                     self.suffix(look, hifilW, 2)
                     
                     if(word.first2() == 'יה'):
@@ -1888,7 +1881,6 @@ class HebrewDictionary(App):
             hifilW.setText(word.last() + word.getText()[3:])
             hifilW.setRL2(hifilW.last() + hifilW.nextToLast())
             hifilW.setVerbform(4)
-            #look.find(hifilW, self.Dict)
             return self.future(look, hifilW)
             
         if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א')) and (word.nextToLast() == 'י') and (self.num_of_p_roots(word.getText()[2:-1]) < 3):
@@ -1897,7 +1889,6 @@ class HebrewDictionary(App):
             hifilW.setText(word.last() + word.getText()[2:])
             hifilW.setRL2(hifilW.last() + hifilW.nextToLast())
             hifilW.setVerbform(4)
-            #look.find(hifilW, self.Dict)
             return self.future(look, hifilW)
                 
         if(((word.first() == 'ה')) and ((word.nextToLast() == 'י')and(word.thirdFromLast() == 'י'))) and (self.num_of_p_roots(word.getText()[3:-1]) < 3):
@@ -1953,13 +1944,19 @@ class HebrewDictionary(App):
                 look.find(hufalW, self.Dict)
                 return hufalW
         
-            if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א') or (word.first() in prefixL)):
+            if(word.first() in prefixL):
                 hufalW = Word("","")
                 hufalW.equalTo(word)
                 hufalW.setText(word.getText()[:-2] + word.first())
                 hufalW.setVerbform(5)
-                #look.find(hufalW, self.Dict)
                 return self.smPrefix(look, hufalW)
+                
+            if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א')):
+                hufalW = Word("","")
+                hufalW.equalTo(word)
+                hufalW.setText(word.getText()[:-2] + word.first())
+                hufalW.setVerbform(5)
+                return self.future(look, hufalW)
                 
         return Word("", "")
     
@@ -1995,13 +1992,19 @@ class HebrewDictionary(App):
             look.find(hitpaelW, self.Dict)
             return hitpaelW
             
-        if((word.first2() == 'תי') or (word.first2() == 'תמ' ) or (word.first2() == 'תת' ) or (word.first2() == 'תל') or (word.first2() == 'תב') or (word.first2() == 'תא') or (word.first2() == 'תנ')) and (not ((word.Ht == False) or (word.third() == 'ו'))):
+        if(word.nextToFirst() == 'ת') and (word.first() in prefixL) and (not ((word.Ht == False) or (word.third() == 'ו'))):
             hitpaelW = Word("","")
             hitpaelW.equalTo(word)
             hitpaelW.setText(word.getText()[:-2] + word.first())
             hitpaelW.setVerbform(6)
-            #look.find(hitpaelW, self.Dict)
             return self.smPrefix(look, hitpaelW)
+            
+        if((word.first2() == 'תי') or (word.first2() == 'תת' ) or (word.first2() == 'תא') or (word.first2() == 'תנ')) and (not ((word.Ht == False) or (word.third() == 'ו'))):
+            hitpaelW = Word("","")
+            hitpaelW.equalTo(word)
+            hitpaelW.setText(word.getText()[:-2] + word.first())
+            hitpaelW.setVerbform(6)
+            return self.future(look, hitpaelW)
         return Word("", "")
        
     def metathesis(self, look, word):
