@@ -1450,7 +1450,7 @@ class HebrewDictionary(App):
         if word.getLen() < 2:
             return Word("", "")
         plural = False
-        self.smPrefix(look, word)
+        self.prefix(look, word)
         
         self.participle(look, word)
         
