@@ -1450,7 +1450,7 @@ class HebrewDictionary(App):
         if word.getLen() < 2:
             return Word("", "")
         plural = False
-        self.prefix(look, word)
+        self.smPrefix(look, word)
         
         self.participle(look, word)
         
@@ -3034,8 +3034,8 @@ class HebrewDictionary(App):
     def participle(self, look, word):
         if(word.getLen() < 4) or (word.isTense() == True):
             return Word("","")
-        if(word.last2() == 'תו') and (self.num_of_p_roots(word.getText()[2:]) > 2):
-            return Word("","")
+        #if(word.last2() == 'תו') and (self.num_of_p_roots(word.getText()[2:]) > 2):
+            #return Word("","")
             
         isPar = False
         if(word.last() == 'ת') and (not(word.nextToLast() == 'ו')) and (word.getLen() > 4):
@@ -3043,13 +3043,23 @@ class HebrewDictionary(App):
             fimW.equalTo(word)
             fimW.setText(self.Final(word.getText()[1:]))
             pfimW = Word("","")
-            if(fimW.nextToFirst() == 'ו') and (self.num_of_a_roots(fimW.getText()[:-2]) < 3):
+            
+            if(fimW.first() == 'מ'):
+                if(fimW.nextToFirst() == 'ו') and (self.num_of_a_roots(fimW.getText()[:-2]) < 3):
+                    pfimW.equalTo(fimW)
+                    pfimW.setText('ה' + self.unFinal(fimW.getText()[:-3] + fimW.first2()))
+                    pfimW.setConstruct()
+                    if fimW.first() == 'ת':
+                        pfimW.Ht = False
+                    pfimW.setTense(2)
+                    pfimW.setPar(1)
+                    look.find(pfimW, self.Dict)
+                    self.algorithm(look, pfimW)     
+            elif(fimW.nextToFirst() == 'ו') and (self.num_of_a_roots(fimW.getText()[:-2]) < 3):
                 isPar = True
                 pfimW.equalTo(fimW)
                 pfimW.setText('ה' + self.unFinal(fimW.getText()[:-2] + fimW.first()))
                 pfimW.setConstruct()
-                #if word.isNoun() == False:
-                    #pfimW.setVerb()
                 if fimW.first() == 'ת':
                     pfimW.Ht = False
                 pfimW.setTense(2)
@@ -3062,8 +3072,6 @@ class HebrewDictionary(App):
                 pfimW2.equalTo(fimW)
                 pfimW2.setText('ה' + self.unFinal(fimW.last() + fimW.getText()[2:]))
                 pfimW2.setConstruct()
-                #if word.isNoun() == False:
-                    #pfimW2.setVerb()
                 pfimW2.setTense(2)
                 pfimW2.setPar(0)
                 look.find(pfimW2, self.Dict)
@@ -3079,12 +3087,21 @@ class HebrewDictionary(App):
                 d = 1
             if word.getSuffix2() == True:
                 d = 2
-            if(word.nextToFirst() == 'ו') and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת'))) and (self.num_of_a_roots(word.getText()[:-2]) < 3):
+            if(word.first() == 'מ'):
+                if(word.third() == 'ו') and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת'))) and (self.num_of_a_roots(word.getText()[:-3]) < 3):
+                    isPar = True
+                    pword.equalTo(word)
+                    pword.setText(word.getText()[:-3] + word.first2())
+                    pword.setTense(2)
+                    pword.setPar(1)
+                    if word.first() == 'ת':
+                        pword.Ht = False
+                    look.find(pword, self.Dict)
+                    self.algorithm(look, pword)    
+            elif(word.nextToFirst() == 'ו') and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת'))) and (self.num_of_a_roots(word.getText()[:-2]) < 3):
                 isPar = True
                 pword.equalTo(word)
                 pword.setText(word.getText()[:-2] + word.first())
-                #if word.isNoun() == False:
-                    #pword.setVerb()
                 pword.setTense(2)
                 pword.setPar(1)
                 if word.first() == 'ת':
@@ -3096,8 +3113,6 @@ class HebrewDictionary(App):
                 pword2 = Word("","")
                 pword2.equalTo(word)
                 pword2.setText(word.last() + word.getText()[2:])
-                #if word.isNoun() == False:
-                    #pword2.setVerb()
                 pword2.setTense(2)
                 pword2.setPar(0)
                 look.find(pword2, self.Dict)
