@@ -1792,7 +1792,7 @@ class HebrewDictionary(App):
                         hifilW2.setRL2(hifilW2.thirdFromLast() + hifilW2.fourthFromLast())
                         hifilW2.setVerbform(4)
                         #look.find(hifilW2, self.Dict)
-                        return self.suffix(look, hifilW)
+                        return self.suffix(look, hifilW, 2)
                     return hifilW
                     
             if(word.getLen() > 6):
@@ -1812,7 +1812,7 @@ class HebrewDictionary(App):
                     hifilW.setRL2(hifilW.thirdFromLast() + hifilW.fourthFromLast())
                     hifilW.setVerbform(4)
                     #look.find(hifilW, self.Dict)
-                    self.suffix(look, hifilW)
+                    self.suffix(look, hifilW, 2)
                     
                     if(word.first2() == 'יה'):
                         hifilW2 = Word("","")
@@ -1821,7 +1821,7 @@ class HebrewDictionary(App):
                         hifilW2.setRL2(hifilW2.thirdFromLast() + hifilW2.fourthFromLast())
                         hifilW2.setVerbform(4)
                         look.find(hifilW2, self.Dict)
-                        return self.suffix(look, hifilW2)
+                        return self.suffix(look, hifilW2, 2)
                     return hifilW
         
         if((self.num_of_a_roots(word.last2()) < 2)and(not (word.last2() in plural))):
@@ -1842,7 +1842,7 @@ class HebrewDictionary(App):
                     hifilW.setRL2(hifilW.nextToLast() + hifilW.thirdFromLast())
                     hifilW.setVerbform(4)
                     look.find(hifilW, self.Dict)
-                    self.suffix(look, hifilW)
+                    self.suffix(look, hifilW, 2)
                     
                     if(word.first2() == 'יה'):
                         hifilW2 = Word("","")
@@ -1851,7 +1851,7 @@ class HebrewDictionary(App):
                         hifilW2.setRL2(hifilW2.nextToLast() + hifilW2.thirdFromLast())
                         hifilW2.setVerbform(4)
                         look.find(hifilW2, self.Dict)
-                        return self.suffix(look, hifilW2)
+                        return self.suffix(look, hifilW2, 2)
             
             if(word.getLen() > 5):
                 if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א')) and (word.thirdFromLast() == 'י') and (self.num_of_p_roots(word.getText()[3:-1]) < 3):
@@ -1870,7 +1870,7 @@ class HebrewDictionary(App):
                     hifilW.setRL2(hifilW.nextToLast() + hifilW.thirdFromLast())
                     hifilW.setVerbform(4)
                     #look.find(hifilW, self.Dict)
-                    self.suffix(look, hifilW)
+                    self.suffix(look, hifilW, 2)
                     
                     if(word.first2() == 'יה'):
                         hifilW2 = Word("","")
@@ -1879,7 +1879,7 @@ class HebrewDictionary(App):
                         hifilW2.setRL2(hifilW2.nextToLast() + hifilW2.thirdFromLast())
                         hifilW2.setVerbform(4)
                         look.find(hifilW2, self.Dict)
-                        return self.suffix(look, hifilW2)
+                        return self.suffix(look, hifilW2, 2)
                     return hifilW
                 
         if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א')) and ((word.nextToLast() == 'י')and(word.thirdFromLast() == 'י')) and (self.num_of_p_roots(word.getText()[3:-1]) < 3):
