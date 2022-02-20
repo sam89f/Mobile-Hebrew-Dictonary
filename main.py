@@ -3375,7 +3375,7 @@ class HebrewDictionary(App):
                     look.find(irregWc, self.Dict)
          
         #checking to see if any letters have been assimilated from the beginning of the word.         
-        if (word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (self.CurrentWord.first() == 'ו'):
+        if ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (self.CurrentWord.first() == 'ו')) and (not(word.getPartiVal() == 1)):
             if (not((word.getVerbform() == 'Hophal')or(word.getVerbform() == 'Hiphil')or(word.getVerbform() == 'Hithpeal'))) and (not(word.getIrregVal() > 0)) and ((not ('ה' in word.getPrixList())) and (not (self.CurrentWord.first() == 'ה')) and (not (word.first() == 'ה'))) and ((word.getPrefix() == True) or (word.getTense() == 'Infinitive')):
                 irregW = Word("","")
                 irregW.equalTo(word)
