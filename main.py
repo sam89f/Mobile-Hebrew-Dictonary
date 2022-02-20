@@ -242,6 +242,12 @@ class Word:
     def isNoun(self):
         return self.Noun
         
+    def isParticiple(self):
+        if self.partiW == -1:
+            return False
+        else:
+            return True
+        
     def getTense(self):
         return self.tenses[self.tense]
         
@@ -690,6 +696,8 @@ class Word:
         
         
     def isNumb(self):
+        if(self.getLen() < 1):
+            return False
         if self.isFinal(self.last()):
             return False
             
@@ -3297,7 +3305,7 @@ class HebrewDictionary(App):
         if(word.getLen() > 2):
             irregWnun2 = Word("","")
             irregWnun2.equalTo(word)
-            if(word.nextToFirst() == 'נ'):
+            if(word.nextToFirst() == 'נ') and (word.isParticiple() == False):
                 irregWnun2.setText(word.getText()[:-2] + word.first())
                 irregWnun2.setIrreg()
                 look.find(irregWnun2, self.Dict)
