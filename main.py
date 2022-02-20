@@ -3157,7 +3157,6 @@ class HebrewDictionary(App):
                 
             if isPar == True:
                 return pword
-                
         return Word("", "")
        
     def constr(self, look, word):
