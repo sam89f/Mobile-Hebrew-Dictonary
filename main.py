@@ -3252,7 +3252,7 @@ class HebrewDictionary(App):
             if(word.getLen() == 2):
                 if(not(word.first() == 'נ')) and (not(self.CurrentWord.first() == 'נ')) and (not(word.getRL2() == word.last2())):
                     irregW.setText(self.Final(word.getText()[1:]) + 'נ')
-            else:
+            elif ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')):
                 irregW.setText(word.getText() + 'נ')
             if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not('ה' in word.getSufxList())) and (not(word.last() == 'ה')) and (not (self.CurrentWord.last() == 'ה')) and (not(('ו' in word.getPrixList())and(word.getTense() == 'Imperfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))) and (not((not ('ו' in word.getPrixList()))and(word.getTense() == 'Perfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))):
                 irregWh = Word("","")
@@ -3263,13 +3263,14 @@ class HebrewDictionary(App):
                 self.FindHelper(look, irregWh, self.Dict)
             self.FindHelper(look, irregW, self.Dict)
             
-            irregWNN = Word("","")
-            irregWNN.equalTo(irregW)
-            irregWNN.setText('ן' + self.unFinal(irregW.getText()))
-            irregWNN.setIrreg()
-            self.FindHelper(look, irregWNN, self.Dict)
-            if word.getLen() == 1:
-                return Word("", "")
+            if (not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')):
+                irregWNN = Word("","")
+                irregWNN.equalTo(irregW)
+                irregWNN.setText('ן' + self.unFinal(irregW.getText()))
+                irregWNN.setIrreg()
+                self.FindHelper(look, irregWNN, self.Dict)
+                if word.getLen() == 1:
+                    return Word("", "")
         
         if(word.getLen() == 2):
             if(not(word.getTense() == 'Participle')) and (not(word.getVerbform() == 'Pual')):
@@ -3296,7 +3297,7 @@ class HebrewDictionary(App):
                 hollow.setIrreg()
                 self.FindHelper(look, hollow, self.Dict)
         
-        if (word.isVerb() == True) and (((word.getTense() == "Infinitive")and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList()) - 1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Imperfect")and('ו' in word.getPrixList())and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Perfect")and(not('ו' in word.getPrixList()))and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last())))) and (not ('ן' in word.getSufxList())):
+        if (word.isVerb() == True) and (((word.getTense() == "Infinitive")and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList()) - 1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Imperfect")and('ו' in word.getPrixList())and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Perfect")and(not('ו' in word.getPrixList()))and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last())))) and (not ('ן' in word.getSufxList())) and (not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')):
             irregWN = Word("","")
             irregWN.equalTo(word)
             irregWN.setText('ן' + self.unFinal(word.getText()))
@@ -3385,7 +3386,7 @@ class HebrewDictionary(App):
                     self.FindHelper(look, irregWc, self.Dict)
          
         #checking to see if any letters have been assimilated from the beginning of the word.         
-        if ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Imperative') or (word.getTense() == 'Cohortative')) and (not(word.getPartiVal() == 1)):
+        if ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')) and (not(word.getPartiVal() == 1)):
             if (not((word.getVerbform() == 'Hophal')or(word.getVerbform() == 'Hiphil')or(word.getVerbform() == 'Hithpeal'))) and (not(word.getIrregVal() > 0)) and ((not ('ה' in word.getPrixList())) and (not (self.CurrentWord.first() == 'ה')) and (not (word.first() == 'ה'))):
                 irregW = Word("","")
                 irregW.equalTo(word)
