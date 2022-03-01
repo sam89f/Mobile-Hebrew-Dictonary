@@ -3306,6 +3306,14 @@ class HebrewDictionary(App):
                 self.FindHelper(look, irregipW2, self.Dict)
                 self.irreg(look, irregipW2)
                 
+                irregipW3 = Word("","")
+                irregipW3.equalTo(word)
+                irregipW3.setText(word.getText() + 'נ')
+                irregipW3.setIrreg()
+                irregipW3.setTense(4)
+                self.FindHelper(look, irregipW3, self.Dict)
+                self.irreg(look, irregipW3)
+                
         if(word.getLen() == 3):
             if (word.nextToLast() == 'ו') or (word.nextToLast() == 'י'):
                 hollow = Word("","")
