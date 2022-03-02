@@ -2798,6 +2798,9 @@ class HebrewDictionary(App):
         cPhrasePre = Word("","")
         cPhrasePre.equalTo(word)
         cPhrasePre.setText(self.revPhWords(word.getText(), "-"))
+        
+        if (cPhrasePre.first() == 'נ') and ('-' in word.getText()):
+            return Word("","")
 
         if(cPhrasePre.getLen() < 2):
             return Word("", "") 
