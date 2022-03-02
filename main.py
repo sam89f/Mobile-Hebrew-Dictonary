@@ -2792,12 +2792,12 @@ class HebrewDictionary(App):
         return True
             
     def prefix(self, look, word):
-        if(word.getLen() < 2) or (self.CurrentWord.first() == 'נ') or (word.getPartiVal() == 1):
+        if(word.getLen() < 2) or ((self.CurrentWord.first() == 'נ')and(not('-' in word.getText()))) or (word.getPartiVal() == 1):
             return Word("","")
             
         cPhrasePre = Word("","")
         cPhrasePre.equalTo(word)
-        cPhrasePre.setText(self.revPhWords(word.getText(), "-"))     
+        cPhrasePre.setText(self.revPhWords(word.getText(), "-"))
 
         if(cPhrasePre.getLen() < 2):
             return Word("", "") 
