@@ -1139,13 +1139,16 @@ class HebrewDictionary(App):
                 cPhrasePl = Word(fixedPhrase, "")
                 cPhrasePl.equalTo(self.plural(check, phraseW))
                 
+                cPhrasePch = Word(fixedPhrase, "")
+                cPhrasePch.equalTo(self.prexChainRapper(check, phraseW))
+
                 cPhrasePre = Word(fixedPhrase, "")
                 cPhrasePre.equalTo(self.prefix(check, phraseW))
                 
                 cPhraseSuf = Word(fixedPhrase, "")
                 cPhraseSuf.equalTo(self.suffix(check, phraseW, 3))
                 
-                if (((check.find(phraseW, self.Dict) == True)) or (check.find(cPhrasePl, self.Dict)) or (check.find(cPhrasePre, self.Dict)) or (check.find(cPhraseSuf, self.Dict)) or (check.find(self.suffix(check, self.prefix(check, phraseW), 3), self.Dict)) or (check.find(self.plural(check, self.prefix(check, phraseW)), self.Dict))) and (end > 1):
+                if (((check.find(phraseW, self.Dict) == True)) or (check.find(cPhrasePch, self.Dict)) or (check.find(cPhrasePl, self.Dict)) or (check.find(cPhrasePre, self.Dict)) or (check.find(cPhraseSuf, self.Dict)) or (check.find(self.suffix(check, self.prefix(check, phraseW), 3), self.Dict)) or (check.find(self.plural(check, self.prefix(check, phraseW)), self.Dict)) or (check.find(self.prexChainRapper(check, self.prefix(check, phraseW)), self.Dict))) and (end > 1):
                     Ws2[i] = revPhrase
                     tempWs[i] = fixedPhrase
                     s = i
@@ -1456,6 +1459,9 @@ class HebrewDictionary(App):
         if word.getLen() < 2:
             return Word("", "")
         plural = False
+        
+        self.prexChainRapper(look, word)
+
         self.prefix(look, word)
         
         self.participle(look, word)
@@ -2792,50 +2798,124 @@ class HebrewDictionary(App):
         return True
             
     def prefix(self, look, word):
-        if(word.getLen() < 2) or ((self.CurrentWord.first() == 'נ')and(not('-' in word.getText()))) or (word.getPartiVal() == 1):
+        if(word.getLen() < 2):
             return Word("","")
+        
+        if not ('-' in word.getText()):
+            return self.smPrefix(look, word)
             
         cPhrasePre = Word("","")
         cPhrasePre.equalTo(word)
-        cPhrasePre.setText(self.revPhWords(word.getText(), "-"))
-        
-        if (cPhrasePre.first() == 'נ') and ('-' in word.getText()):
-            return Word("","")
-
-        if(cPhrasePre.getLen() < 2):
-            return Word("", "") 
-        
+        cPhrasePre.setText(self.revPhWords(cPhrasePre.getText(), "-"))
+          
         if (cPhrasePre.first() in prefixL) and (self.prefixRuls(cPhrasePre, cPhrasePre.first()) == True):
             preW = Word("","")
             preW.equalTo(cPhrasePre)
             preW.setText(cPhrasePre.getText()[:-1])
-            if(cPhrasePre.first() == 'ה') or (cPhrasePre.first() == 'ל'):
-                if cPhrasePre.isVerb() == False:
-                    preW.setNoun()
-                else:
-                    return cPhrasePre
             preW.setPrefix()
             preW.addPre(cPhrasePre.first())
             preW.setText(self.revPhWords(preW.getText(), "-"))
-            self.FindHelper(look, preW, self.Dict)
-            self.future(look, preW)
-            self.perfect(look, preW)
-            if not ('-' in word.getText()):
+            
+            if self.FindHelper(look, preW, self.Dict) == False:
                 self.algorithm(look, preW)
+                preWend = Word("","")
+                preWend.equalTo(self.prefix(look, preW))
+                if preWend.getText() == "":
+                    return preW
+                else:
+                    return preWend
             else:
-                if self.FindHelper(look, preW, self.Dict) == False:
+                return preW   
+                
+        return Word("", "")
+    
+    def prexChainRapper(self, look, word):
+        if(word.getLen() < 2):
+            return Word("","")
+        
+        if not ('-' in word.getText()):
+            return Word("","")
+            
+        cPhrasePre = Word("","")
+        cPhrasePre.equalTo(word)
+        #cPhrasePre.setText(self.revPhWords(cPhrasePre.getText(), "-"))
+          
+        preChain1 = Word("","")
+        preChain1.equalTo(self.prexChain(look, cPhrasePre))
+        
+        if (not(preChain1.getText() == "")):
+            return preChain1
+          
+        if (cPhrasePre.first() in prefixL) and (self.prefixRuls(cPhrasePre, cPhrasePre.first()) == True):
+            preW = Word("","")
+            preW.equalTo(cPhrasePre)
+            preW.setText(cPhrasePre.getText()[:-1])
+
+            preW.setPrefix()
+            preW.addPre(cPhrasePre.first())
+            #preW.setText(self.revPhWords(preW.getText(), "-"))
+            
+            if self.FindHelper(look, preW, self.Dict) == False:
+                preChain = Word("","")
+                preChain.equalTo(self.prexChain(look, preW))
+                 
+                if self.FindHelper(look, preChain, self.Dict) == False:
                     preWend = Word("","")
-                    preWend.equalTo(self.prefix(look, preW))
+                    preWend.equalTo(self.prexChainRapper(look, preW))
                     if preWend.getText() == "":
                         return preW
                     else:
                         return preWend
                 else:
-                    return preW
+                    return preChain
+                    
+            else:
+                return preW
         return Word("", "")
+    
+    def prexChain(self, look, word):
+        if(word.getLen() < 2):
+            return Word("", "")
+              
+        temp1 = Word("", "")
+        temp1.equalTo(word)
+        temp1.setText(self.revPhWords(temp1.getText(), "-"))
+            
+        index = temp1.getText().find("ה-")
+        if index == -1:
+            return Word("", "")
         
+        temp2 = Word("", "")
+        temp2.equalTo(temp1)
+        temp2.setText(temp1.getText()[index + 1:] + temp1.getText()[:index])
+        temp2.setPrefix()
+        temp2.addPre('ה')
+        temp2.setText(self.revPhWords(temp2.getText(), "-"))
+        if self.FindHelper(look, temp2, self.Dict) == True:
+            return temp2
+            
+        while(not (index == -1)):
+            index_t = index
+            tempi = Word("", "")
+            tempi.equalTo(temp1)
+            #tempi.setText(self.revPhWords(tempi.getText(), "-"))
+            index = temp1.getText()[:index].find("ה-")
+            if index == -1:
+                return Word("", "")
+                
+            index_t = index + index_t
+            tempi.setText(temp1.getText()[index_t + 1:] + temp1.getText()[:index_t])
+            tempi.setPrefix()
+            tempi.addPre('ה')
+            tempi.setText(self.revPhWords(tempi.getText(), "-"))
+            if self.FindHelper(look, tempi, self.Dict) == True:
+                return tempi
+            index = index_t
+            
+        return Word("", "")
+
     def smPrefix(self, look, word):
-        if(word.getLen() < 2): #or (word.getModern == True):
+        if(word.getLen() < 2) or (not(self.CurrentWord.first() in prefixL)): #or (word.getModern == True):
             return Word("","")
                 
         if (word.first() in prefixL) and (self.prefixRuls(word, word.first()) == True):
