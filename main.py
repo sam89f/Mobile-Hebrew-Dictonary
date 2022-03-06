@@ -2458,9 +2458,19 @@ class HebrewDictionary(App):
                 if futurW.nextToLast() == 'ו':
                     futurW.setText(futurW.last() + futurW.getText()[2:])
                 f = self.FindHelper(look, futurW, self.Dict)
+                fh = False
+                if(not (futurW.last() == 'ה')):
+                    futurWh = Word("","")
+                    futurWh.equalTo(futurW)
+                    futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                    fh = self.FindHelper(look, futurWh, self.Dict)
+                    self.algorithm(look, futurWh)
                 return futurW
             elif 'ו' in word.getPrixList():
                 return self.irreg(look, futurW)
+                
+            elif 'ו' in word.getPrixList():
+                self.irreg(look, futurW)
             
         if(word.first() == 'י') and (self.imperRules(word, 'י') == True):
             futurW = Word("","")
@@ -2511,6 +2521,13 @@ class HebrewDictionary(App):
                     futurW.setText(futurW.last() + futurW.getText()[2:])
                 f = self.FindHelper(look, futurW, self.Dict)
                 self.algorithm(look, futurW)
+                fh = False
+                if(not (futurW.last() == 'ה')):
+                    futurWh = Word("","")
+                    futurWh.equalTo(futurW)
+                    futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                    fh = self.FindHelper(look, futurWh, self.Dict)
+                    self.algorithm(look, futurWh)
             elif 'ו' in word.getPrixList():
                 self.irreg(look, futurW)
                 
@@ -2526,6 +2543,14 @@ class HebrewDictionary(App):
             
             if(futurW2.getLen() > 1):
                 f2 = self.FindHelper(look, futurW2, self.Dict)
+                self.algorithm(look, futurW2)
+                fh = False
+                if(not (futurW2.last() == 'ה')):
+                    futurW2h = Word("","")
+                    futurW2h.equalTo(futurW2)
+                    futurW2h.setText('ה' + self.unFinal(futurW2.getText()))
+                    fh = self.FindHelper(look, futurW2h, self.Dict)
+                    self.algorithm(look, futurW2h)
                 return futurW2
             elif 'ו' in word.getPrixList():
                 self.irreg(look, futurW2)
@@ -2547,6 +2572,13 @@ class HebrewDictionary(App):
                 if futurW.nextToLast() == 'ו':
                     futurW.setText(futurW.getText()[0:1] + futurW.getText()[2:])               
                 f = self.FindHelper(look, futurW, self.Dict)
+                fh = False
+                if(not (futurW.last() == 'ה')):
+                    futurWh = Word("","")
+                    futurWh.equalTo(futurW)
+                    futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                    fh = self.FindHelper(look, futurWh, self.Dict)
+                    self.algorithm(look, futurWh)
                 return futurW
             elif 'ו' in word.getPrixList():
                 self.irreg(look, futurW)
