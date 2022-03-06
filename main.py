@@ -2838,39 +2838,12 @@ class HebrewDictionary(App):
             
         cPhrasePre = Word("","")
         cPhrasePre.equalTo(word)
-        #cPhrasePre.setText(self.revPhWords(cPhrasePre.getText(), "-"))
           
         preChain1 = Word("","")
         preChain1.equalTo(self.prexChain(look, cPhrasePre))
         
         if (not(preChain1.getText() == "")):
             return preChain1
-          
-        if (cPhrasePre.first() in prefixL) and (self.prefixRuls(cPhrasePre, cPhrasePre.first()) == True):
-            preW = Word("","")
-            preW.equalTo(cPhrasePre)
-            preW.setText(cPhrasePre.getText()[:-1])
-
-            preW.setPrefix()
-            preW.addPre(cPhrasePre.first())
-            #preW.setText(self.revPhWords(preW.getText(), "-"))
-            
-            if self.FindHelper(look, preW, self.Dict) == False:
-                preChain = Word("","")
-                preChain.equalTo(self.prexChain(look, preW))
-                 
-                if self.FindHelper(look, preChain, self.Dict) == False:
-                    preWend = Word("","")
-                    preWend.equalTo(self.prexChainRapper(look, preW))
-                    if preWend.getText() == "":
-                        return preW
-                    else:
-                        return preWend
-                else:
-                    return preChain
-                    
-            else:
-                return preW
         return Word("", "")
     
     def prexChain(self, look, word):
@@ -2881,36 +2854,21 @@ class HebrewDictionary(App):
         temp1.equalTo(word)
         temp1.setText(self.revPhWords(temp1.getText(), "-"))
             
-        index = temp1.getText().find("ה-")
-        if index == -1:
+        s = temp1.getText().count("ה-")
+        if s == 0:
             return Word("", "")
         
-        temp2 = Word("", "")
-        temp2.equalTo(temp1)
-        temp2.setText(temp1.getText()[index + 1:] + temp1.getText()[:index])
-        temp2.setPrefix()
-        temp2.addPre('ה')
-        temp2.setText(self.revPhWords(temp2.getText(), "-"))
-        if self.FindHelper(look, temp2, self.Dict) == True:
-            return temp2
-            
-        while(not (index == -1)):
-            index_t = index
-            tempi = Word("", "")
-            tempi.equalTo(temp1)
-            #tempi.setText(self.revPhWords(tempi.getText(), "-"))
-            index = temp1.getText()[:index].find("ה-")
-            if index == -1:
-                return Word("", "")
+        for i in range(1, s + 1):
+            temp2 = Word("", "")
+            temp2.equalTo(temp1)
+            temp2.setText(temp1.getText().replace("ה-", "-", i))
+            if(not('ה' in temp2.getPrixList())):
+                temp2.setPrefix()
+                temp2.addPre('ה')
                 
-            index_t = index + index_t
-            tempi.setText(temp1.getText()[index_t + 1:] + temp1.getText()[:index_t])
-            tempi.setPrefix()
-            tempi.addPre('ה')
-            tempi.setText(self.revPhWords(tempi.getText(), "-"))
-            if self.FindHelper(look, tempi, self.Dict) == True:
-                return tempi
-            index = index_t
+            temp2.setText(self.revPhWords(temp2.getText(), "-"))
+            if self.FindHelper(look, temp2, self.Dict) == True:
+                return temp2
             
         return Word("", "")
 
