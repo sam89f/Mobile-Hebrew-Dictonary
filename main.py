@@ -1145,7 +1145,7 @@ class HebrewDictionary(App):
                 cPhraseSuf = Word(fixedPhrase, "")
                 cPhraseSuf.equalTo(self.suffix(check, phraseW, 3))
                 
-                if (((check.find(phraseW, self.Dict) == True)) or (check.find(cPhrasePl, self.Dict)) or (check.find(cPhrasePre, self.Dict)) or (check.find(cPhraseSuf, self.Dict)) or (check.find(self.suffix(check, self.prefix(check, phraseW), 3), self.Dict)) or (check.find(self.plural(check, self.prefix(check, phraseW)), self.Dict))) and (end > 1):
+                if (((check.find(phraseW, self.Dict) == True)) or (check.find(cPhrasePl, self.Dict)) or (check.find(cPhrasePre, self.Dict)) or (check.find(cPhraseSuf, self.Dict)) or (check.find(self.prefix(check, cPhraseSuf), self.Dict)) or (check.find(self.prefix(check, cPhrasePl), self.Dict))) and (end > 1):
                     Ws2[i] = revPhrase
                     tempWs[i] = fixedPhrase
                     s = i
@@ -2726,7 +2726,22 @@ class HebrewDictionary(App):
                 return Word("","")
                     
         return Word("", "")
-  
+        
+    def wFinal(self, text):
+        if text[0] in finals.keys():
+            return finals.get(text[0]) + text[1:]
+        return text
+        
+    def FinalChain(self, text):
+        inputL = text.split()
+        if len(text) > 1:
+            for i in range(len(inputL)):
+                inputL[i] = self.wFinal(inputL[i])
+            text =  " ".join(inputL)  
+        else:
+            text = self.wFinal(text)
+        return text
+            
     def plural(self, look, word):
         if(word.getLen() < 3) or (word.isVerb() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getRL2() == word.last2()) or (word.getRL2() == word.nextToLast() + word.thirdFromLast()) or (word.getPartiVal() == 1):
              return Word("", "")
@@ -2735,43 +2750,78 @@ class HebrewDictionary(App):
         cPhrasePl.equalTo(word)
         cPhrasePl.setText(self.revPhWords(word.getText(), "-"))
             
-        if(cPhrasePl.getLen() > 3): 
-            if(cPhrasePl.last3() == 'םיי') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')) and (not (cPhrasePl.getTense() == 'Imperfect')) and (not (cPhrasePl.getTense() == 'Imperative')) and (not (cPhrasePl.getTense() == 'Infinitive')) and (not(word.getConstruct() == True)):
+        if(cPhrasePl.getLen() > 3):
+            if(cPhrasePl.last3() == 'םיי') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')):
                 plW = Word("","")
                 plW.equalTo(cPhrasePl)
                 plW.setText(cPhrasePl.Final(cPhrasePl.getText()[3:]))
+                if '-' in cPhrasePl.getText():
+                    plW.setText(plW.getText().replace("-םיי", " "))
+                    plW.setText(self.FinalChain(plW.getText()))
+                    plW.setText(plW.getText().replace(" ", "-"))
                 plW.setNoun()
                 plW.setDaul()
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 self.FindHelper(look, plW, self.Dict)
                 self.algorithm(look, plW)
+                return plW
         if(cPhrasePl.getLen() > 2):
             if(cPhrasePl.last2() == 'םי') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')):
                 plW = Word("","")
                 plW.equalTo(cPhrasePl)
                 plW.setText(cPhrasePl.Final(cPhrasePl.getText()[2:]))
+                if '-' in cPhrasePl.getText():
+                    plW.setText(plW.getText().replace("-םי", " "))
+                    plW.setText(self.FinalChain(plW.getText()))
+                    plW.setText(plW.getText().replace(" ", "-"))
                 plW.setNoun()
                 plW.setPlural()
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 self.FindHelper(look, plW, self.Dict)
                 self.algorithm(look, plW)
                 return plW
-            if(cPhrasePl.last2() == 'תו') and (not (cPhrasePl.getTense() == 'Perfect')) and (not (cPhrasePl.getTense() == 'Imperfect')) and (not (cPhrasePl.getTense() == 'Imperative')) and (not (cPhrasePl.getTense() == 'Infinitive')):
+        if(cPhrasePl.getLen() > 2):
+            if(cPhrasePl.last2() == 'תו') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')):
                 plW = Word("","")
                 plW.equalTo(cPhrasePl)
-                plW.setText(cPhrasePl.Final(cPhrasePl.getText()[2:]))
+                plW.setText('ה' + cPhrasePl.getText()[2:])
+                if '-' in cPhrasePl.getText():
+                    plW.setText(plW.getText().replace("-תו", "-ה"))
                 plW.setNoun()
                 plW.setPlural()
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 self.FindHelper(look, plW, self.Dict)
                 self.algorithm(look, plW)
-                singleW = Word("","")
-                singleW.equalTo(plW)
-                singleW.setText('ה' + self.unFinal(plW.getText()))
-                singleW.setPlural()
-                self.FindHelper(look, singleW, self.Dict)
-                #self.algorithm(look, singleW)
-                return singleW
+                return plW
+            if(cPhrasePl.last2() == 'תו') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')) and (not ('-' in cPhrasePl.getText())):
+                if '-' in cPhrasePl.getText():
+                    plW = Word("","")
+                    plW.equalTo(cPhrasePl)
+                    plW.setText('ה' + cPhrasePl.getText()[2:])
+                    if '-' in cPhrasePl.getText():
+                        plW.setText(plW.getText().replace("-תו", "-ה"))
+                    plW.setNoun()
+                    plW.setPlural()
+                    plW.setText(self.revPhWords(plW.getText(), "-"))
+                    self.FindHelper(look, plW, self.Dict)
+                    self.algorithm(look, plW)
+                    return plW
+                else:
+                    plW = Word("","")
+                    plW.equalTo(cPhrasePl)
+                    plW.setText(cPhrasePl.Final(cPhrasePl.getText()[2:]))
+                    plW.setNoun()
+                    plW.setPlural()
+                    plW.setText(self.revPhWords(plW.getText(), "-"))
+                    self.FindHelper(look, plW, self.Dict)
+                    self.algorithm(look, plW)
+                    singleW = Word("","")
+                    singleW.equalTo(plW)
+                    singleW.setText('ה' + self.unFinal(plW.getText()))
+                    singleW.setPlural()
+                    self.FindHelper(look, singleW, self.Dict)
+                    self.algorithm(look, singleW)
+                    return singleW
         constr = Word("","")
         constr.equalTo(self.constr(look, cPhrasePl))
         if not (constr.getText() == ""):
