@@ -2743,7 +2743,7 @@ class HebrewDictionary(App):
         return text
             
     def plural(self, look, word):
-        if(word.getLen() < 3) or (word.isVerb() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getRL2() == word.last2()) or (word.getRL2() == word.nextToLast() + word.thirdFromLast()) or (word.getPartiVal() == 1):
+        if(word.getLen() < 3) or (word.isVerb() == True) or ((word.getPlural() == True)and(not((word.getConstruct() == True)and(word.getSuffix() == True)))) or (word.getDaul() == True) or ((word.getConstruct() == True)and(not((word.getPlural() == True)and(word.getSuffix() == True)))) or (word.getModern == True) or (word.getRL2() == word.last2()) or (word.getRL2() == word.nextToLast() + word.thirdFromLast()) or (word.getPartiVal() == 1):
              return Word("", "")
             
         cPhrasePl = Word("","")
@@ -2781,25 +2781,12 @@ class HebrewDictionary(App):
                 self.algorithm(look, plW)
                 return plW
         if(cPhrasePl.getLen() > 2):
-            if(cPhrasePl.last2() == 'תו') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')):
-                plW = Word("","")
-                plW.equalTo(cPhrasePl)
-                plW.setText('ה' + cPhrasePl.getText()[2:])
-                if '-' in cPhrasePl.getText():
-                    plW.setText(plW.getText().replace("-תו", "-ה"))
-                plW.setNoun()
-                plW.setPlural()
-                plW.setText(self.revPhWords(plW.getText(), "-"))
-                self.FindHelper(look, plW, self.Dict)
-                self.algorithm(look, plW)
-                return plW
-            if(cPhrasePl.last2() == 'תו') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')) and (not ('-' in cPhrasePl.getText())):
-                if '-' in cPhrasePl.getText():
+            if(cPhrasePl.last2() == 'תו') and (not (cPhrasePl.getTense() == 'Perfect')):
+                if('-' in cPhrasePl.getText()):
                     plW = Word("","")
                     plW.equalTo(cPhrasePl)
                     plW.setText('ה' + cPhrasePl.getText()[2:])
-                    if '-' in cPhrasePl.getText():
-                        plW.setText(plW.getText().replace("-תו", "-ה"))
+                    plW.setText(plW.getText().replace("-תו", "-ה"))
                     plW.setNoun()
                     plW.setPlural()
                     plW.setText(self.revPhWords(plW.getText(), "-"))
