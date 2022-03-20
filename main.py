@@ -1145,7 +1145,7 @@ class HebrewDictionary(App):
                 cPhraseSuf = Word(fixedPhrase, "")
                 cPhraseSuf.equalTo(self.suffix(check, phraseW, 3))
                 
-                if (((check.find(phraseW, self.Dict) == True)) or (check.find(cPhrasePl, self.Dict)) or (check.find(cPhrasePre, self.Dict)) or (check.find(cPhraseSuf, self.Dict)) or (check.find(self.prefix(check, cPhraseSuf), self.Dict)) or (check.find(self.prefix(check, cPhrasePl), self.Dict))) and (end > 1):
+                if (((check.find(phraseW, self.Dict) == True)) or (check.find(cPhrasePl, self.Dict)) or (check.find(cPhrasePre, self.Dict)) or (check.find(cPhraseSuf, self.Dict)) or (check.find(self.plural(check, cPhrasePre), self.Dict))or (check.find(self.prefix(check, cPhraseSuf), self.Dict)) or (check.find(self.prefix(check, cPhrasePl), self.Dict))) and (end > 1):
                     Ws2[i] = revPhrase
                     tempWs[i] = fixedPhrase
                     s = i
