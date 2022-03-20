@@ -2781,7 +2781,7 @@ class HebrewDictionary(App):
                 self.algorithm(look, plW)
                 return plW
         if(cPhrasePl.getLen() > 2):
-            if(cPhrasePl.last2() == 'תו') and (not (cPhrasePl.getTense() == 'Perfect')):
+            if(cPhrasePl.last2() == 'תו') and (not (cPhrasePl.getTense() == 'Perfect')) and (not(cPhrasePl.getTense() == 'Imperfect')) and (not(cPhrasePl.getTense() == 'Imperative')) and (not(cPhrasePl.getTense() == 'Infinitive')):
                 if('-' in cPhrasePl.getText()):
                     plW = Word("","")
                     plW.equalTo(cPhrasePl)
