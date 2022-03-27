@@ -2741,6 +2741,26 @@ class HebrewDictionary(App):
         else:
             text = self.wFinal(text)
         return text
+        
+    def plChain(self, text, end):
+        temp = text.replace("-", " ")
+        inputL = temp.split()
+        if len(text) > 1:
+            for i in range(len(inputL)):
+                if (inputL[i][0:2] == end) and (len(inputL[i]) < 3):
+                    return False
+        return True
+        
+    def dlChain(self, text):
+        temp = text.replace("-", " ")
+        inputL = temp.split()
+        if len(text) > 1:
+            for i in range(len(inputL)):
+                if (inputL[i][0:3] == "םיי") and (len(inputL[i]) < 4):
+                    return False
+        return True
+        
+    
             
     def plural(self, look, word):
         if(word.getLen() < 3) or (word.isVerb() == True) or ((word.getPlural() == True)and(not((word.getConstruct() == True)and(word.getSuffix() == True)))) or (word.getDaul() == True) or ((word.getConstruct() == True)and(not((word.getPlural() == True)and(word.getSuffix() == True)))) or (word.getModern == True) or (word.getRL2() == word.last2()) or (word.getRL2() == word.nextToLast() + word.thirdFromLast()) or (word.getPartiVal() == 1):
@@ -2749,15 +2769,16 @@ class HebrewDictionary(App):
         cPhrasePl = Word("","")
         cPhrasePl.equalTo(word)
         cPhrasePl.setText(self.revPhWords(word.getText(), "-"))
-            
         if(cPhrasePl.getLen() > 3):
             if(cPhrasePl.last3() == 'םיי') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')):
                 plW = Word("","")
+                plWt = Word("","")
                 plW.equalTo(cPhrasePl)
                 plW.setText(cPhrasePl.Final(cPhrasePl.getText()[3:]))
                 plW.setNoun()
                 plW.setDaul()
-                if '-' in cPhrasePl.getText():
+                plWt.equalTo(plW)
+                if ('-' in cPhrasePl.getText()) and (self.dlChain(cPhrasePl.getText()) == True):
                     plW.setText(plW.getText().replace("-םיי", " "))
                     plW.setText(self.FinalChain(plW.getText()))
                     plW.setText(plW.getText().replace(" ", "-"))
@@ -2779,6 +2800,8 @@ class HebrewDictionary(App):
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 self.FindHelper(look, plW, self.Dict)
                 self.algorithm(look, plW)
+                if ('-' in cPhrasePl.getText()) and (self.dlChain(cPhrasePl.getText()) == True):
+                    return plW
                 #return plW
         if(cPhrasePl.getLen() > 2):
             if(cPhrasePl.last2() == 'םי') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')):
@@ -2787,7 +2810,7 @@ class HebrewDictionary(App):
                 plW.setText(cPhrasePl.Final(cPhrasePl.getText()[2:]))
                 plW.setNoun()
                 plW.setPlural()
-                if '-' in cPhrasePl.getText():
+                if ('-' in cPhrasePl.getText()) and (self.plChain(cPhrasePl.getText(), 'םי') == True):
                     plW.setText(plW.getText().replace("-םי", " "))
                     plW.setText(self.FinalChain(plW.getText()))
                     plW.setText(plW.getText().replace(" ", "-"))
@@ -2812,7 +2835,7 @@ class HebrewDictionary(App):
                 return plW
         if(cPhrasePl.getLen() > 2):
             if(cPhrasePl.last2() == 'תו') and (not (cPhrasePl.getTense() == 'Perfect')) and (not(cPhrasePl.getTense() == 'Imperfect')) and (not(cPhrasePl.getTense() == 'Imperative')) and (not(cPhrasePl.getTense() == 'Infinitive')):
-                if('-' in cPhrasePl.getText()):
+                if('-' in cPhrasePl.getText()) and (self.plChain(cPhrasePl.getText(), 'תו') == True):
                     plW = Word("","")
                     plW.equalTo(cPhrasePl)
                     plW.setText('ה' + cPhrasePl.getText()[2:])
@@ -2839,6 +2862,7 @@ class HebrewDictionary(App):
                     self.FindHelper(look, singleW, self.Dict)
                     self.algorithm(look, singleW)
                     return singleW
+                    
         constr = Word("","")
         constr.equalTo(self.constr(look, cPhrasePl))
         if not (constr.getText() == ""):
