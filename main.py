@@ -3375,7 +3375,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, irregWh, self.Dict)
             self.FindHelper(look, irregW, self.Dict)
             
-            if (not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')):
+            if (not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')) and (not ((not('ו' in word.getPrixList()))and((word.getTense() == 'Perfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Imperfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.'))) or ('ו' in word.getPrixList()and((word.getTense() == 'Imperfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Perfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.')))))):
                 irregWNN = Word("","")
                 irregWNN.equalTo(irregW)
                 irregWNN.setText('ן' + self.unFinal(irregW.getText()))
@@ -3434,7 +3434,7 @@ class HebrewDictionary(App):
                 hollow.setIrreg()
                 self.FindHelper(look, hollow, self.Dict)
         
-        if (word.isVerb() == True) and (((word.getTense() == "Infinitive")and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList()) - 1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Imperfect")and('ו' in word.getPrixList())and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Perfect")and(not('ו' in word.getPrixList()))and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last())))) and (not ('ן' in word.getSufxList())) and (not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')):
+        if (word.isVerb() == True) and (not ((not('ו' in word.getPrixList()))and((word.getTense() == 'Perfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Imperfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.'))) or ('ו' in word.getPrixList()and((word.getTense() == 'Imperfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Perfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.')))))) and (((word.getTense() == "Infinitive")and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList()) - 1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Imperfect")and('ו' in word.getPrixList())and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Perfect")and(not('ו' in word.getPrixList()))and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last())))) and (not ('ן' in word.getSufxList())) and (not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')):
             irregWN = Word("","")
             irregWN.equalTo(word)
             irregWN.setText('ן' + self.unFinal(word.getText()))
