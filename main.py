@@ -2779,7 +2779,7 @@ class HebrewDictionary(App):
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 self.FindHelper(look, plW, self.Dict)
                 self.algorithm(look, plW)
-                return plW
+                #return plW
         if(cPhrasePl.getLen() > 2):
             if(cPhrasePl.last2() == 'םי') and (cPhrasePl.getSuffix() == False) and (not (cPhrasePl.getTense() == 'Perfect')):
                 plW = Word("","")
