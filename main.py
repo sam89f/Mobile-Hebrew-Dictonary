@@ -1018,23 +1018,35 @@ class HebrewDictionary(App):
             return text
 
     def addAction(self, instance):
-        fixedInput = self.revPhWords(self.Input.text, "-")
+        inputBuff = self.Input.text.replace('-', ' ')
+        words = inputBuff.split()
+        words = self.clean(words)
+        word = '-'.join(words)
+        fixedInput = self.revPhWords(word, "-")
         if fixedInput not in self.Dict:
-            self.Word.Word.text = self.Input.text
+            self.Word.Word.text = word
             self.Word.Definition.text = ""
             self.popup.open()
         
     def editAction(self, instance):
-        fixedInput = self.revPhWords(self.Input.text, "-")
+        inputBuff = self.Input.text.replace('-', ' ')
+        words = inputBuff.split()
+        words = self.clean(words)
+        word = '-'.join(words)
+        fixedInput = self.revPhWords(word, "-")
         if fixedInput in self.Dict:
-            self.Word.Word.text = self.Input.text
+            self.Word.Word.text = word
             definition = ",  ".join(self.Dict[fixedInput]["definition"])
             self.Word.Definition.text = definition
             self.popup.title = "Edit Word"
             self.popup.open()
         
     def removeAction(self, instance):
-        fixedInput = self.revPhWords(self.Input.text, "-")
+        inputBuff = self.Input.text.replace('-', ' ')
+        words = inputBuff.split()
+        words = self.clean(words)
+        word = '-'.join(words)
+        fixedInput = self.revPhWords(word, "-")
         if fixedInput in self.Dict:
             word = fixedInput
             del self.Dict[word]
@@ -1052,20 +1064,18 @@ class HebrewDictionary(App):
         self.popup.dismiss()
     
     def enterAction(self, instance):
-        self.Word.Word.text = self.revPhWords(self.Input.text, "-")
+        inputBuff = self.Input.text.replace('-', ' ')
+        words = inputBuff.split()
+        words = self.clean(words)
+        word = '-'.join(words)
+        self.Word.Word.text = self.revPhWords(word, "-")
         word = {self.Word.Word.text: {"text": self.Word.Word.text, "definition": self.Word.Definition.text.split(",  ")}}
         self.Dict.update(word)
         self.popup.dismiss()
         self.store.put(self.Word.Word.text, text=self.Word.Word.text, definition=self.Word.Definition.text.split(",  "))
         self.Word.Definition.text = ""
-            
-    def findAction(self, instance):
-        if len(self.Input.text) == 0:
-            return
-        self.wText = ''
-        inputBuff = self.Input.text.replace('-', ' ')
-        words = inputBuff.split()
-
+    
+    def clean(self, words):
         for i in range(len(words)):
             for j in range(len(punctuation)):
                 words[i] = words[i].strip(punctuation[j])
@@ -1090,7 +1100,17 @@ class HebrewDictionary(App):
             words[w] = words[w].replace("ֳ", "")
             words[w] = words[w].replace("ֽ", "")
             words[w] = words[w].replace("ֺ", "ו")
+        
+        return words
 
+    
+    def findAction(self, instance):
+        if len(self.Input.text) == 0:
+            return
+        self.wText = ''
+        inputBuff = self.Input.text.replace('-', ' ')
+        words = inputBuff.split()
+        words = self.clean(words)
         words = self.revWords(words)
         words = self.getPhrase(words)
         tk = len(words)
