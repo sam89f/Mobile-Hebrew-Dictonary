@@ -1195,8 +1195,6 @@ class HebrewDictionary(App):
     
         number = ''
         Year = ''
-        sText = text[i].strip('"')
-        sText = sText.strip("'")
         look = SearchWord()
         isVerb = False
         yWord = Word(text[i], "")
@@ -1234,9 +1232,19 @@ class HebrewDictionary(App):
                 word.setVerb()
             look.find(word, self.Dict)
             self.algorithm(look, word)
-            
+
+        sText = word.getText()
+        sText = sText.replace("\'", "")
+        sText = sText.replace('\"', '')
+
+        if(not (word.getText() == sText)):
+            word.setText(sText)
+            look.find(word, self.Dict)
+            self.algorithm(look, word)
+        
         WList = look.getWords()
         WList.sort(key=look.getValue, reverse = True)
+        
         if(len(look.getWords()) > 0):
             for wi in WList:  
                 w = Word("", "")
