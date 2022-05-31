@@ -939,7 +939,7 @@ class AddWord(GridLayout):
         
         self.wLabel = Label(text='[color=3333ff]Word[color=3333ff]', outline_color=black, font_size=50, markup=True)
         self.dLabel = Label(text='[color=3333ff]Diffinition[color=3333ff]', outline_color=black, font_size=50, markup=True)
-        self.Word = TextInput(text="", readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
+        self.Word = TextInput(text="", readonly=True, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         self.Definition= TextInput(text="", readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         
         self.enterB = Button(text='[color=000000]Enter[color=000000]', font_name='data/fonts/times', font_size=50, markup=True)
