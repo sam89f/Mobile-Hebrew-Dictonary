@@ -2608,7 +2608,7 @@ class HebrewDictionary(App):
         return True
     
     def imperative(self, look, word):
-        if(word.getLen() < 3) or (self.imperRules(word, word.last()) == False) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getModern == True) or (word.getRL2() == word.last2()):
+        if(word.getLen() < 2) or (self.imperRules(word, word.last()) == False) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getModern == True) or (word.getRL2() == word.last2()):
             return Word("","")
         
         if word.last() == 'ו':
@@ -2633,7 +2633,7 @@ class HebrewDictionary(App):
             self.FindHelper(look, imperW, self.Dict)
             return imperW
         
-        if(word.getLen() > 3) and (not((word.getRL2() == word.nextToLast() + word.thirdFromLast()))):
+        if(word.getLen() > 2) and (not((word.getRL2() == word.nextToLast() + word.thirdFromLast()))):
             if word.last2() == 'הנ':
                 imperW = Word("","")
                 imperW.equalTo(word)
@@ -3403,6 +3403,15 @@ class HebrewDictionary(App):
             return Word("", "")
             
         if(self.CurrentWord.first() == word.first()) and (word.getTense() == 'Imperative'):
+            if(not (word.last() == 'ה')):
+                irreghW = Word("","")
+                irreghW.equalTo(word)
+                irreghW.setText('ה' + self.unFinal(word.getText()))
+                irreghW.setIrreg()
+                irreghW.setVerb()
+                self.FindHelper(look, irreghW, self.Dict)
+                self.irreg(look, irreghW)
+                    
             if(not (word.first() == 'ה')):
                 irregipW = Word("","")
                 irregipW.equalTo(word)
