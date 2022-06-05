@@ -2620,10 +2620,6 @@ class HebrewDictionary(App):
             imperW.setPerson(3)
             imperW.setGender(0)
             self.FindHelper(look, imperW, self.Dict)
-            imperWh = Word("","")
-            imperWh.equalTo(imperW)
-            imperWh.setText(imperW.getText() + 'ה')
-            self.FindHelper(look, imperWh, self.Dict)
             return imperW
             
         if (word.last() == 'י') and (word.getPlural == False):
@@ -2635,10 +2631,6 @@ class HebrewDictionary(App):
             imperW.setPerson(2)
             imperW.setGender(1)
             self.FindHelper(look, imperW, self.Dict)
-            imperWh = Word("","")
-            imperWh.equalTo(imperW)
-            imperWh.setText(imperW.getText() + 'ה')
-            self.FindHelper(look, imperWh, self.Dict)
             return imperW
         
         if(word.getLen() > 3) and (not((word.getRL2() == word.nextToLast() + word.thirdFromLast()))):
@@ -2653,10 +2645,6 @@ class HebrewDictionary(App):
                 if imperW.nextToLast() == 'ו':
                     imperW.setText(imperW.last() + imperW.getText()[2:])
                 self.FindHelper(look, imperW, self.Dict)
-                imperWh = Word("","")
-                imperWh.equalTo(imperW)
-                imperWh.setText(imperW.getText() + 'ה')
-                self.FindHelper(look, imperWh, self.Dict)
                 return imperW
                 
             if word.nextToLast() == 'ו':
@@ -2668,10 +2656,6 @@ class HebrewDictionary(App):
                 imperW.setPerson(2)
                 imperW.setGender(0)
                 self.FindHelper(look, imperW, self.Dict)
-                imperWh = Word("","")
-                imperWh.equalTo(imperW)
-                imperWh.setText(imperW.getText() + 'ה')
-                self.FindHelper(look, imperWh, self.Dict)
                 return imperW
      
         return Word("", "")
@@ -3418,6 +3402,34 @@ class HebrewDictionary(App):
         if(word.getLen() < 1) or (word.getIrregVal() > 15):
             return Word("", "")
             
+        if(self.CurrentWord.first() == word.first()) and (word.getTense() == 'Imperative'):
+            if(not (word.first() == 'ה')):
+                irregipW = Word("","")
+                irregipW.equalTo(word)
+                irregipW.setText(word.getText() + 'ה')
+                irregipW.setIrreg()
+                irregipW.setVerb()
+                self.FindHelper(look, irregipW, self.Dict)
+                self.irreg(look, irregipW)
+            
+            if(not (word.first() == 'י')):
+                irregipW2 = Word("","")
+                irregipW2.equalTo(word)
+                irregipW2.setText(word.getText() + 'י')
+                irregipW2.setIrreg()
+                irregipW2.setVerb()
+                self.FindHelper(look, irregipW2, self.Dict)
+                self.irreg(look, irregipW2)
+                
+            if(not (word.first() == 'נ')):
+                irregipW3 = Word("","")
+                irregipW3.equalTo(word)
+                irregipW3.setText(word.getText() + 'נ')
+                irregipW3.setIrreg()
+                irregipW3.setVerb()
+                self.FindHelper(look, irregipW3, self.Dict)
+                self.irreg(look, irregipW3)
+            
         if(word.getLen() > 1):
             if ((word.first() == 'ה') or (word.first() == 'י')) and (not(('ו' in word.getPrixList())and(word.getTense() == 'Perfect')and(word.getPerson() == '1st, pl.'))) and (not((not ('ו' in word.getPrixList()))and(word.getTense() == 'Imperfect')and(word.getPerson() == '1st, pl.'))) and (not (word.getVerbform() == 'Niphal')) and (not((word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel') or (word.getPartiVal() == 1))):
                 irregW5 = Word("","")
@@ -3484,32 +3496,7 @@ class HebrewDictionary(App):
                 irreg2.setText(word.last() + 'י' + word.first())
                 irreg2.setIrreg()
                 self.FindHelper(look, irreg2, self.Dict)
-                
-            if(self.CurrentWord.first() == word.first()) and (self.CurrentWord.getLen() == 2):
-                irregipW = Word("","")
-                irregipW.equalTo(word)
-                irregipW.setText(word.getText() + 'ה')
-                irregipW.setIrreg()
-                irregipW.setTense(4)
-                self.FindHelper(look, irregipW, self.Dict)
-                self.irreg(look, irregipW)
-                
-                irregipW2 = Word("","")
-                irregipW2.equalTo(word)
-                irregipW2.setText(word.getText() + 'י')
-                irregipW2.setIrreg()
-                irregipW2.setTense(4)
-                self.FindHelper(look, irregipW2, self.Dict)
-                self.irreg(look, irregipW2)
-                
-                irregipW3 = Word("","")
-                irregipW3.equalTo(word)
-                irregipW3.setText(word.getText() + 'נ')
-                irregipW3.setIrreg()
-                irregipW3.setTense(4)
-                self.FindHelper(look, irregipW3, self.Dict)
-                self.irreg(look, irregipW3)
-                
+            
         if(word.getLen() == 3):
             if (word.nextToLast() == 'ו') or (word.nextToLast() == 'י'):
                 hollow = Word("","")
