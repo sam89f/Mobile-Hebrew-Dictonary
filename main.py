@@ -2620,6 +2620,10 @@ class HebrewDictionary(App):
             imperW.setPerson(3)
             imperW.setGender(0)
             self.FindHelper(look, imperW, self.Dict)
+            imperWh = Word("","")
+            imperWh.equalTo(imperW)
+            imperWh.setText(imperW.getText() + 'ה')
+            self.FindHelper(look, imperWh, self.Dict)
             return imperW
             
         if (word.last() == 'י') and (word.getPlural == False):
@@ -2631,6 +2635,10 @@ class HebrewDictionary(App):
             imperW.setPerson(2)
             imperW.setGender(1)
             self.FindHelper(look, imperW, self.Dict)
+            imperWh = Word("","")
+            imperWh.equalTo(imperW)
+            imperWh.setText(imperW.getText() + 'ה')
+            self.FindHelper(look, imperWh, self.Dict)
             return imperW
         
         if(word.getLen() > 3) and (not((word.getRL2() == word.nextToLast() + word.thirdFromLast()))):
@@ -2645,6 +2653,10 @@ class HebrewDictionary(App):
                 if imperW.nextToLast() == 'ו':
                     imperW.setText(imperW.last() + imperW.getText()[2:])
                 self.FindHelper(look, imperW, self.Dict)
+                imperWh = Word("","")
+                imperWh.equalTo(imperW)
+                imperWh.setText(imperW.getText() + 'ה')
+                self.FindHelper(look, imperWh, self.Dict)
                 return imperW
                 
             if word.nextToLast() == 'ו':
@@ -2656,6 +2668,10 @@ class HebrewDictionary(App):
                 imperW.setPerson(2)
                 imperW.setGender(0)
                 self.FindHelper(look, imperW, self.Dict)
+                imperWh = Word("","")
+                imperWh.equalTo(imperW)
+                imperWh.setText(imperW.getText() + 'ה')
+                self.FindHelper(look, imperWh, self.Dict)
                 return imperW
      
         return Word("", "")
