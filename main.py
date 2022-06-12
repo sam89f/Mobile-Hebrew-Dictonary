@@ -2530,7 +2530,7 @@ class HebrewDictionary(App):
                     futurW.setText(futurW.last() + futurW.getText()[2:])
                 f = self.FindHelper(look, futurW, self.Dict)
                 fh = False
-                if(not (futurW.last() == 'ה')):
+                if(not (futurW.last() == 'ה')) and (not('ה' in word.getSufxList())):
                     futurWh = Word("","")
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -2593,7 +2593,7 @@ class HebrewDictionary(App):
                 f = self.FindHelper(look, futurW, self.Dict)
                 self.algorithm(look, futurW)
                 fh = False
-                if(not (futurW.last() == 'ה')):
+                if(not (futurW.last() == 'ה')) and (not('ה' in word.getSufxList())):
                     futurWh = Word("","")
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -2616,7 +2616,7 @@ class HebrewDictionary(App):
                 f2 = self.FindHelper(look, futurW2, self.Dict)
                 self.algorithm(look, futurW2)
                 fh = False
-                if(not (futurW2.last() == 'ה')):
+                if(not (futurW2.last() == 'ה')) and (not('ה' in word.getSufxList())):
                     futurW2h = Word("","")
                     futurW2h.equalTo(futurW2)
                     futurW2h.setText('ה' + self.unFinal(futurW2.getText()))
@@ -2644,7 +2644,7 @@ class HebrewDictionary(App):
                     futurW.setText(futurW.getText()[0:1] + futurW.getText()[2:])               
                 f = self.FindHelper(look, futurW, self.Dict)
                 fh = False
-                if(not (futurW.last() == 'ה')):
+                if(not (futurW.last() == 'ה')) and (not('ה' in word.getSufxList())):
                     futurWh = Word("","")
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -3480,7 +3480,7 @@ class HebrewDictionary(App):
             return Word("", "")
             
         if(self.CurrentWord.first() == word.first()) and (word.getTense() == 'Imperative'):
-            if(not (word.last() == 'ה')):
+            if(not (word.last() == 'ה')) and (not('ה' in word.getSufxList())):
                 irreghW = Word("","")
                 irreghW.equalTo(word)
                 irreghW.setText('ה' + self.unFinal(word.getText()))
@@ -3618,7 +3618,7 @@ class HebrewDictionary(App):
                     irreg3.setIrreg()
                     self.FindHelper(look, irreg3, self.Dict)
           
-                if(word.nextToLast() == 'י') and (word.getPlural == False) and (not(word.last2()  in suffix)):
+                if(word.nextToLast() == 'י') and (word.getPlural == False) and (not(word.last2() in suffix)):
                     irreg3 = Word("","")
                     irreg3.equalTo(word)
                     irreg3.setText(word.last() + word.getText()[2:])
