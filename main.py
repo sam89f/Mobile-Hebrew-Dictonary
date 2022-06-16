@@ -2696,8 +2696,9 @@ class HebrewDictionary(App):
                 imperW.setTense(4)
                 imperW.setPerson(3)
                 imperW.setGender(1)
-                if imperW.nextToLast() == 'ו':
-                    imperW.setText(imperW.last() + imperW.getText()[2:])
+                if(word.getLen() > 3):
+                    if imperW.nextToLast() == 'ו':
+                        imperW.setText(imperW.last() + imperW.getText()[2:])
                 self.FindHelper(look, imperW, self.Dict)
                 return imperW
                 
