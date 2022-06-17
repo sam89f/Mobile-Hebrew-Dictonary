@@ -85,7 +85,7 @@ class Word:
         self.suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
         self.Gender = ['m.', 'f.', '', '']
         self.Person = ['1st, sg.', '1st, pl.', '2nd, sg.', '2nd, pl.', '3rd, sg.', '3rd, pl.', '']
-        self.tenses = ['Perfect', 'Imperfect', 'Participle', 'Infinitive', 'Imperative', 'Cohortative', '']
+        self.tenses = ['Perfect', 'Imperfect', 'Participle', 'Infinitive', 'Imperative', 'Cohortative', 'Infinitive abs.', '']
         self.parti = {1:'Active', 0:'Passive'}
         self.tenseVals = [4, 4, 4, 4, 4, 4, 1]
         self.verbforms = ['Qal', 'Niphal', 'Piel', 'Pual', 'Hiphil', 'Hophal', 'Hithpeal', 'hishtaphel', 'pilpel', '']
@@ -2718,7 +2718,6 @@ class HebrewDictionary(App):
     def infinitive(self, look, word):
         if(word.getLen() < 3) or (word.isTense() == True) or (word.isNoun() == True) or (word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel'):
             return Word("","")
-        fh = False
         singleW2 = Word("","") 
         if(word.getLen() > 3):
             if((word.first() == 'ל') and (word.last2() == 'תו')):
@@ -2737,7 +2736,7 @@ class HebrewDictionary(App):
                 singleW = Word("","")
                 singleW.equalTo(infW)
                 singleW.setText('ה' + self.unFinal(infW.getText()))
-                fh = self.FindHelper(look, singleW, self.Dict)
+                self.FindHelper(look, singleW, self.Dict)
                 
                 if (infW.getLen() > 1) and (infW.first() == 'ה'):
                     singleW2 = Word("","")
@@ -2763,7 +2762,7 @@ class HebrewDictionary(App):
                 
                 singleW2.equalTo(infW)
                 singleW2.setText('ה' + self.unFinal(infW.getText()))
-                fh = self.FindHelper(look, singleW2, self.Dict)
+                self.FindHelper(look, singleW2, self.Dict)
                 
                 if (infW.getLen() > 1) and (infW.first() == 'ה'):
                     singleW2 = Word("","")
@@ -2781,7 +2780,7 @@ class HebrewDictionary(App):
                         infW.setText(infW.last() + infW.getText()[2:])
             infW.setVerb()
             infW.setTense(3)
-            f = self.FindHelper(look, infW, self.Dict)
+            self.FindHelper(look, infW, self.Dict)
             
             if (infW.getLen() > 1) and (infW.first() == 'ה'):
                 singleW2 = Word("","")
@@ -2791,6 +2790,18 @@ class HebrewDictionary(App):
                 self.irreg(look, singleW2)
                     
             return infW
+            
+        if(word.nextToLast() == 'ו') and (self.num_of_p_roots(word.getText()[2:]) < 3):
+            infW = Word("","")
+            infW.equalTo(word)
+            infW.setText(word.last() + word.getText()[2:])
+            infW.setTense(6)
+            self.FindHelper(look, infW, self.Dict)
+            self.algorithm(look, infW)
+
+            singleW2.equalTo(infW)
+            singleW2.setText('ה' + self.unFinal(infW.getText()))
+            self.FindHelper(look, singleW2, self.Dict)
                 
         return Word("", "")
 
