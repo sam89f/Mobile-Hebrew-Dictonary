@@ -2798,10 +2798,10 @@ class HebrewDictionary(App):
             infW.setTense(6)
             self.FindHelper(look, infW, self.Dict)
             self.algorithm(look, infW)
-
-            singleW2.equalTo(infW)
-            singleW2.setText('ה' + self.unFinal(infW.getText()))
-            self.FindHelper(look, singleW2, self.Dict)
+            if(not (word.last() == 'ה')) and (not('ה' in word.getSufxList())):
+                singleW2.equalTo(infW)
+                singleW2.setText('ה' + self.unFinal(infW.getText()))
+                self.FindHelper(look, singleW2, self.Dict)
                 
         return Word("", "")
 
