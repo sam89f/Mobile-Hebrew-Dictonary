@@ -87,9 +87,9 @@ class Word:
         self.Person = ['1st, sg.', '1st, pl.', '2nd, sg.', '2nd, pl.', '3rd, sg.', '3rd, pl.', '']
         self.tenses = ['Perfect', 'Imperfect', 'Participle', 'Infinitive', 'Imperative', 'Cohortative', 'Infinitive abs.', '']
         self.parti = {1:'Active', 0:'Passive', 2:''}
-        self.tenseVals = [4, 4, 4, 4, 4, 4, 1]
-        self.verbforms = ['Qal', 'Niphal', 'Piel', 'Pual', 'Hiphil', 'Hophal', 'Hithpeal', 'hishtaphel', 'pilpel', '']
-        self.verbformVals = [5, 5, 5, 5, 5, 5, 7, 2, 7, 1]
+        self.tenseVals = [4, 4, 4, 4, 4, 4, 4, 1]
+        self.verbforms = ['Qal', 'Niphal', 'Piel', 'Pual', 'Hiphil', 'Hophal', 'Hithpeal', 'Hishtaphel', 'Pilpel', 'Nithpael', '']
+        self.verbformVals = [5, 5, 5, 5, 5, 5, 7, 2, 7, 5, 1]
         self.gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
         self.millenn = ['ה','ד','ג', 'ב', 'א']
         self.finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
@@ -1503,7 +1503,6 @@ class HebrewDictionary(App):
             self.tense(look, word, True)
         self.verbForms(look, word)
             
-        
         self.irreg(look, word)
                 
     def FindHelper(self, look, w, Dict):
@@ -1513,7 +1512,7 @@ class HebrewDictionary(App):
             return look.find(w, Dict)
     
     def modern(self, look, word):
-        if(word.getLen() < 3) or (word.isTense() == True) or (word.isVerbf() == True):
+        if(word.getLen() < 3) or (word.isTense() == True) or ((word.isVerbf() == True)and(not(word.getVerbform() == 'Qal'))):
             return Word("", "")
                 
             if (word.first2() == 'תת') and (word.getSuffix() == False) and (not(word.getPartiVal() == 1)):
@@ -1618,7 +1617,7 @@ class HebrewDictionary(App):
         return Word("", "")
 
     def tense(self, look, word, alg):
-        if(word.getLen() < 3) or (word.isTense() == True) or ((word.getVerbform() == 'Niphal')or((word.getVerbform() == 'Hophal') and (self.CurrentWord.first() == 'ה'))or((word.getVerbform() == 'Hiphil') and (self.CurrentWord.first() == 'ה'))):
+        if(word.getLen() < 2) or (word.isTense() == True) or ((word.getVerbform() == 'Niphal')or((word.getVerbform() == 'Hophal') and (self.CurrentWord.first() == 'ה'))or((word.getVerbform() == 'Hiphil') and (self.CurrentWord.first() == 'ה'))):
             return False
             
         revCW = self.rev(self.CurrentWord.getText())
@@ -1679,7 +1678,7 @@ class HebrewDictionary(App):
             return False
 
     def verbForms(self, look, word):
-        if (word.getLen() < 2) or (word.isVerbf() == True) or (word.getIrreg() == True):
+        if (word.getLen() < 2) or ((word.isVerbf() == True)and(not(word.getVerbform() == 'Qal'))) or (word.getIrreg() == True):
             return Word("","")
 
         nifalW = Word("","")
@@ -2146,8 +2145,15 @@ class HebrewDictionary(App):
             hitpaelW.setText(word.getText()[:-2] + word.first())
             hitpaelW.setVerbform(6)
             if(word.first() == 'מ'):
-                    self.participle(look, hitpaelW)
+                self.participle(look, hitpaelW)
             return self.smPrefix(look, hitpaelW)
+            
+        if(word.first2() == 'תנ') and (not ((word.Ht == False) or (word.third() == 'ו'))):
+            nithpaelW = Word("","")
+            nithpaelW.equalTo(word)
+            nithpaelW.setText(word.getText()[:-2] + word.first())
+            nithpaelW.setVerbform(9)
+            self.FindHelper(look, nithpaelW, self.Dict)
             
         if((word.first2() == 'תי') or (word.first2() == 'תת' ) or (word.first2() == 'תא') or (word.first2() == 'תנ')) and (not ((word.Ht == False) or (word.third() == 'ו'))):
             hitpaelW = Word("","")
@@ -2742,6 +2748,15 @@ class HebrewDictionary(App):
         if(word.getLen() < 2) or (self.imperRules(word, word.last()) == False) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getModern == True) or (word.getRL2() == word.last2()):
             return Word("","")
         
+        if(word.getLen() < 3) and (self.CurrentWord == word):
+            imperW = Word("","")
+            imperW.equalTo(word)
+            imperW.setVerb()
+            imperW.setTense(4)
+            imperW.setPerson(2)
+            imperW.setGender(0)
+            self.irreg(look, imperW)
+        
         if word.last() == 'ו':
             imperW = Word("","")
             imperW.equalTo(word)
@@ -2753,7 +2768,7 @@ class HebrewDictionary(App):
             self.FindHelper(look, imperW, self.Dict)
             return imperW
             
-        if (word.last() == 'י') and (word.getPlural == False):
+        if (word.last() == 'י') and (word.getPlural() == False):
             imperW = Word("","")
             imperW.equalTo(word)
             imperW.setText(self.Final(word.getText()[1:]))
@@ -2777,6 +2792,12 @@ class HebrewDictionary(App):
                     if imperW.nextToLast() == 'ו':
                         imperW.setText(imperW.last() + imperW.getText()[2:])
                 self.FindHelper(look, imperW, self.Dict)
+                
+                if(not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())):
+                    imperwNun = Word("","")
+                    imperwNun.equalTo(imperW)
+                    imperwNun.setText('ן' + self.unFinal(imperW.getText()))
+                    self.irreg(look, imperwNun)
                 return imperW
                 
             if word.nextToLast() == 'ו':
@@ -2808,8 +2829,11 @@ class HebrewDictionary(App):
                 infW.setVerb()
                 infW.setTense(3)
                 infW.setPlural()
-                self.FindHelper(look, infW, self.Dict)
-                self.algorithm(look, infW)
+                if(infW.getLen() > 1):
+                    self.FindHelper(look, infW, self.Dict)
+                    self.algorithm(look, infW)
+                else:
+                    self.irreg(look, infW)
                 
                 singleW = Word("","")
                 singleW.equalTo(infW)
@@ -2835,12 +2859,16 @@ class HebrewDictionary(App):
                         infW.setText(infW.last() + infW.getText()[2:])
                 infW.setVerb()
                 infW.setTense(3)
-                self.FindHelper(look, infW, self.Dict)
-                self.algorithm(look, infW)
+                if(infW.getLen() > 1):
+                    self.FindHelper(look, infW, self.Dict)
+                    self.algorithm(look, infW)
+                else:
+                    self.irreg(look, infW)
                 
-                singleW2.equalTo(infW)
-                singleW2.setText('ה' + self.unFinal(infW.getText()))
-                self.FindHelper(look, singleW2, self.Dict)
+                singleW = Word("","")
+                singleW.equalTo(infW)
+                singleW.setText('ה' + self.unFinal(infW.getText()))
+                self.FindHelper(look, singleW, self.Dict)
                 
                 if (infW.getLen() > 1) and (infW.first() == 'ה'):
                     singleW2 = Word("","")
@@ -2848,6 +2876,8 @@ class HebrewDictionary(App):
                     singleW2.setText(infW.getText()[:-1] + 'י')
                     self.FindHelper(look, singleW2, self.Dict)
                     self.irreg(look, singleW2)
+                    
+                return singleW
                     
         if(word.first() == 'ל'):
             infW = Word("","")
@@ -2858,7 +2888,11 @@ class HebrewDictionary(App):
                         infW.setText(infW.last() + infW.getText()[2:])
             infW.setVerb()
             infW.setTense(3)
-            self.FindHelper(look, infW, self.Dict)
+            if(infW.getLen() > 1):
+                self.FindHelper(look, infW, self.Dict)
+                self.algorithm(look, infW)
+            else:
+                self.irreg(look, infW)
             
             if (infW.getLen() > 1) and (infW.first() == 'ה'):
                 singleW2 = Word("","")
@@ -3568,7 +3602,7 @@ class HebrewDictionary(App):
                 irreghW.equalTo(word)
                 irreghW.setText('ה' + self.unFinal(word.getText()))
                 irreghW.setIrreg()
-                irreghW.setVerb()
+                #irreghW.setVerb()
                 self.FindHelper(look, irreghW, self.Dict)
                 self.irreg(look, irreghW)
                     
@@ -3577,7 +3611,7 @@ class HebrewDictionary(App):
                 irregipW.equalTo(word)
                 irregipW.setText(word.getText() + 'ה')
                 irregipW.setIrreg()
-                irregipW.setVerb()
+                #irregipW.setVerb()
                 self.FindHelper(look, irregipW, self.Dict)
                 self.irreg(look, irregipW)
             
@@ -3586,7 +3620,7 @@ class HebrewDictionary(App):
                 irregipW2.equalTo(word)
                 irregipW2.setText(word.getText() + 'י')
                 irregipW2.setIrreg()
-                irregipW2.setVerb()
+                #irregipW2.setVerb()
                 self.FindHelper(look, irregipW2, self.Dict)
                 self.irreg(look, irregipW2)
                 
@@ -3595,10 +3629,10 @@ class HebrewDictionary(App):
                 irregipW3.equalTo(word)
                 irregipW3.setText(word.getText() + 'נ')
                 irregipW3.setIrreg()
-                irregipW3.setVerb()
+                #irregipW3.setVerb()
                 self.FindHelper(look, irregipW3, self.Dict)
                 self.irreg(look, irregipW3)
-            
+        
         if(word.getLen() > 1):
             if ((word.first() == 'ה') or (word.first() == 'י')) and (not(('ו' in word.getPrixList())and(word.getTense() == 'Perfect')and(word.getPerson() == '1st, pl.'))) and (not((not ('ו' in word.getPrixList()))and(word.getTense() == 'Imperfect')and(word.getPerson() == '1st, pl.'))) and (not (word.getVerbform() == 'Niphal')) and (not((word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel') or (word.getPartiVal() == 1))):
                 irregW5 = Word("","")
@@ -3631,6 +3665,12 @@ class HebrewDictionary(App):
                     irregW.setText(self.Final(word.getText()[1:]) + 'נ')
             elif ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')):
                 irregW.setText(word.getText() + 'נ')
+                irregWNN = Word("","")
+                irregWNN.equalTo(irregW)
+                if(not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())):
+                    irregWNN.setText('ן' + self.unFinal(irregW.getText()))
+                irregWNN.setIrreg()
+                self.FindHelper(look, irregWNN, self.Dict)
             if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not('ה' in word.getSufxList())) and (not(word.last() == 'ה')) and (not (self.CurrentWord.last() == 'ה')) and (not(('ו' in word.getPrixList())and(word.getTense() == 'Imperfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))) and (not((not ('ו' in word.getPrixList()))and(word.getTense() == 'Perfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))):
                 irregWh = Word("","")
                 irregWh.equalTo(irregW)
@@ -3640,14 +3680,14 @@ class HebrewDictionary(App):
                 self.FindHelper(look, irregWh, self.Dict)
             self.FindHelper(look, irregW, self.Dict)
             
-            if (not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')) and (not(word.getTense() == 'Imperative')and(word.getPerson() == '2nd, pl. f')) and (not ((not('ו' in word.getPrixList()))and((word.getTense() == 'Perfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Imperfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.'))) or ('ו' in word.getPrixList()and((word.getTense() == 'Imperfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Perfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.')))))):
+            if(not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')) and (not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())) and (not(word.getTense() == 'Imperative')and(word.getPerson() == '2nd, pl. f')) and (not ((not('ו' in word.getPrixList()))and((word.getTense() == 'Perfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Imperfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.'))) or ('ו' in word.getPrixList()and((word.getTense() == 'Imperfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Perfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.')))))):
                 irregWNN = Word("","")
                 irregWNN.equalTo(irregW)
                 irregWNN.setText('ן' + self.unFinal(irregW.getText()))
                 irregWNN.setIrreg()
                 self.FindHelper(look, irregWNN, self.Dict)
-                if word.getLen() == 1:
-                    return Word("", "")
+            if word.getLen() == 1:
+                return Word("", "")
         
         if(word.getLen() == 2):
             if(not(word.getTense() == 'Participle')) and (not(word.getVerbform() == 'Pual')):
@@ -3665,6 +3705,13 @@ class HebrewDictionary(App):
                 irreg2.setText(word.last() + 'י' + word.first())
                 irreg2.setIrreg()
                 self.FindHelper(look, irreg2, self.Dict)
+                
+            if(word.isVerb() == True) and (not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())) and (not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')):
+                irregWN = Word("","")
+                irregWN.equalTo(word)
+                irregWN.setText('ן' + self.unFinal(word.getText()))
+                irregWN.setIrreg()
+                self.FindHelper(look, irregWN, self.Dict) 
             
         if(word.getLen() == 3):
             if (word.nextToLast() == 'ו') or (word.nextToLast() == 'י'):
@@ -3674,13 +3721,12 @@ class HebrewDictionary(App):
                 hollow.setIrreg()
                 self.FindHelper(look, hollow, self.Dict)
         
-        if (word.isVerb() == True) and (not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())) and (not(word.getTense() == 'Imperative')and(word.getPerson() == '2nd, pl. f')) and (not ((not('ו' in word.getPrixList()))and((word.getTense() == 'Perfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Imperfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.'))) or ('ו' in word.getPrixList()and((word.getTense() == 'Imperfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Perfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.')))))) and (((word.getTense() == "Infinitive")and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList()) - 1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Imperfect")and('ו' in word.getPrixList())and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Perfect")and(not('ו' in word.getPrixList()))and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last())))) and (not ('ן' in word.getSufxList())) and (not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')):
+        if(word.isVerb() == True) and (not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())) and (not(word.getTense() == 'Imperative')and(word.getPerson() == '2nd, pl. f')) and (not ((not('ו' in word.getPrixList()))and((word.getTense() == 'Perfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Imperfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.'))) or ('ו' in word.getPrixList()and((word.getTense() == 'Imperfect')and((word.getPerson() == '1st, pl.')or(word.getPerson() == '2nd, pl. f')) or (word.getTense() == 'Perfect')and((word.getPerson() == '2nd, pl. f.')or(word.getPerson() == '3rd, pl. f.')))))) and (((word.getTense() == "Infinitive")and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList()) - 1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Imperfect")and('ו' in word.getPrixList())and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last()))) or ((word.getTense() == "Perfect")and(not('ו' in word.getPrixList()))and(word.getLen() < self.CurrentWord.getLen()-len(word.getPrixList())-1)and(not(self.CurrentWord.last() == word.last())))) and (not ('ן' in word.getSufxList())) and (not(word.last() == 'ן')) and (not(self.CurrentWord.last() == 'ן')):
             irregWN = Word("","")
             irregWN.equalTo(word)
             irregWN.setText('ן' + self.unFinal(word.getText()))
             irregWN.setIrreg()
             self.FindHelper(look, irregWN, self.Dict)
-            #return Word("", "")
             
         if(word.getLen() > 2):
             irregWnun2 = Word("","")
@@ -3701,7 +3747,7 @@ class HebrewDictionary(App):
                     irreg3.setIrreg()
                     self.FindHelper(look, irreg3, self.Dict)
           
-                if(word.nextToLast() == 'י') and (word.getPlural == False) and (not(word.last2() in suffix)):
+                if(word.nextToLast() == 'י') and (word.getPlural() == False) and (not(word.last2() in suffix)):
                     irreg3 = Word("","")
                     irreg3.equalTo(word)
                     irreg3.setText(word.last() + word.getText()[2:])
