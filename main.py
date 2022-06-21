@@ -2909,24 +2909,30 @@ class HebrewDictionary(App):
     def infinitiveAbs(self, look, word):
         if(word.getLen() < 3) or (word.isTense() == True):
             return Word("","")
-    
-        if(word.isVerbf() == False) or (word.getVerbform() == 'Qal') or (word.getVerbform() == 'Niphal') or (word.getVerbform() == 'Piel') or (word.getVerbform() == 'Pual'):
-            if(word.nextToLast() == 'ו') and (self.num_of_p_roots(word.getText()[2:]) < 3):
-                infW = Word("","")
-                infW.equalTo(word)
-                infW.setText(word.last() + word.getText()[2:])
-                infW.setTense(6)
-                self.FindHelper(look, infW, self.Dict)
-                self.algorithm(look, infW)
-                if(not (word.last() == 'ה')) and (not('ה' in word.getSufxList())):
-                    singleW2 = Word("","") 
-                    singleW2.equalTo(infW)
-                    singleW2.setText('ה' + self.unFinal(infW.getText()))
-                    self.FindHelper(look, singleW2, self.Dict)
-                    return singleW2
+        
+        infWp = Word("","")
+        infWp.equalTo(word)
+        if(word.last2() == 'תו'):
+            infWp.setText(self.Final(word.getText()[2:]))
+            infWp.setPlural()
+        if(infWp.getLen() > 2):
+            if(infWp.isVerbf() == False) or (infWp.getVerbform() == 'Qal') or (infWp.getVerbform() == 'Niphal') or (infWp.getVerbform() == 'Piel') or (infWp.getVerbform() == 'Pual'):
+                if(infWp.nextToLast() == 'ו') and (self.num_of_p_roots(infWp.getText()[2:]) < 3):
+                    infW = Word("","")
+                    infW.equalTo(infWp)
+                    infW.setText(infWp.last() + infWp.getText()[2:])
+                    infW.setTense(6)
+                    self.FindHelper(look, infW, self.Dict)
+                    self.algorithm(look, infW)
+                    if(not (infWp.last() == 'ה')) and (not('ה' in infWp.getSufxList())):
+                        singleW2 = Word("","") 
+                        singleW2.equalTo(infW)
+                        singleW2.setText('ה' + self.unFinal(infW.getText()))
+                        self.FindHelper(look, singleW2, self.Dict)
+                        return singleW2
+                    
+                    return infW
                 
-                return infW
-            
         return Word("", "")
 
     def cohortative(self, look, word):
