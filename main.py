@@ -2112,14 +2112,14 @@ class HebrewDictionary(App):
         if(len(word.getText()) < 4) or (word.getPartiVal() == 1):
             return Word("","")
         
-        if((word.nextToFirst() == "ש") or (word.nextToFirst() == "ס") or (word.nextToFirst() == "צ")) and (word.first() in prefixL):
+        if((word.nextToFirst() == "ש") or (word.nextToFirst() == "ס") or (word.nextToFirst() == "צ")) and ((word.first() in prefixL)or(word.first() == 'א')or(word.first() == 'י')or(word.first() == 'נ')or(word.first() == 'ת')):
             metaW = Word("","")
             metaW.equalTo(self.metathesis(look, word))
             if not (metaW.getText() == ""):
                 return self.hitpael(look, metaW)
                
         #This loop checks for any possible assimilation and undoes it.
-        if((word.nextToFirst() == "ט") or (word.nextToFirst() == "ד") or (word.nextToFirst() == "נ") or (word.nextToFirst() == "ס")) and (word.first() in prefixL):
+        if((word.nextToFirst() == "ט") or (word.nextToFirst() == "ד") or (word.nextToFirst() == "נ") or (word.nextToFirst() == "ס")) and ((word.first() in prefixL)or(word.first() == 'א')or(word.first() == 'י')or(word.first() == 'נ')or(word.first() == 'ת')):
             if(word.nextToFirst() == "ט"):
                 if(word.third() == "צ"):
                     tempW = Word("","")
