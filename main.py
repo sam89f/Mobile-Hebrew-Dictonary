@@ -2152,7 +2152,7 @@ class HebrewDictionary(App):
         if(word.first2() == 'תנ') and (not ((word.Ht == False) or (word.third() == 'ו'))):
             nithpaelW = Word("","")
             nithpaelW.equalTo(word)
-            nithpaelW.setText(word.getText()[:-2] + word.first())
+            nithpaelW.setText(word.getText()[:-2])
             nithpaelW.setVerbform(9)
             self.FindHelper(look, nithpaelW, self.Dict)
             
