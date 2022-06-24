@@ -61,6 +61,7 @@ class Word:
         self.definition = d
         self.value = 0
         self.prefix = 0
+        self.prefactor = 5
         self.r_L2 = ""
         self.preW = []
         self.sufW = []
@@ -68,6 +69,7 @@ class Word:
         self.partiW = -1
         self.suffix1 = 0
         self.suffix2 = 0
+        self.suffactor = 5
         self.irreg = 0
         self.Ht = True
         self.modern = 0
@@ -87,9 +89,9 @@ class Word:
         self.Person = ['1st, sg.', '1st, pl.', '2nd, sg.', '2nd, pl.', '3rd, sg.', '3rd, pl.', '']
         self.tenses = ['Perfect', 'Imperfect', 'Participle', 'Infinitive', 'Imperative', 'Cohortative', 'Infinitive abs.', '']
         self.parti = {1:'Active', 0:'Passive', 2:''}
-        self.tenseVals = [4, 4, 4, 4, 4, 4, 4, 1]
+        self.tenseVals = [1, 1, 5, 5, 5, 5, 8, 1]
         self.verbforms = ['Qal', 'Niphal', 'Piel', 'Pual', 'Hiphil', 'Hophal', 'Hithpeal', 'Hishtaphel', 'Pilpel', 'Nithpael', '']
-        self.verbformVals = [5, 5, 5, 5, 5, 5, 7, 2, 7, 5, 1]
+        self.verbformVals = [1, 5, 5, 5, 5, 5, 5, 8, 8, 3, 1]
         self.gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
         self.millenn = ['ה','ד','ג', 'ב', 'א']
         self.finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
@@ -559,7 +561,7 @@ class Word:
             return text
 
     def setPrefix(self):
-        self.prefix += 3
+        self.prefix += self.prefactor
         
     def setRL2(self, L2):
         self.r_L2 = L2
@@ -568,10 +570,10 @@ class Word:
         self.prefix = 0
         
     def decPrefix(self):
-        self.prefix = self.prefix -3
+        self.prefix = self.prefix -self.prefactor
         
     def decSuffix1(self):
-        self.suffix1 = self.suffix1 -5
+        self.suffix1 = self.suffix1 -self.suffactor
         
     def setVerb(self):
         self.Verb = True
@@ -588,10 +590,10 @@ class Word:
         self.Noun = False
     
     def setSuffix1(self):
-        self.suffix1 += 5
+        self.suffix1 += self.suffactor
         
     def setSuffix2(self):
-        self.suffix2 += 6
+        self.suffix2 += (self.suffactor +2) 
           
     def setIrreg(self):
         self.irreg += 9
@@ -783,8 +785,14 @@ class SearchWord:
             if w.getText() == self.getWords()[i].getText():
                 return i
                 
+    def findText(self, w, Dict):
+        for word in self.getWords():
+            if (w.getText() == word.getText()):
+                return True
+        return False
+                
     def find(self, w, Dict):
-        if  w in self.getWords():
+        if w in self.getWords():
             index = self.indexWords(w)
             if self.Words[index].getValue() < w.getValue():
                 self.Words[index].setValue(w.getValue())
@@ -1506,6 +1514,10 @@ class HebrewDictionary(App):
         self.irreg(look, word)
                 
     def FindHelper(self, look, w, Dict):
+
+        if((w.getText() == self.CurrentWord.getText()) and (look.findText(w, Dict) == True)):
+            return False
+                
         if ((w.getLen() < 3) and ((w.getTense() == 'Participle')or(w.getVerbform() == 'Hiphil')or(w.getVerbform() == 'Pual')or(w.getVerbform() == 'Piel'))):
             return False
         else:
