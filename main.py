@@ -2137,8 +2137,9 @@ class HebrewDictionary(App):
             hitpaelW.equalTo(word)
             hitpaelW.setText(word.getText()[:-2])
             hitpaelW.setVerbform(6)
-            self.FindHelper(look, hitpaelW, self.Dict)
-            return hitpaelW
+            if(not(hitpaelW.getText() == self.CurrentWord.getText())):
+                self.FindHelper(look, hitpaelW, self.Dict)
+                return hitpaelW
             
         if(word.nextToFirst() == 'ת') and (word.first() in prefixL) and (not ((word.Ht == False) or (word.third() == 'ו'))):
             hitpaelW = Word("","")
@@ -2154,7 +2155,8 @@ class HebrewDictionary(App):
             nithpaelW.equalTo(word)
             nithpaelW.setText(word.getText()[:-2])
             nithpaelW.setVerbform(9)
-            self.FindHelper(look, nithpaelW, self.Dict)
+            if(not(nithpaelW.getText() == self.CurrentWord.getText())):
+                self.FindHelper(look, nithpaelW, self.Dict)
             
         if((word.first2() == 'תי') or (word.first2() == 'תת' ) or (word.first2() == 'תא') or (word.first2() == 'תנ')) and (not ((word.Ht == False) or (word.third() == 'ו'))):
             hitpaelW = Word("","")
@@ -3608,17 +3610,16 @@ class HebrewDictionary(App):
                 irreghW = Word("","")
                 irreghW.equalTo(word)
                 irreghW.setText('ה' + self.unFinal(word.getText()))
-                irreghW.setIrreg()
-                #irreghW.setVerb()
-                self.FindHelper(look, irreghW, self.Dict)
-                self.irreg(look, irreghW)
+                if(not(irreghW.getText() == self.CurrentWord.getText())):
+                    irreghW.setIrreg()
+                    self.FindHelper(look, irreghW, self.Dict)
+                    self.irreg(look, irreghW)
                     
             if(not (word.first() == 'ה')) and (not(word.getVerbform() == 'Piel')):
                 irregipW = Word("","")
                 irregipW.equalTo(word)
                 irregipW.setText(word.getText() + 'ה')
                 irregipW.setIrreg()
-                #irregipW.setVerb()
                 self.FindHelper(look, irregipW, self.Dict)
                 self.irreg(look, irregipW)
             
@@ -3627,7 +3628,6 @@ class HebrewDictionary(App):
                 irregipW2.equalTo(word)
                 irregipW2.setText(word.getText() + 'י')
                 irregipW2.setIrreg()
-                #irregipW2.setVerb()
                 self.FindHelper(look, irregipW2, self.Dict)
                 self.irreg(look, irregipW2)
                 
