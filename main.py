@@ -2796,7 +2796,9 @@ class HebrewDictionary(App):
                 if(imperW.getLen() > 3):
                     if imperW.nextToLast() == 'ו':
                         imperW.setText(imperW.last() + imperW.getText()[2:])
-                self.FindHelper(look, imperW, self.Dict)
+                        self.FindHelper(look, imperW, self.Dict)
+                else:
+                    self.FindHelper(look, imperW, self.Dict)
                 
                 if(not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())):
                     imperwNun = Word("","")
