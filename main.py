@@ -2483,7 +2483,7 @@ class HebrewDictionary(App):
                 else:
                     futurW.setTense(1)
                 futurW.setPerson(2)
-                futurW.setGender(1)
+                futurW.setGender(0)
                 
                 if(futurW.getLen() > 1):
                     if(futurW.nextToLast() == 'ו') and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')):
