@@ -2482,7 +2482,7 @@ class HebrewDictionary(App):
                     futurW.setTense(0)
                 else:
                     futurW.setTense(1)
-                futurW.setPerson(2)
+                futurW.setPerson(5)
                 futurW.setGender(0)
                 
                 if(futurW.getLen() > 1):
