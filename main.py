@@ -988,11 +988,8 @@ class HebrewDictionary(App):
         self.UserInterface = GridLayout(cols=1)
         self.MainPanal = GridLayout(cols=1)
         self.Input = TextInput(readonly=False, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=Display_Size)
-<<<<<<< HEAD
         self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=50, markup=True)
-=======
-        self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
->>>>>>> main
+
         self.findB.bind(on_press=self.findAction)
         self.addB = Button(text='AddW', border=[1,1,1,1], font_name='data/fonts/times', font_size=50, markup=True)
         self.addB.bind(on_press=self.addAction)
@@ -1374,11 +1371,7 @@ class HebrewDictionary(App):
             self.wText += '\n'
             
         if k > 1:
-<<<<<<< HEAD
             self.wText += '\t\t'*(n+1) + "-"*177
-=======
-            self.wText += '\t\t'*(n+1) + "-"*181
->>>>>>> main
             self.wText += '\n'
             Lwords = []
             t1 = text[i].split('-')[0]
@@ -1390,20 +1383,12 @@ class HebrewDictionary(App):
                 if (len(Lwords[lw]) == 1) and (k == 2):
                     self.wText += '\t\t'*(n+1) + Lwords[lw] + " " + "(prefix)"
                     if not(lw == len(Lwords)-1):
-<<<<<<< HEAD
                         self.wText += '\t\t'*(n+1) + "-"*177
-=======
-                        self.wText += '\t\t'*(n+1) + "-"*181
->>>>>>> main
                     self.wText += '\n'
                 else:
                     self.getWList(Lwords, lw, len(Lwords), len(Lwords[lw].split('-')), n+1)
                     if not(lw == len(Lwords)-1):
-<<<<<<< HEAD
                         self.wText += '\t\t'*(n+1) + "-"*177
-=======
-                        self.wText += '\t\t'*(n+1) + "-"*181
->>>>>>> main
                         self.wText += '\n'
             
         #self.wText += "*********" + self.CurrentWord.last2() + "*********"
