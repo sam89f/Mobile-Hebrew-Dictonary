@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 #Hebrew Dictionary mobile aplication python file (Phone Version)
-=======
-#Hebrew Dictionary mobile aplication python file (Tablet Version)
->>>>>>> main
 #==============================================================================
 
 #This file displays the UI, and the main fuction buttons and input text field, while the .kv file
