@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #Hebrew Dictionary mobile aplication python file (Phone Version)
+=======
+#Hebrew Dictionary mobile aplication python file (Tablet Version)
+>>>>>>> main
 #==============================================================================
 
 #This file displays the UI, and the main fuction buttons and input text field, while the .kv file
@@ -83,7 +87,7 @@ class Word:
         self.Verb = False
         self.Noun = False
         self.prefixD = {"תת":"sub", "ה":"the", "ו":"and", "ב":"in", "מ":"from", "ל":"to", "כ":"as", "ש":"which"}
-        self.suffix = {"ןהי":"their/them(f)", "ןה":"their/them(f)", "ן":"their/them(f)", "םהי":"their/them(m)", "םה":"their/them(m)", "ם":"their/them(m)", "הי":"her", "ה":"her", "הנ":"her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you(pl. f)", "ןכ":"your/you(pl. f)", "םכי":"your/you(pl.)", "םכ":"your/you(pl.)", "ךי":"you/your(m)", "ך":"you/your(m)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
+        self.suffix = {"ןהי":"their/them(f.)", "ןה":"their/them(f.)", "ן":"their/them(f.)", "םהי":"their/them(m.)", "םה":"their/them(m.)", "ם":"their/them(m.)", "הי":"her", "ה":"her", "הנ":"her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you(pl. f.)", "ןכ":"your/you(pl. f.)", "םכי":"your/you(pl.)", "םכ":"your/you(pl.)", "ךי":"you/your(m.)", "ך":"you/your(m.)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
         self.suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
         self.Gender = ['m.', 'f.', '', '']
         self.Person = ['1st, sg.', '1st, pl.', '2nd, sg.', '2nd, pl.', '3rd, sg.', '3rd, pl.', '']
@@ -988,7 +992,11 @@ class HebrewDictionary(App):
         self.UserInterface = GridLayout(cols=1)
         self.MainPanal = GridLayout(cols=1)
         self.Input = TextInput(readonly=False, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=Display_Size)
+<<<<<<< HEAD
         self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=50, markup=True)
+=======
+        self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+>>>>>>> main
         self.findB.bind(on_press=self.findAction)
         self.addB = Button(text='AddW', border=[1,1,1,1], font_name='data/fonts/times', font_size=50, markup=True)
         self.addB.bind(on_press=self.addAction)
@@ -1370,7 +1378,11 @@ class HebrewDictionary(App):
             self.wText += '\n'
             
         if k > 1:
+<<<<<<< HEAD
             self.wText += '\t\t'*(n+1) + "-"*177
+=======
+            self.wText += '\t\t'*(n+1) + "-"*181
+>>>>>>> main
             self.wText += '\n'
             Lwords = []
             t1 = text[i].split('-')[0]
@@ -1382,12 +1394,20 @@ class HebrewDictionary(App):
                 if (len(Lwords[lw]) == 1) and (k == 2):
                     self.wText += '\t\t'*(n+1) + Lwords[lw] + " " + "(prefix)"
                     if not(lw == len(Lwords)-1):
+<<<<<<< HEAD
                         self.wText += '\t\t'*(n+1) + "-"*177
+=======
+                        self.wText += '\t\t'*(n+1) + "-"*181
+>>>>>>> main
                     self.wText += '\n'
                 else:
                     self.getWList(Lwords, lw, len(Lwords), len(Lwords[lw].split('-')), n+1)
                     if not(lw == len(Lwords)-1):
+<<<<<<< HEAD
                         self.wText += '\t\t'*(n+1) + "-"*177
+=======
+                        self.wText += '\t\t'*(n+1) + "-"*181
+>>>>>>> main
                         self.wText += '\n'
             
         #self.wText += "*********" + self.CurrentWord.last2() + "*********"
