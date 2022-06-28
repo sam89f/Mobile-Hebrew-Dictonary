@@ -3605,6 +3605,8 @@ class HebrewDictionary(App):
             constW = Word("","")
             constW.equalTo(word)
             constW.setText(self.Final(word.getText()[1:]))
+            constW.setNoun()
+            constW.setConstruct()
             self.FindHelper(look, constW, self.Dict)
             self.irreg(look, constW)
             constW2 = Word("", "")
