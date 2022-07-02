@@ -3149,10 +3149,21 @@ class HebrewDictionary(App):
                     singleW = Word("","")
                     singleW.equalTo(plW)
                     singleW.setText('ה' + self.unFinal(plW.getText()))
-                    singleW.setPlural()
                     self.FindHelper(look, singleW, self.Dict)
                     self.algorithm(look, singleW)
-                    return singleW
+                    if(plW.last() == 'י'):
+                        plW2 = Word("","")
+                        plW2.equalTo(plW)
+                        plW2.setText(cPhrasePl.Final(plW.getText()[1:]))
+                        plW2.setText(self.revPhWords(plW2.getText(), "-"))
+                        self.FindHelper(look, plW2, self.Dict)
+                        self.algorithm(look, plW2)
+                        singleW2 = Word("","")
+                        singleW2.equalTo(plW2)
+                        singleW2.setText('ה' + self.unFinal(plW2.getText()))
+                        self.FindHelper(look, singleW2, self.Dict)
+                        self.algorithm(look, singleW2)
+                        return singleW2
                     
         constr = Word("","")
         constr.equalTo(self.constr(look, cPhrasePl))
