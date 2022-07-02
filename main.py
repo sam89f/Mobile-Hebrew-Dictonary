@@ -61,6 +61,10 @@ class Word:
         self.definition = d
         self.value = 0
         self.prefix = 0
+        self.heyVal = 2
+        self.lamedVal = 3
+        self.betVal = 2
+        self.vavVal = 1
         self.prefactor = 5
         self.r_L2 = ""
         self.preW = []
@@ -91,7 +95,7 @@ class Word:
         self.parti = {1:'Active', 0:'Passive', 2:''}
         self.tenseVals = [1, 1, 5, 5, 5, 5, 8, 1]
         self.verbforms = ['Qal', 'Niphal', 'Piel', 'Pual', 'Hiphil', 'Hophal', 'Hithpeal', 'Hishtaphel', 'Pilpel', 'Nithpael', '']
-        self.verbformVals = [1, 5, 5, 5, 5, 5, 5, 8, 8, 3, 1]
+        self.verbformVals = [1, 5, 5, 5, 5, 5, 6, 8, 8, 3, 1]
         self.gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
         self.millenn = ['ה','ד','ג', 'ב', 'א']
         self.finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
@@ -560,6 +564,9 @@ class Word:
         else:
             return text
 
+    def setPrefixN(self, n):
+        self.prefix += n
+    
     def setPrefix(self):
         self.prefix += self.prefactor
         
@@ -3225,7 +3232,16 @@ class HebrewDictionary(App):
             preW = Word("","")
             preW.equalTo(cPhrasePre)
             preW.setText(cPhrasePre.getText()[:-1])
-            preW.setPrefix()
+            if(cPhrasePre.first() == "ה"):
+                preW.setPrefixN(preW.heyVal)
+            elif(cPhrasePre.first() == 'ל'):
+                preW.setPrefixN(preW.lamedVal)
+            elif(cPhrasePre.first() == 'ב'):
+                preW.setPrefixN(preW.betVal)
+            elif(cPhrasePre.first() == 'ו'):
+                preW.setPrefixN(preW.vavVal)
+            else:
+                preW.setPrefix()
             preW.addPre(cPhrasePre.first())
             preW.setText(self.revPhWords(preW.getText(), "-"))
             
@@ -3259,7 +3275,7 @@ class HebrewDictionary(App):
             temp2.equalTo(temp1)
             temp2.setText(temp1.getText().replace("ה-", "-", i))
             if(not('ה' in temp2.getPrixList())):
-                temp2.setPrefix()
+                temp2.setPrefixN(temp2.heyVal)
                 temp2.addPre('ה')
                 
             temp2.setText(self.revPhWords(temp2.getText(), "-"))
@@ -3281,7 +3297,16 @@ class HebrewDictionary(App):
                     preW.setNoun()
                 else:
                     return word
-            preW.setPrefix()
+            if(word.first() == 'ה'):
+                preW.setPrefixN(preW.heyVal)
+            elif(word.first() == 'ל'):
+                preW.setPrefixN(preW.lamedVal)
+            elif(word.first() == 'ב'):
+                preW.setPrefixN(preW.betVal)
+            elif(word.first() == 'ו'):
+                preW.setPrefixN(preW.vavVal)
+            else:
+                preW.setPrefix()
             preW.addPre(word.first())
             self.FindHelper(look, preW, self.Dict)
             self.algorithm(look, preW)
