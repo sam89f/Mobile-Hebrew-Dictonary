@@ -626,7 +626,7 @@ class Word:
         self.modern += 6
         
     def setPlural(self):
-        self.plural += 1
+        self.plural += 2
         
     def resetPlural(self):
         self.plural = 0
