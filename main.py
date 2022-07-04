@@ -1249,8 +1249,7 @@ class HebrewDictionary(App):
                     if (preNum.isNumb() == True) and (not preNum.getText() == ""):
                         number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
             if not(word.getText() == "הוהי"):  
-            
-                if not ((not (((text[i+1] in Obj) or (text[i+1] == 'תא')) and (self.tense(look, word, False) == True))) or (word.getText() == "הוהי")):
+                if(((text[i+1] in Obj) or (text[i+1] == 'תא')) and (self.tense(look, word, False) == True)):
                     isVerb = True
         else:
             if word.isNumb() == True:
