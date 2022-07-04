@@ -1278,6 +1278,7 @@ class HebrewDictionary(App):
 
         if(not (word.getText() == sText)):
             word.setText(sText)
+            self.CurrentWord.equalTo(word)
             look.find(word, self.Dict)
             if not(word.getText() == "הוהי"):
                 self.algorithm(look, word)
