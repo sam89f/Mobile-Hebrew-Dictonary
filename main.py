@@ -1234,6 +1234,7 @@ class HebrewDictionary(App):
         Year = ''
         look = SearchWord()
         isVerb = False
+        isNoun = False
         yWord = Word(text[i], "")
         if yWord.isYear() == True:
             Year = 'Year: ' + str(yWord.getYear())
@@ -1248,7 +1249,11 @@ class HebrewDictionary(App):
                 if preNum.getLen() > 0:
                     if (preNum.isNumb() == True) and (not preNum.getText() == ""):
                         number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
-            if not(word.getText() == "הוהי"):  
+            
+            if i > 0:
+                if((text[i-1] == 'תא') or (text[i-1] == 'תאו')):
+                    isNoun = True
+            if(not(word.getText() == "הוהי")) and (isNoun == False):  
                 if(((text[i+1] in Obj) or (text[i+1] == 'תא')) and (self.tense(look, word, False) == True)):
                     isVerb = True
         else:
@@ -1266,21 +1271,24 @@ class HebrewDictionary(App):
             word.setNoun()
             look.find(word, self.Dict)
         else:
+            if isNoun == True:
+                word.setNoun()
             if isVerb == True:
-                word.setVerb()
+                word.setVerb() 
+                
             look.find(word, self.Dict)
             self.algorithm(look, word)
 
-        sText = word.getText()
-        sText = sText.replace("\'", "")
-        sText = sText.replace('\"', '')
+            sText = word.getText()
+            sText = sText.replace("\'", "")
+            sText = sText.replace('\"', '')
 
-        if(not (word.getText() == sText)):
-            word.setText(sText)
-            self.CurrentWord.equalTo(word)
-            look.find(word, self.Dict)
-            if not(word.getText() == "הוהי"):
-                self.algorithm(look, word)
+            if(not (word.getText() == sText)):
+                word.setText(sText)
+                self.CurrentWord.equalTo(word)
+                look.find(word, self.Dict)
+                if not(word.getText() == "הוהי"):
+                    self.algorithm(look, word)
         
         WList = look.getWords()
         WList.sort(key=look.getValue, reverse = True)
