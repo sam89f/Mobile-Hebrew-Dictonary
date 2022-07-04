@@ -1234,6 +1234,7 @@ class HebrewDictionary(App):
         number = ''
         Year = ''
         look = SearchWord()
+        check = SearchWord()
         isVerb = False
         isNoun = False
         yWord = Word(text[i], "")
@@ -1242,11 +1243,10 @@ class HebrewDictionary(App):
         word = Word(text[i], "")
         self.CurrentWord.equalTo(word)
         if(tk > i+1):
-            #if (not (((text[i+1] in Obj) or (text[i+1] == 'תא')) and (self.tense(look, word, False) == True))) or (word.getText() == "הוהי"):
             if word.isNumb() == True:
                 number = '#: ' + str(word.getGemontria()) + '; '
-            elif not(word.getText() == "הוהי"):
-                preNum = self.smPrefix(look, word)
+            else:
+                preNum = self.smPrefix(check, word)
                 if preNum.getLen() > 0:
                     if (preNum.isNumb() == True) and (not preNum.getText() == ""):
                         number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
@@ -1255,13 +1255,13 @@ class HebrewDictionary(App):
                 if((text[i-1] == 'תא') or (text[i-1] == 'תאו')):
                     isNoun = True
             if(not(word.getText() == "הוהי")) and (isNoun == False):  
-                if(((text[i+1] in Obj) or (text[i+1] == 'תא')) and (self.tense(look, word, False) == True)):
+                if(((text[i+1] in Obj) or (text[i+1] == 'תא')) and (self.tense(check, word, False) == True)):
                     isVerb = True
         else:
             if word.isNumb() == True:
                 number = '#: ' + str(word.getGemontria()) + '; '
             else:
-                preNum = self.smPrefix(look, word)
+                preNum = self.smPrefix(check, word)
                 if preNum.getLen() > 0:
                     if (preNum.isNumb() == True) and (not preNum.getText() == ""):
                         number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
