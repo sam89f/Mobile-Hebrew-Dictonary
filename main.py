@@ -1235,6 +1235,7 @@ class HebrewDictionary(App):
         Year = ''
         look = SearchWord()
         check = SearchWord()
+        checkV = SearchWord()
         isVerb = False
         isNoun = False
         yWord = Word(text[i], "")
@@ -1242,29 +1243,30 @@ class HebrewDictionary(App):
             Year = 'Year: ' + str(yWord.getYear())
         word = Word(text[i], "")
         self.CurrentWord.equalTo(word)
-        if(tk > i+1):
-            if word.isNumb() == True:
-                number = '#: ' + str(word.getGemontria()) + '; '
-            else:
-                preNum = self.smPrefix(check, word)
-                if preNum.getLen() > 0:
-                    if (preNum.isNumb() == True) and (not preNum.getText() == ""):
-                        number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
-            
-            if i > 0:
-                if((text[i-1] == 'תא') or (text[i-1] == 'תאו')):
-                    isNoun = True
-            if(not(word.getText() == "הוהי")) and (isNoun == False):  
-                if(((text[i+1] in Obj) or (text[i+1] == 'תא')) and (self.tense(check, word, False) == True)):
-                    isVerb = True
+        
+        if word.isNumb() == True:
+            number = '#: ' + str(word.getGemontria()) + '; '
         else:
-            if word.isNumb() == True:
-                number = '#: ' + str(word.getGemontria()) + '; '
-            else:
-                preNum = self.smPrefix(check, word)
-                if preNum.getLen() > 0:
-                    if (preNum.isNumb() == True) and (not preNum.getText() == ""):
-                        number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
+            preNum = self.smPrefix(check, word)
+            if preNum.getLen() > 0:
+                if (preNum.isNumb() == True) and (not preNum.getText() == ""):
+                    number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
+        
+        if i > 0:
+            if((text[i-1] == 'תא') or (text[i-1] == 'תאו')):
+                isNoun = True
+        if(tk > i+1):
+            if(not(word.getText() == "הוהי")) and (isNoun == False) and ((text[i+1] in Obj) or (text[i+1] == 'תא')):
+                if(self.tense(checkV, word, False) == True):
+                    if(len(checkV.getWords()) > 0):
+                        isVerb = True
+                    elif(word.first() == 'ו'):
+                        preW = Word("","")
+                        preW.equalTo(word)
+                        preW.setText(word.getText()[:-1])
+                        if(self.tense(checkV, preW, False) == True):
+                            if(len(checkV.getWords()) > 0):
+                                isVerb = True
                         
         self.wText += '\t\t'*n + ':' + (self.revPhWords(text[i], '-')) + '   ' + number + Year + '\n'
          
