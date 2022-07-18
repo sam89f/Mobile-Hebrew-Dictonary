@@ -951,19 +951,20 @@ class DisplayWords(GridLayout):
     def __init__(self, instance, **kwargs):
         super(DisplayWords, self).__init__(**kwargs)
         self.cols = 1
-        self.X = 0
-        self.Y = 0
-        self.readText = TextInput(readonly=True, multiline=True, base_direction='rtl', size_hint=[5, 0.3], focus=False, font_name='data/fonts/times', font_size=Display_Size)
-        self.display = TextInput(readonly=True, multiline=True, focus=False, size_hint_x=5, size_hint_y=None, font_name='data/fonts/times', font_size=Display_Size)
+        self.readText = TextInput(readonly=True, multiline=True, base_direction='rtl', size_hint=[5, 0.3], focus=True, font_name='data/fonts/times', font_size=Display_Size)
+        self.display = TextInput(readonly=True, multiline=True, focus=True, size_hint_x=5, size_hint_y=None, font_name='data/fonts/times', font_size=Display_Size)
         self.display.bind(minimum_height=self.display.setter('height'))
-        dRoot = ScrollView(size_hint=(5, 1), size=(Window.width, Window.height))
-        dRoot.add_widget(self.display)
+        self.dRoot = ScrollView(size_hint=(5, 1), size=(Window.width, Window.height))
+        self.dRoot.add_widget(self.display)
         self.SubPanal = GridLayout(rows=1, size_hint=[5, 0.1])
         self.closeB = Button(text='[color=FFFFFF]Close[color=FFFFFF]', font_name='data/fonts/times', font_size=50, markup=True)
         self.closeB.bind(on_press=instance.closeAction)
+        self.topB = Button(text='[color=FFFFFF]Top[color=FFFFFF]', font_name='data/fonts/times', font_size=20, markup=True)
+        self.topB.bind(on_press=instance.topAction)
         self.SubPanal.add_widget(self.closeB)
+        self.SubPanal.add_widget(self.topB)
         self.add_widget(self.readText)
-        self.add_widget(dRoot)
+        self.add_widget(self.dRoot)
         self.add_widget(self.SubPanal)
              
         
@@ -1093,9 +1094,11 @@ class HebrewDictionary(App):
         sys.exit(0)
         
     def closeAction(self, instance):
-        self.DWords.X = 0
-        self.DWords.Y = 0
         self.wordPopup.dismiss()
+    
+    #scrolls to the beginning of the text input
+    def topAction(self, instance):
+        self.wordPopup.content.dRoot.scroll_y = 1.0
         
     def cancelAction(self, instance):
         self.popup.dismiss()
@@ -1162,9 +1165,8 @@ class HebrewDictionary(App):
                 self.wText += "*"*160
                 self.wText += '\n\n'
         
-        #self.y_end = self.DWords.display.cursor_col
-        self.DWords.display.cursor = (0, 0)
-        #Popup(title='Word', content=TextInput(text=str(words), readonly=True, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=25)).open()
+        #scrolls to the beginning of the text input once all the resalts are displayed
+        self.wordPopup.content.dRoot.scroll_y = 1.0
     def revPhWords(self, phrase, s):
         lph = phrase.split(s)
         rLph = []
@@ -1173,7 +1175,7 @@ class HebrewDictionary(App):
         for i in range(len(lph)):
             rLph.append(lph[end-i])
             
-        return s.join(rLph)       
+        return s.join(rLph)
         
     def getPhrase(self, words):
         if len(words) < 2:
@@ -1182,7 +1184,7 @@ class HebrewDictionary(App):
         tempWs = words
         Ws2 = words
         k = 0
-        end = len(tempWs)                 
+        end = len(tempWs)
         for i in range(end):
             N = 1
             s = 0
@@ -1229,6 +1231,8 @@ class HebrewDictionary(App):
                             break                   
         return tempWs[0:(end)]
         
+    #This function is responsible for finding and displaying all the diffent possible words that the word, stored in text[i],
+    #is derived from.
     def getWList(self, text, i, tk, k, n):
     
         number = ''
@@ -1239,29 +1243,45 @@ class HebrewDictionary(App):
         isVerb = False
         isNoun = False
         yWord = Word(text[i], "")
+        
+        #checks to see if the text is in the format of a Hebrew year.
+        #if so format a string in 'Year' variable to display that year
         if yWord.isYear() == True:
             Year = 'Year: ' + str(yWord.getYear())
+        
+        #creating word object with text value of the string at indext 'i' (current index)
         word = Word(text[i], "")
+        #initialize 'CurrentWord' variable to the word now being processed
         self.CurrentWord.equalTo(word)
         
+        #if text in word object is in the format of a Hebrew number, format a string in the 
+        #'number' variable to display that number
         if word.isNumb() == True:
             number = '#: ' + str(word.getGemontria()) + '; '
+        #otherwise check to see if the text is in Hebrew number format with a prefix at the beginning of the text
         else:
             preNum = self.smPrefix(check, word)
             if preNum.getLen() > 0:
                 if (preNum.isNumb() == True) and (not preNum.getText() == ""):
                     number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
         
+        #This section of the code is dedicated to context recognition.
+        #if the current word is not the first word check the word before it; and if the word
+        #before it is one if the Hebrew words below in the if statement, the the current word 
+        #is most likely a noun
         if i > 0:
             if((text[i-1] == 'תא') or (text[i-1] == 'תאו')):
                 isNoun = True
+        #if the current word is not the last word, and not The Tetragramaton, and not a noun,
+        #and the next word is in the list variable 'obj', or is 'תא', there is a good chance
+        #that the current word is a verb.
         if(tk > i+1):
             if(not(word.getText() == "הוהי")) and (isNoun == False) and ((text[i+1] in Obj) or (text[i+1] == 'תא')):
-                if(self.tense(checkV, word, False) == True):
-                    if(len(checkV.getWords()) > 0):
-                        isVerb = True
-                    elif(word.first() == 'ו'):
-                        preW = Word("","")
+                if(self.tense(checkV, word, False) == True): #if the current word is in one of certain tense forms, and at leat one word 
+                    if(len(checkV.getWords()) > 0):#is found in the dictionary, this is enough evidence to set the current word to a verb
+                        isVerb = True              
+                    elif(word.first() == 'ו'): #otherwise check to see if the text is in one of the tense forms with a prefix at the beginning of the text
+                        preW = Word("","")     #if so and at leat one word is found in the dictionary, then set the current word to a verb
                         preW.equalTo(word)
                         preW.setText(word.getText()[:-1])
                         if(self.tense(checkV, preW, False) == True):
@@ -1270,32 +1290,38 @@ class HebrewDictionary(App):
                         
         self.wText += '\t\t'*n + ':' + (self.revPhWords(text[i], '-')) + '   ' + number + Year + '\n'
          
+        #If the current word is The Tetragramaton, then we don't need to process the word any further
+        #we already know this is the proper name of G_d and a proper noun.
         if word.getText() == "הוהי":
             word.setNoun()
             look.find(word, self.Dict)
-        else:
+        else: #If the current word is not The Tetragramaton, then the current word may or may not be set to a noun or a verb
+              #based on the resalts from the context recognition part of the code
             if isNoun == True:
                 word.setNoun()
             if isVerb == True:
                 word.setVerb() 
                 
-            look.find(word, self.Dict)
-            self.algorithm(look, word)
+            look.find(word, self.Dict) #search for the word as it appears in the text input field
+            self.algorithm(look, word) #determines the possible forms of the current word, and searches
+            #for the words that the current word may have be been derived from
 
+            #These three lines gets rid of any quotation marks just in cases thay interfered with the processing of the word.
             sText = word.getText()
             sText = sText.replace("\'", "")
             sText = sText.replace('\"', '')
 
-            if(not (word.getText() == sText)):
-                word.setText(sText)
+            if(not (word.getText() == sText)): #if there are quotation marks in the current word put stripped version in the algorithm
+                word.setText(sText)            #stored in the 'sText' variable.
                 self.CurrentWord.equalTo(word)
                 look.find(word, self.Dict)
-                if not(word.getText() == "הוהי"):
+                if not(word.getText() == "הוהי"): #see if current word is The Tetragramaton, this time without the quotation marks
                     self.algorithm(look, word)
         
-        WList = look.getWords()
-        WList.sort(key=look.getValue, reverse = True)
-        
+        WList = look.getWords() #store all the words found in the 'WList' variable
+        WList.sort(key=look.getValue, reverse = True) #sord words according to closeness to the word as it appears in the input field
+                                                      #based on a formula in the 'calValue' function of the 'Word' class
+        #This block of code is responsible for formatting and displaying the results.                                               
         if(len(look.getWords()) > 0):
             for wi in WList:  
                 w = Word("", "")
