@@ -959,7 +959,7 @@ class DisplayWords(GridLayout):
         self.SubPanal = GridLayout(rows=1, size_hint=[5, 0.1])
         self.closeB = Button(text='[color=FFFFFF]Close[color=FFFFFF]', font_name='data/fonts/times', font_size=50, markup=True)
         self.closeB.bind(on_press=instance.closeAction)
-        self.topB = Button(text='[color=FFFFFF]Top[color=FFFFFF]', font_name='data/fonts/times', font_size=20, markup=True)
+        self.topB = Button(text='[color=FFFFFF]Top[color=FFFFFF]', font_name='data/fonts/times', font_size=50, markup=True)
         self.topB.bind(on_press=instance.topAction)
         self.SubPanal.add_widget(self.closeB)
         self.SubPanal.add_widget(self.topB)
