@@ -3141,6 +3141,11 @@ class HebrewDictionary(App):
                         if (self.FindHelper(look, plWc, self.Dict) == True):
                             return plWc
                 plW.setText(self.revPhWords(plW.getText(), "-"))
+                singleW = Word("","")
+                singleW.equalTo(plW)
+                singleW.setText('ה' + self.unFinal(plW.getText()))
+                self.FindHelper(look, singleW, self.Dict)
+                self.algorithm(look, singleW)
                 tempWf2 = Word("","")
                 tempWf2.equalTo(plW)
                 tempWf2.setText('י' + self.unFinal(plW.getText()))
@@ -3180,6 +3185,11 @@ class HebrewDictionary(App):
                             return plWc
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 self.FindHelper(look, plW, self.Dict)
+                singleW = Word("","")
+                singleW.equalTo(plW)
+                singleW.setText('ה' + self.unFinal(plW.getText()))
+                self.FindHelper(look, singleW, self.Dict)
+                self.algorithm(look, singleW)
                 tempWf2 = Word("","")
                 tempWf2.equalTo(plW)
                 tempWf2.setText('י' + self.unFinal(plW.getText()))
@@ -3207,7 +3217,7 @@ class HebrewDictionary(App):
                     if(not(word.getTense() == 'Participle')):
                         plW.setNoun()
                     plW.setPlural()
-                    plW.setText(self.revPhWords(plW.getText(), "-"))
+                    #plW.setText(self.revPhWords(plW.getText(), "-"))
                     self.FindHelper(look, plW, self.Dict)
                     self.algorithm(look, plW)
                     singleW = Word("","")
@@ -3220,7 +3230,7 @@ class HebrewDictionary(App):
                             plW2 = Word("","")
                             plW2.equalTo(plW)
                             plW2.setText(cPhrasePl.Final(plW.getText()[1:]))
-                            plW2.setText(self.revPhWords(plW2.getText(), "-"))
+                            #plW2.setText(self.revPhWords(plW2.getText(), "-"))
                             self.FindHelper(look, plW2, self.Dict)
                             self.algorithm(look, plW2)
                             singleW2 = Word("","")
@@ -3748,11 +3758,18 @@ class HebrewDictionary(App):
                     daulW2.setConstruct()
                     daulW2.setNoun()
                     self.FindHelper(look, daulW2, self.Dict)
+                    
+                    daulW3 = Word("", "")
+                    daulW3.equalTo(daulW)
+                    daulW3.setText('ה' + constW.getText()[1:])
+                    self.FindHelper(look, daulW3, self.Dict)
+                    self.algorithm(look, daulW3)
+                    
                 else:   
                     constW.setPlural()
                     constW.setConstruct()
                     constW.setNoun()
-                    self.FindHelper(look, constW, self.Dict)                
+                    self.FindHelper(look, constW, self.Dict)
                     
                     constW2 = Word("","")
                     constW2.equalTo(word)
@@ -3761,6 +3778,13 @@ class HebrewDictionary(App):
                     constW2.setNoun()
                     self.FindHelper(look, constW2, self.Dict)
                     self.algorithm(look, constW)
+                    
+                    constW3 = Word("", "")
+                    constW3.equalTo(constW)
+                    constW3.setText('ה' + word.getText()[1:])
+                    self.FindHelper(look, constW3, self.Dict)
+                    self.algorithm(look, constW3)
+                    
                 return constW
                 
         if(word.getLen() > 2) and (word.last() == 'ת'):
@@ -3774,8 +3798,6 @@ class HebrewDictionary(App):
             constW2 = Word("", "")
             constW2.equalTo(constW)
             constW2.setText('ה' + word.getText()[1:])
-            constW2.setNoun()
-            constW2.setConstruct()
             self.FindHelper(look, constW2, self.Dict)
             self.algorithm(look, constW2)
             return constW
