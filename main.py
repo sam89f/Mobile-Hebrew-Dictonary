@@ -2903,8 +2903,8 @@ class HebrewDictionary(App):
     def infinitive(self, look, word):
         if(word.getLen() < 3) or (word.isTense() == True) or (word.isNoun() == True) or (word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel'):
             return Word("","")
-            
-        singleW2 = Word("","") 
+        
+        singleW2 = Word("","")
         if(word.getLen() > 3):
             if((word.first() == 'ל') and (word.last2() == 'תו')):
                 infW = Word("","")
@@ -2927,14 +2927,17 @@ class HebrewDictionary(App):
                 singleW.setText('ה' + self.unFinal(infW.getText()))
                 self.FindHelper(look, singleW, self.Dict)
                 
-                if (infW.getLen() > 1) and (infW.first() == 'ה'):
+                if(infW.getLen() > 1) and (infW.first() == 'ה'):
                     singleW2 = Word("","")
                     singleW2.equalTo(infW)
                     singleW2.setText(infW.getText()[:-1] + 'י')
                     self.FindHelper(look, singleW2, self.Dict)
                     self.irreg(look, singleW2)
                 
-                return singleW
+                if(word.getLen() > 5):
+                    return singleW
+                else:
+                    self.algorithm(look, singleW)
                     
         if(word.getLen() > 2):
             if((word.first() == 'ל') and (word.last() == 'ת')):
@@ -2964,7 +2967,10 @@ class HebrewDictionary(App):
                     self.FindHelper(look, singleW2, self.Dict)
                     self.irreg(look, singleW2)
                     
-                return singleW
+                if(word.getLen() > 4):
+                    return singleW
+                else:
+                    self.algorithm(look, singleW)
                     
         if(word.first() == 'ל'):
             infW = Word("","")
