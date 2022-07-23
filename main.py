@@ -3459,6 +3459,7 @@ class HebrewDictionary(App):
                 suffWh.setText('ה' + cPhraseSuf.getText()[1:])
                 suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
                 self.FindHelper(look, suffWh, self.Dict)
+                self.algorithm(look, suffWh)
                 return suffWh
                 
             return suffW
@@ -3506,6 +3507,7 @@ class HebrewDictionary(App):
                 suffWh.setText('ה' + cPhraseSuf.getText()[2:])
                 suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
                 self.FindHelper(look, suffWh, self.Dict)
+                self.algorithm(look, suffWh)
                 return suffWh
                 
             return suffW
@@ -3553,6 +3555,7 @@ class HebrewDictionary(App):
                 suffWh.setText('ה' + cPhraseSuf.getText()[3:])
                 suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
                 self.FindHelper(look, suffWh, self.Dict)
+                self.algorithm(look, suffWh)
                 return suffWh
                 
             return suffW
@@ -3670,7 +3673,7 @@ class HebrewDictionary(App):
                             pword.Ht = False
                         self.FindHelper(look, pword, self.Dict)
                         self.algorithm(look, pword)
-                    if(word.nextToLast() == 'ו') and (self.num_of_p_roots(word.getText()[2:]) < 3) and (not(word.last() == 'י')) and (not((word.last() == 'ה')and(not(self.CurrentWord.last() == 'ה')))) and (not(word.last() == 'ו')) and (word.getConstruct() == False):
+                    if(word.nextToLast() == 'ו') and (self.num_of_p_roots(word.getText()[2:]) < 3) and (not(word.last() == 'י')) and (not(word.last() == 'ו')) and (not((word.last() == 'ה')and(self.CurrentWord.last() == 'ת')and(word.getConstruct() == True))):
                         isPar = True
                         pword2 = Word("","")
                         pword2.equalTo(word)
@@ -3718,7 +3721,7 @@ class HebrewDictionary(App):
                         pword.Ht = False
                     self.FindHelper(look, pword, self.Dict)
                     self.algorithm(look, pword)      
-                if(word.nextToLast() == 'ו') and (self.num_of_p_roots(word.getText()[2:]) < 3) and (not(word.last() == 'י')) and (not((word.last() == 'ה')and(not(self.CurrentWord.last() == 'ה')))) and (not(word.last() == 'ו')) and (word.getConstruct() == False):
+                if(word.nextToLast() == 'ו') and (self.num_of_p_roots(word.getText()[2:]) < 3) and (not(word.last() == 'י')) and (not(word.last() == 'ו')) and (not((word.last() == 'ה')and(self.CurrentWord.last() == 'ת')and(word.getConstruct() == True))):
                     isPar = True
                     pword2 = Word("","")
                     pword2.equalTo(word)
