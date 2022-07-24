@@ -1873,14 +1873,24 @@ class HebrewDictionary(App):
     def pual(self, look, word):
         if(len(word.getText()) < 4):
             return Word("","")
-        
+
         if(word.nextToFirst() == 'ו') and (self.num_of_a_roots(word.getText()[:-2]) < 3):
+            if(word.first() in prefixL) and (len(word.getText()) > 4):
+                return self.hufal(look, word)
             pualW = Word("","")
             pualW.equalTo(word)
             pualW.setText(word.getText()[:-2] + word.first())
             pualW.setVerbform(3)
             self.FindHelper(look, pualW, self.Dict)
             return pualW
+            
+        if(len(word.getText()) > 4) and (word.first() in prefixL) and (word.third() == 'ו') and (self.num_of_a_roots(word.getText()[:-3]) < 3):
+            pualW = Word("","")
+            pualW.equalTo(word)
+            pualW.setText(word.getText()[:-3] + word.nextToFirst() + word.first())
+            pualW.setVerbform(3)
+            return pualW
+            
         return Word("", "")
     
     def hifil(self, look, word):
