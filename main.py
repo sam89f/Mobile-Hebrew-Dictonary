@@ -1888,7 +1888,11 @@ class HebrewDictionary(App):
             pualW.equalTo(word)
             pualW.setText(word.getText()[:-3] + word.nextToFirst() + word.first())
             pualW.setVerbform(3)
-            return pualW
+            self.prefix(look, pualW)
+            if(word.first() == 'ל'):
+                return self.infinitive(look, pualW)
+            if(word.first() == 'מ'):
+                return self.participle(look, pualW)
             
         return Word("", "")
     
@@ -3403,7 +3407,7 @@ class HebrewDictionary(App):
         return Word("", "")  
     
     def suffix(self, look, word, p):
-        if(word.getLen() < 3) or (word.getConstruct() == True)or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (not (word.getTenseVal() == -1)) or (word.getModern == True) or (word.getPartiVal() == 0):
+        if(word.getLen() < 3) or (word.getConstruct() == True)or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (not (word.getTenseVal() == -1)) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() == 'Pual'):
             return Word("","")
             
         suff1 = Word("","")
@@ -3431,7 +3435,7 @@ class HebrewDictionary(App):
         return Word("","")
         
     def suffix1(self, look, word):
-        if(word.getLen() < 2) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getRL2() == word.last2()) or (word.getPartiVal() == 0):
+        if(word.getLen() < 2) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getRL2() == word.last2()) or (word.getPartiVal() == 0) or (word.getVerbform() == 'Pual'):
             return Word("","")
                 
         cPhraseSuf = Word("","")
@@ -3483,7 +3487,7 @@ class HebrewDictionary(App):
         return Word("","")
 
     def suffix2(self, look, word):
-        if(word.getLen() < 3) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getRL2() == word.last2()) or (word.getRL2() == word.nextToLast() + word.thirdFromLast()) or (word.getPartiVal() == 0):
+        if(word.getLen() < 3) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getRL2() == word.last2()) or (word.getRL2() == word.nextToLast() + word.thirdFromLast()) or (word.getPartiVal() == 0) or (word.getVerbform() == 'Pual'):
             return Word("","")
 
         cPhraseSuf = Word("","")
@@ -3531,7 +3535,7 @@ class HebrewDictionary(App):
         return Word("","")
         
     def suffix3(self, look, word):
-        if(word.getLen() < 4) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getRL2() == word.last3()) or (word.getRL2() == word.thirdFromLast() + word.fourthFromLast()) or (word.getPartiVal() == 0):
+        if(word.getLen() < 4) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getRL2() == word.last3()) or (word.getRL2() == word.thirdFromLast() + word.fourthFromLast()) or (word.getPartiVal() == 0) or (word.getVerbform() == 'Pual'):
             return Word("","")
 
         cPhraseSuf = Word("","")
@@ -3641,7 +3645,7 @@ class HebrewDictionary(App):
                     self.algorithm(look, pfimW2) 
                     return pfimW2
                 
-            elif(fimW.isVerbf() == False) or (fimW.getVerbform() == 'Qal'):
+            if(fimW.isVerbf() == False) or (fimW.getVerbform() == 'Qal'):
                 if(fimW.nextToFirst() == 'ו') and (self.num_of_a_roots(fimW.getText()[:-2]) < 3):
                     isPar = True
                     pfimW.equalTo(fimW)
@@ -3725,7 +3729,7 @@ class HebrewDictionary(App):
                     self.algorithm(look, pword2) 
                     return pword2
                     
-            elif(word.isVerbf() == False) or (word.getVerbform() == 'Qal'):
+            if(word.isVerbf() == False) or (word.getVerbform() == 'Qal'):
                 if(word.nextToFirst() == 'ו') and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת'))) and (self.num_of_a_roots(word.getText()[:-2]) < 3):
                     isPar = True
                     pword.equalTo(word)
