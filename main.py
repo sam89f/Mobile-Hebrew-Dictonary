@@ -2164,6 +2164,7 @@ class HebrewDictionary(App):
                 hufalW.equalTo(word)
                 hufalW.setText(word.getText()[:-2])
                 hufalW.setVerbform(5)
+                self.FindHelper(look, hufalW, self.Dict)
                 hufalWy = Word("","")
                 hufalWy.equalTo(hufalW)
                 hufalWy.setText(hufalW.getText() + 'י')
