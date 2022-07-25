@@ -1868,7 +1868,31 @@ class HebrewDictionary(App):
             pielW.setVerbform(2)
             self.FindHelper(look, pielW, self.Dict)
             return pielW
+            
+        if(len(word.getText()) > 5) and (word.first() in prefixL) and (word.XtoY(2, 4) == 'יי') and (self.num_of_a_roots(word.getText()[:-3]) < 4):
+            pielW = Word("","")
+            pielW.equalTo(word)
+            pielW.setText(word.getText()[:-4] + word.nextToFirst() + word.first())
+            pielW.setVerbform(2)
+            self.prefix(look, pielW)
+            if(word.first() == 'ל'):
+                return self.infinitive(look, pielW)
+            if(word.first() == 'מ'):
+                return self.participle(look, pielW)
+            
+        if(len(word.getText()) > 4) and (word.first() in prefixL) and (word.third() == 'י') and (self.num_of_a_roots(word.getText()[:-3]) < 3):
+            pielW = Word("","")
+            pielW.equalTo(word)
+            pielW.setText(word.getText()[:-3] + word.nextToFirst() + word.first())
+            pielW.setVerbform(2)
+            self.prefix(look, pielW)
+            if(word.first() == 'ל'):
+                return self.infinitive(look, pielW)
+            if(word.first() == 'מ'):
+                return self.participle(look, pielW)
+                
         return Word("", "")
+        
     
     def pual(self, look, word):
         if(len(word.getText()) < 4):
@@ -2229,7 +2253,7 @@ class HebrewDictionary(App):
                 return self.hitpael(look, tempW)
                 
         if(word.first2() == 'תה') and (not ((word.Ht == False) or (word.third() == 'ו'))):
-            hitpaelW = Word("","")
+            hitpaelW = Word("","") 
             hitpaelW.equalTo(word)
             hitpaelW.setText(word.getText()[:-2])
             hitpaelW.setVerbform(6)
