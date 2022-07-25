@@ -3927,6 +3927,7 @@ class HebrewDictionary(App):
                     irregW.setIrreg()
             elif ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')):
                 irregW.setText(word.getText() + 'נ')
+                irregW.setIrreg()
                 irregWNN = Word("","")
                 irregWNN.equalTo(irregW)
 
@@ -3975,7 +3976,31 @@ class HebrewDictionary(App):
                 irregWN.equalTo(word)
                 irregWN.setText('ן' + self.unFinal(word.getText()))
                 irregWN.setIrreg()
-                self.FindHelper(look, irregWN, self.Dict) 
+                self.FindHelper(look, irregWN, self.Dict)
+                
+        if(word.getLen() > 2):
+            if(word.nextToFirst() == 'נ') and (not((word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel') or (word.getVerbform() == 'Hiphil') or (word.isParticiple() == True))):
+                irregWN = Word("","")
+                irregWN.equalTo(word)
+                irregWN.setText(word.getText()[:-2] + word.first())
+                irregWN.setIrreg()
+                self.FindHelper(look, irregWN, self.Dict)
+                self.irreg(look, irregWN)
+                
+            if(not(word.getText()) == self.CurrentWord.getText()):
+                if(word.nextToFirst() == 'י'):
+                    irreg3 = Word("","")
+                    irreg3.equalTo(word)
+                    irreg3.setText(word.getText()[:-2] + word.first())
+                    irreg3.setIrreg()
+                    self.FindHelper(look, irreg3, self.Dict)
+          
+                if(word.nextToLast() == 'י') and (word.getPlural() == False) and (not(word.last2() in suffix)):
+                    irreg3 = Word("","")
+                    irreg3.equalTo(word)
+                    irreg3.setText(word.last() + word.getText()[2:])
+                    irreg3.setIrreg()
+                    self.FindHelper(look, irreg3, self.Dict)
             
         if(word.getLen() == 3):
             if (word.nextToLast() == 'ו') or (word.nextToLast() == 'י'):
@@ -3991,32 +4016,6 @@ class HebrewDictionary(App):
             irregWN.setText('ן' + self.unFinal(word.getText()))
             irregWN.setIrreg()
             self.FindHelper(look, irregWN, self.Dict)
-            
-        if(word.getLen() > 2):
-            irregWnun2 = Word("","")
-            irregWnun2.equalTo(word)
-            if(word.nextToFirst() == 'נ') and (word.isParticiple() == False):
-                irregWnun2.setText(word.getText()[:-2] + word.first())
-                irregWnun2.setIrreg()
-                self.FindHelper(look, irregWnun2, self.Dict)
-                if word.isTense == False:
-                    self.tense(look, irregWnun2, True)
-                    return Word("", "")
-            
-            if(not(word.getText()) == self.CurrentWord.getText()):
-                if(word.nextToFirst() == 'י'):
-                    irreg3 = Word("","")
-                    irreg3.equalTo(word)
-                    irreg3.setText(word.getText()[:-2] + word.first())
-                    irreg3.setIrreg()
-                    self.FindHelper(look, irreg3, self.Dict)
-          
-                if(word.nextToLast() == 'י') and (word.getPlural() == False) and (not(word.last2() in suffix)):
-                    irreg3 = Word("","")
-                    irreg3.equalTo(word)
-                    irreg3.setText(word.last() + word.getText()[2:])
-                    irreg3.setIrreg()
-                    self.FindHelper(look, irreg3, self.Dict)
  
         #checking to see if any tavs or hays have been removed form the end of the word, or if any extra vawls have been added within the word
         if (word.getLen() > 3) and (not(word.getPartiVal() == 0)) and ((word.getSuffix() == True) or (not (word.last3() == self.CurrentWord.last3()))) and (('ו' in word.getPrixList()) or (word.getTense() == "Perfect") or (word.getTense() == "Imperfect") or (word.getTense() == "Imperative") or (word.getTense() == "Infinitive")):
@@ -4098,7 +4097,7 @@ class HebrewDictionary(App):
                 
             return Word("", "")
                         
-        return Word("", "")       
+        return Word("", "")
         
     def build(self):
         #collecting user words form Json file (the database)
