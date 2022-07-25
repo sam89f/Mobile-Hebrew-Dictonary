@@ -2350,6 +2350,7 @@ class HebrewDictionary(App):
                 perfW.setPerson(1)
                 perfW.setGender(2)
                 f = self.FindHelper(look, perfW, self.Dict)
+                self.algorithm(look, perfW)
                 
                 fh = False
                 if(not (perfW.last() == 'ה')):
@@ -2359,7 +2360,7 @@ class HebrewDictionary(App):
                     fh = self.FindHelper(look, perfWh, self.Dict)
                     self.algorithm(look, perfWh)
                 
-                return perfW
+                #return perfW
                 
             if(word.getVerbform() == 'Niphal') and (word.last3() == 'ונת'):
                 perfW = Word("","")
@@ -2375,6 +2376,7 @@ class HebrewDictionary(App):
                 perfW.setPerson(1)
                 perfW.setGender(2)
                 f = self.FindHelper(look, perfW, self.Dict)
+                self.algorithm(look, perfW)
                 
                 fh = False
                 if(not (perfW.last() == 'ה')):
@@ -2384,7 +2386,7 @@ class HebrewDictionary(App):
                     fh = self.FindHelper(look, perfWh, self.Dict)
                     self.algorithm(look, perfWh)
                 
-                return perfW
+                #return perfW
                 
             if(word.last2() == 'םת') and (not(word.getRL2() == word.nextToLast() + word.thirdFromLast())):
                 perfW = Word("","")
