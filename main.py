@@ -3506,7 +3506,6 @@ class HebrewDictionary(App):
                 suffWh.setText('ה' + cPhraseSuf.getText()[1:])
                 suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
                 self.FindHelper(look, suffWh, self.Dict)
-                self.future(look, suffWh)
                 self.prefix(look, suffWh)
                 self.verbForms(look, suffWh)
                 return suffWh
@@ -3556,7 +3555,6 @@ class HebrewDictionary(App):
                 suffWh.setText('ה' + cPhraseSuf.getText()[2:])
                 suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
                 self.FindHelper(look, suffWh, self.Dict)
-                self.future(look, suffWh)
                 self.prefix(look, suffWh)
                 self.verbForms(look, suffWh)
                 return suffWh
@@ -3606,7 +3604,6 @@ class HebrewDictionary(App):
                 suffWh.setText('ה' + cPhraseSuf.getText()[3:])
                 suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
                 self.FindHelper(look, suffWh, self.Dict)
-                self.future(look, suffWh)
                 self.prefix(look, suffWh)
                 self.verbForms(look, suffWh)
                 return suffWh
