@@ -2325,14 +2325,15 @@ class HebrewDictionary(App):
                 perfW.setPerson(0)
                 perfW.setGender(0)
                 f = self.FindHelper(look, perfW, self.Dict)
+                self.algorithm(look, perfW)
                 
                 fh = False
-                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
+                if(not('וה' in word.getSufxList())) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
                     perfWh = Word("","")
                     perfWh.equalTo(perfW)
                     perfWh.setText('ה' + self.unFinal(perfW.getText()))
                     fh = self.FindHelper(look, perfWh, self.Dict)
-                    self.algorithm(look, perfWh)
+                    self.irreg(look, perfWh)
                 
                 return perfW
                 
@@ -2358,7 +2359,7 @@ class HebrewDictionary(App):
                     perfWh.equalTo(perfW)
                     perfWh.setText('ה' + self.unFinal(perfW.getText()))
                     fh = self.FindHelper(look, perfWh, self.Dict)
-                    self.algorithm(look, perfWh)
+                    self.irreg(look, perfWh)
                 
                 #return perfW
                 
@@ -2384,7 +2385,7 @@ class HebrewDictionary(App):
                     perfWh.equalTo(perfW)
                     perfWh.setText('ה' + self.unFinal(perfW.getText()))
                     fh = self.FindHelper(look, perfWh, self.Dict)
-                    self.algorithm(look, perfWh)
+                    self.irreg(look, perfWh)
                 
                 #return perfW
                 
@@ -2402,14 +2403,15 @@ class HebrewDictionary(App):
                 perfW.setPerson(3)
                 perfW.setGender(0)
                 f = self.FindHelper(look, perfW, self.Dict)
+                self.algorithm(look, perfW)
                 
                 fh = False
-                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
+                if(not('וה' in word.getSufxList())) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
                     perfWh = Word("","")
                     perfWh.equalTo(perfW)
                     perfWh.setText('ה' + self.unFinal(perfW.getText()))
                     fh = self.FindHelper(look, perfWh, self.Dict)
-                    self.algorithm(look, perfWh)
+                    self.irreg(look, perfWh)
                 
                 return perfW 
                 
@@ -2427,14 +2429,15 @@ class HebrewDictionary(App):
                 perfW.setPerson(3)
                 perfW.setGender(1)
                 f = self.FindHelper(look, perfW, self.Dict)
+                self.algorithm(look, perfW)
                 
                 fh = False
-                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
+                if(not('וה' in word.getSufxList())) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
                     perfWh = Word("","")
                     perfWh.equalTo(perfW)
                     perfWh.setText('ה' + self.unFinal(perfW.getText()))
                     fh = self.FindHelper(look, perfWh, self.Dict)
-                    self.algorithm(look, perfWh)
+                    self.irreg(look, perfWh)
                 
                 return perfW 
                 
@@ -2452,14 +2455,15 @@ class HebrewDictionary(App):
             perfW.setPerson(5)
             perfW.setGender(2)
             f = self.FindHelper(look, perfW, self.Dict)
+            self.algorithm(look, perfW)
             
             fh = False
-            if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
+            if(not('וה' in word.getSufxList())) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
                 perfWh = Word("","")
                 perfWh.equalTo(perfW)
                 perfWh.setText('ה' + self.unFinal(perfW.getText()))
                 fh = self.FindHelper(look, perfWh, self.Dict)
-                self.algorithm(look, perfWh)
+                self.irreg(look, perfWh)
                 
             return perfW
             
@@ -2477,9 +2481,10 @@ class HebrewDictionary(App):
             perfW.setPerson(2)
             perfW.setGender(2)
             f = self.FindHelper(look, perfW, self.Dict)
+            self.algorithm(look, perfW)
             
             fh = False
-            if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
+            if(not('וה' in word.getSufxList())) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not (perfW.last() == 'ה')):
                 perfWh = Word("","")
                 perfWh.equalTo(perfW)
                 perfWh.setText('ה' + self.unFinal(perfW.getText()))
@@ -2504,6 +2509,7 @@ class HebrewDictionary(App):
             perfW.setPerson(4)
             perfW.setGender(1)
             f = self.FindHelper(look, perfW, self.Dict)
+            self.algorithm(look, perfW)
 
             fh = False
             if(perfW.last() == 'ת'):
@@ -2544,16 +2550,16 @@ class HebrewDictionary(App):
                 
                 if(futurW.getLen() > 1):
                     if(futurW.nextToLast() == 'ו') and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')):
-                        futurW.setText(futurW.last() + futurW.getText()[2:])   
+                        futurW.setText(futurW.last() + futurW.getText()[2:])
                     f = self.FindHelper(look, futurW, self.Dict)
                     self.algorithm(look, futurW)
                     fh = False
-                    if(not (futurW.last() == 'ה')):
+                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
                         fh = self.FindHelper(look, futurWh, self.Dict)
-                        self.algorithm(look, futurWh)
+                        self.irreg(look, futurWh)
                 elif 'ו' in word.getPrixList():
                     self.irreg(look, futurW)
                 
@@ -2569,14 +2575,14 @@ class HebrewDictionary(App):
                 
                 if(futurW2.getLen() > 1):
                     f2 = self.FindHelper(look, futurW2, self.Dict)
-                    self.irreg(look, futurW2)
+                    self.algorithm(look, futurW2)
                     f2h = False
-                    if(not (futurW2.last() == 'ה')):
+                    if(not (futurW2.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                         futurW2h = Word("","")
                         futurW2h.equalTo(futurW2)
                         futurW2h.setText('ה' + self.unFinal(futurW2.getText()))
                         f2h = self.FindHelper(look, futurW2h, self.Dict)
-                        self.algorithm(look, futurW2h)
+                        self.irreg(look, futurW2h)
                     return futurW2
                 elif 'ו' in word.getPrixList():
                     return self.irreg(look, futurW2)
@@ -2598,14 +2604,14 @@ class HebrewDictionary(App):
                     if(futurW.nextToLast() == 'ו') and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')):
                         futurW.setText(futurW.last() + futurW.getText()[2:])
                     f = self.FindHelper(look, futurW, self.Dict)
-                    self.irreg(look, futurW)
+                    self.algorithm(look, futurW)
                     fh = False
                     if(not (futurW.last() == 'ה')):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
                         fh = self.FindHelper(look, futurWh, self.Dict)
-                        self.algorithm(look, futurWh)
+                        self.irreg(look, futurWh)
                     return futurW
                 elif 'ו' in word.getPrixList():
                     return self.irreg(look, futurW)
@@ -2628,14 +2634,14 @@ class HebrewDictionary(App):
                     if(futurW.nextToLast() == 'ו') and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')):
                         futurW.setText(futurW.last() + futurW.getText()[2:])
                     f = self.FindHelper(look, futurW, self.Dict)
-                    self.irreg(look, futurW)
+                    self.algorithm(look, futurW)
                     fh = False
-                    if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())):
+                    if(not('וה' in word.getSufxList())) and (not(word.last() == 'ה')) and (word.getSuffix() == True) and (not ('ה' in word.getSufxList())):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
                         fh = self.FindHelper(look, futurWh, self.Dict)
-                        self.algorithm(look, futurWh)
+                        self.irreg(look, futurWh)
                     return futurW
                 elif 'ו' in word.getPrixList():
                     return self.irreg(look, futurW)
@@ -2655,14 +2661,14 @@ class HebrewDictionary(App):
                 
                 if(futurW.getLen() > 1):
                     f = self.FindHelper(look, futurW, self.Dict)
-                    self.irreg(look, futurW)
+                    self.algorithm(look, futurW)
                     fh = False
-                    if(not(('וה' in futurW.getSufxList())or('ןהי' in futurW.getSufxList())or('םה' in futurW.getSufxList()))) and (not('ה' in futurW.getSufxList())) and (not(futurW.last() == 'ה')):
+                    if(not(('וה' in futurW.getSufxList())or('ה' in futurW.getSufxList()))) and (not(futurW.last() == 'ה')):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
                         fh = self.FindHelper(look, futurWh, self.Dict)
-                        self.algorithm(look, futurWh)
+                        self.irreg(look, futurWh)
                     return futurW
                 elif 'ו' in word.getPrixList():
                     return self.irreg(look, futurW)
@@ -2682,14 +2688,14 @@ class HebrewDictionary(App):
                 
                 if(futurW.getLen() > 1):
                     f = self.FindHelper(look, futurW, self.Dict)
-                    self.irreg(look, futurW)
+                    self.algorithm(look, futurW)
                     fh = False
-                    if(not(('וה' in futurW.getSufxList())or('ןהי' in futurW.getSufxList())or('םה' in futurW.getSufxList()))) and (not('ה' in futurW.getSufxList())) and (not(futurW.last() == 'ה')):
+                    if(not(('וה' in futurW.getSufxList())or('ה' in futurW.getSufxList()))) and (not(futurW.last() == 'ה')):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
                         fh = self.FindHelper(look, futurWh, self.Dict)
-                        self.algorithm(look, futurWh)
+                        self.irreg(look, futurWh)
                     self.algorithm(look, futurW)
                 elif 'ו' in word.getPrixList():
                     self.irreg(look, futurW)
@@ -2709,14 +2715,14 @@ class HebrewDictionary(App):
 
                 if(futurW.getLen() > 1):
                     f = self.FindHelper(look, futurW, self.Dict)
-                    self.irreg(look, futurW)
+                    self.algorithm(look, futurW)
                     fh = False
-                    if(not (futurW.last() == 'ה')):
+                    if(not(('וה' in futurW.getSufxList())or('ה' in word.getSufxList()))):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
                         fh = self.FindHelper(look, futurWh, self.Dict)
-                        self.algorithm(look, futurWh)
+                        self.irreg(look, futurWh)
                     return futurW
                 elif 'ו' in word.getPrixList():
                     return self.irreg(look, futurW)
@@ -2738,13 +2744,14 @@ class HebrewDictionary(App):
                 if(futurW.nextToLast() == 'ו') and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')):
                     futurW.setText(futurW.last() + futurW.getText()[2:])
                 f = self.FindHelper(look, futurW, self.Dict)
+                self.algorithm(look, futurW)
                 fh = False
-                if(not (futurW.last() == 'ה')) and (not('ה' in word.getSufxList())):
+                if(not (word.last() == 'ה')) and (not('ה' in word.getSufxList())) and (word.getSuffix() == True):
                     futurWh = Word("","")
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
                     fh = self.FindHelper(look, futurWh, self.Dict)
-                    self.algorithm(look, futurWh)
+                    self.irreg(look, futurWh)
                 return futurW
             elif 'ו' in word.getPrixList():
                 return self.irreg(look, futurW)
@@ -2769,14 +2776,15 @@ class HebrewDictionary(App):
                 if(futurW.nextToLast() == 'ו') and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')):
                     futurW.setText(futurW.last() + futurW.getText()[2:])   
                 f = self.FindHelper(look, futurW, self.Dict)
+                self.algorithm(look, futurW)
               
                 fh = False
-                if (not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and ('ו' in word.getPrixList()) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())):
+                if(not((futurW.last() == 'ה')or(word.last() == 'ה'))) and (('ו' in word.getPrixList())or(word.getSuffix() == True)) and (not ('ה' in word.getSufxList())):
                     futurWh = Word("","")
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
                     fh = self.FindHelper(look, futurWh, self.Dict)
-                    self.algorithm(look, futurWh)
+                    self.irreg(look, futurWh)
                 return futurW
             elif 'ו' in word.getPrixList():
                 self.irreg(look, futurW)
@@ -2807,7 +2815,7 @@ class HebrewDictionary(App):
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
                     fh = self.FindHelper(look, futurWh, self.Dict)
-                    self.algorithm(look, futurWh)
+                    self.irreg(look, futurWh)
             elif 'ו' in word.getPrixList():
                 self.irreg(look, futurW)
                 
@@ -2825,12 +2833,12 @@ class HebrewDictionary(App):
                 f2 = self.FindHelper(look, futurW2, self.Dict)
                 self.algorithm(look, futurW2)
                 fh = False
-                if(not (futurW2.last() == 'ה')) and (not('ה' in word.getSufxList())):
+                if(not (futurW2.last() == 'ה')) and (not('ה' in word.getSufxList())) and (word.getSuffix() == True):
                     futurW2h = Word("","")
                     futurW2h.equalTo(futurW2)
                     futurW2h.setText('ה' + self.unFinal(futurW2.getText()))
                     fh = self.FindHelper(look, futurW2h, self.Dict)
-                    self.algorithm(look, futurW2h)
+                    self.irreg(look, futurW2h)
                 return futurW2
             elif 'ו' in word.getPrixList():
                 self.irreg(look, futurW2)
@@ -2850,15 +2858,16 @@ class HebrewDictionary(App):
             
             if(futurW.getLen() > 1):
                 if(futurW.nextToLast() == 'ו') and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')):
-                    futurW.setText(futurW.last() + futurW.getText()[2:])               
+                    futurW.setText(futurW.last() + futurW.getText()[2:])
                 f = self.FindHelper(look, futurW, self.Dict)
+                self.algorithm(look, futurW)
                 fh = False
-                if(not (futurW.last() == 'ה')) and (not('ה' in word.getSufxList())):
+                if(not (futurW.last() == 'ה')) and (not('ה' in word.getSufxList())) and (word.getSuffix() == True):
                     futurWh = Word("","")
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
                     fh = self.FindHelper(look, futurWh, self.Dict)
-                    self.algorithm(look, futurWh)
+                    self.irreg(look, futurWh)
                 return futurW
             elif 'ו' in word.getPrixList():
                 self.irreg(look, futurW)
@@ -2874,7 +2883,7 @@ class HebrewDictionary(App):
         if(word.getLen() < 2) or (self.imperRules(word, word.last()) == False) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getModern == True) or (word.getRL2() == word.last2()):
             return Word("","")
         
-        if(word.getLen() < 3) and (self.CurrentWord == word):
+        if((word.getLen() < 3) and (self.CurrentWord == word)):
             imperW = Word("","")
             imperW.equalTo(word)
             imperW.setVerb()
@@ -3862,8 +3871,8 @@ class HebrewDictionary(App):
         if(word.getLen() < 1) or (word.getIrregVal() > 15):
             return Word("", "")
             
-        if(self.CurrentWord.first() == word.first()) and (word.getTense() == 'Imperative'):
-            if(not (word.last() == 'ה')) and (not('ה' in word.getSufxList())) and (not(word.getVerbform() == 'Piel')):
+        if((self.CurrentWord.first() == word.first()) or ((self.CurrentWord.second() == word.first())and(self.CurrentWord.first() in word.getPrixList()))) and (word.getTense() == 'Imperative'):
+            if(not (word.last() == 'ה')):
                 irreghW = Word("","")
                 irreghW.equalTo(word)
                 irreghW.setText('ה' + self.unFinal(word.getText()))
@@ -3876,7 +3885,7 @@ class HebrewDictionary(App):
                     self.FindHelper(look, irreghW, self.Dict)
                     self.irreg(look, irreghW)
                     
-            if(not (word.first() == 'ה')) and (not(word.getVerbform() == 'Piel')):
+            if(not (word.first() == 'ה')) and (not(word.getVerbform() == 'Piel')) and (not(word.getVerbform() == 'Pual')):
                 irregipW = Word("","")
                 irregipW.equalTo(word)
                 irregipW.setText(word.getText() + 'ה')
@@ -3884,7 +3893,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, irregipW, self.Dict)
                 self.irreg(look, irregipW)
             
-            if(not (word.first() == 'י')) and (not(word.getVerbform() == 'Piel')):
+            if(not (word.first() == 'י')) and (not(word.getVerbform() == 'Piel')) and (not(word.getVerbform() == 'Pual')):
                 irregipW2 = Word("","")
                 irregipW2.equalTo(word)
                 irregipW2.setText(word.getText() + 'י')
@@ -3892,7 +3901,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, irregipW2, self.Dict)
                 self.irreg(look, irregipW2)
                 
-            if(not (word.first() == 'נ')) and (not(word.getVerbform() == 'Piel')):
+            if(not (word.first() == 'נ')) and (not(word.getVerbform() == 'Piel')) and (not(word.getVerbform() == 'Pual')) and (not (word.getVerbform() == 'Niphal')):
                 irregipW3 = Word("","")
                 irregipW3.equalTo(word)
                 irregipW3.setText(word.getText() + 'נ')
@@ -3928,7 +3937,7 @@ class HebrewDictionary(App):
             irregW = Word("","")
             irregW.equalTo(word)
             if(word.getLen() == 2):
-                if(not(word.first() == 'נ')) and (not(self.CurrentWord.first() == 'נ')) and (not(word.getRL2() == word.last2())):
+                if(not(word.first() == 'נ')) and (not(word.getVerbform() == 'Niphal')) and (not(word.getRL2() == word.last2())):
                     irregW.setText(self.Final(word.getText()[1:]) + 'נ')
                     irregW.setIrreg()
             elif ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')):
@@ -3993,20 +4002,20 @@ class HebrewDictionary(App):
                 self.FindHelper(look, irregWN, self.Dict)
                 self.irreg(look, irregWN)
                 
-            if(not(word.getText()) == self.CurrentWord.getText()):
-                if(word.nextToFirst() == 'י'):
-                    irreg3 = Word("","")
-                    irreg3.equalTo(word)
-                    irreg3.setText(word.getText()[:-2] + word.first())
-                    irreg3.setIrreg()
-                    self.FindHelper(look, irreg3, self.Dict)
-          
-                if(word.nextToLast() == 'י') and (word.getPlural() == False) and (not(word.last2() in suffix)):
+            if(word.nextToLast() == 'י') and (word.getPlural() == False) and (not(word.last2() in suffix)):
                     irreg3 = Word("","")
                     irreg3.equalTo(word)
                     irreg3.setText(word.last() + word.getText()[2:])
                     irreg3.setIrreg()
                     self.FindHelper(look, irreg3, self.Dict)
+                
+            if(word.nextToLast() == 'י') and (not((word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel') or (word.getVerbform() == 'Hiphil') or (word.isParticiple() == True))):
+                irregWN = Word("","")
+                irregWN.equalTo(word)
+                irregWN.setText(word.getText()[:-2] + word.first())
+                irregWN.setIrreg()
+                self.FindHelper(look, irregWN, self.Dict)
+                self.irreg(look, irregWN)
             
         if(word.getLen() == 3):
             if (word.nextToLast() == 'ו') or (word.nextToLast() == 'י'):
@@ -4077,7 +4086,7 @@ class HebrewDictionary(App):
                     irregWc.setIrreg()
                     self.FindHelper(look, irregWc, self.Dict)
          
-        #checking to see if any letters have been assimilated from the beginning of the word.         
+        #checking to see if any letters have been assimilated from the beginning of the word.
         if ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or ((word.getTense() == 'Imperfect')and(not('ו' in word.getPrixList()))) or ((word.getTense() == 'Perfect')and('ו' in word.getPrixList())) or (word.getTense() == 'Cohortative')) and (not(word.getPartiVal() == 1)):
             if (not((word.getVerbform() == 'Hophal')or(word.getVerbform() == 'Hiphil')or(word.getVerbform() == 'Hithpeal'))) and (not(word.getIrregVal() > 0)) and ((not ('ה' in word.getPrixList())) and (not (self.CurrentWord.first() == 'ה')) and (not (word.first() == 'ה'))) and (not(word.getVerbform() == 'Piel')):
                 irregW = Word("","")
@@ -4087,7 +4096,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, irregW, self.Dict)
                 self.irreg(look, irregW)
                 
-            if(not (word.getVerbform() == 'Niphal')) and (not ((word.first() == 'נ') and (word.getIrregVal() > 0))) and (not(word.getVerbform() == 'Piel')):
+            if(not(word.getVerbform() == 'Niphal')) and (not ((word.first() == 'נ') and (word.getIrregVal() > 0))) and (not(word.getVerbform() == 'Piel')):
                 irregW2 = Word("","")
                 irregW2.equalTo(word)
                 irregW2.setText(word.getText() + 'נ')
@@ -4100,8 +4109,6 @@ class HebrewDictionary(App):
                 irregW3.setText(word.getText() + 'י')
                 irregW3.setIrreg()
                 self.FindHelper(look, irregW3, self.Dict)
-                
-            return Word("", "")
                         
         return Word("", "")
         
