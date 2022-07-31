@@ -3188,7 +3188,10 @@ class HebrewDictionary(App):
         cPhrasePl.equalTo(word)
         cPhrasePl.setText(self.revPhWords(word.getText(), "-"))
         
-        if(cPhrasePl.getLen() > 3):
+        if(self.getFrsLen(cPhrasePl) < 3):
+            return Word("", "")
+        
+        if(cPhrasePl.getLen() > 3) and (self.getFrsLen(cPhrasePl) > 3):
             if(self.dlChain(cPhrasePl.getText()) == True) and ('-' in cPhrasePl.getText()):
                 plW = Word("","")
                 plW.equalTo(cPhrasePl)
@@ -3291,7 +3294,7 @@ class HebrewDictionary(App):
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 return plW
 
-        if(cPhrasePl.getLen() > 2):
+        if(cPhrasePl.getLen() > 2) and (self.getFrsLen(cPhrasePl) > 2):
             if('-' in cPhrasePl.getText()) and (self.plChain(cPhrasePl.getText(), 'םי') == True):
                 plW = Word("","")
                 plW.equalTo(cPhrasePl)
@@ -3468,7 +3471,7 @@ class HebrewDictionary(App):
                     self.FindHelper(look, singleW, self.Dict)
                     if(not('-' in cPhrasePl.getText())):
                         self.algorithm(look, singleW)
-                    if(cPhrasePl.getLen() > 3):
+                    if(cPhrasePl.getLen() > 3) and (self.getFrsLen(cPhrasePl) > 3):
                         if(plW.last() == 'י'):
                             plW2 = Word("","")
                             plW2.equalTo(plW)
