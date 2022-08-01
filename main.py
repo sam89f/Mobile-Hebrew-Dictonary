@@ -3426,6 +3426,16 @@ class HebrewDictionary(App):
                     self.algorithm(look, plW)
                     if(self.FindHelper(look, plW, self.Dict) == True):
                         return plW
+                        
+                plW.equalTo(cPhrasePl)
+                plW.setText(plW.getText().replace("-תו", "-ת"))
+                if(changef > 0):
+                    plW.setNoun()
+                    plW.setPlural()
+                    plW.setText(self.revPhWords(plW.getText(), "-"))
+                    self.algorithm(look, plW)
+                    if(self.FindHelper(look, plW, self.Dict) == True):
+                        return plW
                                     
             if((self.getLstLen(cPhrasePl) > 2) or (self.getLstLen(cPhrasePl) == -1)) and (cPhrasePl.last2() == 'תו') and (not (cPhrasePl.getTense() == 'Perfect')) and (not(cPhrasePl.getTense() == 'Imperfect')) and (not(cPhrasePl.getTense() == 'Imperative')) and (not(cPhrasePl.getTense() == 'Infinitive')):
                 changef2 = self.lstChain(cPhrasePl.getText(), cPhrasePl.last2())
@@ -3446,6 +3456,16 @@ class HebrewDictionary(App):
                     plW.equalTo(cPhrasePl)
                     plW.setText('ה' + cPhrasePl.getText()[2:])
                     plW.setText(plW.getText().replace("-תו", "-ה"))
+                    plW.setNoun()
+                    plW.setPlural()
+                    plW.setText(self.revPhWords(plW.getText(), "-"))
+                    self.algorithm(look, plW)
+                    if(self.FindHelper(look, plW, self.Dict) == True):
+                        return plW
+                        
+                    plW.equalTo(cPhrasePl)
+                    plW.setText('ת' + cPhrasePl.getText()[2:])
+                    plW.setText(plW.getText().replace("-תו", "-ת"))
                     plW.setNoun()
                     plW.setPlural()
                     plW.setText(self.revPhWords(plW.getText(), "-"))
