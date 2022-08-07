@@ -3595,7 +3595,7 @@ class HebrewDictionary(App):
                 self.plural(look, preW)
                 self.suffix(look, preW, 1)
                 preWend = Word("","")
-                preWend.equalTo(self.prefix(look, preW), False)
+                preWend.equalTo(self.prefix(look, preW, False))
                 if preWend.getText() == "":
                     return preW
                 else:
