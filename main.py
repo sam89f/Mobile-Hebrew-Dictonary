@@ -1227,7 +1227,7 @@ class HebrewDictionary(App):
                         prePhrase = tempWs[i] + "-" + tempWs[i+1][p:]
                         prephraseW = Word(prePhrase, "")
                         zPhrasePre = Word(prephraseW, "")
-                        zPhrasePre.equalTo(self.prefix(check, prephraseW))
+                        zPhrasePre.equalTo(self.prefix(check, prephraseW, False))
                         if (check.find(prephraseW, self.Dict) == True) or (check.find(zPhrasePre, self.Dict)):
                             tempWs[i] = prePhrase
                             tempWs[i+1] = tempWs[i+1]
@@ -1263,7 +1263,7 @@ class HebrewDictionary(App):
             number = '#: ' + str(word.getGemontria()) + '; '
         #otherwise check to see if the text is in Hebrew number format with a prefix at the beginning of the text
         else:
-            preNum = self.smPrefix(check, word)
+            preNum = self.smPrefix(check, word, False)
             if preNum.getLen() > 0:
                 if (preNum.isNumb() == True) and (not preNum.getText() == ""):
                     number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
@@ -1565,7 +1565,7 @@ class HebrewDictionary(App):
             return Word("", "")
         plural = False
         
-        self.prefix(look, word)
+        self.prefix(look, word, False)
         
         self.participle(look, word)
         
@@ -1877,7 +1877,7 @@ class HebrewDictionary(App):
             pielW.equalTo(word)
             pielW.setText(word.getText()[:-4] + word.nextToFirst() + word.first())
             pielW.setVerbform(2)
-            self.prefix(look, pielW)
+            self.prefix(look, pielW, False)
             if(word.first() == 'ל'):
                 return self.infinitive(look, pielW)
             if(word.first() == 'מ'):
@@ -1888,7 +1888,7 @@ class HebrewDictionary(App):
             pielW.equalTo(word)
             pielW.setText(word.getText()[:-3] + word.nextToFirst() + word.first())
             pielW.setVerbform(2)
-            self.prefix(look, pielW)
+            self.prefix(look, pielW, False)
             if(word.first() == 'ל'):
                 return self.infinitive(look, pielW)
             if(word.first() == 'מ'):
@@ -1916,7 +1916,7 @@ class HebrewDictionary(App):
             pualW.equalTo(word)
             pualW.setText(word.getText()[:-3] + word.nextToFirst() + word.first())
             pualW.setVerbform(3)
-            self.prefix(look, pualW)
+            self.prefix(look, pualW, False)
             if(word.first() == 'ל'):
                 return self.infinitive(look, pualW)
             if(word.first() == 'מ'):
@@ -2220,7 +2220,7 @@ class HebrewDictionary(App):
                 hufalW.setVerbform(5)
                 if(word.first() == 'מ'):
                     self.participle(look, hufalW)
-                return self.smPrefix(look, hufalW)
+                return self.smPrefix(look, hufalW, True)
                 
             if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א')):
                 hufalW = Word("","")
@@ -2273,7 +2273,7 @@ class HebrewDictionary(App):
                 self.participle(look, hitpaelW)
             if(word.first() == 'ל'):
                 self.infinitive(look, hitpaelW)
-            return self.smPrefix(look, hitpaelW)
+            return self.smPrefix(look, hitpaelW, True)
             
         if(word.first2() == 'תנ') and (not ((word.Ht == False) or (word.third() == 'ו'))):
             nithpaelW = Word("","")
@@ -3516,13 +3516,13 @@ class HebrewDictionary(App):
         #return constr
         return Word("","")
             
-    def prefixRuls(self, word, p):
+    def prefixRuls(self, word, p, h):
         cPhraseSuf2 = Word("","")
         cPhraseSuf2.equalTo(self.CurrentWord)
         cPhraseSuf2.setText(self.revPhWords(self.CurrentWord.getText(), "-"))
         if(word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel') or (word.getPartiVal() == 1):
             return False
-        if((word.getPrefix() == True) and ((word.getVerbform() == 'Hithpeal')or(word.getVerbform() == 'Hiphil')or(word.getVerbform() == 'Hophal'))):
+        if((word.getPrefix() == True) and (h == False) and ((word.getVerbform() == 'Hithpeal')or(word.getVerbform() == 'Hiphil')or(word.getVerbform() == 'Hophal'))):
             return False
         revCW = self.rev(cPhraseSuf2.getText())
         posTov = revCW.find("ת", 0, 4)
@@ -3552,12 +3552,12 @@ class HebrewDictionary(App):
                 return False
         return True
             
-    def prefix(self, look, word):
+    def prefix(self, look, word, h):
         if(word.getLen() < 2):
             return Word("","")
         
         if not ('-' in word.getText()):
-            return self.smPrefix(look, word)
+            return self.smPrefix(look, word, h)
             
         cPhrasePre = Word("","")
         cPhrasePre.equalTo(word)
@@ -3574,7 +3574,7 @@ class HebrewDictionary(App):
         if(self.getFrsLen(cPhrasePre) < 2):
             return Word("", "")
           
-        if (cPhrasePre.first() in prefixL) and (self.prefixRuls(cPhrasePre, cPhrasePre.first()) == True):
+        if (cPhrasePre.first() in prefixL) and (self.prefixRuls(cPhrasePre, cPhrasePre.first(), False) == True):
             preW = Word("","")
             preW.equalTo(cPhrasePre)
             preW.setText(cPhrasePre.getText()[:-1])
@@ -3595,7 +3595,7 @@ class HebrewDictionary(App):
                 self.plural(look, preW)
                 self.suffix(look, preW, 1)
                 preWend = Word("","")
-                preWend.equalTo(self.prefix(look, preW))
+                preWend.equalTo(self.prefix(look, preW), False)
                 if preWend.getText() == "":
                     return preW
                 else:
@@ -3637,11 +3637,11 @@ class HebrewDictionary(App):
             
         return Word("", "")
 
-    def smPrefix(self, look, word):
+    def smPrefix(self, look, word, h):
         if(word.getLen() < 2) or (not(self.CurrentWord.first() in prefixL)) or ('-' in word.getText()): #or (word.getModern == True):
             return Word("","")
                 
-        if (word.first() in prefixL) and (self.prefixRuls(word, word.first()) == True):
+        if (word.first() in prefixL) and (self.prefixRuls(word, word.first(), h) == True):
             preW = Word("","")
             preW.equalTo(word)
             preW.setText(word.getText()[:-1])
@@ -3742,7 +3742,7 @@ class HebrewDictionary(App):
                 suffWh.equalTo(suffW)
                 suffWh.setText('ה' + cPhraseSuf.getText()[1:])
                 self.FindHelper(look, suffWh, self.Dict)
-                self.prefix(look, suffWh)
+                self.prefix(look, suffWh, False)
                 self.verbForms(look, suffWh)
                 return suffWh
                 
@@ -3794,7 +3794,7 @@ class HebrewDictionary(App):
                 suffWh.equalTo(suffW)
                 suffWh.setText('ה' + cPhraseSuf.getText()[2:])
                 self.FindHelper(look, suffWh, self.Dict)
-                self.prefix(look, suffWh)
+                self.prefix(look, suffWh, False)
                 self.verbForms(look, suffWh)
                 return suffWh
                 
@@ -3846,7 +3846,7 @@ class HebrewDictionary(App):
                 suffWh.equalTo(suffW)
                 suffWh.setText('ה' + cPhraseSuf.getText()[3:])
                 self.FindHelper(look, suffWh, self.Dict)
-                self.prefix(look, suffWh)
+                self.prefix(look, suffWh, False)
                 self.verbForms(look, suffWh)
                 return suffWh
                 
