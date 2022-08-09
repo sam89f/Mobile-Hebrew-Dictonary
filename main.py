@@ -375,6 +375,12 @@ class Word:
             s += pre +  '- ' + self.prefixD[pre]+ ', '
         return s[:-2]
         
+    def getPrixListEnd(self):
+        s = ''
+        for pre in self.preW:
+            s = pre
+        return s
+        
     def getPrixList(self):
         return self.preW.copy()
         
@@ -1716,7 +1722,7 @@ class HebrewDictionary(App):
         if(word.isNoun() == True):
             return False
             
-        if (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or ('מ' in word.getPrixList()) or ('ל' in word.getPrixList()) or ('ה' in word.getPrixList()):
+        if (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getPrixListEnd() == 'מ') or (word.getPrixListEnd() == 'ל') or ('ה' in word.getPrixList()):
             return False
         
         perf = Word("","")
@@ -1726,7 +1732,7 @@ class HebrewDictionary(App):
                 self.algorithm(look, perf)
         
         infin = Word("","")
-        if (not (('מ' in word.getPrixList()) or ('ל' in word.getPrixList()) or ('כ' in word.getPrixList()) or ('ה' in word.getPrixList()))) and (word.getTenseVal() == -1):
+        if (not ((word.getPrixListEnd() == 'מ') or (word.getPrixListEnd() == 'ל') or (word.getPrixListEnd() == 'כ') or ('ה' in word.getPrixList()))) and (word.getTenseVal() == -1):
             infin.equalTo(self.infinitive(look, word))
             if not (infin.getText() == ""):
                 if alg == True:
@@ -2879,12 +2885,17 @@ class HebrewDictionary(App):
         return Word("", "")
     
     def imperRules(self, word, l):
-        if ('ה' in word.getPrixList()) or ((('ל' in word.getPrixList()) or ('מ' in word.getPrixList()) or ('כ' in word.getPrixList()) or ('ב' in word.getPrixList())) and (not('ש' in word.getPrixList()))):
+        if (('ה' in word.getPrixList()) or (word.getPrixListEnd() == 'ל') or (word.getPrixListEnd() == 'מ') or (word.getPrixListEnd() == 'ב')):
+            return False
+        return True
+        
+    def impertvRules(self, word, l):
+        if (('ה' in word.getPrixList()) or ('ל' in word.getPrixList()) or ('כ' in word.getPrixList()) or ('מ' in word.getPrixList()) or ('ש' in word.getPrixList()) or ('ב'in word.getPrixList())):
             return False
         return True
     
     def imperative(self, look, word):
-        if(word.getLen() < 2) or ('-' in word.getText()) or (self.imperRules(word, word.last()) == False) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getVerbform() == 'Niphal') or (word.getModern == True) or (word.getRL2() == word.last2()):
+        if(word.getLen() < 2) or ('-' in word.getText()) or (self.impertvRules(word, word.last()) == False) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getVerbform() == 'Niphal') or (word.getModern == True) or (word.getRL2() == word.last2()):
             return Word("","")
         
         if((word.getLen() < 3) and (self.CurrentWord == word)):
@@ -2955,7 +2966,7 @@ class HebrewDictionary(App):
         return Word("", "")
         
     def infinitive(self, look, word):
-        if(word.getLen() < 3) or ('-' in word.getText()) or (word.isTense() == True) or (word.isNoun() == True) or (word.getVerbform() == 'Niphal') or (word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel'):
+        if((word.getLen() < 3) or ('-' in word.getText()) or (word.getPrixListEnd() == 'מ') or (word.getPrixListEnd() == 'ל') or (word.getPrixListEnd() == 'כ') or ('ה' in word.getPrixList()) or (word.isTense() == True) or (word.isNoun() == True) or (word.getVerbform() == 'Niphal') or (word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel')):
             return Word("","")
         
         singleW2 = Word("","")
@@ -3053,7 +3064,7 @@ class HebrewDictionary(App):
         return Word("", "")
         
     def infinitiveAbs(self, look, word):
-        if(word.getLen() < 3)  or ('-' in word.getText()) or (word.getVerbform() == 'Niphal') or (word.isTense() == True):
+        if((word.getLen() < 3)  or ('-' in word.getText()) or (word.getVerbform() == 'Niphal') or (word.isTense() == True) or (word.getPrixListEnd() == 'מ') or (word.getPrixListEnd() == 'ל') or (word.getPrixListEnd() == 'כ') or ('ה' in word.getPrixList())):
             return Word("","")
         
         infWp = Word("","")
@@ -3082,7 +3093,7 @@ class HebrewDictionary(App):
         return Word("", "")
 
     def cohortative(self, look, word):
-        if(word.getLen() < 3) or ('-' in word.getText()) or (word.isTense() == True) or (word.isNoun() == True) or (word.getVerbform() == 'Niphal') or (word.getRL2() == word.last2()) or (word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel'):
+        if((word.getLen() < 3) or (word.getPrixListEnd() == 'ל') or ('ה' in word.getPrixList()) or ('-' in word.getText()) or (word.isTense() == True) or (word.isNoun() == True) or (word.getVerbform() == 'Niphal') or (word.getRL2() == word.last2()) or (word.getVerbform() == 'Pual') or (word.getVerbform() == 'Piel')):
             return Word("","")
             
         if(word.getLen() > 3):   
@@ -3533,17 +3544,19 @@ class HebrewDictionary(App):
             return False
         if (p in word.getPrixList()):
             return False
-        if ((p == 'ב') or (p == 'ל')) and (('ב' in word.getPrixList()) or ('ל' in word.getPrixList())):
+        if ((p == 'ב') or (p == 'ל')) and ((word.getPrixListEnd() == 'ב') or (word.getPrixListEnd() == 'ל')):
             return False
-        if (word.getPrefix() == True) and (word.prefixD[p] == "and"):
+        if ((p == 'ו') and (word.getPrefix() == True)):
             return False
         if ('ה' in word.getPrixList()):
             return False
         if (p == 'ש') and ('ש' in word.getPrixList()):
             return False
-        if ((p == 'מ') or (p == 'ל')) and (('ב' in word.getPrixList()) or ('ל' in word.getPrixList())):
+        if (word.getPrixListEnd() == p):
             return False
-        if (p == 'כ') and (('ל' in word.getPrixList()) or ('ב' in word.getPrixList()) or ('כ' in word.getPrixList()) or ('ש' in word.getPrixList()) or ("מ" in word.getPrixList())):
+        if ((p == 'מ') or (p == 'ל')) and ((word.getPrixListEnd() == 'ב') or (word.getPrixListEnd() == 'ל')):
+            return False
+        if (p == 'כ') and (('ל' in word.getPrixList()) or ('כ' in word.getPrixList()) or (word.getPrixListEnd() == 'ש') or (word.getPrixListEnd() == 'מ')):
             return False
         if (p == 'ה') and (word.isVerb() == True):
             return False
@@ -4103,7 +4116,7 @@ class HebrewDictionary(App):
         if(word.getLen() < 1) or ('-' in word.getText()) or (word.getIrregVal() > 15):
             return Word("", "")
             
-        if((self.CurrentWord.first() == word.first()) or ((self.CurrentWord.second() == word.first())and(self.CurrentWord.first() in word.getPrixList()))) and (word.getTense() == 'Imperative'):
+        if((self.CurrentWord.first() == word.first()) or ((self.CurrentWord.second() == word.first())and(word.getPrixListEnd() == self.CurrentWord.first())and(len(word.getPrixList()) == 1))) and (word.getTense() == 'Imperative'):
             if(not (word.last() == 'ה')):
                 irreghW = Word("","")
                 irreghW.equalTo(word)
