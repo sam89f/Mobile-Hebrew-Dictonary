@@ -853,7 +853,7 @@ class Keyboard(GridLayout):
         if(len(inputT) < 1):
             self.main.Input.text = k
         else:
-            if(inputT[0] in unFinals):
+            if((inputT[0] in unFinals) and (not (k == '-'))):
                 self.main.Input.text = k + unFinals.get(inputT[0]) + inputT[1:]
             else:
                 self.main.Input.text = k + inputT
