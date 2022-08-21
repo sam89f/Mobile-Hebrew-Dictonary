@@ -59,23 +59,27 @@ class Word:
         
         self.text = t
         self.definition = d
-        self.value = 0
-        self.prefix = 0
+        self.value = 100000000000
         self.heyVal = 2
         self.lamedVal = 3
         self.betVal = 2
         self.vavVal = 1
         self.prefactor = 5
+        self.suffactor = 5
         self.plFactor = 2
+        self.dlFactor = 3
+        self.mdrnFactor = 6
+        self.cnstFactor = 2
+        self.irrgFactor = 9
         self.r_L2 = ""
         self.preW = []
         self.sufW = []
         self.mdrnW = 'sddgfges'
+        self.prefix = 0
         self.partiW = -1
         self.suffix1 = 0
         self.suffix2 = 0
         self.suffix3 = 0
-        self.suffactor = 5
         self.irreg = 0
         self.Ht = True
         self.modern = 0
@@ -306,10 +310,10 @@ class Word:
                 g += self.gemontria[letter]   
         return g
         
-    def calValue(self):
-        if(self.value == 0):
-            self.value = 100000000000 - 10*((self.prefix + 1)*(self.suffix1 + 1)*(self.suffix2 + 1)*(self.suffix3 + 1)*(self.plural + 1)*(self.modern + 1)*(self.irreg + 1)*(self.tenseVals[self.tense])*(self.verbformVals[self.verbform]))
-        return self.value
+    #def calValue(self):
+        #if(self.value == 0):
+            #self.value = 100000000000 - 10*((self.prefix + 1)*(self.suffix1 + 1)*(self.suffix2 + 1)*(self.suffix3 + 1)*(self.plural + 1)*(self.modern + 1)*(self.irreg + 1)*(self.tenseVals[self.tense])*(self.verbformVals[self.verbform]))
+        #return self.value
         
     def getValue(self):
         return self.value
@@ -588,21 +592,25 @@ class Word:
 
     def setPrefixN(self, n):
         self.prefix += n
+        self.value = self.value - n
     
     def setPrefix(self):
         self.prefix += self.prefactor
+        self.value = self.value - self.prefactor
         
     def setRL2(self, L2):
         self.r_L2 = L2
         
-    def resetPrefix(self):
-        self.prefix = 0
+    #def resetPrefix(self):
+        #self.prefix = 0
         
     def decPrefix(self):
-        self.prefix = self.prefix -self.prefactor
+        self.prefix = self.prefix - self.prefactor
+        self.value = self.value + self.prefactor
         
     def decSuffix1(self):
-        self.suffix1 = self.suffix1 -self.suffactor
+        self.suffix1 = self.suffix1 - self.suffactor
+        self.value = self.value + self.suffactor
         
     def setVerb(self):
         self.Verb = True
@@ -620,37 +628,49 @@ class Word:
     
     def setSuffix1(self):
         self.suffix1 += self.suffactor
+        self.value = self.value - self.suffactor
         
     def setSuffix2(self):
         self.suffix2 += (self.suffactor + 2)
+        self.value = self.value - (self.suffactor + 2)
+        
         
     def setSuffix3(self):
         self.suffix3 += (self.suffactor + 3) 
+        self.value = self.value - (self.suffactor + 3)
           
     def setIrreg(self):
-        self.irreg += 9
+        self.irreg += self.irrgFactor
+        self.value = self.value - self.irrgFactor
           
     def setModern(self):
-        self.modern += 6
+        self.modern += self.mdrnFactor
+        self.value = self.value - self.mdrnFactor
         
     def setPlural(self):
         self.plural += self.plFactor
+        self.value = self.value - self.plFactor
         
     def resetPlural(self):
         self.plural = 0
+        self.value = self.value + self.plFactor
         
     def setDaul(self):
-        self.daul += 1
+        self.daul += self.dlFactor
+        self.value = self.value - self.dlFactor
         
     def setConstruct(self):
-        self.construct = 3
+       self.construct = self.cnstFactor
+       self.value = self.value - self.cnstFactor
         
     def resetConstruct(self):
         self.construct = 0
+        self.value = self.value + self.cnstFactor
         
     def setTense(self, t):
         self.tense = t
         isTense = True
+        self.value = self.value - self.tenseVals[self.tense]
         if self.verbform == -1:
             self.setVerbform(0)
         
@@ -668,6 +688,7 @@ class Word:
     def setVerbform(self, verb):
         self.verbform = verb
         isVerbf = True
+        self.value = self.value - self.verbformVals[self.verbform]
     
     def setText(self, t):
         self.text = t
@@ -829,15 +850,13 @@ class SearchWord:
     def find(self, w, Dict):
         if w in self.getWords():
             index = self.indexWords(w)
-            if self.Words[index].calValue() > w.calValue():
-                self.Words[index].setValue(w.calValue())
+            #if self.Words[index].getValue() < w.getValue():
+                #self.Words[index].setValue(w.getValue())
             return True
         elif w.getText() in Dict.keys():
             definition = Dict[w.getText()]["definition"]
             newWord = Word("", "")
-            w.calValue()
             newWord.equalTo(w)
-            newWord.setValue(w.calValue())
             newWord.setDefinition(definition)
             self.addWord(newWord)
             return True
@@ -1332,7 +1351,7 @@ class HebrewDictionary(App):
         
         WList = look.getWords() #store all the words found in the 'WList' variable
         WList.sort(key=look.getValue, reverse = True) #sord words according to closeness to the word as it appears in the input field
-                                                      #based on a formula in the 'calValue' function of the 'Word' class
+                                                      #based on a formula in the algorithm for calculating the value, which is built in the 'Word' class
         #This block of code is responsible for formatting and displaying the results.                                               
         if(len(look.getWords()) > 0):
             for wi in WList:  
