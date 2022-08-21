@@ -308,7 +308,7 @@ class Word:
         
     def calValue(self):
         if(self.value == 0):
-            self.value = 100000000000 - 10*(self.prefix + 1)*(self.suffix1 + 1)*(self.suffix2 + 1)*(self.suffix3 + 1)*(self.plural + 1)*(self.modern + 1)*(self.irreg + 1)*(self.tenseVals[self.tense])*(self.verbformVals[self.verbform])
+            self.value = 100000000000 - 10*((self.prefix + 1)*(self.suffix1 + 1)*(self.suffix2 + 1)*(self.suffix3 + 1)*(self.plural + 1)*(self.modern + 1)*(self.irreg + 1)*(self.tenseVals[self.tense])*(self.verbformVals[self.verbform]))
         return self.value
         
     def getValue(self):
@@ -829,16 +829,16 @@ class SearchWord:
     def find(self, w, Dict):
         if w in self.getWords():
             index = self.indexWords(w)
-            if self.Words[index].getValue() < w.calValue():
-                self.Words[index].setValue(w.getValue())
+            if self.Words[index].calValue() > w.calValue():
+                self.Words[index].setValue(w.calValue())
             return True
         elif w.getText() in Dict.keys():
             definition = Dict[w.getText()]["definition"]
             newWord = Word("", "")
-            newWord.equalTo(w)
-            newWord.setDefinition(definition)
             w.calValue()
-            newWord.setValue(w.getValue())
+            newWord.equalTo(w)
+            newWord.setValue(w.calValue())
+            newWord.setDefinition(definition)
             self.addWord(newWord)
             return True
         return False
