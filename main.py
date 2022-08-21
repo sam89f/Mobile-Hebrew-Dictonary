@@ -837,7 +837,8 @@ class SearchWord:
             newWord = Word("", "")
             newWord.equalTo(w)
             newWord.setDefinition(definition)
-            newWord.calValue()
+            w.calValue()
+            newWord.setValue(w.getValue())
             self.addWord(newWord)
             return True
         return False
