@@ -52,6 +52,8 @@ a_roots = ['א', 'ב', 'ג', 'ד', 'ז', 'ח', 'ט', 'כ', 'ל', 'מ', 'ס', 'ע
 roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף', 'ץ']
 p_roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף', 'ץ']
 
+INF = 100000000000
+
 #This class defines all the properties and methods that a Word object needs to have in order
 #use the proper metrics in searching and ordering words.
 class Word:
@@ -59,12 +61,16 @@ class Word:
         
         self.text = t
         self.definition = d
-        self.value = 100000000000
+        self.value = INF
         self.heyVal = 2
         self.lamedVal = 3
         self.betVal = 2
         self.vavVal = 1
+        self.vrbFactor = 0
+        self.nonFactor = 0
         self.prefactor = 5
+        self.suffactor2 = 6
+        self.suffactor3 = 7
         self.suffactor = 5
         self.plFactor = 2
         self.dlFactor = 3
@@ -115,6 +121,8 @@ class Word:
         self.definition = value.definition
         self.Verb = value.Verb
         self.Noun = value.Noun
+        self.vrbFactor = newWord.vrbFactor
+        self.nonFactor = newWord.nonFactor
         self.prefix = value.prefix
         self.r_L2 = value.r_L2
         self.suffix1 = value.suffix1
@@ -141,6 +149,8 @@ class Word:
         self.definition = newWord.definition
         self.Verb = newWord.Verb
         self.Noun = newWord.Noun
+        self.vrbFactor = newWord.vrbFactor
+        self.nonFactor = newWord.nonFactor
         self.prefix = newWord.prefix
         self.r_L2 = newWord.r_L2
         self.suffix1 = newWord.suffix1
@@ -613,31 +623,60 @@ class Word:
         self.value = self.value + self.suffactor
         
     def setVerb(self):
+        if self.Verb == True:
+            return
         self.Verb = True
         self.Noun = False
+        if((INF - (self.value + self.vrbFactor)) > 0):
+            self.value += self.vrbFactor
+        else:
+            self.value = INF - 1
         
     def setNoun(self):
+        if self.Noun == True:
+            return
         self.Noun = True
         self.Verb = False
+        if((INF - (self.value + self.nonFactor)) > 0):
+            self.value += self.nonFactor
+        else:
+            self.value = INF - 1
         
     def unSetVerb(self):
+        if self.Verb == False:
+            return
         self.verb = False
+        if((INF - (self.value - self.vrbFactor)) > 0):
+            self.value = self.value - self.vrbFactor
+        else:
+            self.value = INF - 1
+        
+    def setVfactor(self, num):
+        self.vrbFactor = num
         
     def unSetNoun(self):
+        if self.Noun == False:
+            return
         self.Noun = False
+        if((INF - (self.value - self.nonFactor)) > 0):
+            self.value = self.value - self.nonFactor
+        else:
+            self.value = INF - 1
+        
+    def setNfactor(self, num):
+        self.nonFactor = num
     
     def setSuffix1(self):
         self.suffix1 += self.suffactor
         self.value = self.value - self.suffactor
         
     def setSuffix2(self):
-        self.suffix2 += (self.suffactor + 2)
-        self.value = self.value - (self.suffactor + 2)
-        
+        self.suffix2 += (self.suffactor2)
+        self.value = self.value - (self.suffactor2)
         
     def setSuffix3(self):
-        self.suffix3 += (self.suffactor + 3) 
-        self.value = self.value - (self.suffactor + 3)
+        self.suffix3 += (self.suffactor3) 
+        self.value = self.value - (self.suffactor3)
           
     def setIrreg(self):
         self.irreg += self.irrgFactor
@@ -850,7 +889,7 @@ class SearchWord:
     def find(self, w, Dict):
         if w in self.getWords():
             index = self.indexWords(w)
-            #if self.Words[index].getValue() < w.getValue():
+            # if self.Words[index].getValue() < w.getValue():
                 #self.Words[index].setValue(w.getValue())
             return True
         elif w.getText() in Dict.keys():
@@ -1269,10 +1308,10 @@ class HebrewDictionary(App):
         Year = ''
         look = SearchWord()
         check = SearchWord()
-        checkV = SearchWord()
         isVerb = False
         isNoun = False
         yWord = Word(text[i], "")
+        confidence = 7
         
         #checks to see if the text is in the format of a Hebrew year.
         #if so format a string in 'Year' variable to display that year
@@ -1297,26 +1336,32 @@ class HebrewDictionary(App):
         
         #This section of the code is dedicated to context recognition.
         #if the current word is not the first word check the word before it; and if the word
-        #before it is one if the Hebrew words below in the if statement, the the current word 
+        #before it is one if the Hebrew words below in the if statement, then the current word 
         #is most likely a noun
         if i > 0:
             if((text[i-1] == 'תא') or (text[i-1] == 'תאו')):
                 isNoun = True
+                word.setNfactor(confidence)
+                word.setVfactor(-confidence)
         #if the current word is not the last word, and not The Tetragramaton, and not a noun,
         #and the next word is in the list variable 'obj', or is 'תא', there is a good chance
         #that the current word is a verb.
         if(tk > i+1):
             if(not(word.getText() == "הוהי")) and (isNoun == False) and ((text[i+1] in Obj) or (text[i+1] == 'תא')):
-                if(self.tense(checkV, word, False) == True): #if the current word is in one of certain tense forms, and at leat one word 
-                    if(len(checkV.getWords()) > 0):#is found in the dictionary, this is enough evidence to set the current word to a verb
-                        isVerb = True              
-                    elif(word.first() == 'ו'): #otherwise check to see if the text is in one of the tense forms with a prefix at the beginning of the text
-                        preW = Word("","")     #if so and at leat one word is found in the dictionary, then set the current word to a verb
-                        preW.equalTo(word)
-                        preW.setText(word.getText()[:-1])
-                        if(self.tense(checkV, preW, False) == True):
-                            if(len(checkV.getWords()) > 0):
-                                isVerb = True
+                isVerb = True  
+                word.setVfactor(confidence)
+                word.setNfactor(-confidence)
+                
+                #if(self.tense(checkV, word, False) == True): #if the current word is in one of certain tense forms, and at leat one word 
+                #    if(len(checkV.getWords()) > 0):#is found in the dictionary, this is enough evidence to set the current word to a verb
+                #        isVerb = True              
+                #    elif(word.first() == 'ו'): #otherwise check to see if the text is in one of the tense forms with a prefix at the beginning of the text
+                #        preW = Word("","")     #if so and at leat one word is found in the dictionary, then set the current word to a verb
+                #        preW.equalTo(word)
+                #        preW.setText(word.getText()[:-1])
+                #        if(self.tense(checkV, preW, False) == True):
+                #            if(len(checkV.getWords()) > 0):
+                #                isVerb = True
                         
         self.wText += '\t\t'*n + ':' + (self.revPhWords(text[i], '-')) + '   ' + number + Year + '\n'
          
@@ -1327,10 +1372,10 @@ class HebrewDictionary(App):
             look.find(word, self.Dict)
         else: #If the current word is not The Tetragramaton, then the current word may or may not be set to a noun or a verb
               #based on the resalts from the context recognition part of the code
-            if isNoun == True:
-                word.setNoun()
-            if isVerb == True:
-                word.setVerb() 
+        #    if isNoun == True:
+        #        word.setNoun()
+        #    if isVerb == True:
+        #        word.setVerb() 
                 
             look.find(word, self.Dict) #search for the word as it appears in the text input field
             self.algorithm(look, word) #determines the possible forms of the current word, and searches
