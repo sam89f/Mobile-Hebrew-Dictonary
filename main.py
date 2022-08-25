@@ -615,12 +615,14 @@ class Word:
         #self.prefix = 0
         
     def decPrefix(self):
-        self.prefix = self.prefix - self.prefactor
-        self.value = self.value + self.prefactor
+        if self.prefix > 0:
+            self.prefix = self.prefix - self.prefactor
+            self.value = self.value + self.prefactor
         
     def decSuffix1(self):
-        self.suffix1 = self.suffix1 - self.suffactor
-        self.value = self.value + self.suffactor
+        if self.suffix1 > 0:
+            self.suffix1 = self.suffix1 - self.suffactor
+            self.value = self.value + self.suffactor
         
     def setVerb(self):
         if self.Verb == True:
@@ -691,6 +693,8 @@ class Word:
         self.value = self.value - self.plFactor
         
     def resetPlural(self):
+        if self.plural == 0:
+            return
         self.plural = 0
         self.value = self.value + self.plFactor
         
@@ -703,6 +707,8 @@ class Word:
        self.value = self.value - self.cnstFactor
         
     def resetConstruct(self):
+        if self.construct == 0:
+            return
         self.construct = 0
         self.value = self.value + self.cnstFactor
         
