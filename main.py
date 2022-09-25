@@ -1026,7 +1026,7 @@ class DisplayWords(GridLayout):
     def __init__(self, instance, **kwargs):
         super(DisplayWords, self).__init__(**kwargs)
         self.cols = 1
-        self.readText = TextInput(readonly=True, multiline=True, base_direction='rtl', size_hint=[5, 0.3], focus=True, font_name='data/fonts/times', font_size=Display_Size)
+        self.readText = TextInput(readonly=True, multiline=True, size_hint=[5, 0.3], focus=True, font_name='data/fonts/times', font_size=Display_Size)
         self.display = TextInput(readonly=True, multiline=True, focus=True, size_hint_x=5, size_hint_y=None, font_name='data/fonts/times', font_size=Display_Size)
         self.display.bind(minimum_height=self.display.setter('height'))
         self.dRoot = ScrollView(size_hint=(5, 1), size=(Window.width, Window.height))
@@ -1089,7 +1089,7 @@ class HebrewDictionary(App):
         
         self.UserInterface = GridLayout(cols=1)
         self.MainPanal = GridLayout(cols=1)
-        self.Input = TextInput(readonly=False, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=Display_Size)
+        self.Input = TextInput(readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
         self.findB.bind(on_press=self.findAction)
         self.addB = Button(text='AddW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
