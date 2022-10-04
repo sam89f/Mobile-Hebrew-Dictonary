@@ -1125,7 +1125,7 @@ class HebrewDictionary(App):
         
         self.UserInterface = GridLayout(cols=1)
         self.MainPanal = GridLayout(cols=1)
-        self.Input = CustomInput(readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
+        self.Input = CustomInput(readonly=False, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=Display_Size)
         self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
         self.findB.bind(on_press=self.findAction)
         self.addB = Button(text='AddW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
