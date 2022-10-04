@@ -1039,11 +1039,41 @@ class CustomInput(TextInput):
      
     # reverses text of parameter
     def revT(self, text):
-        revText = ""
+        newInput = text
+        revInput = ""
         end = len(text)-1
-        for i in range(len(text)):
-            revText += text[end-i]
-        return str(revText)
+        for index in range(end+1):
+            if newInput[end-index] == '(':
+                revInput += ')'
+            elif newInput[end-index] == ')':
+                revInput += '('
+            elif newInput[end-index] == '[':
+                revInput += ']'
+            elif newInput[end-index] == ']':
+                revInput += '['
+            elif newInput[end-index] == '{':
+                revInput += '}'
+            elif newInput[end-index] == '}':
+                revInput += '{'
+            else:
+                revInput += newInput[end-index]
+                
+        return self.revNum(str(revInput))
+    
+    def revNum(self, words):
+        numWords = ""
+        n = 0;
+        for i in range(len(words)):
+            if words[i].isdigit():
+                n += 1
+            else:
+                for j in range(i-1, (i-1)-n, -1):
+                    numWords += words[j]
+                numWords += words[i]
+                n = 0
+                
+        return str(numWords)
+        
         
     # check and see if there are final letters at the beginning of word (which should be at the end)
     def check(self):
