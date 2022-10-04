@@ -1083,7 +1083,7 @@ class CustomInput(TextInput):
                 w = w.strip(punctuation[i])
             if w[-1] in finals.values():
                 return True
-            if w[-1] in finals.keys(): # If nonfinal letter is at the beginning then the text is in the correct order
+            if w[0] in finals.values(): # If nonfinal letter is at the beginning then the text is in the correct order
                 return False
         return False
         
