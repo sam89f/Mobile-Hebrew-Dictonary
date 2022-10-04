@@ -20,6 +20,7 @@ from kivy.base import runTouchApp
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from codecs import decode
+from kivy.core.clipboard import Clipboard
 import string
 import os
 import sys
@@ -27,7 +28,7 @@ import unicodedata
 
 Display_Size = 30
 
-#color values
+# color values
 red = [1, 0, 0, 1]
 green = [0, 1, 0, 1]
 sky_biue = [135, 206, 235]
@@ -54,8 +55,8 @@ p_roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף
 
 INF = 100000000000
 
-#This class defines all the properties and methods that a Word object needs to have in order
-#use the proper metrics in searching and ordering words.
+# This class defines all the properties and methods that a Word object needs to have in order
+# use the proper metrics in searching and ordering words.
 class Word:
     def __init__(self, t, d):
         
@@ -863,8 +864,8 @@ class Word:
         if self.gemontria[n] >= 100:
             return 2
 
-#This is a helper class which contain the methods for searching and choosing words. 
-#It also has at least one container to store and sort certain Word objects.
+# This is a helper class which contain the methods for searching and choosing words. 
+# It also has at least one container to store and sort certain Word objects.
 class SearchWord:
     def __init__(self):
         self.Words = []
@@ -907,7 +908,7 @@ class SearchWord:
             return True
         return False
             
-#Keyboard interface
+# Keyboard interface
 class Keyboard(GridLayout):
     
     def __init__(self, instance, **kwargs):
@@ -1021,7 +1022,42 @@ class Keyboard(GridLayout):
             return finals.get(text[0]) + text[1:]
         return text
         
-    #Interface for displaying the words found, their diffinition, and some gramatical properties.  
+# custom TextInput class with custom methods and overridden parent methods
+class CustomInput(TextInput):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    # override function to paste text from clipboard when the input field is triple tapped
+    def on_triple_tap(self):
+        if(not(self.text == "")):
+            super(CustomInput, self).on_triple_tap()  # performs it's original function
+        else:
+            self.text = Clipboard.paste()
+            if self.check(): # maker sure text order is correct; if not, reverse input text
+                self.text = self.revT(self.text)
+        print("triple tap confirmed")
+     
+    # reverses text of parameter
+    def revT(self, text):
+        revText = ""
+        end = len(text)-1
+        for i in range(len(text)):
+            revText += text[end-i]
+        return str(revText)
+        
+    # check and see if there are final letters at the beginning of word (which should be at the end)
+    def check(self):
+        words = self.text.split()
+        for w in words:
+            for i in range(len(punctuation)):
+                w = w.strip(punctuation[i])
+            if w[-1] in finals.values():
+                return True
+            if w[-1] in finals.keys(): # If nonfinal letter is at the beginning then the text is in the correct order
+                return False
+        return False
+        
+    # Interface for displaying the words found, their diffinition, and some gramatical properties.  
 class DisplayWords(GridLayout):
     def __init__(self, instance, **kwargs):
         super(DisplayWords, self).__init__(**kwargs)
@@ -1043,7 +1079,7 @@ class DisplayWords(GridLayout):
         self.add_widget(self.SubPanal)
              
         
-#Inerface for adding a new word to the dictionary
+# Inerface for adding a new word to the dictionary
 class AddWord(GridLayout):
     def __init__(self, instance, **kwargs):
         super(AddWord, self).__init__(**kwargs)
@@ -1066,7 +1102,7 @@ class AddWord(GridLayout):
         self.add_widget(self.enterB)
         self.add_widget(self.cancelB)     
  
-#top level of app.  
+# top level of app.  
 class HebrewDictionary(App):
     
     def startInterface(self):
@@ -1089,7 +1125,7 @@ class HebrewDictionary(App):
         
         self.UserInterface = GridLayout(cols=1)
         self.MainPanal = GridLayout(cols=1)
-        self.Input = TextInput(readonly=False, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=Display_Size)
+        self.Input = CustomInput(readonly=False, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=Display_Size)
         self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
         self.findB.bind(on_press=self.findAction)
         self.addB = Button(text='AddW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
@@ -1170,7 +1206,7 @@ class HebrewDictionary(App):
     def closeAction(self, instance):
         self.wordPopup.dismiss()
     
-    #scrolls to the beginning of the text input
+    # scrolls to the beginning of the text input
     def topAction(self, instance):
         self.wordPopup.content.dRoot.scroll_y = 1.0
         
@@ -1239,7 +1275,7 @@ class HebrewDictionary(App):
                 self.wText += "*"*125
                 self.wText += '\n\n'
         
-        #scrolls to the beginning of the text input once all the resalts are displayed
+        # scrolls to the beginning of the text input once all the resalts are displayed
         self.wordPopup.content.dRoot.scroll_y = 1.0
     def revPhWords(self, phrase, s):
         lph = phrase.split(s)
@@ -1306,8 +1342,8 @@ class HebrewDictionary(App):
                             break                   
         return tempWs[0:(end)]
         
-    #This function is responsible for finding and displaying all the diffent possible words that the word, stored in text[i],
-    #is derived from.
+    # This function is responsible for finding and displaying all the diffent possible words that the word, stored in text[i],
+    # is derived from.
     def getWList(self, text, i, tk, k, n):
     
         number = ''
@@ -1319,31 +1355,31 @@ class HebrewDictionary(App):
         yWord = Word(text[i], "")
         confidence = 7
         
-        #checks to see if the text is in the format of a Hebrew year.
-        #if so format a string in 'Year' variable to display that year
+        # checks to see if the text is in the format of a Hebrew year.
+        # if so format a string in 'Year' variable to display that year
         if yWord.isYear() == True:
             Year = 'Year: ' + str(yWord.getYear())
         
-        #creating word object with text value of the string at indext 'i' (current index)
+        # creating word object with text value of the string at indext 'i' (current index)
         word = Word(text[i], "")
-        #initialize 'CurrentWord' variable to the word now being processed
+        # initialize 'CurrentWord' variable to the word now being processed
         self.CurrentWord.equalTo(word)
         
-        #if text in word object is in the format of a Hebrew number, format a string in the 
-        #'number' variable to display that number
+        # if text in word object is in the format of a Hebrew number, format a string in the 
+        # 'number' variable to display that number
         if word.isNumb() == True:
             number = '#: ' + str(word.getGemontria()) + '; '
-        #otherwise check to see if the text is in Hebrew number format with a prefix at the beginning of the text
+        # otherwise check to see if the text is in Hebrew number format with a prefix at the beginning of the text
         else:
             preNum = self.smPrefix(check, word, False)
             if preNum.getLen() > 0:
                 if (preNum.isNumb() == True) and (not preNum.getText() == ""):
                     number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
         
-        #This section of the code is dedicated to context recognition.
-        #if the current word is not the first word check the word before it; and if the word
-        #before it is one if the Hebrew words below in the if statement, then the current word 
-        #is most likely a noun
+        # This section of the code is dedicated to context recognition.
+        # if the current word is not the first word check the word before it; and if the word
+        # before it is one if the Hebrew words below in the if statement, then the current word 
+        # is most likely a noun
         if i > 0:
             if((text[i-1] == 'תא') or (text[i-1] == 'תאו')):
                 isNoun = True
@@ -1356,9 +1392,9 @@ class HebrewDictionary(App):
                     nounW.setNoun()
                     look.find(nounW, self.Dict)
                     self.algorithm(look, nounW)
-        #if the current word is not the last word, and not The Tetragramaton, and not a noun,
-        #and the next word is in the list variable 'obj', or is 'תא', there is a good chance
-        #that the current word is a verb.
+        # if the current word is not the last word, and not The Tetragramaton, and not a noun,
+        # and the next word is in the list variable 'obj', or is 'תא', there is a good chance
+        # that the current word is a verb.
         if(tk > i+1):
             if(not(word.getText() == "הוהי")) and (isNoun == False) and ((text[i+1] in Obj) or (text[i+1] == 'תא')):
                 isVerb = True  
@@ -1373,33 +1409,33 @@ class HebrewDictionary(App):
                         
         self.wText += '\t\t'*n + ':' + (self.revPhWords(text[i], '-')) + '   ' + number + Year + '\n'
          
-        #If the current word is The Tetragramaton, then we don't need to process the word any further
-        #we already know this is the proper name of G_d and a proper noun.
+        # If the current word is The Tetragramaton, then we don't need to process the word any further
+        # we already know this is the proper name of G_d and a proper noun.
         if word.getText() == "הוהי":
             word.setNoun()
             look.find(word, self.Dict)
-        else: #If the current word is not The Tetragramaton, then the current word may or may not be set to a noun or a verb
-              #based on the resalts from the context recognition part of the code
-            look.find(word, self.Dict) #search for the word as it appears in the text input field
-            self.algorithm(look, word) #determines the possible forms of the current word, and searches
-            #for the words that the current word may have be been derived from
+        else: # If the current word is not The Tetragramaton, then the current word may or may not be set to a noun or a verb
+              # based on the resalts from the context recognition part of the code
+            look.find(word, self.Dict) # search for the word as it appears in the text input field
+            self.algorithm(look, word) # determines the possible forms of the current word, and searches
+            # for the words that the current word may have be been derived from
 
-            #These three lines gets rid of any quotation marks just in cases thay interfered with the processing of the word.
+            # These three lines gets rid of any quotation marks just in cases thay interfered with the processing of the word.
             sText = word.getText()
             sText = sText.replace("\'", "")
             sText = sText.replace('\"', '')
 
-            if(not (word.getText() == sText)): #if there are quotation marks in the current word put stripped version in the algorithm
-                word.setText(sText)            #stored in the 'sText' variable.
+            if(not (word.getText() == sText)): # if there are quotation marks in the current word put stripped version in the algorithm
+                word.setText(sText)            # stored in the 'sText' variable.
                 self.CurrentWord.setText(sText)
                 look.find(word, self.Dict)
-                if not(word.getText() == "הוהי"): #see if current word is The Tetragramaton, this time without the quotation marks
+                if not(word.getText() == "הוהי"): # see if current word is The Tetragramaton, this time without the quotation marks
                     self.algorithm(look, word)
         
-        WList = look.getWords() #store all the words found in the 'WList' variable
-        WList.sort(key=look.getValue, reverse = True) #sord words according to closeness to the word as it appears in the input field
-                                                      #based on a formula in the algorithm for calculating the value, which is built in the 'Word' class
-        #This block of code is responsible for formatting and displaying the results.                                               
+        WList = look.getWords() # store all the words found in the 'WList' variable
+        WList.sort(key=look.getValue, reverse = True) # store words according to closeness to the word as it appears in the input field
+                                                      # based on a formula in the algorithm for calculating the value, which is built in the 'Word' class
+        # This block of code is responsible for formatting and displaying the results.                                               
         if(len(look.getWords()) > 0):
             for wi in WList:  
                 w = Word("", "")
@@ -4375,7 +4411,7 @@ class HebrewDictionary(App):
             irregWN.setIrreg()
             self.FindHelper(look, irregWN, self.Dict)
  
-        #checking to see if any tavs or hays have been removed form the end of the word, or if any extra vawls have been added within the word
+        # checking to see if any tavs or hays have been removed form the end of the word, or if any extra vawls have been added within the word
         if (word.getLen() > 3) and (not(word.getPartiVal() == 0)) and ((word.getSuffix() == True) or (not (word.last3() == self.CurrentWord.last3()))) and (('ו' in word.getPrixList()) or (word.getTense() == "Perfect") or (word.getTense() == "Imperfect") or (word.getTense() == "Imperative") or (word.getTense() == "Infinitive")):
             if((not(((word.getConstruct() == True) and (((word.getPlural() == True)and(self.CurrentWord.getX(self.CurrentWord.getLen() - 2) == word.last())) or ((word.getDaul() == True)and(self.CurrentWord.getX(self.CurrentWord.getLen() - 3) == word.last())))) or ((word.getConstruct() == False) and (((word.getPlural() == True)and(self.CurrentWord.getX(self.CurrentWord.getLen() - 3) == word.last())) or ((word.getDaul() == True)and(self.CurrentWord.getX(self.CurrentWord.getLen() - 4) == word.last())))))) and (not((word.getConstruct() == True)and((word.getPlural() == False)and(word.getDaul() == False)) and (self.CurrentWord.last2()[-1:] == word.last()))) or ((word.getTense() == "Imperfect")and('ו' in word.getPrixList())) or ((word.getTense() == "Perfect")and(not 'ו' in word.getPrixList()))) and (word.getSuffix() == True) and (not ('ה' in word.getSufxList())):
                 if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not(('ו' in word.getPrixList())and(word.getTense() == 'Imperfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))) and (not((not ('ו' in word.getPrixList()))and(word.getTense() == 'Perfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))):
@@ -4429,7 +4465,7 @@ class HebrewDictionary(App):
                     irregWc.setIrreg()
                     self.FindHelper(look, irregWc, self.Dict)
          
-        #checking to see if any letters have been assimilated from the beginning of the word.
+        # checking to see if any letters have been assimilated from the beginning of the word.
         if ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or ((word.getTense() == 'Imperfect')and(not('ו' in word.getPrixList()))) or ((word.getTense() == 'Perfect')and('ו' in word.getPrixList())) or (word.getTense() == 'Cohortative')) and (not(word.getPartiVal() == 1)):
             if (not((word.getVerbform() == 'Hophal')or(word.getVerbform() == 'Hiphil')or(word.getVerbform() == 'Hithpeal'))) and (not(word.getIrregVal() > 0)) and ((not ('ה' in word.getPrixList())) and (not (self.CurrentWord.first() == 'ה')) and (not (word.first() == 'ה'))) and (not(word.getVerbform() == 'Piel')):
                 irregW = Word("","")
@@ -4456,7 +4492,7 @@ class HebrewDictionary(App):
         return Word("", "")
         
     def build(self):
-        #collecting user words form Json file (the database)
+        # collecting user words form Json file (the database)
         self.store = JsonStore('data/WordsFinalFixed.json')
         
         # Building .kv file
