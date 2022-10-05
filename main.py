@@ -1032,7 +1032,7 @@ class CustomInput(TextInput):
         if(not(self.text == "")):
             super(CustomInput, self).on_triple_tap()  # performs it's original function
         else:
-            self.text = Clipboard.paste()
+            self.text = "\n" + Clipboard.paste()
             if self.check(): # maker sure text order is correct; if not, reverse input text
                 self.text = self.revT(self.text)
         print("triple tap confirmed")
@@ -1081,10 +1081,11 @@ class CustomInput(TextInput):
         for w in words:
             for i in range(len(punctuation)):
                 w = w.strip(punctuation[i])
-            if w[-1] in finals.values():
-                return True
-            if w[0] in finals.values(): # If nonfinal letter is at the beginning then the text is in the correct order
-                return False
+            if len(w) > 0:
+                if w[-1] in finals.values():
+                    return True
+                if w[0] in finals.values(): # If nonfinal letter is at the beginning then the text is in the correct order
+                    return False
         return False
         
     # Interface for displaying the words found, their diffinition, and some gramatical properties.  
