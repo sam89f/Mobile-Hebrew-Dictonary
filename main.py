@@ -37,6 +37,7 @@ purple = [1, 0, 1, 1]
 white = [1, 1, 1, 1]
 black = [0, 0, 0, 0]
 
+AlefBet = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ת', 'ך', 'ם', 'ן', 'ף', 'ץ']
 finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
 unFinals = {'ך':'כ', 'ם':'מ', 'ן':'נ', 'ף':'פ', 'ץ':'צ'}
 suffix = ['הנה', 'ונ', 'םכ', 'ןכ', 'םה', 'ם', 'ןה', 'ן', 'ית', 'ינ', 'יי', 'י', 'ה', 'הנ', 'וה', 'ו', 'ך']
@@ -931,20 +932,7 @@ class Keyboard(GridLayout):
         end = len(self.main.Input.text)-1
         
         for index in range(end+1):
-            if newInput[end-index] == '(':
-                revInput += ')'
-            elif newInput[end-index] == ')':
-                revInput += '('
-            elif newInput[end-index] == '[':
-                revInput += ']'
-            elif newInput[end-index] == ']':
-                revInput += '['
-            elif newInput[end-index] == '{':
-                revInput += '}'
-            elif newInput[end-index] == '}':
-                revInput += '{'
-            else:
-                revInput += newInput[end-index]
+            revInput += newInput[end-index]
                 
         self.main.Input.text = self.revNum(str(revInput))
         
@@ -952,7 +940,7 @@ class Keyboard(GridLayout):
         numWords = ""
         n = 0;
         for i in range(len(words)):
-            if words[i].isdigit():
+            if (not (words[i] in AlefBet)):
                 n += 1
             else:
                 for j in range(i-1, (i-1)-n, -1):
@@ -1043,20 +1031,7 @@ class CustomInput(TextInput):
         revInput = ""
         end = len(text)-1
         for index in range(end+1):
-            if newInput[end-index] == '(':
-                revInput += ')'
-            elif newInput[end-index] == ')':
-                revInput += '('
-            elif newInput[end-index] == '[':
-                revInput += ']'
-            elif newInput[end-index] == ']':
-                revInput += '['
-            elif newInput[end-index] == '{':
-                revInput += '}'
-            elif newInput[end-index] == '}':
-                revInput += '{'
-            else:
-                revInput += newInput[end-index]
+            revInput += newInput[end-index]
                 
         return self.revNum(str(revInput))
     
@@ -1064,7 +1039,7 @@ class CustomInput(TextInput):
         numWords = ""
         n = 0;
         for i in range(len(words)):
-            if words[i].isdigit():
+            if (not (words[i] in AlefBet)):
                 n += 1
             else:
                 for j in range(i-1, (i-1)-n, -1):
@@ -1291,6 +1266,10 @@ class HebrewDictionary(App):
             return
         self.wText = ''
         inputBuff = self.Input.text.replace('-', ' ')
+        inputBuff = self.Input.text.replace('[', ' ')
+        inputBuff = self.Input.text.replace(']', ' ')
+        inputBuff = self.Input.text.replace('(', ' ')
+        inputBuff = self.Input.text.replace(')', ' ')
         words = inputBuff.split()
         words = self.clean(words)
         words = self.revWords(words)
