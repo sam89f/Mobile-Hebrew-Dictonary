@@ -1266,10 +1266,6 @@ class HebrewDictionary(App):
             return
         self.wText = ''
         inputBuff = self.Input.text.replace('-', ' ')
-        inputBuff = self.Input.text.replace('[', ' ')
-        inputBuff = self.Input.text.replace(']', ' ')
-        inputBuff = self.Input.text.replace('(', ' ')
-        inputBuff = self.Input.text.replace(')', ' ')
         words = inputBuff.split()
         words = self.clean(words)
         words = self.revWords(words)
