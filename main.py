@@ -48,7 +48,7 @@ prephrase = ['ת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
 plural = ['תו', 'םי', 'םיי']
 metathesis = ['ס', 'ש', 'צ']
 Obj = ['םתוא', 'ןתוא', 'ךתוא', 'התוא', 'ותוא', 'ונתוא', 'םהתא', 'ןהתא', 'םכתא', 'ןכתא']
-punctuation = ['\"', '\'', ' ', ',', '.', '?', ';', ':', '-', ')', '(', '[', ']', '}', '{', '*', '!']
+punctuation = ['־', '#', '+', '\"', '\'', ' ', ',', '.', '?', ';', ':', '-', ')', '(', '[', ']', '}', '{', '*', '!']
 vowels = ['ֵ']
 a_roots = ['א', 'ב', 'ג', 'ד', 'ז', 'ח', 'ט', 'כ', 'ל', 'מ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ף', 'ץ']
 roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף', 'ץ']
@@ -1294,6 +1294,7 @@ class HebrewDictionary(App):
         if len(self.Input.text) == 0:
             return
         self.wText = ''
+        inputBuff = self.Input.text.replace('־', '-')
         inputBuff = self.Input.text.replace('-', ' ')
         inputBuff = inputBuff.replace('[', ' ')
         inputBuff = inputBuff.replace(']', ' ')
