@@ -1033,7 +1033,7 @@ class CustomInput(TextInput):
         if(not(self.text == "")):
             super(CustomInput, self).on_triple_tap()  # performs it's original function
         else:
-            self.text = "\n" + Clipboard.paste()
+            self.text = ' ' + "\n" + Clipboard.paste()
             if self.check(): # maker sure text order is correct; if not, reverse input text
                 self.text = self.revT(self.text)
         print("triple tap confirmed")
