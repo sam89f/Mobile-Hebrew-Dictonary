@@ -48,7 +48,7 @@ prephrase = ['ת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
 plural = ['תו', 'םי', 'םיי']
 metathesis = ['ס', 'ש', 'צ']
 Obj = ['םתוא', 'ןתוא', 'ךתוא', 'התוא', 'ותוא', 'ונתוא', 'םהתא', 'ןהתא', 'םכתא', 'ןכתא']
-punctuation = [' ', ',', '.', '?', ';', ':', '-', ')', '(', '[', ']', '}', '{', '*', '!']
+punctuation = ['\"', '\'', ' ', ',', '.', '?', ';', ':', '-', ')', '(', '[', ']', '}', '{', '*', '!']
 vowels = ['ֵ']
 a_roots = ['א', 'ב', 'ג', 'ד', 'ז', 'ח', 'ט', 'כ', 'ל', 'מ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ף', 'ץ']
 roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף', 'ץ']
@@ -1258,11 +1258,10 @@ class HebrewDictionary(App):
         self.Word.Definition.text = ""
     
     def clean(self, words):
-        for i in range(len(words)):
-            for j in range(len(punctuation)):
-                words[i] = words[i].strip(punctuation[j])
-                
+        
         for w in range(len(words)):
+            words[w] = words[w].replace("[", " ")
+            words[w] = words[w].replace("]", " ")
             words[w] = words[w].replace("”", "")
             words[w] = words[w].replace("ֹו", "ו")
             words[w] = words[w].replace("ֹ", "ו") 
@@ -1283,6 +1282,10 @@ class HebrewDictionary(App):
             words[w] = words[w].replace("ֳ", "")
             words[w] = words[w].replace("ֽ", "")
             words[w] = words[w].replace("ֺ", "ו")
+            
+        for i in range(len(words)):
+            for j in range(len(punctuation)):
+                words[i] = words[i].strip(punctuation[j])
         
         return words
 
@@ -1292,6 +1295,8 @@ class HebrewDictionary(App):
             return
         self.wText = ''
         inputBuff = self.Input.text.replace('-', ' ')
+        inputBuff = inputBuff.replace('[', ' ')
+        inputBuff = inputBuff.replace(']', ' ')
         words = inputBuff.split()
         words = self.clean(words)
         words = self.revWords(words)
