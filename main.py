@@ -48,7 +48,7 @@ prephrase = ['ת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
 plural = ['תו', 'םי', 'םיי']
 metathesis = ['ס', 'ש', 'צ']
 Obj = ['םתוא', 'ןתוא', 'ךתוא', 'התוא', 'ותוא', 'ונתוא', 'םהתא', 'ןהתא', 'םכתא', 'ןכתא']
-punctuation = [',', '.', '?', ';', ':', '-', ')', '(', '[', ']', '}', '{', '*', '!']
+punctuation = [' ', ',', '.', '?', ';', ':', '-', ')', '(', '[', ']', '}', '{', '*', '!']
 vowels = ['ֵ']
 a_roots = ['א', 'ב', 'ג', 'ד', 'ז', 'ח', 'ט', 'כ', 'ל', 'מ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ף', 'ץ']
 roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף', 'ץ']
@@ -932,7 +932,20 @@ class Keyboard(GridLayout):
         end = len(self.main.Input.text)-1
         
         for index in range(end+1):
-            revInput += newInput[end-index]
+            if newInput[end-index] == '(':
+                revInput += ')'
+            elif newInput[end-index] == ')':
+                revInput += '('
+            elif newInput[end-index] == '[':
+                revInput += ']'
+            elif newInput[end-index] == ']':
+                revInput += '['
+            elif newInput[end-index] == '{':
+                revInput += '}'
+            elif newInput[end-index] == '}':
+                revInput += '{'
+            else:
+                revInput += newInput[end-index]
                 
         self.main.Input.text = self.revNum(str(revInput))
         
@@ -940,7 +953,7 @@ class Keyboard(GridLayout):
         numWords = ""
         n = 0;
         for i in range(len(words)):
-            if (not (words[i] in AlefBet)):
+            if (not (words[i] in AlefBet)) and (not (words[i] in punctuation)):
                 n += 1
             else:
                 for j in range(i-1, (i-1)-n, -1):
@@ -1031,7 +1044,20 @@ class CustomInput(TextInput):
         revInput = ""
         end = len(text)-1
         for index in range(end+1):
-            revInput += newInput[end-index]
+            if newInput[end-index] == '(':
+                    revInput += ')'
+            elif newInput[end-index] == ')':
+                revInput += '('
+            elif newInput[end-index] == '[':
+                revInput += ']'
+            elif newInput[end-index] == ']':
+                revInput += '['
+            elif newInput[end-index] == '{':
+                revInput += '}'
+            elif newInput[end-index] == '}':
+                revInput += '{'
+            else:
+                revInput += newInput[end-index]
                 
         return self.revNum(str(revInput))
     
@@ -1039,7 +1065,7 @@ class CustomInput(TextInput):
         numWords = ""
         n = 0;
         for i in range(len(words)):
-            if (not (words[i] in AlefBet)):
+            if (not (words[i] in AlefBet)) and (not (words[i] in punctuation)):
                 n += 1
             else:
                 for j in range(i-1, (i-1)-n, -1):
