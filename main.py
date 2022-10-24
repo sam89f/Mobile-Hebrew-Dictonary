@@ -811,7 +811,10 @@ class Word:
             if self.nextToLast() == '"':
                 nText = self.last() + self.text[2:]
         if len(nText) == 1:
-            return True
+            if nText in AlefBet:
+                return True
+            else:
+                return False
         if nText == 'וט':
             return True
         if nText == 'זט':
