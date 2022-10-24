@@ -1,4 +1,4 @@
-# Mobile-Hebrew-Dictonary
+# Mobile-Hebrew-Dictionary
 
 ### Mobile app to help read or translate Hebrew text
 
