@@ -1976,7 +1976,7 @@ class HebrewDictionary(App):
         tempW = Word("","")
         tempW.equalTo(word)
         tempW.setText(self.unFinal(word.getText()))
-        if tempW.last2() == self.Final(tempW.getText()[2:4]): 
+        if tempW.last2() == tempW.getText()[2:4]: 
             tempW.setText(self.Final(tempW.getText()[2:]))
             tempWf = Word("","")
             tempWf.equalTo(tempW)
