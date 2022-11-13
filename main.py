@@ -1263,6 +1263,7 @@ class HebrewDictionary(App):
     def clean(self, words):
         
         for w in range(len(words)):
+            words[w] = words[w].replace("\"", "")
             words[w] = words[w].replace("[", " ")
             words[w] = words[w].replace("]", " ")
             words[w] = words[w].replace("”", "")
