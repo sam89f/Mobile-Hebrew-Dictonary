@@ -3389,7 +3389,7 @@ class HebrewDictionary(App):
                     if(changC > 0):
                         plWc.setNoun()
                         plWc.setDaul()
-                        plWc.setConstruct()
+                        #plWc.setConstruct()
                         plWc.setText(self.revPhWords(plWc.getText(), "-"))
                         if(self.FindHelper(look, plWc, self.Dict) == True):
                             return plWc
@@ -3433,7 +3433,7 @@ class HebrewDictionary(App):
                         plWc.setNoun()
                         plWc.setDaul()
                         if(changeC2 > 0):
-                            plWc.setConstruct()
+                            #plWc.setConstruct()
                             plWc.setText(self.revPhWords(plWc.getText(), "-"))
                             if(self.FindHelper(look, plWc, self.Dict) == True):
                                 return plWc
@@ -3497,7 +3497,7 @@ class HebrewDictionary(App):
                     if(change3C > 0):
                         plWc.setNoun()
                         plWc.setPlural()
-                        plWc.setConstruct()
+                        #plWc.setConstruct()
                         plWc.setText(self.revPhWords(plWc.getText(), "-"))
                         if(self.FindHelper(look, plWc, self.Dict) == True):
                             return plWc
@@ -3541,7 +3541,7 @@ class HebrewDictionary(App):
                         plWc.setNoun()
                         plWc.setPlural()
                         if(changeC4 > 0):
-                            plWc.setConstruct()
+                            #plWc.setConstruct()
                             plWc.setText(self.revPhWords(plWc.getText(), "-"))
                             if(self.FindHelper(look, plWc, self.Dict) == True):
                                 return plWc
@@ -4224,11 +4224,14 @@ class HebrewDictionary(App):
             if isPar == True:
                 return pword
         return Word("", "")
-       
+     
     def constr(self, look, word):
-        if(word.getLen() < 2) or ('-' in word.getText()) or (word.getConstruct() == True) or (word.isVerb() == True) or (word.getTense() == 'Perfect') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Imperative') or (word.getTense() == 'Infinitive') or (word.getPartiVal() == 0) or ((not(word.getPartiVal() == -1))and(word.last() == 'ת')) or (word.getRL2() == word.last2()):
+        if(word.getLen() < 2) or (word.getConstruct() == True) or (word.isVerb() == True) or (word.getTense() == 'Perfect') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Imperative') or (word.getTense() == 'Infinitive') or (word.getPartiVal() == 0) or ((not(word.getPartiVal() == -1))and(word.last() == 'ת')) or (word.getRL2() == word.last2()):
             return Word("", "")
-
+    
+        if('-' in word.getText()):
+            return self.phCostr(look, word)
+    
         if(word.getLen() > 2):
             if(not ('י' in word.getSufxList())) and (word.last() == 'י') and ((self.CurrentWord.last() == 'י')or(word.getSuffix() == True)) and (not('ם' in word.getSufxList())) and (not(word.getPlural() == True)) and (not(word.getDaul() == True)):
                 constW = Word("","")
@@ -4295,6 +4298,76 @@ class HebrewDictionary(App):
             return constW
         return Word("", "")    
                 
+    def phCostr(self, look, word):
+    
+        PhraseCostr = Word("","")
+        PhraseCostr.equalTo(word)
+        PhraseCostr.setText(self.revPhWords(word.getText(), "-"))
+        
+        PhraseCurrent = Word("","")
+        PhraseCurrent.equalTo(self.CurrentWord)
+        PhraseCurrent.setText(self.revPhWords(self.CurrentWord.getText(), "-"))
+    
+        if(word.getLen() > 2):
+            if (PhraseCostr.last() == 'י') and ((PhraseCurrent.last() == 'י')or(PhraseCostr.getSuffix() == True)) and (not('ם' in PhraseCostr.getSufxList())):
+                constW = Word("","")
+                constW.equalTo(PhraseCostr)
+                constW.setText(self.Final(constW.getText()[1:]))
+                if(PhraseCostr.last2() == 'יי'):
+                    daulW = Word("","")
+                    daulW.equalTo(PhraseCostr)
+                    daulW.setText(self.Final(constW.getText()[1:]))
+                    daulW.setDaul()
+                    daulW.setConstruct()
+                    daulW.setNoun()
+                    daulW.setText(self.revPhWords(daulW.getText(), "-"))
+                    self.FindHelper(look, daulW, self.Dict)
+                    self.algorithm(look, daulW)
+                    
+                    daulW2 = Word("","")
+                    daulW2.equalTo(PhraseCostr)
+                    daulW2.setText('ם' + PhraseCostr.getText())
+                    daulW2.setConstruct()
+                    daulW2.setNoun()
+                    daulW2.setText(self.revPhWords(daulW2.getText(), "-"))
+                    self.FindHelper(look, daulW2, self.Dict)
+                    
+                    daulW3 = Word("", "")
+                    daulW3.equalTo(daulW)
+                    daulW3.setText('ה' + constW.getText()[1:])
+                    daulW3.setText(self.revPhWords(daulW3.getText(), "-"))
+                    self.FindHelper(look, daulW3, self.Dict)
+                    self.algorithm(look, daulW3)
+                    
+                else:   
+                    constW.setPlural()
+                    constW.setConstruct()
+                    constW.setNoun()
+                    constW.setText(self.revPhWords(constW.getText(), "-"))
+                    self.FindHelper(look, constW, self.Dict)
+                    self.algorithm(look, constW)
+                    
+                    constW2 = Word("","")
+                    constW2.equalTo(PhraseCostr)
+                    constW2.setText('ם' + PhraseCostr.getText())
+                    constW2.setConstruct()
+                    constW2.setNoun()
+                    constW2.setText(self.revPhWords(constW2.getText(), "-"))
+                    self.FindHelper(look, constW2, self.Dict)
+                    self.algorithm(look, constW2)
+                    
+                    constW3 = Word("", "")
+                    constW3.equalTo(constW)
+                    constW3.setText('ה' + PhraseCostr.getText()[1:])
+                    constW3.setText(self.revPhWords(constW3.getText(), "-"))
+                    self.FindHelper(look, constW3, self.Dict)
+                    self.algorithm(look, constW3)
+                    
+                    return constW
+            
+        return Word("", "") 
+        
+    
     def irreg(self, look, word):
         if(word.getLen() < 1) or ('-' in word.getText()) or (word.getIrregVal() > 15):
             return Word("", "")
