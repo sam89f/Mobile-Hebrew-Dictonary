@@ -1263,7 +1263,6 @@ class HebrewDictionary(App):
     def clean(self, words):
         
         for w in range(len(words)):
-            words[w] = words[w].replace("\"", "")
             words[w] = words[w].replace("[", " ")
             words[w] = words[w].replace("]", " ")
             words[w] = words[w].replace("”", "")
@@ -1355,8 +1354,11 @@ class HebrewDictionary(App):
                 phraseW = Word(fixedPhrase, "")
                 rPhraseW = Word(revPhrase, "")
                 self.CurrentWord.equalTo(phraseW)
-                
+                phraseW2 = Word("", "")
+                phraseW2.equalTo(phraseW)
+                phraseW2.setText(phraseW.getText().replace("\"", ""))
                 self.algorithm(check, phraseW)
+                self.algorithm(check, phraseW2)
                 
                 if((check.find(phraseW, self.Dict) == True) or (check.getNumWds() > 0)) and (end > 1):
                     Ws2[i] = revPhrase
