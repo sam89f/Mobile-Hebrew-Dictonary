@@ -4262,7 +4262,7 @@ class HebrewDictionary(App):
                     daulW3.equalTo(daulW)
                     daulW3.setText('ה' + constW.getText()[1:])
                     self.FindHelper(look, daulW3, self.Dict)
-                    self.algorithm(look, daulW3)
+                    #self.algorithm(look, daulW3)
                     
                 else:   
                     constW.setPlural()
@@ -4276,13 +4276,13 @@ class HebrewDictionary(App):
                     constW2.setConstruct()
                     constW2.setNoun()
                     self.FindHelper(look, constW2, self.Dict)
-                    self.algorithm(look, constW)
+                    #self.algorithm(look, constW)
                     
                     constW3 = Word("", "")
                     constW3.equalTo(constW)
                     constW3.setText('ה' + word.getText()[1:])
                     self.FindHelper(look, constW3, self.Dict)
-                    self.algorithm(look, constW3)
+                    #self.algorithm(look, constW3)
                     
                 return constW
                 
@@ -4358,7 +4358,7 @@ class HebrewDictionary(App):
                     constW2.setNoun()
                     constW2.setText(self.revPhWords(constW2.getText(), "-"))
                     self.FindHelper(look, constW2, self.Dict)
-                    self.algorithm(look, constW2)
+                    #self.algorithm(look, constW2)
                     
                     constW3 = Word("", "")
                     constW3.equalTo(constW)
