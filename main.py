@@ -2795,7 +2795,7 @@ class HebrewDictionary(App):
                     return self.irreg(look, futurW)
                
         if(word.getLen() > 2):
-            if (word.first2() == 'וי') and (self.imperRules(word, 'וי') == True):
+            if ('ו' in word.getPrixList()) and ((word.first2() == 'וי') and (self.imperRules(word, 'וי') == True) or (word.first2() == 'יי') and (self.imperRules(word, 'יי') == True)):
                 futurW = Word("","")
                 futurW.equalTo(word)
                 futurW.setText(word.getText()[:-2])
