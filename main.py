@@ -3356,16 +3356,16 @@ class HebrewDictionary(App):
         return text.find("-")
             
     def plural(self, look, word):
-        if(word.getLen() < 3) or (word.isVerb() == True) or ((word.getPlural() == True)and(not((word.getConstruct() == True)and(word.getSuffix() == True)))) or (word.getDaul() == True) or ((word.getConstruct() == True)and(not((word.getPlural() == True)and(word.getSuffix() == True)))) or (word.getModern == True) or (word.getRL2() == word.last2()) or (word.getRL2() == word.nextToLast() + word.thirdFromLast()):# or (word.getPartiVal() == 1):
-             return Word("", "")
+        if(word.getLen() < 3) or (word.isVerb() == True) or ((word.getPlural() == True)and(not((word.getConstruct() == True)and(word.getSuffix() == True)))) or (word.getDaul() == True) or ((word.getConstruct() == True)and(not((word.getPlural() == True)and(word.getSuffix() == True)))) or (word.getModern == True) or (word.getRL2() == word.last2()) or (word.getRL2() == word.nextToLast() + word.thirdFromLast()) or (word.getPluralVal() > 3*word.plFactor):
+            return Word("", "")
             
         cPhrasePl = Word("","")
         cPhrasePl.equalTo(word)
         cPhrasePl.setText(self.revPhWords(word.getText(), "-"))
         
-        if((self.getLstLen(cPhrasePl) < 3) and ('-' in cPhrasePl.getText())):
+        if(word.getPluralVal() > 3*word.plFactor):
             return Word("", "")
-        
+
         if(cPhrasePl.getLen() > 3):
             change = self.lstChain(cPhrasePl.getText(), "םיי")
             if(('-' in cPhrasePl.getText()) and (change > -1)):
