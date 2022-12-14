@@ -3794,7 +3794,7 @@ class HebrewDictionary(App):
         temp1.equalTo(word)
         temp1.setText(self.revPhWords(temp1.getText(), "-"))
         
-        if(self.getFrsLen(temp1) < 2):
+        if(self.getFrsLen(temp1) < 2) or (temp1.last2() == "ה-") or ("-ה-" in temp1.getText()):
             return Word("", "")
             
         s = temp1.getText().count("ה-")
