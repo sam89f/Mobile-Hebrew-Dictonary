@@ -2669,10 +2669,11 @@ class HebrewDictionary(App):
                 fh = self.FindHelper(look, perfWh, self.Dict)
                 self.algorithm(look, perfWh)
               
-            return perfW
+            if(word.getSuffix() == False):
+                return perfW
             
         #may have to be changed later upon further knowledge    
-        if(word.last() == 'ה') and (self.CurrentWord.last() == 'ה'):
+        if(((word.last() == 'ה') and (self.CurrentWord.last() == 'ה')) or ((word.last() == 'ת')and(word.getSuffix() == True))):
             f = False
             perfW = Word("","")
             perfW.equalTo(word)
@@ -3899,9 +3900,10 @@ class HebrewDictionary(App):
             suffW.setSuffix1()
 
             if((suffW.getLen() > 1) and ((self.getLstLen(cPhraseSuf) > 2)or(self.getLstLen(cPhraseSuf) == -1))):
+             
                 if (suffW.last() == 'י') and (cPhraseSuf.last2() in suffix):
                     suffW2 = Word("","")
-                    suffW2.equalTo(suffW)
+                    suffW2.equalTo(suffW) 
                     suffW2.setText(self.Final(suffW.getText()[1:]))
                     suffW2.addSuff(cPhraseSuf.last2())
                     if ((suffW2.getLen() > 3) and ((self.getLstLen(cPhraseSuf) > 6)or(self.getLstLen(cPhraseSuf) == -1))):
@@ -3909,6 +3911,15 @@ class HebrewDictionary(App):
                             suffW2.setText(self.revPhWords(suffW2.getText(), "-"))
                             self.FindHelper(look, suffW2, self.Dict)
                             self.algorithm(look, suffW2)
+                            
+                if(suffW.last() == "ת"):
+                    suffWh = Word("","")
+                    suffWh.equalTo(suffW) 
+                    suffWh.setText('ה' + suffW.getText()[1:])
+                    suffWh.addSuff(cPhraseSuf.last()) 
+                    suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
+                    self.FindHelper(look, suffWh, self.Dict)
+                    self.algorithm(look, suffWh)
             
             suffW.addSuff(cPhraseSuf.last())    
             suffW.setText(self.revPhWords(suffW.getText(), "-"))
@@ -3962,6 +3973,15 @@ class HebrewDictionary(App):
                             suffW3.setText(self.revPhWords(suffW3.getText(), "-"))
                             self.FindHelper(look, suffW3, self.Dict)
                             self.algorithm(look, suffW3)
+                            
+                if(suffW.last() == "ת"):
+                    suffWh = Word("","")
+                    suffWh.equalTo(suffW) 
+                    suffWh.setText('ה' + suffW.getText()[1:])
+                    suffWh.addSuff(cPhraseSuf.last2()) 
+                    suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
+                    self.FindHelper(look, suffWh, self.Dict)
+                    self.algorithm(look, suffWh)
 
             suffW.addSuff(cPhraseSuf.last2())    
             suffW.setText(self.revPhWords(suffW.getText(), "-"))
@@ -4014,6 +4034,15 @@ class HebrewDictionary(App):
                             suffW3.setText(self.revPhWords(suffW3.getText(), "-"))
                             self.FindHelper(look, suffW3, self.Dict)
                             self.algorithm(look, suffW3)
+                            
+                if(suffW.last() == "ת"):
+                    suffWh = Word("","")
+                    suffWh.equalTo(suffW) 
+                    suffWh.setText('ה' + suffW.getText()[1:])
+                    suffWh.addSuff(cPhraseSuf.last3()) 
+                    suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
+                    self.FindHelper(look, suffWh, self.Dict)
+                    self.algorithm(look, suffWh)
                            
             suffW.addSuff(cPhraseSuf.last3())    
             suffW.setText(self.revPhWords(suffW.getText(), "-"))
@@ -4286,7 +4315,7 @@ class HebrewDictionary(App):
                     
                 return constW
                 
-        if(word.getLen() > 2) and (word.last() == 'ת'):
+        if(word.getLen() > 2) and (word.last() == 'ת')and(self.CurrentWord.last() == 'ת'):
             constW = Word("","")
             constW.equalTo(word)
             constW.setText(self.Final(word.getText()[1:]))
