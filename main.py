@@ -74,7 +74,7 @@ class Word:
         self.suffactor2 = 6
         self.suffactor3 = 7
         self.suffactor = 5
-        self.plFactor = 2
+        self.plFactor = 1
         self.dlFactor = 3
         self.mdrnFactor = 6
         self.cnstFactor = 2
@@ -2752,7 +2752,7 @@ class HebrewDictionary(App):
                     f = self.FindHelper(look, futurW, self.Dict)
                     self.algorithm(look, futurW)
                     fh = False
-                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW.isVavSeq() == True)or(word.getSuffix() == True)):
+                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -2777,7 +2777,7 @@ class HebrewDictionary(App):
                     f2 = self.FindHelper(look, futurW2, self.Dict)
                     self.algorithm(look, futurW2)
                     f2h = False
-                    if(not (futurW2.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW2.isVavSeq() == True)or(word.getSuffix() == True)):
+                    if(not (futurW2.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                         futurW2h = Word("","")
                         futurW2h.equalTo(futurW2)
                         futurW2h.setText('ה' + self.unFinal(futurW2.getText()))
@@ -2804,7 +2804,7 @@ class HebrewDictionary(App):
                     f = self.FindHelper(look, futurW, self.Dict)
                     self.algorithm(look, futurW)
                     fh = False
-                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW.isVavSeq() == True)or(word.getSuffix() == True)):
+                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -2834,7 +2834,7 @@ class HebrewDictionary(App):
                     f = self.FindHelper(look, futurW, self.Dict)
                     self.algorithm(look, futurW)
                     fh = False
-                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW.isVavSeq() == True)or(word.getSuffix() == True)):
+                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -2865,7 +2865,7 @@ class HebrewDictionary(App):
                     f = self.FindHelper(look, futurW, self.Dict)
                     self.algorithm(look, futurW)
                     fh = False
-                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW.isVavSeq() == True)or(word.getSuffix() == True)):
+                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -2894,7 +2894,7 @@ class HebrewDictionary(App):
                     f = self.FindHelper(look, futurW, self.Dict)
                     self.algorithm(look, futurW)
                     fh = False
-                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW.isVavSeq() == True)or(word.getSuffix() == True)):
+                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -2921,7 +2921,7 @@ class HebrewDictionary(App):
                     f = self.FindHelper(look, futurW, self.Dict)
                     self.algorithm(look, futurW)
                     fh = False
-                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW.isVavSeq() == True)or(word.getSuffix() == True)):
+                    if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -2952,7 +2952,7 @@ class HebrewDictionary(App):
                 f = self.FindHelper(look, futurW, self.Dict)
                 self.algorithm(look, futurW)
                 fh = False
-                if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW.isVavSeq() == True)or(word.getSuffix() == True)):
+                if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                     futurWh = Word("","")
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -2985,7 +2985,7 @@ class HebrewDictionary(App):
                 self.algorithm(look, futurW)
               
                 fh = False
-                if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW.isVavSeq() == True)or(word.getSuffix() == True)):
+                if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                     futurWh = Word("","")
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -3018,7 +3018,7 @@ class HebrewDictionary(App):
                 f = self.FindHelper(look, futurW, self.Dict)
                 self.algorithm(look, futurW)
                 fh = False
-                if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW.isVavSeq() == True)or(word.getSuffix() == True)):
+                if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                     futurWh = Word("","")
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
@@ -3043,7 +3043,7 @@ class HebrewDictionary(App):
                 f2 = self.FindHelper(look, futurW2, self.Dict)
                 self.algorithm(look, futurW2)
                 fh = False
-                if(not (futurW2.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW2.isVavSeq() == True)or(word.getSuffix() == True)):
+                if(not (futurW2.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                     futurW2h = Word("","")
                     futurW2h.equalTo(futurW2)
                     futurW2h.setText('ה' + self.unFinal(futurW2.getText()))
@@ -3074,7 +3074,7 @@ class HebrewDictionary(App):
                 f = self.FindHelper(look, futurW, self.Dict)
                 self.algorithm(look, futurW)
                 fh = False
-                if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList()))and ((futurW.isVavSeq() == True)or(word.getSuffix() == True)):
+                if(not (futurW.last() == 'ה')) and (not ('ה' in word.getSufxList())):
                     futurWh = Word("","")
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
