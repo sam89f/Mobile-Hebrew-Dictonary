@@ -1297,7 +1297,10 @@ class HebrewDictionary(App):
             
         for i in range(len(words)):
             for j in range(len(punctuation)):
-                words[i] = words[i].strip(punctuation[j])
+                if punctuation[j] =="'":
+                    continue
+                else:
+                    words[i] = words[i].strip(punctuation[j])
         
         return words
 
