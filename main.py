@@ -596,7 +596,7 @@ class Word:
     def Final(self, text):
         if text[0] in self.finals.keys():
             if len(text) > 1:
-                return self.finals.get(text[0]) + text[1:]
+                return finals.get(text[0]) + text[1:]
             else:
                 return finals.get(text[0])
         else:
@@ -1099,6 +1099,11 @@ class CustomInput(TextInput):
                     return True
                 if w[0] in finals.values(): # If nonfinal letter is at the beginning then the text is in the correct order
                     return False
+                if (not(('\'' in w)or('`' in w)or('\"' in w)or('״' in w))):
+                    if w[0] in finals.keys():
+                        return True
+                    if w[-1] in finals.keys():
+                        return False
         return False
         
     # Interface for displaying the words found, their diffinition, and some gramatical properties.  
@@ -1275,6 +1280,8 @@ class HebrewDictionary(App):
             words[w] = words[w].replace("[", " ")
             words[w] = words[w].replace("]", " ")
             words[w] = words[w].replace("”", "")
+            words[w] = words[w].replace("״", "\"")
+            words[w] = words[w].replace("׳", "\'")
             words[w] = words[w].replace("ֹו", "ו")
             words[w] = words[w].replace("ֹ", "ו") 
             words[w] = words[w].replace("ֻ", "ו")
@@ -1477,9 +1484,9 @@ class HebrewDictionary(App):
             self.algorithm(look, word) # determines the possible forms of the current word, and searches
             # for the words that the current word may have be been derived from
 
-            # These three lines gets rid of any quotation marks just in cases thay interfered with the processing of the word.
+            # These three blocks gets rid of any quotation marks just in cases thay interfered with the processing of the word.
+            #words must be searched with each single and double quotes missing and with both present (done above).
             sText = word.getText()
-            sText = sText.replace("\'", "")
             sText = sText.replace('\"', '')
 
             if(not (word.getText() == sText)): # if there are quotation marks in the current word put stripped version in the algorithm
@@ -1487,6 +1494,16 @@ class HebrewDictionary(App):
                 self.CurrentWord.setText(sText)
                 look.find(word, self.Dict)
                 if not(word.getText() == "הוהי"): # see if current word is The Tetragramaton, this time without the quotation marks
+                    self.algorithm(look, word)
+        
+            sText2 = word.getText()
+            sText2 = sText2.replace("\'", "")
+            
+            if(not (word.getText() == sText2)): # if there are single quotes in the current word put stripped version in the algorithm
+                word.setText(sText2)            # stored in the 'sText2' variable.
+                self.CurrentWord.setText(sText2)
+                look.find(word, self.Dict)
+                if not(word.getText() == "הוהי"): # see if current word is The Tetragramaton, this time without the single quotes
                     self.algorithm(look, word)
         
         WList = look.getWords() # store all the words found in the 'WList' variable
