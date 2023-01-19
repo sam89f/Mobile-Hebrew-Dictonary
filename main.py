@@ -1395,12 +1395,13 @@ class HebrewDictionary(App):
             k = 0
             if(i < end-1):
                 for p in range(-3 , 0, 1):
+                    check2 = SearchWord()
                     if(tempWs[i+1][p:] in prephrase) and (not (len(tempWs[i+1][:p]) < 2)):
                         prePhrase = tempWs[i] + "-" + tempWs[i+1][p:]
                         prephraseW = Word(prePhrase, "")
                         zPhrasePre = Word(prephraseW, "")
-                        zPhrasePre.equalTo(self.prefix(check, prephraseW, False))
-                        if (check.find(prephraseW, self.Dict) == True) or (check.find(zPhrasePre, self.Dict)):
+                        zPhrasePre.equalTo(self.prefix(check2, prephraseW, False))
+                        if (check2.find(prephraseW, self.Dict) == True) or (check2.getNumWds() > 0):
                             tempWs[i] = prePhrase
                             tempWs[i+1] = tempWs[i+1]
                             break                   
@@ -3843,17 +3844,15 @@ class HebrewDictionary(App):
             preW.addPre(cPhrasePre.first())
             preW.setText(self.revPhWords(preW.getText(), "-"))
             
-            if self.FindHelper(look, preW, self.Dict) == False:
-                self.plural(look, preW)
-                self.suffix(look, preW, 1)
-                preWend = Word("","")
-                preWend.equalTo(self.prefix(look, preW, False))
-                if preWend.getText() == "":
-                    return preW
-                else:
-                    return preWend
+            self.FindHelper(look, preW, self.Dict) 
+            self.plural(look, preW)
+            self.suffix(look, preW, 1)
+            preWend = Word("","")
+            preWend.equalTo(self.prefix(look, preW, False))
+            if preWend.getText() == "":
+                return preW
             else:
-                return preW   
+                return preWend
                 
         return Word("", "")
     
