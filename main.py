@@ -3896,7 +3896,7 @@ class HebrewDictionary(App):
             preW = Word("","")
             preW.equalTo(word)
             preW.setText(word.getText()[:-1])
-            if(word.first() == 'ה') or (word.first() == 'ל'):
+            if(word.first() == 'ה'):
                 if word.isVerb() == False:
                     preW.setNoun()
                 else:
