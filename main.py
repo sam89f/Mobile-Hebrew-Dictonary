@@ -1802,6 +1802,7 @@ class HebrewDictionary(App):
             self.tense(look, word, True)
         self.verbForms(look, word)
             
+        self.pilpel(look, word)
         self.irreg(look, word)
                 
     def FindHelper(self, look, w, Dict):
@@ -2041,11 +2042,14 @@ class HebrewDictionary(App):
             tempWf.equalTo(tempW)
             if(not((tempW.last() == 'י') or (tempW.last() == 'ו'))):
                 tempWf.setText(self.Final(tempW.getText()))
-                tempWf.setVerbform(8)
+                if(word.isVerbf() == False):
+                    tempWf.setVerbform(8)
+                self.irreg(look, tempWf)
             self.FindHelper(look, tempWf, self.Dict)
             tempWf2 = Word("","")
             tempWf2.equalTo(tempWf)
             tempWf2.setText('י' + self.unFinal(tempWf.getText()))
+            self.irreg(look, tempWf2)
             self.FindHelper(look, tempWf2, self.Dict)
             if (not (tempW.nextToLast() == self.unFinal(tempW.last()))) or (len(tempW.getText()) < 3):
                 return tempWf
@@ -2058,11 +2062,14 @@ class HebrewDictionary(App):
             tempWf = Word("","")
             tempWf.equalTo(tempW)
             tempWf.setText(self.Final(tempW.getText()))
-            tempWf.setVerbform(8)
+            if(word.isVerbf() == False):
+                tempWf.setVerbform(8)
             tempWf2 = Word("","")
             tempWf2.equalTo(tempWf)
             tempWf2.setText('י' + self.unFinal(tempWf.getText()))
+            self.irreg(look, tempWf)
             self.FindHelper(look, tempWf, self.Dict)
+            self.irreg(look, tempWf2)
             self.FindHelper(look, tempWf2, self.Dict)
             return tempWf
         return Word("", "")  
