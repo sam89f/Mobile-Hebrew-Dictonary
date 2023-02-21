@@ -2049,8 +2049,11 @@ class HebrewDictionary(App):
             tempWf2 = Word("","")
             tempWf2.equalTo(tempWf)
             tempWf2.setText('י' + self.unFinal(tempWf.getText()))
-            self.irreg(look, tempWf2)
             self.FindHelper(look, tempWf2, self.Dict)
+            tempWf3 = Word("","")
+            tempWf3.equalTo(tempWf)
+            tempWf3.setText('ה' + self.unFinal(tempWf.getText()))
+            self.FindHelper(look, tempWf3, self.Dict)
             if (not (tempW.nextToLast() == self.unFinal(tempW.last()))) or (len(tempW.getText()) < 3):
                 return tempWf
         
@@ -2067,10 +2070,13 @@ class HebrewDictionary(App):
             tempWf2 = Word("","")
             tempWf2.equalTo(tempWf)
             tempWf2.setText('י' + self.unFinal(tempWf.getText()))
+            tempWf3 = Word("","")
+            tempWf3.equalTo(tempWf)
+            tempWf3.setText('ה' + self.unFinal(tempWf.getText()))
             self.irreg(look, tempWf)
             self.FindHelper(look, tempWf, self.Dict)
-            self.irreg(look, tempWf2)
             self.FindHelper(look, tempWf2, self.Dict)
+            self.FindHelper(look, tempWf3, self.Dict)      
             return tempWf
         return Word("", "")  
 
