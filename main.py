@@ -2044,7 +2044,7 @@ class HebrewDictionary(App):
                 tempWf.setText(self.Final(tempW.getText()))
                 if(word.isVerbf() == False):
                     tempWf.setVerbform(8)
-                self.irreg(look, tempWf)
+            self.irreg(look, tempWf)
             self.FindHelper(look, tempWf, self.Dict)
             tempWf2 = Word("","")
             tempWf2.equalTo(tempWf)
