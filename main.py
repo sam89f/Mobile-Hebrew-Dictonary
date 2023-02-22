@@ -191,6 +191,10 @@ class Word:
             return False
         if not (self.hey1 == newWord.hey1):
             return False
+        if not (self.Noun == newWord.Noun):
+            return False
+        if not (self.Verb == newWord.Verb):
+            return False
         if not (self.hey1factor == newWord.hey1factor):
             return False
         if not (self.getSuffix() == newWord.getSuffix()):
@@ -233,6 +237,10 @@ class Word:
         if not (self.getPrefix() == newWord.getPrefix()):
             return False
         if not (self.r_L2 == newWord.r_L2):
+            return False
+        if not (self.Noun == newWord.Noun):
+            return False
+        if not (self.Verb == newWord.Verb):
             return False
         if not (self.partiW == newWord.partiW):
             return False
@@ -2044,7 +2052,7 @@ class HebrewDictionary(App):
                 tempWf.setText(self.Final(tempW.getText()))
                 if(word.isVerbf() == False):
                     tempWf.setVerbform(8)
-                self.irreg(look, tempWf)
+            self.irreg(look, tempWf)
             self.FindHelper(look, tempWf, self.Dict)
             tempWf2 = Word("","")
             tempWf2.equalTo(tempWf)
@@ -2841,6 +2849,7 @@ class HebrewDictionary(App):
                 futurW2 = Word("","")
                 futurW2.equalTo(word)
                 futurW2.setText(futurW.getText())
+                futurW2.setVerb()
                  
                 if(futurW.isVavSeq() == True):
                     futurW2.setTense(0)
@@ -3118,6 +3127,7 @@ class HebrewDictionary(App):
             futurW2 = Word("","")
             futurW2.equalTo(word)
             futurW2.setText(futurW.getText())
+            futurW2.setVerb()
              
             if(futurW.isVavSeq() == True):
                 futurW2.setTense(0)
@@ -3600,7 +3610,7 @@ class HebrewDictionary(App):
                     self.FindHelper(look, tempWf2, self.Dict)
                     self.algorithm(look, plW2)
                 plW.setText(self.revPhWords(plW.getText(), "-"))
-                return plW
+                #return plW
 
         if(cPhrasePl.getLen() > 2):
             change3 = self.lstChain(cPhrasePl.getText(), "םי")
@@ -4717,15 +4727,15 @@ class HebrewDictionary(App):
                 self.FindHelper(look, irregWN, self.Dict)
                 self.irreg(look, irregWN)
                 
-            if(word.nextToLast() == 'י') and (word.getPlural() == False) and (not(word.last2() in suffix)):
-                    irreg3 = Word("","")
-                    irreg3.equalTo(word)
-                    irreg3.setText(word.last() + word.getText()[2:])
-                    irreg3.setIrreg()
-                    self.FindHelper(look, irreg3, self.Dict)
+            #if(word.nextToLast() == 'י') and (word.getPlural() == False) and (not(word.last2() in suffix)):
+            #        irreg3 = Word("","")
+            #        irreg3.equalTo(word)
+            #        irreg3.setText(word.last() + word.getText()[2:])
+           #         irreg3.setIrreg()
+           #         self.FindHelper(look, irreg3, self.Dict)
             
         if(word.getLen() == 3):
-            if (word.nextToLast() == 'ו') or (word.nextToLast() == 'י'):
+            if (word.nextToLast() == 'ו') or (word.nextToLast() == 'י') and (not((word.last() == 'ה')and(not(self.CurrentWord.last() == 'ה')))):
                 hollow = Word("","")
                 hollow.equalTo(word)
                 hollow.setText(word.last() + word.first())
@@ -4748,50 +4758,50 @@ class HebrewDictionary(App):
                     irregW.setText('ה' + self.unFinal(word.getText()))
                     irregW.setIrreg()
                     self.FindHelper(look, irregW, self.Dict)
-            elif (word.getTense() == "Imperative") and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not ('ה' in word.getSufxList())) and (not((word.isVavSeq() == True)and(word.getTense() == 'Imperfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))) and (not((word.isVavSeq() == False)and(word.getTense() == 'Perfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))):
-                irregW = Word("","")
-                irregW.equalTo(word)
-                irregW.setText('ה' + self.unFinal(word.getText()))
-                irregW.setIrreg()
-                self.FindHelper(look, irregW, self.Dict)
-            elif (word.getTense() == "Perfect") and (not(self.CurrentWord.last3() == word.last3())):
-                if((word.last3() == 'יוו') or (word.last3() == 'ווי') or (word.last3() == 'ויו')):
-                    irregWa = Word("","")
-                    irregWa.equalTo(word)
-                    irregWa.setText('ה' + word.getText()[3:])
-                    irregWa.setIrreg()
-                    self.FindHelper(look, irregWa, self.Dict)
-                elif((word.last2() == 'וי') or (word.last2() == 'יו') or (word.last2() == 'וו')):
-                    irregWb = Word("","")
-                    irregWb.equalTo(word)
-                    irregWb.setText('ה' + word.getText()[2:])
-                    irregWb.setIrreg()
-                    self.FindHelper(look, irregWb, self.Dict)
-                elif((word.last() == 'י') or (word.last() == 'ו')):
-                    irregWc = Word("","")
-                    irregWc.equalTo(word)
-                    irregWc.setText('ה' + word.getText()[1:])
-                    irregWc.setIrreg()
-                    self.FindHelper(look, irregWc, self.Dict)
-            elif (word.getTense() == "Imperfect") and (not(self.CurrentWord.last3() == (word.last3()))):
-                if(word.getLen() > 3) and ((word.last3() == 'יוו') or (word.last3() == 'ווי') or (word.last3() == 'ויו')):
-                    irregWa = Word("","")
-                    irregWa.equalTo(word)
-                    irregWa.setText('ה' + word.getText()[3:])
-                    irregWa.setIrreg()
-                    self.FindHelper(look, irregWa, self.Dict)
-                elif(word.getLen() > 2) and ((word.last2() == 'וי') or (word.last2() == 'יו') or (word.last2() == 'וו')):
-                    irregWb = Word("","")
-                    irregWb.equalTo(word)
-                    irregWb.setText('ה' + word.getText()[2:])
-                    irregWb.setIrreg()
-                    self.FindHelper(look, irregWb, self.Dict)
-                elif((word.last() == 'י') or (word.last() == 'ו')):
-                    irregWc = Word("","")
-                    irregWc.equalTo(word)
-                    irregWc.setText('ה' + word.getText()[1:])
-                    irregWc.setIrreg()
-                    self.FindHelper(look, irregWc, self.Dict)
+            #elif (word.getTense() == "Imperative") and (not(word.last() == 'ה')) and (not ('ה' in word.getSufxList())) and (not ('ה' in word.getSufxList())) and (not((word.isVavSeq() == True)and(word.getTense() == 'Imperfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))) and (not((word.isVavSeq() == False)and(word.getTense() == 'Perfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))):
+            #    irregW = Word("","")
+            #    irregW.equalTo(word)
+            #    irregW.setText('ה' + self.unFinal(word.getText()))
+            #    irregW.setIrreg()
+            #    self.FindHelper(look, irregW, self.Dict)
+            #elif (word.getTense() == "Perfect") and (not(self.CurrentWord.last3() == word.last3())):
+            #    if((word.last3() == 'יוו') or (word.last3() == 'ווי') or (word.last3() == 'ויו')):
+            #        irregWa = Word("","")
+            #        irregWa.equalTo(word)
+            #        irregWa.setText('ה' + word.getText()[3:])
+            #        irregWa.setIrreg()
+            #        self.FindHelper(look, irregWa, self.Dict)
+            #    elif((word.last2() == 'וי') or (word.last2() == 'יו') or (word.last2() == 'וו')):
+            #        irregWb = Word("","")
+            #        irregWb.equalTo(word)
+            #        irregWb.setText('ה' + word.getText()[2:])
+            #        irregWb.setIrreg()
+            #        self.FindHelper(look, irregWb, self.Dict)
+            #    elif(word.last() == 'י'):
+            #        irregWc = Word("","")
+            #        irregWc.equalTo(word)
+            #        irregWc.setText('ה' + word.getText()[1:])
+            #        irregWc.setIrreg()
+            #        self.FindHelper(look, irregWc, self.Dict)
+            #elif (word.getTense() == "Imperfect") and (not(self.CurrentWord.last3() == (word.last3()))):
+            #    if(word.getLen() > 3) and ((word.last3() == 'יוו') or (word.last3() == 'ווי') or (word.last3() == 'ויו')):
+            #        irregWa = Word("","")
+            #        irregWa.equalTo(word)
+            #        irregWa.setText('ה' + word.getText()[3:])
+            #        irregWa.setIrreg()
+            #        self.FindHelper(look, irregWa, self.Dict)
+            #    elif(word.getLen() > 2) and ((word.last2() == 'וי') or (word.last2() == 'יו') or (word.last2() == 'וו')):
+            #        irregWb = Word("","")
+            #        irregWb.equalTo(word)
+            #        irregWb.setText('ה' + word.getText()[2:])
+            #        irregWb.setIrreg()
+            #        self.FindHelper(look, irregWb, self.Dict)
+            #    elif(word.last() == 'י'):
+            #        irregWc = Word("","")
+            #        irregWc.equalTo(word)
+            #        irregWc.setText('ה' + word.getText()[1:])
+            #        irregWc.setIrreg()
+            #        self.FindHelper(look, irregWc, self.Dict)
          
         # checking to see if any letters have been assimilated from the beginning of the word.
         if ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')) and (not(word.getPartiVal() == 1)):
