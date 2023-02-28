@@ -1969,13 +1969,14 @@ class HebrewDictionary(App):
             if not (infin.getText() == ""):
                 if alg == True:
                     self.algorithm(look, infin)
-        
+                    
         imp = Word("","")
-        if(word.isTense() == False):
-            imp.equalTo(self.future(look, word))
-            if not (imp.getText() == ""):
-                if alg == True:
-                    self.algorithm(look, imp)
+        if not (word.getVerbform() == 'Hiphil'):
+            if(word.isTense() == False):
+                imp.equalTo(self.future(look, word))
+                if not (imp.getText() == ""):
+                    if alg == True:
+                        self.algorithm(look, imp)
             
         if(word.isTense() == False):
             imper = Word("","")
