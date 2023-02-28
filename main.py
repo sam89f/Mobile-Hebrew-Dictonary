@@ -2530,6 +2530,11 @@ class HebrewDictionary(App):
             hitpaelW.setVerbform(6)
             if(not(hitpaelW.getText() == self.CurrentWord.getText())):
                 self.FindHelper(look, hitpaelW, self.Dict)
+                if(not (hitpaelW.last() == 'ה')) and ((word.getTense() == 'Perfect')and(not(self.CurrentWord.last() == word.last()))):
+                    hitpaelWh = Word("","")
+                    hitpaelWh.equalTo(hitpaelW)
+                    hitpaelWh.setText('ה' + self.unFinal(hitpaelW.getText()))
+                    self.FindHelper(look, hitpaelWh, self.Dict)
                 return hitpaelW
             
         if(word.nextToFirst() == 'ת') and (word.first() in prefixL) and (not ((word.Ht == False) or (word.third() == 'ו'))):
@@ -2550,6 +2555,11 @@ class HebrewDictionary(App):
             nithpaelW.setVerbform(9)
             if(not(nithpaelW.getText() == self.CurrentWord.getText())):
                 self.FindHelper(look, nithpaelW, self.Dict)
+                if(not (nithpaelW.last() == 'ה')) and ((word.getTense() == 'Perfect')and(not(self.CurrentWord.last() == word.last()))):
+                    nithpaelWh = Word("","")
+                    nithpaelWh.equalTo(nithpaelW)
+                    nithpaelWh.setText('ה' + self.unFinal(nithpaelW.getText()))
+                    self.FindHelper(look, nithpaelWh, self.Dict)
             
         if((word.first2() == 'תי') or (word.first2() == 'תת' ) or (word.first2() == 'תא') or (word.first2() == 'תנ')) and (not ((word.Ht == False) or (word.third() == 'ו'))):
             hitpaelW = Word("","")
