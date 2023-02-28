@@ -3861,9 +3861,9 @@ class HebrewDictionary(App):
             return False
         if ((p == 'ו') and (word.getPrefix() == True)):
             return False
-        if ('ה' in word.getPrixList()):
+        if ((p == 'ה') and (word.getSuffix() == True)):
             return False
-        if (p == 'ש') and ('ש' in word.getPrixList()):
+        if ('ה' in word.getPrixList()):
             return False
         if (word.getPrixListEnd() == p):
             return False
@@ -3989,7 +3989,7 @@ class HebrewDictionary(App):
         return Word("", "")  
     
     def suffix(self, look, word, p):
-        if(word.getLen() < 3) or (word.getConstruct() == True) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (not (word.getTenseVal() == -1)) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() == 'Pual'):
+        if(word.getLen() < 3) or (word.getConstruct() == True) or ('ה' in word.getPrixList()) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (not (word.getTenseVal() == -1)) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() == 'Pual'):
             return Word("","")
             
         suff1 = Word("","")
