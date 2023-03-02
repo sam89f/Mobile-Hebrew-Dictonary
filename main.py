@@ -4603,7 +4603,7 @@ class HebrewDictionary(App):
         
     
     def irreg(self, look, word):
-        if(word.getLen() < 1) or ('-' in word.getText()) or (word.getIrregVal() > 15):
+        if(word.getLen() < 1) or ('-' in word.getText()) or (word.getIrregVal() > 15) or (word.getTense() == "Participle"):
             return Word("", "")
             
         if((self.CurrentWord.first() == word.first()) or ((self.CurrentWord.second() == word.first())and(word.getPrixListEnd() == self.CurrentWord.first())and(len(word.getPrixList()) == 1))) and (word.getTense() == 'Imperative'):
