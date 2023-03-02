@@ -4603,7 +4603,7 @@ class HebrewDictionary(App):
         
     
     def irreg(self, look, word):
-        if(word.getLen() < 1) or ('-' in word.getText()) or (word.getIrregVal() > 15) or (word.getTense() == "Participle"):
+        if(word.getLen() < 1) or ('-' in word.getText()) or (word.getIrregVal() > 15):
             return Word("", "")
             
         if((self.CurrentWord.first() == word.first()) or ((self.CurrentWord.second() == word.first())and(word.getPrixListEnd() == self.CurrentWord.first())and(len(word.getPrixList()) == 1))) and (word.getTense() == 'Imperative'):
@@ -4675,7 +4675,7 @@ class HebrewDictionary(App):
                 if(not(word.first() == 'נ')) and (not(word.getVerbform() == 'Niphal')) and (not(word.getRL2() == word.last2())):
                     irregW.setText(self.Final(word.getText()[1:]) + 'נ')
                     irregW.setIrreg()
-            elif ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')):
+            elif ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')) and (not(word.getPartiVal() == 0)):
                 irregW.setText(word.getText() + 'נ')
                 irregW.setIrreg()
                 irregWNN = Word("","")
@@ -4715,7 +4715,7 @@ class HebrewDictionary(App):
                 irreg1.setIrreg()
                 self.FindHelper(look, irreg1, self.Dict)
             
-            if(not(word.getVerbform() == 'Piel')):
+            if(not(word.getVerbform() == 'Piel')) and (not(word.getTense() == "Participle")):
                 irreg2 = Word("","")
                 irreg2.equalTo(word)
                 irreg2.setText(word.last() + 'י' + word.first())
@@ -4824,7 +4824,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, irregW, self.Dict)
                 self.irreg(look, irregW)
                 
-            if(not(word.getVerbform() == 'Niphal')) and (not ((word.first() == 'נ') and (word.getIrregVal() > 0))) and (not(word.getVerbform() == 'Piel')):
+            if(not(word.getVerbform() == 'Niphal')) and (not ((word.first() == 'נ') and (word.getIrregVal() > 0))) and (not(word.getVerbform() == 'Piel')) and (not(word.getPartiVal() == 0)):
                 irregW2 = Word("","")
                 irregW2.equalTo(word)
                 irregW2.setText(word.getText() + 'נ')
@@ -4837,7 +4837,7 @@ class HebrewDictionary(App):
                     irregWh.setText('ה' + self.unFinal(irregW2.getText()))
                     irregWh.setIrreg()
                     self.FindHelper(look, irregWh, self.Dict)
-            if(not((word.first() == 'י') and (word.getIrregVal() > 0))) and (not(word.getVerbform() == 'Piel')):
+            if(not((word.first() == 'י') and (word.getIrregVal() > 0))) and (not(word.getVerbform() == 'Piel')) and (not(word.getPartiVal() == 0)):
                 irregW3 = Word("","")
                 irregW3.equalTo(word)
                 irregW3.setText(word.getText() + 'י')
