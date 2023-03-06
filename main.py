@@ -4630,7 +4630,7 @@ class HebrewDictionary(App):
                         self.algorithm(look, pfimW2) 
                         return pfimW2
                     
-                if(fimW.getLen() > 3) and ((wword.getVerbform() in Piel) or (word.getVerbform() in Hiphil)):
+                if(fimW.getLen() > 3) and ((word.getVerbform() in Piel) or (word.getVerbform() in Hiphil)):
                     isPar = True
                     pfimW2 = Word("","")
                     pfimW2.equalTo(fimW)
