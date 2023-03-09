@@ -2117,7 +2117,7 @@ class HebrewDictionary(App):
 
     def nifal(self, look, word):
 
-        rareVerbforms  = {'Qal':1, 'Hithpeal':9}
+        rareVerbforms  = {'Qal':1}
         
         if(word.getLen() < 3) or (word.getIrreg() == True) or (word.isParticiple() == True) or (word.getTense() == 'Imperfect') or ((word.isVerbf() == True) and (not(word.getVerbform() in rareVerbforms))):
             return Word("","")
