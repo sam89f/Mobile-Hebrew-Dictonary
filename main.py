@@ -2625,6 +2625,7 @@ class HebrewDictionary(App):
                                 
                                 self.FindHelper(look, hifilW2, self.Dict)
                                 return self.perfect(look, hifilW2)
+                            return hifilW
                                 
                         if(word.first() == 'ת'):
                             tifilW = Word("","")
@@ -2642,7 +2643,7 @@ class HebrewDictionary(App):
                                 tifilW2.setVerbform(12)
                                 self.FindHelper(look, tifilW2, self.Dict)
                                 return self.perfect(look, tifilW2)
-                        return hifilW
+                            return tifilW
                         
         if((word.nextToLast() == 'י')and(word.thirdFromLast() == 'י')) and (self.num_of_p_roots(word.getText()[3:-1]) < 3):
             if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א')) and (not((word.first() == 'ת')and(word.last2() == 'הנ'))):
