@@ -38,8 +38,17 @@ white = [1, 1, 1, 1]
 black = [0, 0, 0, 0]
 
 AlefBet = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ת', 'ך', 'ם', 'ן', 'ף', 'ץ']
-finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
-unFinals = {'ך':'כ', 'ם':'מ', 'ן':'נ', 'ף':'פ', 'ץ':'צ'}
+Gender = ['m.', 'f.', '', '']
+Person = ['1st, sg.', '1st, pl.', '2nd, sg.', '2nd, pl.', '3rd, sg.', '3rd, pl.', '']
+tenses = ['Perfect', 'Imperfect', 'Participle', 'Infinitive', 'Imperative', 'Cohortative', 'Infinitive abs.', '']
+tenseVals = [3, 3, 4, 4, 4, 4, 8, 1]
+verbforms = ['Qal', 'Niphal', 'Piel', 'Pual', 'Hiphil', 'Hophal', 'Hithpeal', 'Hishtaphel', 'Pilpel', 'Nithpael', 'Pilel', 'Pulal', 'Tiphil', 'Hithpoel', 'Hithpolel', 'Hithpalpel', 'Hothpaal', '']
+verbformVals = [1, 5, 5, 5, 5, 5, 6, 8, 8, 5, 6, 6, 6, 6, 6, 6, 6, 1]
+millenn = ['ה','ד','ג', 'ב', 'א']
+Hithpeal = ['Hithpeal', 'Hithpalpel', 'Hithpoel', 'Hithpolel', 'Nithpael']
+Hiphil = ['Hiphil', 'Tiphil', 'Hishtaphel']
+Pual = ['Pual', 'Pulal', 'Poal', 'Polpal']
+Piel = ['Piel', 'Poel', 'Pilpel', 'Pilel', 'Palel', 'Polel', 'Pealal', 'Hothpaal']
 suffix = ['הנה', 'ונ', 'םכ', 'ןכ', 'םה', 'ומ', 'ם', 'ןה', 'ן', 'ית', 'ינ', 'יי', 'י', 'ה', 'הנ', 'וה', 'ו', 'ך']
 suffixObj = ['וה', 'וי', 'ינ', 'ה', 'ו', 'ך']
 prefixL = ['תת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
@@ -53,12 +62,17 @@ vowels = ['ֵ']
 a_roots = ['א', 'ב', 'ג', 'ד', 'ז', 'ח', 'ט', 'כ', 'ל', 'מ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ף', 'ץ']
 roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף', 'ץ']
 p_roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף', 'ץ']
+Finals = ['ך', 'ם', 'ן', 'ף', 'ץ']
+finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
 
-Hithpeal = ['Hithpeal', 'Hithpalpel', 'Hithpoel', 'Hithpolel', 'Nithpael']
-Hiphil = ['Hiphil', 'Tiphil', 'Hishtaphel']
-Pual = ['Pual', 'Pulal', 'Poal', 'Polpal']
-Piel = ['Piel', 'Poel', 'Pilpel', 'Pilel', 'Palel', 'Polel', 'Pealal', 'Hothpaal']
+unFinals = {'ך':'כ', 'ם':'מ', 'ן':'נ', 'ף':'פ', 'ץ':'צ'}
+prefixD = {"תת":"sub", "ה":"the", "ו":"and", "ב":"in", "מ":"from", "ל":"to", "כ":"as", "ש":"which"}
+ssuffix = {"ןהי":"their/them(f.)", "ןה":"their/them(f.)", "הנה":"their/them(f.)", "ן":"their/them(f.)", "םהי":"their/them(m.)", "םה":"their/them(m.)", "ם":"their/them(m.)", "ומ":"their/them(m.)", "הי":"hers/her", "ה":"hers/her", "הנ":"hers/her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you(pl. f.)", "ןכ":"your/you(pl. f.)", "םכי":"your/you(pl.)", "םכ":"your/you(pl.)", "ךי":"you/your(m.)", "ך":"you/your(m.)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
+suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
+parti = {1:'Active', 0:'Passive', 2:''}
+gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
 
+dirHey = "ה- to/toward"
 INF = 100000000000
 
 # This class defines all the properties and methods that a Word object needs to have in order
@@ -108,23 +122,7 @@ class Word:
         self.Verb = False
         self.Noun = False
         self.VavSeq = False
-        self.prefixD = {"תת":"sub", "ה":"the", "ו":"and", "ב":"in", "מ":"from", "ל":"to", "כ":"as", "ש":"which"}
-        self.suffix = {"ןהי":"their/them(f.)", "ןה":"their/them(f.)", "הנה":"their/them(f.)", "ן":"their/them(f.)", "םהי":"their/them(m.)", "םה":"their/them(m.)", "ם":"their/them(m.)", "ומ":"their/them(m.)", "הי":"hers/her", "ה":"hers/her", "הנ":"hers/her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you(pl. f.)", "ןכ":"your/you(pl. f.)", "םכי":"your/you(pl.)", "םכ":"your/you(pl.)", "ךי":"you/your(m.)", "ך":"you/your(m.)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
-        self.suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
-        self.dirHey = "ה- to/toward"
-        self.Gender = ['m.', 'f.', '', '']
-        self.Person = ['1st, sg.', '1st, pl.', '2nd, sg.', '2nd, pl.', '3rd, sg.', '3rd, pl.', '']
-        self.tenses = ['Perfect', 'Imperfect', 'Participle', 'Infinitive', 'Imperative', 'Cohortative', 'Infinitive abs.', '']
-        self.parti = {1:'Active', 0:'Passive', 2:''}
-        self.tenseVals = [3, 3, 4, 4, 4, 4, 8, 1]
-        self.verbforms = ['Qal', 'Niphal', 'Piel', 'Pual', 'Hiphil', 'Hophal', 'Hithpeal', 'Hishtaphel', 'Pilpel', 'Nithpael', 'Pilel', 'Pulal', 'Tiphil', 'Hithpoel', 'Hithpolel', 'Hithpalpel', 'Hothpaal', '']
-        self.verbformVals = [1, 5, 5, 5, 5, 5, 6, 8, 8, 5, 6, 6, 6, 6, 6, 6, 6, 1]
-        self.gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
-        self.millenn = ['ה','ד','ג', 'ב', 'א']
-        self.finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
-        self.unFinals = {'ך':'כ', 'ם':'מ', 'ן':'נ', 'ף':'פ', 'ץ':'צ'}
-        self.Finals = ['ך', 'ם', 'ן', 'ף', 'ץ']
-        
+
     def __assign__(self, value):
         self.value = value.value
         self.text = value.text
@@ -312,25 +310,25 @@ class Word:
             return True
         
     def getTense(self):
-        return self.tenses[self.tense]
+        return tenses[self.tense]
         
     def getTenseVal(self):
         return self.tense
         
     def getPerson(self):
-        return self.Person[self.person]
+        return Person[self.person]
     
     def getPersonVal(self):
         return self.person
     
     def getGender(self):
-        return self.Gender[self.gender]
+        return Gender[self.gender]
         
     def getGenderVal(self):
         return self.gender
     
     def getVerbform(self):
-        return self.verbforms[self.verbform]
+        return verbforms[self.verbform]
     
     def getVerbformVal(self):
         return self.verbform
@@ -346,8 +344,8 @@ class Word:
         nText = self.text.strip('"')
         nText = nText.strip("'")
         for letter in nText:
-            if letter in self.gemontria:
-                g += self.gemontria[letter]   
+            if letter in gemontria:
+                g += gemontria[letter]   
         return g
         
     def getTGemontria(self, t):
@@ -355,13 +353,13 @@ class Word:
         nText = t.strip('"')
         nText = nText.strip("'")
         for letter in nText:
-            if letter in self.gemontria:
-                g += self.gemontria[letter]   
+            if letter in gemontria:
+                g += gemontria[letter]   
         return g
         
     #def calValue(self):
         #if(self.value == 0):
-            #self.value = 100000000000 - 10*((self.prefix + 1)*(self.suffix1 + 1)*(self.suffix2 + 1)*(self.suffix3 + 1)*(self.plural + 1)*(self.modern + 1)*(self.irreg + 1)*(self.tenseVals[self.tense])*(self.verbformVals[self.verbform]))
+            #self.value = 100000000000 - 10*((self.prefix + 1)*(self.suffix1 + 1)*(self.suffix2 + 1)*(self.suffix3 + 1)*(self.plural + 1)*(self.modern + 1)*(self.irreg + 1)*(tenseVals[self.tense])*(self.verbformVals[self.verbform]))
         #return self.value
         
     def getValue(self):
@@ -418,7 +416,7 @@ class Word:
         return False
         
     def getPar(self):
-        return self.parti[self.partiW]
+        return parti[self.partiW]
         
     def getPrefixVal(self):
         return self.prefix
@@ -426,7 +424,7 @@ class Word:
     def getPrefixW(self):
         s = ""
         for pre in self.preW:
-            s += pre +  '- ' + self.prefixD[pre]+ ', '
+            s += pre +  '- ' + prefixD[pre]+ ', '
         return s[:-2]
         
     def getPrixListEnd(self):
@@ -444,7 +442,7 @@ class Word:
     def getSuffixW(self):
         s = ""
         for suff in self.sufW:
-            s += suff + '- ' + self.suffix[suff] + ', '
+            s += suff + '- ' + ssuffix[suff] + ', '
         return s[:-2]
         
     def getSufxList(self):
@@ -625,7 +623,7 @@ class Word:
                 return self.text[-y:-x]
 
     def Final(self, text):
-        if text[0] in self.finals.keys():
+        if text[0] in finals.keys():
             if len(text) > 1:
                 return finals.get(text[0]) + text[1:]
             else:
@@ -760,7 +758,7 @@ class Word:
     def setTense(self, t):
         self.tense = t
         isTense = True
-        self.value = self.value - self.tenseVals[self.tense]
+        self.value = self.value - tenseVals[self.tense]
         if self.verbform == -1:
             self.setVerbform(0)
         
@@ -778,7 +776,7 @@ class Word:
     def setVerbform(self, verb):
         self.verbform = verb
         isVerbf = True
-        self.value = self.value - self.verbformVals[self.verbform]
+        self.value = self.value - verbformVals[self.verbform]
     
     def setText(self, t):
         self.text = t
@@ -808,7 +806,7 @@ class Word:
         self.value = self.value + v
         
     def isFinal(self, l):
-        if l in self.Finals:
+        if l in Finals:
             return True
         else:
             return False
@@ -828,7 +826,7 @@ class Word:
             Year = 0;
         if (self.nextToFirst() == "'"):
             textYear = self.last() + self.text[2:-2]
-            Year = self.getTGemontria(textYear) + 1000*(self.gemontria[self.first()])
+            Year = self.getTGemontria(textYear) + 1000*(gemontria[self.first()])
         if (not self.nextToFirst() == "'"):
             textYear = self.last() + self.text[2:]
             Year = self.getTGemontria(textYear) + 5000
@@ -867,16 +865,16 @@ class Word:
         if nText == 'וי':
             return False
         for i in range(len(nText)-1):
-            if not (nText[i] in self.gemontria):
+            if not (nText[i] in gemontria):
                 if i == 0: 
                     return False
                 return True
-            if not nText[i+1] in self.gemontria:
+            if not nText[i+1] in gemontria:
                 return False
             if self.rank(nText[i]) < 2:
                 if self.rank(nText[i]) >= self.rank(nText[i+1]):
                     return False
-            elif (self.rank(nText[i]) > self.rank(nText[i+1])) or (self.gemontria[nText[i]] > self.gemontria[nText[i+1]]):
+            elif (self.rank(nText[i]) > self.rank(nText[i+1])) or (gemontria[nText[i]] > gemontria[nText[i+1]]):
                 return False      
         return True
         
@@ -888,27 +886,27 @@ class Word:
         if nText == 'זט':
             return True
         for i in range(len(nText)-1):
-            if not (nText[i] in self.gemontria):
+            if not (nText[i] in gemontria):
                 if i == 0: 
                     return False
                 return True
-            if not nText[i+1] in self.gemontria:
+            if not nText[i+1] in gemontria:
                 return False
             if self.rank(nText[i]) < 2:
                 if self.rank(nText[i]) >= self.rank(nText[i+1]):
                     return False
-            elif (self.rank(nText[i]) > self.rank(nText[i+1])) or (self.gemontria[nText[i]] > self.gemontria[nText[i+1]]):
+            elif (self.rank(nText[i]) > self.rank(nText[i+1])) or (gemontria[nText[i]] > gemontria[nText[i+1]]):
                 return False      
         return True
     
     def rank(self, n):
         if len(n) > 1:
             return -1
-        if self.gemontria[n] < 10:
+        if gemontria[n] < 10:
             return 0
-        if (self.gemontria[n] >= 10) and (self.gemontria[n] < 100):
+        if (gemontria[n] >= 10) and (gemontria[n] < 100):
             return 1
-        if self.gemontria[n] >= 100:
+        if gemontria[n] >= 100:
             return 2
 
 # This is a helper class which contain the methods for searching and choosing words. 
@@ -1619,7 +1617,7 @@ class HebrewDictionary(App):
                 if w.getSuffix() == True:
                     suff = "suffix"
                     if w.getHey1() > 0:
-                        s7 = " [" + w.getSuffixW() + ',' + ' ' + w.dirHey + ']'  
+                        s7 = " [" + w.getSuffixW() + ',' + ' ' + dirHey + ']'  
                     else:
                         s7 = " [" + w.getSuffixW() + ']'
                     if(w.getPlural() == True) or (w.getDaul() == True):
@@ -1628,7 +1626,7 @@ class HebrewDictionary(App):
                 else:       
                     if w.getHey1() > 0:
                         suff = "suffix"
-                        s7 = " [" + w.dirHey + ']'
+                        s7 = " [" + dirHey + ']'
                         if(w.getPlural() == True) or (w.getDaul() == True):
                             suffSP = ' '
 
