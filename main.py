@@ -50,7 +50,7 @@ Hiphil = ['Hiphil', 'Tiphil', 'Hishtaphel']
 Pual = ['Pual', 'Pulal', 'Poal', 'Polpal']
 Piel = ['Piel', 'Poel', 'Pilpel', 'Pilel', 'Palel', 'Polel', 'Pealal', 'Hothpaal']
 suffix = ['הנה', 'םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'ןי', 'וני', 'ונ', 'םכ', 'ןכ', 'םה', 'ומ', 'ם', 'ןה', 'ן', 'ית', 'ינ', 'יי', 'י', 'ה', 'הנ', 'וה', 'ו', 'ך']
-suffixObj = ['םכי', 'ינ', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'יי', 'ןי', 'וני']
+suffixPos= ['םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'יי', 'ןי', 'וני']
 prefixL = ['תת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
 modernL = ['קינ', 'רטמ', 'הקס', 'םינו', 'דיאו', 'ןמ', 'הינמ', 'סיזניק', 'פוקס', 'היפרג', 'היצ', 'ןקי', 'הקי', 'טסי', 'םזי', 'הז', 'יל', 'יא', 'תי']
 prephrase = ['ת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
@@ -4562,19 +4562,6 @@ class HebrewDictionary(App):
             suffW.setText(self.Final(cPhraseSuf.getText()[1:]))
             suffW.setSuffix1()
 
-            if((suffW.getLen() > 1) and ((self.getLstLen(cPhraseSuf) > 2)or(self.getLstLen(cPhraseSuf) == -1))):
-             
-                if (suffW.last() == 'י') and (cPhraseSuf.last2() in suffix):
-                    suffW2 = Word("","")
-                    suffW2.equalTo(suffW) 
-                    suffW2.setText(self.Final(suffW.getText()[1:]))
-                    suffW2.addSuff(cPhraseSuf.last2())
-                    if ((suffW2.getLen() > 3) and ((self.getLstLen(cPhraseSuf) > 6)or(self.getLstLen(cPhraseSuf) == -1))):
-                        if suffW2.last2() == 'ות':
-                            suffW2.setText(self.revPhWords(suffW2.getText(), "-"))
-                            self.FindHelper(look, suffW2, self.Dict)
-                            self.algorithm(look, suffW2)
-                    
             if(suffW.getLen() > 1):
                 if(suffW.last() == "ת"):
                     suffWh = Word("","")
@@ -4623,23 +4610,10 @@ class HebrewDictionary(App):
             suffW = Word("","")
             suffW.equalTo(cPhraseSuf)
             suffW.setText(self.Final(cPhraseSuf.getText()[2:]))
-            if(cPhraseSuf.last2() in suffixObj):
+            if(cPhraseSuf.last2() in suffixPos):
                 suffW.setNoun()
             suffW.setSuffix2()
             
-            if((suffW.getLen() > 1) and ((self.getLstLen(cPhraseSuf) > 3)or(self.getLstLen(cPhraseSuf) == -1))):
-                if (suffW.last() == 'י') and (cPhraseSuf.last3() in suffix):
-                    suffW3 = Word("","")
-                    suffW3.equalTo(suffW)
-                    suffW3.setText(self.Final(suffW.getText()[1:]))
-                    suffW3.addSuff(cPhraseSuf.last3())
-                    
-                    if((suffW3.getLen() > 3) and ((self.getLstLen(cPhraseSuf) > 7)or(self.getLstLen(cPhraseSuf) == -1))):
-                        if suffW3.last2() == 'ות':
-                            suffW3.setText(self.revPhWords(suffW3.getText(), "-"))
-                            self.FindHelper(look, suffW3, self.Dict)
-                            self.algorithm(look, suffW3)
-                  
             if(suffW.getLen() > 1):
                 if(suffW.last() == "ת"):
                     suffWh = Word("","")
@@ -4688,7 +4662,7 @@ class HebrewDictionary(App):
             suffW = Word("","")
             suffW.equalTo(cPhraseSuf)
             suffW.setText(self.Final(cPhraseSuf.getText()[3:]))
-            if(cPhraseSuf.last3() in suffixObj):
+            if(cPhraseSuf.last3() in suffixPos):
                 suffW.setNoun()
             suffW.setSuffix3()
             if((suffW.getLen() > 1) and ((self.getLstLen(cPhraseSuf) > 4)or(self.getLstLen(cPhraseSuf) == -1))):
@@ -4697,13 +4671,10 @@ class HebrewDictionary(App):
                     suffW3.equalTo(suffW)
                     suffW3.setText(self.Final(suffW.getText()[1:]))
                     suffW3.addSuff(cPhraseSuf.lastX(4))
-                    
-                    if((suffW3.getLen() > 3) and ((self.getLstLen(cPhraseSuf) > 8)or(self.getLstLen(cPhraseSuf) == -1))):
-                        if suffW3.last2() == 'ות':
-                            suffW3.setText(self.revPhWords(suffW3.getText(), "-"))
-                            self.FindHelper(look, suffW3, self.Dict)
-                            self.algorithm(look, suffW3)
-                    
+                    suffW3.setText(self.revPhWords(suffW3.getText(), "-"))
+                    self.FindHelper(look, suffW3, self.Dict)
+                    self.algorithm(look, suffW3)
+            
             if(suffW.getLen() > 1):
                 if(suffW.last() == "ת"):
                     suffWh = Word("","")
