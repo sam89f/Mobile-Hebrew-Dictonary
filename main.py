@@ -814,7 +814,7 @@ class Word:
     def isYear(self):
         if (self.getLen() < 2) or (self.isFinal(self.last())):
             return False
-        if (self.nextToFirst() == "'") and (self.first() in self.millenn) and (self.nextToLast() == '"') and (self.textIsNumb(self.last() + self.text[2:-2]) == True):
+        if (self.nextToFirst() == "'") and (self.first() in millenn) and (self.nextToLast() == '"') and (self.textIsNumb(self.last() + self.text[2:-2]) == True):
             return True
         if(not self.nextToFirst() == "'") and (self.nextToLast() == '"') and (self.textIsNumb(self.last() + self.text[2:]) == True):
             return True
