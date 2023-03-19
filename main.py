@@ -49,8 +49,8 @@ Hithpeal = ['Hithpeal', 'Hithpalpel', 'Hithpoel', 'Hithpolel', 'Nithpael']
 Hiphil = ['Hiphil', 'Tiphil', 'Hishtaphel']
 Pual = ['Pual', 'Pulal', 'Poal', 'Polpal']
 Piel = ['Piel', 'Poel', 'Pilpel', 'Pilel', 'Palel', 'Polel', 'Pealal', 'Hothpaal']
-suffix = ['הנה', 'םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'ןי', 'וני', 'ונ', 'םכ', 'ןכ', 'םה', 'ומ', 'ם', 'ןה', 'ן', 'ית', 'ינ', 'יי', 'י', 'ה', 'הנ', 'וה', 'ו', 'ך']
-suffixPos= ['םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'יי', 'ןי', 'וני']
+suffix = ['הנה', 'הנהי', 'םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'ןי', 'וני', 'ונ', 'םכ', 'ןכ', 'םה', 'ומ', 'ם', 'ןה', 'ן', 'ית', 'ינ', 'יי', 'י', 'ה', 'הנ', 'וה', 'ו', 'ך']
+suffixPos= ['הנהי', 'םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'יי', 'ןי', 'וני']
 prefixL = ['תת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
 modernL = ['קינ', 'רטמ', 'הקס', 'םינו', 'דיאו', 'ןמ', 'הינמ', 'סיזניק', 'פוקס', 'היפרג', 'היצ', 'ןקי', 'הקי', 'טסי', 'םזי', 'הז', 'יל', 'יא', 'תי']
 prephrase = ['ת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
@@ -64,10 +64,9 @@ roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף',
 p_roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף', 'ץ']
 Finals = ['ך', 'ם', 'ן', 'ף', 'ץ']
 finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
-
 unFinals = {'ך':'כ', 'ם':'מ', 'ן':'נ', 'ף':'פ', 'ץ':'צ'}
 prefixD = {"תת":"sub", "ה":"the", "ו":"and", "ב":"in", "מ":"from", "ל":"to", "כ":"as", "ש":"which"}
-ssuffix = {"ןהי":"their/them(f.)", "ןה":"their/them(f.)", "הנה":"their/them(f.)", "ן":"their/them(f.)", "ןי":"their/them(f.)", "םהי":"their/them(m.)", "םה":"their/them(m.)", "ם":"their/them(m.)", "ומ":"their/them(m.)", "הי":"hers/her", "ה":"hers/her", "הנ":"hers/her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you(pl. f.)", "ןכ":"your/you(pl. f.)", "םכי":"your/you(pl.)", "םכ":"your/you(pl.)", "ךי":"you/your(m.)", "ך":"you/your(m.)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
+ssuffix = {"ןהי":"their/them(f.)", "ןה":"their/them(f.)", "הנה":"their/them(f.)", "הנהי":"their/them(f.)", "ן":"their/them(f.)", "ןי":"their/them(f.)", "םהי":"their/them(m.)", "םה":"their/them(m.)", "ם":"their/them(m.)", "ומ":"their/them(m.)", "הי":"hers/her", "ה":"hers/her", "הנ":"hers/her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you(pl. f.)", "ןכ":"your/you(pl. f.)", "םכי":"your/you(pl.)", "םכ":"your/you(pl.)", "ךי":"you/your(m.)", "ך":"you/your(m.)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
 #suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
 parti = {1:'Active', 0:'Passive', 2:''}
 gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
@@ -1681,7 +1680,7 @@ class HebrewDictionary(App):
             #Lwords = text.split('-')
             for lw in range(len(Lwords)):
                 if (len(Lwords[lw]) == 1) and (k == 2):
-                    self.wText += '\t\t'*(n+1) + Lwords[lw] + " " + "(prefix)"
+                    self.wText += '\t\t'*(n+1) + "prefix " + '[' + Lwords[lw] + '-' + " " + prefixD[Lwords[lw]] + ']'
                     if not(lw == len(Lwords)-1):
                         self.wText += '\t\t'*(n+1) + "-"*177
                     self.wText += '\n'
@@ -4666,11 +4665,12 @@ class HebrewDictionary(App):
                 suffW.setNoun()
             suffW.setSuffix3()
             if((suffW.getLen() > 1) and ((self.getLstLen(cPhraseSuf) > 4)or(self.getLstLen(cPhraseSuf) == -1))):
-                if (suffW.last() == 'י') and (cPhraseSuf.lastX(4) in suffix):
+                if (suffW.last() == 'י') and (cPhraseSuf.lastX(4) in suffixPos):
                     suffW3 = Word("","")
                     suffW3.equalTo(suffW)
                     suffW3.setText(self.Final(suffW.getText()[1:]))
                     suffW3.addSuff(cPhraseSuf.lastX(4))
+                    suffW3.setNoun()
                     suffW3.setText(self.revPhWords(suffW3.getText(), "-"))
                     self.FindHelper(look, suffW3, self.Dict)
                     self.algorithm(look, suffW3)
