@@ -49,8 +49,8 @@ Hithpeal = ['Hithpeal', 'Hithpalpel', 'Hithpoel', 'Hithpolel', 'Nithpael']
 Hiphil = ['Hiphil', 'Tiphil', 'Hishtaphel']
 Pual = ['Pual', 'Pulal', 'Poal', 'Polpal']
 Piel = ['Piel', 'Poel', 'Pilpel', 'Pilel', 'Palel', 'Polel', 'Pealal', 'Hothpaal']
-suffix = ['הנה', 'םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'יי', 'ןי', 'וני', 'ונ', 'םכ', 'ןכ', 'םה', 'ומ', 'ם', 'ןה', 'ן', 'ית', 'ינ', 'יי', 'י', 'ה', 'הנ', 'וה', 'ו', 'ך']
-suffixObj = ['וה', 'וי', 'ינ', 'ה', 'ו', 'ך']
+suffix = ['הנה', 'םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'ןי', 'וני', 'ונ', 'םכ', 'ןכ', 'םה', 'ומ', 'ם', 'ןה', 'ן', 'ית', 'ינ', 'יי', 'י', 'ה', 'הנ', 'וה', 'ו', 'ך']
+suffixPos= ['םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'יי', 'ןי', 'וני']
 prefixL = ['תת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
 modernL = ['קינ', 'רטמ', 'הקס', 'םינו', 'דיאו', 'ןמ', 'הינמ', 'סיזניק', 'פוקס', 'היפרג', 'היצ', 'ןקי', 'הקי', 'טסי', 'םזי', 'הז', 'יל', 'יא', 'תי']
 prephrase = ['ת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
@@ -68,7 +68,7 @@ finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
 unFinals = {'ך':'כ', 'ם':'מ', 'ן':'נ', 'ף':'פ', 'ץ':'צ'}
 prefixD = {"תת":"sub", "ה":"the", "ו":"and", "ב":"in", "מ":"from", "ל":"to", "כ":"as", "ש":"which"}
 ssuffix = {"ןהי":"their/them(f.)", "ןה":"their/them(f.)", "הנה":"their/them(f.)", "ן":"their/them(f.)", "ןי":"their/them(f.)", "םהי":"their/them(m.)", "םה":"their/them(m.)", "ם":"their/them(m.)", "ומ":"their/them(m.)", "הי":"hers/her", "ה":"hers/her", "הנ":"hers/her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you(pl. f.)", "ןכ":"your/you(pl. f.)", "םכי":"your/you(pl.)", "םכ":"your/you(pl.)", "ךי":"you/your(m.)", "ך":"you/your(m.)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
-suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
+#suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
 parti = {1:'Active', 0:'Passive', 2:''}
 gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
 
@@ -4562,19 +4562,6 @@ class HebrewDictionary(App):
             suffW.setText(self.Final(cPhraseSuf.getText()[1:]))
             suffW.setSuffix1()
 
-            if((suffW.getLen() > 1) and ((self.getLstLen(cPhraseSuf) > 2)or(self.getLstLen(cPhraseSuf) == -1))):
-             
-                if (suffW.last() == 'י') and (cPhraseSuf.last2() in suffix):
-                    suffW2 = Word("","")
-                    suffW2.equalTo(suffW) 
-                    suffW2.setText(self.Final(suffW.getText()[1:]))
-                    suffW2.addSuff(cPhraseSuf.last2())
-                    if ((suffW2.getLen() > 3) and ((self.getLstLen(cPhraseSuf) > 6)or(self.getLstLen(cPhraseSuf) == -1))):
-                        if suffW2.last2() == 'ות':
-                            suffW2.setText(self.revPhWords(suffW2.getText(), "-"))
-                            self.FindHelper(look, suffW2, self.Dict)
-                            self.algorithm(look, suffW2)
-                    
             if(suffW.getLen() > 1):
                 if(suffW.last() == "ת"):
                     suffWh = Word("","")
@@ -4623,20 +4610,10 @@ class HebrewDictionary(App):
             suffW = Word("","")
             suffW.equalTo(cPhraseSuf)
             suffW.setText(self.Final(cPhraseSuf.getText()[2:]))
+            if(cPhraseSuf.last2() in suffixPos):
+                suffW.setNoun()
             suffW.setSuffix2()
-            if((suffW.getLen() > 1) and ((self.getLstLen(cPhraseSuf) > 3)or(self.getLstLen(cPhraseSuf) == -1))):
-                if (suffW.last() == 'י') and (cPhraseSuf.last3() in suffix):
-                    suffW3 = Word("","")
-                    suffW3.equalTo(suffW)
-                    suffW3.setText(self.Final(suffW.getText()[1:]))
-                    suffW3.addSuff(cPhraseSuf.last3())
-                    
-                    if((suffW3.getLen() > 3) and ((self.getLstLen(cPhraseSuf) > 7)or(self.getLstLen(cPhraseSuf) == -1))):
-                        if suffW3.last2() == 'ות':
-                            suffW3.setText(self.revPhWords(suffW3.getText(), "-"))
-                            self.FindHelper(look, suffW3, self.Dict)
-                            self.algorithm(look, suffW3)
-                  
+            
             if(suffW.getLen() > 1):
                 if(suffW.last() == "ת"):
                     suffWh = Word("","")
@@ -4685,6 +4662,8 @@ class HebrewDictionary(App):
             suffW = Word("","")
             suffW.equalTo(cPhraseSuf)
             suffW.setText(self.Final(cPhraseSuf.getText()[3:]))
+            if(cPhraseSuf.last3() in suffixPos):
+                suffW.setNoun()
             suffW.setSuffix3()
             if((suffW.getLen() > 1) and ((self.getLstLen(cPhraseSuf) > 4)or(self.getLstLen(cPhraseSuf) == -1))):
                 if (suffW.last() == 'י') and (cPhraseSuf.lastX(4) in suffix):
@@ -4692,13 +4671,10 @@ class HebrewDictionary(App):
                     suffW3.equalTo(suffW)
                     suffW3.setText(self.Final(suffW.getText()[1:]))
                     suffW3.addSuff(cPhraseSuf.lastX(4))
-                    
-                    if((suffW3.getLen() > 3) and ((self.getLstLen(cPhraseSuf) > 8)or(self.getLstLen(cPhraseSuf) == -1))):
-                        if suffW3.last2() == 'ות':
-                            suffW3.setText(self.revPhWords(suffW3.getText(), "-"))
-                            self.FindHelper(look, suffW3, self.Dict)
-                            self.algorithm(look, suffW3)
-                    
+                    suffW3.setText(self.revPhWords(suffW3.getText(), "-"))
+                    self.FindHelper(look, suffW3, self.Dict)
+                    self.algorithm(look, suffW3)
+            
             if(suffW.getLen() > 1):
                 if(suffW.last() == "ת"):
                     suffWh = Word("","")
