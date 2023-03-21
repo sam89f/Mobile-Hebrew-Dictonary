@@ -4956,12 +4956,13 @@ class HebrewDictionary(App):
                     
                 return constW
                 
-        if(word.getLen() > 2) and (word.last() == 'ת')and(self.CurrentWord.last() == 'ת'):
+        if(word.getLen() > 2) and (word.last() == 'ת') and (self.CurrentWord.last() == 'ת'):
             constW = Word("","")
             constW.equalTo(word)
             constW.setText(self.Final(word.getText()[1:]))
             constW.setNoun()
-            constW.setConstruct()
+            if(word.getPlural() == False) and (word.getSuffix() == False):
+                constW.setConstruct()
             self.FindHelper(look, constW, self.Dict)
             self.irreg(look, constW)
             constW2 = Word("", "")
