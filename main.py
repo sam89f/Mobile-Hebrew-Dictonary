@@ -4961,7 +4961,7 @@ class HebrewDictionary(App):
             constW.equalTo(word)
             constW.setText(self.Final(word.getText()[1:]))
             constW.setNoun()
-            if(word.getPlural() == False) and (word.getSuffix() == False):
+            if(word.getPlural() == False):
                 constW.setConstruct()
             self.FindHelper(look, constW, self.Dict)
             self.irreg(look, constW)
