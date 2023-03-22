@@ -1798,7 +1798,8 @@ class HebrewDictionary(App):
         
         self.prefix(look, word, False)
         
-        self.participle(look, word)
+        if (not (word.getVerbform() in Hiphil)) and (not (word.getVerbform() == 'Hophal')) and (not (word.getVerbform() in Hithpeal)):
+            self.participle(look, word)
         
         self.suffix(look, word, 2)
 
@@ -1947,8 +1948,9 @@ class HebrewDictionary(App):
             if(revCW[posTov-1] == 'ה') and (word.getVerbform() in Hithpeal):
                 return False
                 
-        parti = Word("","")
-        parti.equalTo(self.participle(look, word))
+        if (not (word.getVerbform() in Hiphil)) and (not (word.getVerbform() == 'Hophal')) and (not (word.getVerbform() in Hithpeal)):
+            parti = Word("","")
+            parti.equalTo(self.participle(look, word))
         
         infin_abs = Word("","")
         infin_abs.equalTo(self.infinitiveAbs(look, word))
@@ -1966,14 +1968,14 @@ class HebrewDictionary(App):
                 self.algorithm(look, perf)
         
         infin = Word("","")
-        if (not ((word.getPrixListEnd() == 'מ') or (word.getPrixListEnd() == 'ל') or (word.getPrixListEnd() == 'כ') or ('ה' in word.getPrixList()))) and (word.getTenseVal() == -1):
+        if (not ((word.getPrixListEnd() == 'מ') or (word.getPrixListEnd() == 'ל') or (word.getPrixListEnd() == 'כ') or ('ה' in word.getPrixList()))) and (not (word.getVerbform() in Hiphil)) and (not (word.getVerbform() == 'Hophal')) and (not (word.getVerbform() in Hithpeal)) and (word.getTenseVal() == -1):
             infin.equalTo(self.infinitive(look, word))
             if not (infin.getText() == ""):
                 if alg == True:
                     self.algorithm(look, infin)
                     
         imp = Word("","")
-        if not (word.getVerbform() in Hiphil):
+        if (not (word.getVerbform() in Hiphil)) and (not (word.getVerbform() == 'Hophal')) and (not (word.getVerbform() in Hithpeal)):
             if(word.isTense() == False):
                 imp.equalTo(self.future(look, word))
                 if not (imp.getText() == ""):
@@ -2863,7 +2865,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, hufalWy, self.Dict)
                 return hufalW
         
-            if(word.first() in prefixL):
+            elif(word.first() in prefixL):
                 hufalW = Word("","")
                 hufalW.equalTo(word)
                 hufalW.setText(word.getText()[:-2] + word.first())
@@ -2877,7 +2879,7 @@ class HebrewDictionary(App):
                     self.participle(look, hufalW)
                 return self.smPrefix(look, hufalW, True)
                 
-            if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א')):
+            elif((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א')):
                 hufalW = Word("","")
                 hufalW.equalTo(word)
                 hufalW.setText(word.getText()[:-2] + word.first())
@@ -4716,7 +4718,7 @@ class HebrewDictionary(App):
             fimW.setText(self.Final(word.getText()[1:]))
             pfimW = Word("","")
             
-            if(fimW.first() == 'מ') and (not(((word.getPrefix() == True) and ((word.getVerbform() in Hithpeal)or(word.getVerbform() in Hiphil)or(word.getVerbform() == 'Hophal'))))):
+            if(fimW.first() == 'מ'):
                 if(fimW.getLen() > 4) and ((fimW.isVerbf() == False) or (fimW.getVerbform() == 'Qal')):
                     if(fimW.third() == 'ו') and (self.num_of_a_roots(fimW.getText()[:-3]) < 3):
                         pfimW.equalTo(fimW)
@@ -4804,7 +4806,7 @@ class HebrewDictionary(App):
                 d = 1
             if word.getSuffix2() == True:
                 d = 2
-            if(word.first() == 'מ') and (not(((word.getPrefix() == True) and ((word.getVerbform() in Hithpeal)or(word.getVerbform() in Hiphil)or(word.getVerbform() == 'Hophal'))))):
+            if(word.first() == 'מ'):
                 if(word.getLen() > 4) and ((word.isVerbf() == False) or (word.getVerbform() == 'Qal')):
                     if(word.third() == 'ו') and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת'))) and (self.num_of_a_roots(word.getText()[:-3]) < 3):
                         isPar = True
