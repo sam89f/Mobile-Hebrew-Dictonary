@@ -4716,7 +4716,7 @@ class HebrewDictionary(App):
             fimW.setText(self.Final(word.getText()[1:]))
             pfimW = Word("","")
             
-            if(fimW.first() == 'מ') and (not(((word.getPrefix() == True) and ((word.getVerbform() in Hithpeal)or(word.getVerbform() in Hiphil)or(word.getVerbform() == 'Hophal'))))):
+            if(fimW.first() == 'מ'):
                 if(fimW.getLen() > 4) and ((fimW.isVerbf() == False) or (fimW.getVerbform() == 'Qal')):
                     if(fimW.third() == 'ו') and (self.num_of_a_roots(fimW.getText()[:-3]) < 3):
                         pfimW.equalTo(fimW)
@@ -4804,7 +4804,7 @@ class HebrewDictionary(App):
                 d = 1
             if word.getSuffix2() == True:
                 d = 2
-            if(word.first() == 'מ') and (not(((word.getPrefix() == True) and ((word.getVerbform() in Hithpeal)or(word.getVerbform() in Hiphil)or(word.getVerbform() == 'Hophal'))))):
+            if(word.first() == 'מ'):
                 if(word.getLen() > 4) and ((word.isVerbf() == False) or (word.getVerbform() == 'Qal')):
                     if(word.third() == 'ו') and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת'))) and (self.num_of_a_roots(word.getText()[:-3]) < 3):
                         isPar = True
