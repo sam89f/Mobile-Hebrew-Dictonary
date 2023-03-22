@@ -1798,7 +1798,8 @@ class HebrewDictionary(App):
         
         self.prefix(look, word, False)
         
-        self.participle(look, word)
+        if (not (word.getVerbform() in Hiphil)) and (not (word.getVerbform() == 'Hophal')) and (not (word.getVerbform() in Hithpeal)):
+            self.participle(look, word)
         
         self.suffix(look, word, 2)
 
@@ -1947,8 +1948,9 @@ class HebrewDictionary(App):
             if(revCW[posTov-1] == 'ה') and (word.getVerbform() in Hithpeal):
                 return False
                 
-        parti = Word("","")
-        parti.equalTo(self.participle(look, word))
+        if (not (word.getVerbform() in Hiphil)) and (not (word.getVerbform() == 'Hophal')) and (not (word.getVerbform() in Hithpeal)):
+            parti = Word("","")
+            parti.equalTo(self.participle(look, word))
         
         infin_abs = Word("","")
         infin_abs.equalTo(self.infinitiveAbs(look, word))
@@ -1966,14 +1968,14 @@ class HebrewDictionary(App):
                 self.algorithm(look, perf)
         
         infin = Word("","")
-        if (not ((word.getPrixListEnd() == 'מ') or (word.getPrixListEnd() == 'ל') or (word.getPrixListEnd() == 'כ') or ('ה' in word.getPrixList()))) and (word.getTenseVal() == -1):
+        if (not ((word.getPrixListEnd() == 'מ') or (word.getPrixListEnd() == 'ל') or (word.getPrixListEnd() == 'כ') or ('ה' in word.getPrixList()))) and (not (word.getVerbform() in Hiphil)) and (not (word.getVerbform() == 'Hophal')) and (not (word.getVerbform() in Hithpeal)) and (word.getTenseVal() == -1):
             infin.equalTo(self.infinitive(look, word))
             if not (infin.getText() == ""):
                 if alg == True:
                     self.algorithm(look, infin)
                     
         imp = Word("","")
-        if not (word.getVerbform() in Hiphil):
+        if (not (word.getVerbform() in Hiphil)) and (not (word.getVerbform() == 'Hophal')) and (not (word.getVerbform() in Hithpeal)):
             if(word.isTense() == False):
                 imp.equalTo(self.future(look, word))
                 if not (imp.getText() == ""):
@@ -2863,7 +2865,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, hufalWy, self.Dict)
                 return hufalW
         
-            if(word.first() in prefixL):
+            elif(word.first() in prefixL):
                 hufalW = Word("","")
                 hufalW.equalTo(word)
                 hufalW.setText(word.getText()[:-2] + word.first())
@@ -2877,7 +2879,7 @@ class HebrewDictionary(App):
                     self.participle(look, hufalW)
                 return self.smPrefix(look, hufalW, True)
                 
-            if((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א')):
+            elif((word.first() == 'י') or (word.first() == 'נ' ) or (word.first() == 'ת' ) or (word.first() == 'א')):
                 hufalW = Word("","")
                 hufalW.equalTo(word)
                 hufalW.setText(word.getText()[:-2] + word.first())
