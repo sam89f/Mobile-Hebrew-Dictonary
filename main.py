@@ -2320,6 +2320,22 @@ class HebrewDictionary(App):
                             
                         return self.participle(look, hifilW)
                         
+                    if(word.first() in prefixL) and (not(word.first() =='ו')) and (word.fourth() == 'י' ):
+                        hifilW = Word("","")
+                        hifilW.equalTo(word)
+                        hifilW.setText(word.last3() + word.getText()[5:])
+                        hifilW.setRL2(hifilW.thirdFromLast() + hifilW.fourthFromLast())
+                        
+                        if(word.isVerbf() == False):
+                            hifilW.setVerbform(4)
+                        else:
+                            hifilW.setVerbform(rareVerbforms[word.getVerbform()])
+                                    
+                        if(not(word.first() =='ה')):           
+                            return self.smPrefix(look, hifilW, True)
+                        else:
+                            self.smPrefix(look, hifilW, True)
+                        
                     if(not((word.last() == 'ת')or(word.last2() == 'ונ')or(word.last2() == 'ית')or(word.last2() == 'םת')or(word.last2() == 'תן'))):
                         if(word.first() == 'ת') and (word.fourth() == 'י' ):
                             tifilW = Word("","")
@@ -2350,7 +2366,7 @@ class HebrewDictionary(App):
                         self.FindHelper(look, hifilW, self.Dict)
                         self.perfect(look, hifilW)
                         
-                        if(word.first2() == 'יה') and (not((word.last() == 'ת')or(word.last2() == 'ונ')or(word.last2() == 'ית')or(word.last2() == 'םת')or(word.last2() == 'תן'))) and (word.getX(5) == 'י' ):
+                        if(word.first2() == 'יה') and (word.getX(5) == 'י' ):
                             hifilW2 = Word("","")
                             hifilW2.equalTo(word)
                             hifilW2.setText(word.last3() + word.getText()[5:-2])
@@ -2407,6 +2423,22 @@ class HebrewDictionary(App):
                             hifilW.setVerbform(rareVerbforms[word.getVerbform()])
                             
                         return self.participle(look, hifilW)
+                        
+                    if(word.first() in prefixL) and (not(word.first() =='ו')) and (word.fourth() == 'י' ):
+                        hifilW = Word("","")
+                        hifilW.equalTo(word)
+                        hifilW.setText(word.last3() + word.getText()[4:])
+                        hifilW.setRL2(hifilW.thirdFromLast() + hifilW.fourthFromLast())
+                       
+                        if(word.isVerbf() == False):
+                            hifilW.setVerbform(4)
+                        else:
+                            hifilW.setVerbform(rareVerbforms[word.getVerbform()])
+                                    
+                        if(not(word.first() =='ה')):           
+                            return self.smPrefix(look, hifilW, True)
+                        else:
+                            self.smPrefix(look, hifilW, True)
                     
                     if(not((word.last() == 'ת')or(word.last2() == 'ונ')or(word.last2() == 'ית')or(word.last2() == 'םת')or(word.last2() == 'תן'))):
                         if(word.first() == 'ת') and (word.fourth() == 'י' ):
@@ -2440,7 +2472,7 @@ class HebrewDictionary(App):
                             
                         self.perfect(look, hifilW)
                         
-                        if(word.first2() == 'יה') and (not((word.last() == 'ת')or(word.last2() == 'ונ')or(word.last2() == 'ית')or(word.last2() == 'םת')or(word.last2() == 'תן'))) and (word.getX(5) == 'י' ):
+                        if(word.first2() == 'יה') and (word.getX(5) == 'י' ):
                             hifilW2 = Word("","")
                             hifilW2.equalTo(word)
                             hifilW2.setText(word.last3() + word.getText()[4:-2])
@@ -2504,6 +2536,22 @@ class HebrewDictionary(App):
                             
                         return self.participle(look, hifilW)
                         
+                    if(word.first() in prefixL) and (not(word.first() =='ו')) and (word.fourth() == 'י' ):
+                        hifilW = Word("","")
+                        hifilW.equalTo(word)
+                        hifilW.setText(word.last2() + word.getText()[4:])
+                        hifilW.setRL2(hifilW.nextToLast() + hifilW.thirdFromLast())
+                        
+                        if(word.isVerbf() == False):
+                            hifilW.setVerbform(4)
+                        else:
+                            hifilW.setVerbform(rareVerbforms[word.getVerbform()])
+                                    
+                        if(not(word.first() =='ה')):           
+                            return self.smPrefix(look, hifilW, True)
+                        else:
+                            self.smPrefix(look, hifilW, True)
+                        
                     if(not((word.last() == 'ת')or(word.last2() == 'ונ')or(word.last2() == 'ית')or(word.last2() == 'םת')or(word.last2() == 'תן'))):
                         if(word.first() == 'ת') and (word.fourth() == 'י' ):
                             tifilW = Word("","")
@@ -2536,7 +2584,7 @@ class HebrewDictionary(App):
                         self.FindHelper(look, hifilW, self.Dict)
                         self.perfect(look, hifilW)
                         
-                        if(word.first2() == 'יה')(not((word.last() == 'ת')or(word.last2() == 'ונ')or(word.last2() == 'ית')or(word.last2() == 'םת')or(word.last2() == 'תן'))) and (word.getX(5) == 'י' ):
+                        if(word.first2() == 'יה') and (word.getX(5) == 'י' ):
                             hifilW2 = Word("","")
                             hifilW2.equalTo(word)
                             hifilW2.setText(word.last2() + word.getText()[4:-2])
@@ -2597,6 +2645,22 @@ class HebrewDictionary(App):
                             hifilW.setVerbform(rareVerbforms[word.getVerbform()])
                             
                         return self.participle(look, hifilW)
+                        
+                    if(word.first() in prefixL) and (not(word.first() =='ו')) and (word.fourth() == 'י' ):
+                        hifilW = Word("","")
+                        hifilW.equalTo(word)
+                        hifilW.setText(word.last3() + word.getText()[3:])
+                        hifilW.setRL2(hifilW.nextToLast() + hifilW.thirdFromLast())
+                        
+                        if(word.isVerbf() == False):
+                            hifilW.setVerbform(4)
+                        else:
+                            hifilW.setVerbform(rareVerbforms[word.getVerbform()])
+                                    
+                        if(not(word.first() =='ה')):           
+                            return self.smPrefix(look, hifilW, True)
+                        else:
+                            self.smPrefix(look, hifilW, True)
                     
                     #if(not((word.last() == 'ת')or(word.last2() == 'ונ')or(word.last2() == 'ית')or(word.last2() == 'םת')or(word.last2() == 'תן'))):
                     if(word.first() == 'ה') and (word.fourth() == 'י' ):
@@ -2611,7 +2675,7 @@ class HebrewDictionary(App):
                             
                         self.perfect(look, hifilW)
                         
-                        if(word.first2() == 'יה') and (not((word.last() == 'ת')or(word.last2() == 'ונ')or(word.last2() == 'ית')or(word.last2() == 'םת')or(word.last2() == 'תן'))) and (word.getX(5) == 'י' ):
+                        if(word.first2() == 'יה') and (word.getX(5) == 'י' ):
                             hifilW2 = Word("","")
                             hifilW2.equalTo(word)
                             hifilW2.setText(word.last2() + word.getText()[3:-2])
@@ -2700,6 +2764,22 @@ class HebrewDictionary(App):
                             
                 return self.participle(look, hifilW)
                 
+            if(word.first() in prefixL) and (not(word.first() =='ו')) and (word.fourth() == 'י' ):
+               hifilW = Word("","")
+               hifilW.equalTo(word)
+               hifilW.setText(word.last() + word.getText()[3:])
+               hifilW.setRL2(hifilW.last() + hifilW.nextToLast())
+                
+               if(word.isVerbf() == False):
+                   hifilW.setVerbform(4)
+               else:
+                   hifilW.setVerbform(rareVerbforms[word.getVerbform()])
+                            
+               if(not(word.first() =='ה')):           
+                   return self.smPrefix(look, hifilW, True)
+               else:
+                   self.smPrefix(look, hifilW, True)
+                
             if(word.first() == 'ה') and (word.fourth() == 'י' ):
                 hifilW = Word("","")
                 hifilW.equalTo(word)
@@ -2783,6 +2863,22 @@ class HebrewDictionary(App):
                     hifilW.setVerbform(rareVerbforms[word.getVerbform()])
                             
                 return self.participle(look, hifilW)
+                
+            if(word.first() in prefixL) and (not(word.first() =='ו')) and (word.fourth() == 'י' ):
+                hifilW = Word("","")
+                hifilW.equalTo(word)
+                hifilW.setText(word.last() + word.getText()[2:])
+                hifilW.setRL2(hifilW.last() + hifilW.nextToLast())
+                
+                if(word.isVerbf() == False):
+                    hifilW.setVerbform(4)
+                else:
+                    hifilW.setVerbform(rareVerbforms[word.getVerbform()])
+                    
+                if(not(word.first() =='ה')):           
+                    return self.smPrefix(look, hifilW, True)
+                else:
+                    self.smPrefix(look, hifilW, True)
                      
             if(word.first() == 'ה') and (word.fourth() == 'י' ):
                 hifilW = Word("","")
@@ -2865,7 +2961,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, hufalWy, self.Dict)
                 return hufalW
         
-            elif(word.first() in prefixL):
+            elif(word.first() in prefixL) and (not(word.first() =='ו')):
                 hufalW = Word("","")
                 hufalW.equalTo(word)
                 hufalW.setText(word.getText()[:-2] + word.first())
@@ -2938,7 +3034,7 @@ class HebrewDictionary(App):
                     self.FindHelper(look, hitpaelWh, self.Dict)
                 return hitpaelW
             
-        if(word.nextToFirst() == 'ת') and (word.first() in prefixL) and (not ((word.Ht == False) or (word.third() == 'ו'))):
+        if(word.nextToFirst() == 'ת') and (word.first() in prefixL) and (not ((word.Ht == False) or (word.third() == 'ו'))) and (not(word.first() =='ו')) :
             hitpaelW = Word("","")
             hitpaelW.equalTo(word)
             hitpaelW.setText(word.getText()[:-2] + word.first())
