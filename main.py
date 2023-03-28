@@ -2623,7 +2623,7 @@ class HebrewDictionary(App):
                     if(word.first() == 'ל') and (word.fourth() == 'י' ):
                         hifilW = Word("","")
                         hifilW.equalTo(word)
-                        hifilW.setText(word.last3() + word.getText()[3:])
+                        hifilW.setText(word.last2() + word.getText()[3:])
                         hifilW.setRL2(hifilW.nextToLast() + hifilW.thirdFromLast())
                         
                         if(word.isVerbf() == False):
@@ -2636,7 +2636,7 @@ class HebrewDictionary(App):
                     if(word.first() == 'מ') and (word.fourth() == 'י' ):
                         hifilW = Word("","")
                         hifilW.equalTo(word)
-                        hifilW.setText(word.last3() + word.getText()[3:])
+                        hifilW.setText(word.last2() + word.getText()[3:])
                         hifilW.setRL2(hifilW.nextToLast() + hifilW.thirdFromLast())
                         
                         if(word.isVerbf() == False):
@@ -2649,7 +2649,7 @@ class HebrewDictionary(App):
                     if(word.first() in prefixL) and (not(word.first() =='ו')) and (word.fourth() == 'י' ):
                         hifilW = Word("","")
                         hifilW.equalTo(word)
-                        hifilW.setText(word.last3() + word.getText()[3:])
+                        hifilW.setText(word.last2() + word.getText()[3:])
                         hifilW.setRL2(hifilW.nextToLast() + hifilW.thirdFromLast())
                         
                         if(word.isVerbf() == False):
