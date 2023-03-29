@@ -5214,7 +5214,7 @@ class HebrewDictionary(App):
                 if(not(word.first() == 'נ')) and (not(word.getVerbform() == 'Niphal')) and (not(word.getRL2() == word.last2())):
                     irregW.setText(self.Final(word.getText()[1:]) + 'נ')
                     irregW.setIrreg()
-            elif ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')) and (not(word.getPartiVal() == 0)):
+            elif ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')) and (not(word.getPartiVal() == 0)) and (not(word.getVerbform() == 'Pual')):
                 irregW.setText(word.getText() + 'נ')
                 irregW.setIrreg()
                 irregWNN = Word("","")
@@ -5354,7 +5354,7 @@ class HebrewDictionary(App):
             #        self.FindHelper(look, irregWc, self.Dict)
          
         # checking to see if any letters have been assimilated from the beginning of the word.
-        if ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')) and (not(word.getPartiVal() == 1)):
+        if ((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')) and (not(word.getPartiVal() == 1)) and (not(word.getVerbform() in Pual)):
             if (not((word.getVerbform() == 'Hophal')or(word.getVerbform() in Hiphil)or(word.getVerbform() in Hithpeal))) and (not(word.getIrregVal() > 0)) and ((not ('ה' in word.getPrixList())) and (not (self.CurrentWord.first() == 'ה')) and (not (word.first() == 'ה'))) and (not(word.getVerbform() in Piel)):
                 irregW = Word("","")
                 irregW.equalTo(word)
