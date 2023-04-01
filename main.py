@@ -96,7 +96,7 @@ class Word:
         self.plFactor = 1
         self.plFactor2 = 2
         self.dlFactor = 3
-        self.dlFactor = 5
+        self.dlFactor2 = 5
         self.mdrnFactor = 6
         self.cnstFactor = 2
         self.cnstFactor2 = 4
