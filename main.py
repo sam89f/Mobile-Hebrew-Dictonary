@@ -4189,7 +4189,7 @@ class HebrewDictionary(App):
                     self.FindHelper(look, plW2, self.Dict)
                    
                     singleW.setText('ה' + self.unFinal(plW.getText()))
-                    plW.setDaul2()
+                    singleW.setDaul2()
                     singleW.setText(self.revPhWords(singleW.getText(), "-"))
                     self.FindHelper(look, singleW, self.Dict)
                     self.algorithm(look, singleW)
