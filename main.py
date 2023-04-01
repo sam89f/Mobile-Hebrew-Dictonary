@@ -4176,7 +4176,7 @@ class HebrewDictionary(App):
                     plWh.setText('ה' + cPhrasePl.getText()[3:])
                     plWh.setText(plWh.getText().replace("-םיי", "-ה"))
                     plWh.setNoun()
-                    plWh.setDau2()
+                    plWh.setDaul2()
                     plWh.setText(self.revPhWords(plWh.getText(), "-"))
                     self.algorithm(look, plWh)
                     if(change2 > 0):
