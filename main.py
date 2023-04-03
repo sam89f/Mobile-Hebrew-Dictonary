@@ -1695,7 +1695,10 @@ class HebrewDictionary(App):
             #Lwords = text.split('-')
             for lw in range(len(Lwords)):
                 if (len(Lwords[lw]) == 1) and (k == 2):
-                    self.wText += '\t\t'*(n+1) + "prefix " + '[' + Lwords[lw] + '-' + " " + prefixD[Lwords[lw]] + ']'
+                    if Lwords[lw] in prefixD:
+                        self.wText += '\t\t'*(n+1) + "prefix " + '[' + Lwords[lw] + '-' + " " + prefixD[Lwords[lw]] + ']'
+                    else:
+                        self.wText += '\t\t'*(n+1) + "prefix " + '[' + Lwords[lw] + ']'
                     if not(lw == len(Lwords)-1):
                         self.wText += '\t\t'*(n+1) + "-"*181
                     self.wText += '\n'
