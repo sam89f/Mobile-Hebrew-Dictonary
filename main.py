@@ -4190,6 +4190,14 @@ class HebrewDictionary(App):
                     plW2.equalTo(plW)
                     plW2.setText(self.revPhWords(plW2.getText(), "-"))
                     self.FindHelper(look, plW2, self.Dict)
+                    
+                    if(plW.getLen() > 1):
+                        if(plW.last() == "ת"):
+                            suffWh = Word("","")
+                            suffWh.equalTo(plW) 
+                            suffWh.setText('ה' + plW.getText()[1:])  
+                            suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
+                            self.FindHelper(look, suffWh, self.Dict)
                    
                     singleW.setText('ה' + self.unFinal(plW.getText()))
                     singleW.setDaul2()
@@ -4301,6 +4309,15 @@ class HebrewDictionary(App):
                     plW2.equalTo(plW)
                     plW2.setText(self.revPhWords(plW2.getText(), "-"))
                     self.FindHelper(look, plW2, self.Dict)
+                    
+                    if(plW.getLen() > 1):
+                        if(plW.last() == "ת"):
+                            suffWh = Word("","")
+                            suffWh.equalTo(plW) 
+                            suffWh.setText('ה' + plW.getText()[1:])  
+                            suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
+                            self.FindHelper(look, suffWh, self.Dict)
+                    
                     singleW.setText('ה' + self.unFinal(plW.getText()))
                     singleW.setPlural2()
                     singleW.setText(self.revPhWords(singleW.getText(), "-"))
