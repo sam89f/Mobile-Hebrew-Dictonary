@@ -4193,11 +4193,11 @@ class HebrewDictionary(App):
                     
                     if(plW.getLen() > 1):
                         if(plW.last() == "ת"):
-                            suffWh = Word("","")
-                            suffWh.equalTo(plW) 
-                            suffWh.setText('ה' + plW.getText()[1:])  
-                            suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
-                            self.FindHelper(look, suffWh, self.Dict)
+                            plWWh = Word("","")
+                            plWWh.equalTo(plW) 
+                            plWWh.setText('ה' + plW.getText()[1:])  
+                            plWWh.setText(self.revPhWords(plWWh.getText(), "-"))
+                            self.FindHelper(look, plWWh, self.Dict)
                    
                     singleW.setText('ה' + self.unFinal(plW.getText()))
                     singleW.setDaul2()
@@ -4312,11 +4312,11 @@ class HebrewDictionary(App):
                     
                     if(plW.getLen() > 1):
                         if(plW.last() == "ת"):
-                            suffWh = Word("","")
-                            suffWh.equalTo(plW) 
-                            suffWh.setText('ה' + plW.getText()[1:])  
-                            suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
-                            self.FindHelper(look, suffWh, self.Dict)
+                            plWWh = Word("","")
+                            plWWh.equalTo(plW) 
+                            plWWh.setText('ה' + plW.getText()[1:])  
+                            plWWh.setText(self.revPhWords(plWWh.getText(), "-"))
+                            self.FindHelper(look, plWWh, self.Dict)
                     
                     singleW.setText('ה' + self.unFinal(plW.getText()))
                     singleW.setPlural2()
@@ -5205,7 +5205,28 @@ class HebrewDictionary(App):
                     self.algorithm(look, constW3)
                     
                     return constW
-            
+                    
+        if(word.getLen() > 2) and (PhraseCostr.last() == 'ת') and (not (PhraseCostr.getTense() == 'Perfect')) and (not(PhraseCostr.getTense() == 'Imperfect')) and (not(PhraseCostr.getTense() == 'Imperative')) and (not(PhraseCostr.getTense() == 'Infinitive')):
+            if('-' in PhraseCostr.getText()):
+                plW = Word("","")
+                plW.equalTo(PhraseCostr)
+                plW.setText(PhraseCostr.Final(PhraseCostr.getText()[1:]))
+                plW.setNoun()
+                plW.setConstruct2()
+                plW.setText(self.revPhWords(plW.getText(), "-"))
+                self.algorithm(look, plW)
+                if(self.FindHelper(look, plW, self.Dict) == True):
+                    return plW
+                
+                plW.equalTo(PhraseCostr)
+                plW.setText('ה' + PhraseCostr.getText()[1:])
+                plW.setNoun()
+                plW.setConstruct()
+                plW.setText(self.revPhWords(plW.getText(), "-"))
+                self.algorithm(look, plW)
+                if(self.FindHelper(look, plW, self.Dict) == True):
+                    return plW
+                        
         return Word("", "") 
         
     
