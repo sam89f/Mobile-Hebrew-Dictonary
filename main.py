@@ -1092,8 +1092,13 @@ class CustomInput(TextInput):
             super(CustomInput, self).on_triple_tap()  # performs it's original function
         else:
             self.text = ' ' + "\n" + Clipboard.paste()
+            inputBuff = self.text
+            words = inputBuff.split()
+            words = self.clean(words)
+            word = ' '.join(words)
+ 
             if self.check(): # maker sure text order is correct; if not, reverse input text
-                self.text = self.revT(self.text)
+                self.text = self.revT(word)
         print("triple tap confirmed")
      
     # reverses text of parameter
@@ -1152,6 +1157,56 @@ class CustomInput(TextInput):
                         return False
         return False
         
+    def clean(self, words):
+        
+        for w in range(len(words)):
+            words[w] = words[w].replace("ֹו", "ו")
+            words[w] = words[w].replace("ֹ", "ו") 
+            words[w] = words[w].replace("ֻ", "ו")
+            words[w] = words[w].replace("ַיּ", "יי")
+            words[w] = words[w].replace("ִיַ", "יי")
+            words[w] = words[w].replace("ֵ", "")
+            words[w] = words[w].replace("ִ", "")
+            words[w] = words[w].replace("ַ", "")
+            words[w] = words[w].replace("ָ", "")
+            words[w] = words[w].replace("ׁ", "")
+            words[w] = words[w].replace("ׂ", "")
+            words[w] = words[w].replace("ּ", "")   
+            words[w] = words[w].replace("ֱ", "")
+            words[w] = words[w].replace("ֵ", "")
+            words[w] = words[w].replace("ְ", "")
+            words[w] = words[w].replace("ֶ", "")
+            words[w] = words[w].replace("ֲ", "")
+            words[w] = words[w].replace("ֳ", "")
+            words[w] = words[w].replace("ֽ", "")
+            words[w] = words[w].replace("ֺ", "ו")
+            words[w] = words[w].replace("שׁ", "ש")
+            words[w] = words[w].replace("שׂ", "ש")
+            words[w] = words[w].replace("וֹ", "ו")
+            words[w] = words[w].replace("וּ", "ו")
+            words[w] = words[w].replace("אָ", "א")
+            words[w] = words[w].replace("אַ", "א")
+            words[w] = words[w].replace("בּ", "ב")
+            words[w] = words[w].replace("גּ", "ג")
+            words[w] = words[w].replace("דּ", "ד")
+            words[w] = words[w].replace("הּ", "ה")
+            words[w] = words[w].replace("זּ", "ז")
+            words[w] = words[w].replace("טּ", "ט")
+            words[w] = words[w].replace("יּ", "י")
+            words[w] = words[w].replace("יִ", "י")
+            words[w] = words[w].replace("כּ", "כ")
+            words[w] = words[w].replace("לּ", "ל")
+            words[w] = words[w].replace("מּ", "מ")
+            words[w] = words[w].replace("נּ", "נ")
+            words[w] = words[w].replace("סּ", "ס")
+            words[w] = words[w].replace("פּ", "פ")
+            words[w] = words[w].replace("צּ", "צ")
+            words[w] = words[w].replace("קּ", "ק")
+            words[w] = words[w].replace("שּׁ", "ש")
+            words[w] = words[w].replace("שּׂ", "ש")
+            words[w] = words[w].replace("תּ", "ת")
+            
+        return words
     # Interface for displaying the words found, their diffinition, and some gramatical properties.  
 class DisplayWords(GridLayout):
     def __init__(self, instance, **kwargs):
@@ -1331,6 +1386,7 @@ class HebrewDictionary(App):
             words[w] = words[w].replace("ֹו", "ו")
             words[w] = words[w].replace("ֹ", "ו") 
             words[w] = words[w].replace("ֻ", "ו")
+            words[w] = words[w].replace("ַיּ", "יי")
             words[w] = words[w].replace("ִיַ", "יי")
             words[w] = words[w].replace("ֵ", "")
             words[w] = words[w].replace("ִ", "")
@@ -1338,7 +1394,7 @@ class HebrewDictionary(App):
             words[w] = words[w].replace("ָ", "")
             words[w] = words[w].replace("ׁ", "")
             words[w] = words[w].replace("ׂ", "")
-            words[w] = words[w].replace("ּ", "")
+            words[w] = words[w].replace("ּ", "")   
             words[w] = words[w].replace("ֱ", "")
             words[w] = words[w].replace("ֵ", "")
             words[w] = words[w].replace("ְ", "")
@@ -1347,28 +1403,6 @@ class HebrewDictionary(App):
             words[w] = words[w].replace("ֳ", "")
             words[w] = words[w].replace("ֽ", "")
             words[w] = words[w].replace("ֺ", "ו")
-            words[w] = words[w].replace("שׁ", "ש")
-            words[w] = words[w].replace("שׂ", "ש")
-            words[w] = words[w].replace("וֹ", "ו")
-            words[w] = words[w].replace("וּ", "ו")
-            words[w] = words[w].replace("בּ", "ב")
-            words[w] = words[w].replace("גּ", "ג")
-            words[w] = words[w].replace("דּ", "ד")
-            words[w] = words[w].replace("הּ", "ה")
-            words[w] = words[w].replace("זּ", "ז")
-            words[w] = words[w].replace("טּ", "ט")
-            words[w] = words[w].replace("יּ", "י")
-            words[w] = words[w].replace("כּ", "כ")
-            words[w] = words[w].replace("לּ", "ל")
-            words[w] = words[w].replace("מּ", "מ")
-            words[w] = words[w].replace("נּ", "נ")
-            words[w] = words[w].replace("סּ", "ס")
-            words[w] = words[w].replace("פּ", "פ")
-            words[w] = words[w].replace("צּ", "צ")
-            words[w] = words[w].replace("קּ", "ק")
-            words[w] = words[w].replace("שּׁ", "ש")
-            words[w] = words[w].replace("שּׂ", "ש")
-            words[w] = words[w].replace("תּ", "ת")
             
         for i in range(len(words)):
             for j in range(len(punctuation)):
@@ -1586,14 +1620,17 @@ class HebrewDictionary(App):
                 w.setText(self.revPhWords(wi.getText(), '-'))
                 val = ""
                 if w.isVerb() == True:
-                    val = "verb: "
-                    if w.isTense() == False:
-                        if 'ו' in w.getPrixList():
-                            w.setTense(1)
-                        else:
-                            w.setTense(0)
-                        w.setGender(0)
-                        w.setPerson(4) 
+                    if((w.getPrixListEnd() == 'מ') or (w.getPrixListEnd() == 'ל')) and (w.isTense() == False):
+                        w.unSetVerb()
+                    else:
+                        val = "verb: "
+                        if w.isTense() == False:
+                            if 'ו' in w.getPrixList():
+                                w.setTense(1)
+                            else:
+                                w.setTense(0)
+                            w.setGender(0)
+                            w.setPerson(4) 
                         
                 if w.isNoun() == True:
                     val = "noun: "
@@ -4912,7 +4949,7 @@ class HebrewDictionary(App):
         uther = False
         isPar = False
         
-        if("מ" in word.getText()):
+        if("מ" in word.getText()) and (not(word.last() == "מ")):
             rVcW = Word("", "")
             rVcW.setText(self.rev(self.CurrentWord.getText()))
             if ('מ' in word.getPrixList()): 
