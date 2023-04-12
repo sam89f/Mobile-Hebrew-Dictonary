@@ -1091,14 +1091,16 @@ class CustomInput(TextInput):
         if(not(self.text == "")):
             super(CustomInput, self).on_triple_tap()  # performs it's original function
         else:
-            self.text = ' ' + "\n" + Clipboard.paste()
-            inputBuff = self.text
+            inputBuff = Clipboard.paste()
             words = inputBuff.split()
             words = self.clean(words)
             word = ' '.join(words)
  
-            if self.check(): # maker sure text order is correct; if not, reverse input text
+            if self.check(word): # maker sure text order is correct; if not, reverse input text
                 self.text = self.revT(word)
+            else:
+                self.text = word
+                
         print("triple tap confirmed")
      
     # reverses text of parameter
@@ -1140,8 +1142,8 @@ class CustomInput(TextInput):
         
         
     # check and see if there are final letters at the beginning of word (which should be at the end)
-    def check(self):
-        words = self.text.split()
+    def check(self, words):
+        words = words.split()
         for w in words:
             for i in range(len(punctuation)):
                 w = w.strip(punctuation[i])
@@ -1387,7 +1389,7 @@ class HebrewDictionary(App):
             words[w] = words[w].replace("ֹו", "ו")
             words[w] = words[w].replace("ֹ", "ו") 
             words[w] = words[w].replace("ֻ", "ו")
-            words[w] = words[w].replace("ַיּ", "יי")
+            #words[w] = words[w].replace("ַיּ", "יי")
             words[w] = words[w].replace("ִיַ", "יי")
             words[w] = words[w].replace("ֵ", "")
             words[w] = words[w].replace("ִ", "")
