@@ -2621,6 +2621,8 @@ class HebrewDictionary(App):
             else:
                 hitpaelW.setVerbform(rareVerbforms[word.getVerbform()])
                 
+            if(word.last() == 'ה'):
+                self.cohortative(look, hitpaelW)
             return self.future(look, hitpaelW)
             
         return Word("", "")
