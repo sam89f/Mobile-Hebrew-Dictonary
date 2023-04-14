@@ -2375,6 +2375,9 @@ class HebrewDictionary(App):
                 else:
                     hifilW.setVerbform(rareVerbforms[word.getVerbform()])
                             
+                if(word.last() == 'ה'):
+                    self.cohortative(look, hifilW)
+                    
                 return self.future(look, hifilW)
                 
             if(word.first() == 'ל'):
@@ -2464,6 +2467,19 @@ class HebrewDictionary(App):
                 self.FindHelper(look, tifilW2, self.Dict)
                 self.perfect(look, tifilW2)
                 return tifilW2
+                
+        if(word.first() == 'ה'):
+            if(word.last() == 'ת' ) or (word.last2() == 'םת') or (word.last2() == 'ןת') or (word.last2() == 'ית') or (word.last2() == 'ונ'):
+                hifilW = Word("","")
+                hifilW.equalTo(word)
+                hifilW.setText(word.getText()[:-1])
+                
+                if(word.isVerbf() == False):
+                    hifilW.setVerbform(4)
+                else:
+                    hifilW.setVerbform(rareVerbforms[word.getVerbform()])
+                            
+                return self.perfect(look, hifilW)
             
         return Word("", "")
     
