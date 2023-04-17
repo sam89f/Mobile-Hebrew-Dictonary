@@ -4913,13 +4913,14 @@ class HebrewDictionary(App):
                 irregW6.setIrreg()
                 self.FindHelper(look, irregW6, self.Dict)
                 self.irreg(look, irregW6)
-                if(irregW6.getLen() > 2) and (irregW6.nextToLast() == 'י') or (irregW6.nextToLast() == 'ו') and (not((word.getRoot()[:2] == word.last3()[1:]) or (word.getRoot()[-2:] == word.last3()[1:]))):
-                    irregW7 = Word("","")
-                    irregW7.equalTo(word)
-                    irregW7.setText('ה' + word.getText()[2:])
-                    irregW7.setIrreg()
-                    self.FindHelper(look, irregW7, self.Dict)
-                    self.irreg(look, irregW7)
+                if(irregW6.getLen() > 2):
+                    if(irregW6.nextToLast() == 'י') or (irregW6.nextToLast() == 'ו')  and (not(irregW6.getRoot()[:2] == irregW6.last2())):
+                        irregW7 = Word("","")
+                        irregW7.equalTo(word)
+                        irregW7.setText('ה' + word.getText()[2:])
+                        irregW7.setIrreg()
+                        self.FindHelper(look, irregW7, self.Dict)
+                        self.irreg(look, irregW7)
                       
         if ((word.getLen() == 1) or ((word.getLen() == 2)and(word.last() == 'ת'))) and ((word.isTense() == True) or (word.getPrefix() == True)): #and (not(word.getTense() == 'Imperfect')and(word.getPerson() == '1st, pl.')) and (not (word.getVerbform() == 'Niphal')):
             irregW = Word("","")
