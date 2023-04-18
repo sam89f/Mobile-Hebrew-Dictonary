@@ -1668,7 +1668,7 @@ class HebrewDictionary(App):
                 s7b = ""
                 s8 = ''       
                 
-                if(not(w.getVerbformVal() == -1)) or (not(w.getTenseVal() == -1)) or (not(w.getPersonVal() == -1)) or (not(w.getGenderVal() == -1)) or (w.getPlural() == True) or (w.getDaul() == True) or (w.getHey1() > 0) or (w.getSuffix() == True) or (w.getPrefix() == True) or (w.getConstruct() == True):
+                if(not(w.getVerbformVal() == -1)) or (not(w.getTenseVal() == -1)) or (not(w.getPersonVal() == -1)) or (not(w.getGenderVal() == -1)) or (w.getPlural() == True) or (w.getDaul() == True) or (w.getHey1() > 0) or (w.getSuffix() == True) or (w.getPrefix() == True) or (w.hasRoot() == True) or (w.getConstruct() == True):
                     gr = True
                 if w.getModern() == True:
                     if gr == True:
@@ -1676,16 +1676,16 @@ class HebrewDictionary(App):
                     else:
                         modern = "modern suffix:" + " [" + w.getModernW() + ']'
                 if (not(w.getVerbform() == '')):
-                    if(w.getPlural() == True) or (w.getDaul() == True) or (not(w.getTenseVal() == -1)) or (w.getSuffix() == True) or (w.getHey1() > 0) or (w.getConstruct() == True) or (w.isGender() == True) or (w.isPerson() == True):
+                    if(w.getPlural() == True) or (w.getDaul() == True) or (not(w.getTenseVal() == -1)) or (w.getSuffix() == True) or (w.getHey1() > 0) or (w.getConstruct() == True) or (w.isGender() == True) or (w.isPerson() == True) or (w.hasRoot() == True):
                         s1 = " "
                 if (not(w.getTense() == '')):
-                    if(w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True)  or (w.getHey1() > 0) or (w.getConstruct() == True) or (w.isGender() == True) or (w.isPerson() == True):
+                    if(w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True)  or (w.getHey1() > 0) or (w.getConstruct() == True) or (w.isGender() == True) or (w.isPerson() == True) or (w.hasRoot() == True):
                         s2 = " "
                 if (w.isPerson() == True):
-                    if(w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True) or (w.getHey1() > 0) or (w.getConstruct() == True) or (w.isGender() == True):
+                    if(w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True) or (w.getHey1() > 0) or (w.getConstruct() == True) or (w.isGender() == True) or (w.hasRoot() == True):
                         s3 = " "
                 if (w.getGenderVal() == 0) or (w.getGenderVal() == 1):
-                    if(w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True) or (w.getHey1() > 0) or (w.getConstruct() == True):
+                    if(w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True) or (w.getHey1() > 0) or (w.getConstruct() == True) or (w.hasRoot() == True):
                         s4 = " "
                 if(w.hasRoot() == True):
                     if(w.getConstruct() == True) or (w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True) or (w.getHey1() > 0):
@@ -2370,6 +2370,8 @@ class HebrewDictionary(App):
         
         if(word.getLen() < 4) or ((word.isVerbf() == True) and (not(word.getVerbform() in rareVerbforms))) or (word.getPartiVal() == 1) or (word.getTenseVal() == 0) or (word.getConstruct() == True):
             return Word("","")
+            
+        end = False
         
         if(word.getLen() > 4):
             if(word.fourth() == 'י' ):
@@ -2437,6 +2439,7 @@ class HebrewDictionary(App):
                     return self.smPrefix(look, hifilW, True)
                              
                 if(word.first() == 'ה') and (not(word.getRoot()[-2:] == word.first2())):
+                    end = True
                     hifilW = Word("","")
                     hifilW.equalTo(word)
                     hifilW.setText(word.getText()[:-4]  + word.first3()[:-1])
@@ -2486,7 +2489,7 @@ class HebrewDictionary(App):
                     self.perfect(look, tifilW2)
                     return tifilW2
                 
-        if(word.first() == 'ה'):
+        if(word.first() == 'ה') and (end == False):
             if(word.last() == 'ת' ) or (word.last2() == 'םת') or (word.last2() == 'ןת') or (word.last2() == 'ית') or (word.last2() == 'ונ') and (not(word.getRoot()[-2:] == word.first2())):
                 hifilW = Word("","")
                 hifilW.equalTo(word)
