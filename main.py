@@ -3488,6 +3488,7 @@ class HebrewDictionary(App):
                 if(infW.getLen() > 3):
                     if(infW.nextToLast() == 'ו') and (self.num_of_p_roots(infW.getText()[2:]) < 3) and (not (infW.getRoot()[:2] == infW.last2())):
                         infW.setText(infW.last() + infW.getText()[2:])
+                        infW.setRoot(infW.getText()[:3])
                 infW.setVerb()
                 infW.setTense(3)
                 if(infW.getLen() > 1):
@@ -3520,6 +3521,7 @@ class HebrewDictionary(App):
             if(infW.getLen() > 3):
                 if(infW.nextToLast() == 'ו') and (self.num_of_p_roots(infW.getText()[2:]) < 3) and (not (infW.getRoot()[:2] == infW.last2())):
                         infW.setText(infW.last() + infW.getText()[2:])
+                        infW.setRoot(infW.getText()[:3])
             infW.setVerb()
             infW.setTense(3)
             if(infW.getLen() > 1):
