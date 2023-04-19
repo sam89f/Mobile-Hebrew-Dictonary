@@ -4583,7 +4583,7 @@ class HebrewDictionary(App):
                     self.algorithm(look, pfimW2) 
                     return pfimW2
                 
-            if(fimW.isVerbf() == False) or (fimW.getVerbform() == 'Qal') or (fimW.getVerbform() == 'Niphal'):
+            if(fimW.getLen() > 3) and (fimW.isVerbf() == False) or (fimW.getVerbform() == 'Qal') or (fimW.getVerbform() == 'Niphal'):
                 if(fimW.nextToFirst() == 'ו') and ((fimW.isVerbf() == False) or (fimW.getVerbform() == 'Qal')) and (self.num_of_a_roots(fimW.getText()[:-2]) < 3) and (not(fimW.getRoot()[-2:] == fimW.first2())):
                     isPar = True
                     pfimW.equalTo(fimW)
@@ -4624,7 +4624,7 @@ class HebrewDictionary(App):
                 d = 2
             if(word.first() == 'מ'):
                 if(word.getLen() > 4) and ((word.isVerbf() == False) or (word.getVerbform() == 'Qal')):
-                    if(word.third() == 'ו') and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת'))) and (self.num_of_a_roots(word.getText()[:-3]) < 3) and (not(word.getRoot()[-2:] == word.first3()[:-1])):
+                    if(word.third() == 'ו') and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת')and(word.getPlural() == False))) and (self.num_of_a_roots(word.getText()[:-3]) < 3) and (not(word.getRoot()[-2:] == word.first3()[:-1])):
                         isPar = True
                         pword.equalTo(word)
                         pword.setText(word.getText()[:-3] + word.nextToFirst())
@@ -4640,7 +4640,7 @@ class HebrewDictionary(App):
                                 pword.Ht = False
                             self.FindHelper(look, pword, self.Dict)
                             self.algorithm(look, pword)
-                    if(word.nextToLast() == 'ו') and (self.num_of_p_roots(word.getText()[2:]) < 3) and (not(word.last() == 'י')) and (not(word.last() == 'ו')) and (not((word.last() == 'ה')and(self.CurrentWord.last() == 'ת')and(word.getConstruct() == True))) and (not (word.getRoot()[:2] == word.last2())):
+                    if(word.nextToLast() == 'ו') and (self.num_of_p_roots(word.getText()[2:]) < 3) and (not(word.last() == 'י')) and (not(word.last() == 'ו')) and (not (word.getRoot()[:2] == word.last2())):
                         isPar = True
                         pword2 = Word("","")
                         pword2.equalTo(word)
@@ -4688,7 +4688,7 @@ class HebrewDictionary(App):
                     return pword2
                     
             if(word.isVerbf() == False) or (word.getVerbform() == 'Qal') or (word.getVerbform() == 'Niphal'):
-                if(word.nextToFirst() == 'ו') and ((word.isVerbf() == False) or (word.getVerbform() == 'Qal')) and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת'))) and (self.num_of_a_roots(word.getText()[:-2]) < 3) and (not(word.getRoot()[-2:] == word.first2())): 
+                if(word.nextToFirst() == 'ו') and ((word.isVerbf() == False) or (word.getVerbform() == 'Qal')) and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת')and(word.getPlural() == False))) and (self.num_of_a_roots(word.getText()[:-2]) < 3) and (not(word.getRoot()[-2:] == word.first2())): 
                     isPar = True
                     pword.equalTo(word)
                     pword.setText(word.getText()[:-2] + word.first())
@@ -4704,7 +4704,7 @@ class HebrewDictionary(App):
                             pword.Ht = False
                         self.FindHelper(look, pword, self.Dict)
                         self.algorithm(look, pword)      
-                if(word.nextToLast() == 'ו') and (self.num_of_p_roots(word.getText()[2:]) < 3) and (not(word.last() == 'י')) and (not(word.last() == 'ו')) and (not((word.last() == 'ה')and(self.CurrentWord.last() == 'ת')and(word.getConstruct() == True))) and (not (word.getRoot()[:2] == word.last2())):
+                if(word.nextToLast() == 'ו') and (self.num_of_p_roots(word.getText()[2:]) < 3) and (not(word.last() == 'י')) and (not(word.last() == 'ו')) and (not (word.getRoot()[:2] == word.last2())):
                     isPar = True
                     pword2 = Word("","")
                     pword2.equalTo(word)
