@@ -4534,17 +4534,16 @@ class HebrewDictionary(App):
                 return suffW
 
             if(not(cPhraseSuf.last() == 'ה')):
-                suffWh = Word("","")
-                suffWh.equalTo(cPhraseSuf)
-                suffWh.setText('ה' + cPhraseSuf.getText()[1:])
-                suffWh.addSuff(cPhraseSuf.last())
-                if(suffWh.hasRoot()) and (suffWh.getLen() > 2):
-                    if(suffWh.getRoot()[1:] == suffWh.last3()[1:]):
-                        suffWh.setRoot(suffWh.last3())
-                self.FindHelper(look, suffWh, self.Dict)
-                self.prefix(look, suffWh, False)
-                self.verbForms(look, suffWh)
-                return suffWh
+                suffWh2 = Word("","")
+                suffWh2.equalTo(suffW)
+                suffWh2.setText('ה' + cPhraseSuf.getText()[1:])
+                if(suffWh2.hasRoot()) and (suffWh2.getLen() > 2):
+                    if(suffWh2.getRoot()[1:] == suffWh2.last3()[1:]):
+                        suffWh2.setRoot(suffWh2.last3())
+                self.FindHelper(look, suffWh2, self.Dict)
+                self.prefix(look, suffWh2, False)
+                self.verbForms(look, suffWh2)
+                return suffWh2
                 
         return Word("","")
 
@@ -4592,17 +4591,16 @@ class HebrewDictionary(App):
                 return suffW           
             
             if(not(cPhraseSuf.last3()[2:] == 'ה')) and (not ('ה' in cPhraseSuf.getSufxList())) and (not(cPhraseSuf.getRoot()[:2] == cPhraseSuf.last2())):
-                suffWh = Word("","")
-                suffWh.equalTo(cPhraseSuf)
-                suffWh.setText('ה' + cPhraseSuf.getText()[2:])
-                suffWh.addSuff(cPhraseSuf.last2()) 
-                if(suffWh.hasRoot()) and (suffWh.getLen() > 2):
-                    if(suffWh.getRoot()[1:] == suffWh.last3()[1:]):
-                        suffWh.setRoot(suffWh.last3())
-                self.FindHelper(look, suffWh, self.Dict)
-                self.prefix(look, suffWh, False)
-                self.verbForms(look, suffWh)
-                return suffWh
+                suffWh2 = Word("","")
+                suffWh2.equalTo(suffW)
+                suffWh2.setText('ה' + cPhraseSuf.getText()[2:])
+                if(suffWh2.hasRoot()) and (suffWh2.getLen() > 2):
+                    if(suffWh2.getRoot()[1:] == suffWh2.last3()[1:]):
+                        suffWh2.setRoot(suffWh2.last3())
+                self.FindHelper(look, suffWh2, self.Dict)
+                self.prefix(look, suffWh2, False)
+                self.verbForms(look, suffWh2)
+                return suffWh2
 
         return Word("","")
         
@@ -4660,17 +4658,16 @@ class HebrewDictionary(App):
                 return suffW
                 
             if(not(cPhraseSuf.lastX(4)[3:] == 'ה')) and (not ('ה' in cPhraseSuf.getSufxList())) and (not((cPhraseSuf.getRoot()[:2] == self.Final(cPhraseSuf.last3()[1:])) or (cPhraseSuf.getRoot()[-2:] == cPhraseSuf.last3()[1:]))):
-                suffWh = Word("","")
-                suffWh.equalTo(cPhraseSuf)
-                suffWh.setText('ה' + cPhraseSuf.getText()[3:])
-                suffWh.addSuff(cPhraseSuf.last3())
-                if(suffWh.hasRoot()) and (suffWh.getLen() > 2):
-                    if(suffWh.getRoot()[1:] == suffWh.last3()[1:]):
-                        suffWh.setRoot(suffWh.last3())
-                self.FindHelper(look, suffWh, self.Dict)
-                self.prefix(look, suffWh, False)
-                self.verbForms(look, suffWh)
-                return suffWh
+                suffWh2 = Word("","")
+                suffWh2.equalTo(suffW)
+                suffWh2.setText('ה' + cPhraseSuf.getText()[3:])
+                if(suffWh2.hasRoot()) and (suffWh2.getLen() > 2):
+                    if(suffWh2.getRoot()[1:] == suffWh2.last3()[1:]):
+                        suffWh2.setRoot(suffWh2.last3())
+                self.FindHelper(look, suffWh2, self.Dict)
+                self.prefix(look, suffWh2, False)
+                self.verbForms(look, suffWh2)
+                return suffWh2
                 
         return Word("","")
         
