@@ -4507,18 +4507,17 @@ class HebrewDictionary(App):
             return Word("","")
   
         if(cPhraseSuf2.last() == cPhraseSuf.last()) and (cPhraseSuf.last() in suffix) and (not((cPhraseSuf2.nextToLast() == "י")and(cPhraseSuf.getVerbform() in Hiphil))):
+            suffW = Word("","")
+            suffW.equalTo(cPhraseSuf)
+            suffW.setText(self.Final(cPhraseSuf.getText()[1:]))
+            suffW.setSuffix1()
+            suffW.addSuff(cPhraseSuf.last())
             if(not(word.getRoot()[:2] == word.last2())):
-                suffW = Word("","")
-                suffW.equalTo(cPhraseSuf)
-                suffW.setText(self.Final(cPhraseSuf.getText()[1:]))
-                suffW.setSuffix1()
-
                 if(suffW.getLen() > 1):
                     if(suffW.last() == "ת"):
                         suffWh = Word("","")
                         suffWh.equalTo(suffW) 
                         suffWh.setText('ה' + suffW.getText()[1:])
-                        suffWh.addSuff(cPhraseSuf.last())
                         if(suffWh.hasRoot()) and (suffWh.getLen() > 2):
                             if(suffWh.getRoot()[1:] == suffWh.last3()[1:]):
                                 suffWh.setRoot(suffWh.last3())
@@ -4526,7 +4525,6 @@ class HebrewDictionary(App):
                         self.FindHelper(look, suffWh, self.Dict)
                         self.algorithm(look, suffWh)
                 
-                suffW.addSuff(cPhraseSuf.last())    
                 suffW.setText(self.revPhWords(suffW.getText(), "-"))
                 self.FindHelper(look, suffW, self.Dict)
                 self.algorithm(look, suffW)
@@ -4536,7 +4534,7 @@ class HebrewDictionary(App):
             if(not(cPhraseSuf.last() == 'ה')):
                 suffWh2 = Word("","")
                 suffWh2.equalTo(suffW)
-                suffWh2.setText('ה' + cPhraseSuf.getText()[1:])
+                suffWh2.setText('ה' + cPhraseSuf.getText()[1:])  
                 if(suffWh2.hasRoot()) and (suffWh2.getLen() > 2):
                     if(suffWh2.getRoot()[1:] == suffWh2.last3()[1:]):
                         suffWh2.setRoot(suffWh2.last3())
@@ -4562,20 +4560,19 @@ class HebrewDictionary(App):
             return Word("", "")
             
         if(cPhraseSuf2.last2() == cPhraseSuf.last2()) and (cPhraseSuf.last2() in suffix) and (not((cPhraseSuf2.nextToLast() == "י")and(cPhraseSuf.getVerbform() in Hiphil))):
+            suffW = Word("","")
+            suffW.equalTo(cPhraseSuf)
+            suffW.setText(self.Final(cPhraseSuf.getText()[2:]))
+            if(cPhraseSuf.last2() in suffixPos):
+                suffW.setNoun()
+            suffW.setSuffix2()
+            suffW.addSuff(cPhraseSuf.last2())    
             if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
-                suffW = Word("","")
-                suffW.equalTo(cPhraseSuf)
-                suffW.setText(self.Final(cPhraseSuf.getText()[2:]))
-                if(cPhraseSuf.last2() in suffixPos):
-                    suffW.setNoun()
-                suffW.setSuffix2()
-                
                 if(suffW.getLen() > 1):
                     if(suffW.last() == "ת"):
                         suffWh = Word("","")
                         suffWh.equalTo(suffW) 
                         suffWh.setText('ה' + suffW.getText()[1:])
-                        suffWh.addSuff(cPhraseSuf.last2()) 
                         if(suffWh.hasRoot()) and (suffWh.getLen() > 2):
                             if(suffWh.getRoot()[1:] == suffWh.last3()[1:]):
                                 suffWh.setRoot(suffWh.last3())
@@ -4583,7 +4580,6 @@ class HebrewDictionary(App):
                         self.FindHelper(look, suffWh, self.Dict)
                         self.algorithm(look, suffWh)
 
-                suffW.addSuff(cPhraseSuf.last2())    
                 suffW.setText(self.revPhWords(suffW.getText(), "-"))
                 self.FindHelper(look, suffW, self.Dict)
                 self.algorithm(look, suffW)
@@ -4594,6 +4590,7 @@ class HebrewDictionary(App):
                 suffWh2 = Word("","")
                 suffWh2.equalTo(suffW)
                 suffWh2.setText('ה' + cPhraseSuf.getText()[2:])
+                suffWh2.addSuff(cPhraseSuf.last2())  
                 if(suffWh2.hasRoot()) and (suffWh2.getLen() > 2):
                     if(suffWh2.getRoot()[1:] == suffWh2.last3()[1:]):
                         suffWh2.setRoot(suffWh2.last3())
@@ -4619,17 +4616,18 @@ class HebrewDictionary(App):
             return Word("", "")
             
         if(cPhraseSuf2.last3() == cPhraseSuf.last3()) and (cPhraseSuf.last3() in suffix) and (not(((cPhraseSuf2.thirdFromLast() == "י")or(cPhraseSuf2.fourthFromLast() == "י"))and(cPhraseSuf.getVerbform() in Hiphil))):
+            suffW = Word("","")
+            suffW.equalTo(cPhraseSuf)
+            suffW.setText(self.Final(cPhraseSuf.getText()[3:]))
+            if(cPhraseSuf.last3() in suffixPos):
+                suffW.setNoun()
+            suffW.setSuffix3()
+            suffW.addSuff(cPhraseSuf.last3())
             if(not((self.unFinal(cPhraseSuf.getRoot()[:2]) == cPhraseSuf.lastX(4)[2:]) or (self.unFinal(cPhraseSuf.getRoot()[:2]) == cPhraseSuf.last3()[1:]) or (cPhraseSuf.getRoot()[:2] == cPhraseSuf.last2()))):
-                suffW = Word("","")
-                suffW.equalTo(cPhraseSuf)
-                suffW.setText(self.Final(cPhraseSuf.getText()[3:]))
-                if(cPhraseSuf.last3() in suffixPos):
-                    suffW.setNoun()
-                suffW.setSuffix3()
                 if((suffW.getLen() > 1) and ((self.getLstLen(cPhraseSuf) > 4)or(self.getLstLen(cPhraseSuf) == -1))):
                     if (suffW.last() == 'י') and (cPhraseSuf.lastX(4) in suffixPos) and (not(suffW.getRoot()[:2] == suffW.last2())):
                         suffW3 = Word("","")
-                        suffW3.equalTo(suffW)
+                        suffW3.equalTo(word)
                         suffW3.setText(self.Final(suffW.getText()[1:]))
                         suffW3.addSuff(cPhraseSuf.lastX(4))
                         suffW3.setNoun()
@@ -4649,8 +4647,7 @@ class HebrewDictionary(App):
                         suffWh.setText(self.revPhWords(suffWh.getText(), "-"))
                         self.FindHelper(look, suffWh, self.Dict)
                         self.algorithm(look, suffWh)
-                               
-                suffW.addSuff(cPhraseSuf.last3())    
+                                 
                 suffW.setText(self.revPhWords(suffW.getText(), "-"))
                 self.FindHelper(look, suffW, self.Dict)
                 self.algorithm(look, suffW)
@@ -4661,6 +4658,7 @@ class HebrewDictionary(App):
                 suffWh2 = Word("","")
                 suffWh2.equalTo(suffW)
                 suffWh2.setText('ה' + cPhraseSuf.getText()[3:])
+                suffWh2.addSuff(cPhraseSuf.last3())  
                 if(suffWh2.hasRoot()) and (suffWh2.getLen() > 2):
                     if(suffWh2.getRoot()[1:] == suffWh2.last3()[1:]):
                         suffWh2.setRoot(suffWh2.last3())
