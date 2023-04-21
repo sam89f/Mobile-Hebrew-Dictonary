@@ -4620,7 +4620,6 @@ class HebrewDictionary(App):
                 suffWh2 = Word("","")
                 suffWh2.equalTo(suffW)
                 suffWh2.setText('ה' + cPhraseSuf.getText()[2:])
-                suffWh2.addSuff(cPhraseSuf.last2())  
                 if(suffWh2.hasRoot()) and (suffWh2.getLen() > 2):
                     if(suffWh2.getRoot()[1:] == suffWh2.last3()[1:]):
                         suffWh2.setRoot(suffWh2.last3())
@@ -4670,7 +4669,6 @@ class HebrewDictionary(App):
                         suffWh = Word("","")
                         suffWh.equalTo(suffW) 
                         suffWh.setText('ה' + suffW.getText()[1:])
-                        suffWh.addSuff(cPhraseSuf.last3())
                         if(suffWh.hasRoot()) and (suffWh.getLen() > 2):
                             if(suffWh.getRoot()[1:] == suffWh.last3()[1:]):
                                 suffWh.setRoot(suffWh.last3())
@@ -4688,7 +4686,6 @@ class HebrewDictionary(App):
                 suffWh2 = Word("","")
                 suffWh2.equalTo(suffW)
                 suffWh2.setText('ה' + cPhraseSuf.getText()[3:])
-                suffWh2.addSuff(cPhraseSuf.last3())  
                 if(suffWh2.hasRoot()) and (suffWh2.getLen() > 2):
                     if(suffWh2.getRoot()[1:] == suffWh2.last3()[1:]):
                         suffWh2.setRoot(suffWh2.last3())
