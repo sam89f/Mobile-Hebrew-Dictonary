@@ -4978,10 +4978,10 @@ class HebrewDictionary(App):
                 if(constW2.getRoot()[1:] == constW2.last3()[1:]):
                     constW2.setRoot(constW2.last3())
             if(word.getPlural() == False):
-                constW.setConstruct2()
+                constW2.setConstruct()
             self.FindHelper(look, constW2, self.Dict)
             self.algorithm(look, constW2)
-            return constW
+            return constW2
         return Word("", "") 
                 
     def phCostr(self, look, word):
