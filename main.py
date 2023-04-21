@@ -2165,9 +2165,9 @@ class HebrewDictionary(App):
                     tempWf.setVerbform(8)
                 else:
                     tempWf.setVerbform(rareVerbforms[word.getVerbform()])
-             
-            if(not(tempWf.hasRoot() and (not(tempWf.getRoot()[1:] == tempWf.last3()[1:])))) and (Stop == False):
-                tempWf.setRoot(tempWf.last3())
+            if(tempWf.getLen() > 2):
+                if(not(tempWf.hasRoot() and (not(tempWf.getRoot()[1:] == tempWf.last3()[1:])))) and (Stop == False):
+                    tempWf.setRoot(tempWf.last3())
                 self.verbForms(look, tempWf)
                 self.irreg(look, tempWf)
                 self.FindHelper(look, tempWf, self.Dict)
@@ -2177,14 +2177,16 @@ class HebrewDictionary(App):
             tempWf2 = Word("","")
             tempWf2.equalTo(tempWf)
             tempWf2.setText('י' + self.unFinal(tempWf.getText()))
-            if(not(tempWf2.hasRoot() and (not(tempWf2.getRoot()[1:] == tempWf2.last3()[1:])))):
-                tempWf2.setRoot(tempWf2.last3())
+            if(tempWf2.getLen() > 2):
+                if(not(tempWf2.hasRoot() and (not(tempWf2.getRoot()[1:] == tempWf2.last3()[1:])))):
+                    tempWf2.setRoot(tempWf2.last3())
             self.FindHelper(look, tempWf2, self.Dict)
             tempWf3 = Word("","")
             tempWf3.equalTo(tempWf)
             tempWf3.setText('ה' + self.unFinal(tempWf.getText()))
-            if(not(tempWf3.hasRoot() and (not(tempWf3.getRoot()[1:] == tempWf3.last3()[1:])))):
-                tempWf3.setRoot(tempWf3.last3())
+            if(tempWf3.getLen() > 2):
+                if(not(tempWf3.hasRoot() and (not(tempWf3.getRoot()[1:] == tempWf3.last3()[1:])))):
+                    tempWf3.setRoot(tempWf3.last3())
             self.FindHelper(look, tempWf3, self.Dict)
             self.verbForms(look, tempWf3)
             if (not (tempW.nextToLast() == self.unFinal(tempW.last()))) or (len(tempW.getText()) < 3):
