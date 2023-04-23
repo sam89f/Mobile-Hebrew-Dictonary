@@ -1680,7 +1680,7 @@ class HebrewDictionary(App):
                 isR = ""
 
                 HR = False
-                HR = w.hasRoot()
+                #HR = w.hasRoot()
                 if(w.isRoot() == True):
                     isR = "(r) "
                 
