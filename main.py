@@ -3233,6 +3233,7 @@ class HebrewDictionary(App):
                 futurW2 = Word("","")
                 futurW2.equalTo(word)
                 futurW2.setText(futurW.getText())
+                futurW2.setRoot(futurW.getRoot())
                 futurW2.setVerb()
                  
                 if(futurW.isVavSeq() == True):
