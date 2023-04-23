@@ -1680,7 +1680,7 @@ class HebrewDictionary(App):
                 isR = ""
 
                 HR = False
-                #HR = w.hasRoot()
+                HR = w.hasRoot()
                 if(w.isRoot() == True):
                     isR = "(r) "
                 
@@ -4494,8 +4494,8 @@ class HebrewDictionary(App):
             return False
         if ((p == 'ו') and (word.getPrefix() == True)):
             return False
-        if ((p == 'ה') and (word.getSuffix() == True)):
-            return False
+        #if ((p == 'ה') and (word.getSuffix() == True)):
+          #  return False
         if ('ה' in word.getPrixList()):
             return False
         if (word.getPrixListEnd() == p):
