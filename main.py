@@ -2461,7 +2461,7 @@ class HebrewDictionary(App):
                     hifilW = Word("","")
                     hifilW.equalTo(word2)
                     hifilW.setText(word2.getText()[:-4]  + word2.first3())
-                    if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW0.firstX(4)[:-2]))))):
+                    if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW.firstX(4)[:-2]))))):
                         hifilW.setRoot(self.Final(hifilW.getText()[-4:-1]))
                         if(word2.first() == 'ת') and (not(word2.getRoot()[-2:] == word2.first2())):
                             tifilW = Word("","")
@@ -2488,7 +2488,7 @@ class HebrewDictionary(App):
                     hifilW = Word("","")
                     hifilW.equalTo(word2)
                     hifilW.setText(word2.getText()[:-4]  + word2.first3())
-                    if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW0.firstX(4)[:-2]))))):
+                    if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW.firstX(4)[:-2]))))):
                         hifilW.setRoot(self.Final(hifilW.getText()[-4:-1]))
                         
                         if(word2.isVerbf() == False):
@@ -2502,7 +2502,7 @@ class HebrewDictionary(App):
                     hifilW = Word("","")
                     hifilW.equalTo(word2)
                     hifilW.setText(word2.getText()[:-4]  + word2.first3())
-                    if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW0.firstX(4)[:-2]))))):
+                    if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW.firstX(4)[:-2]))))):
                         hifilW.setRoot(self.Final(hifilW.getText()[-4:-1]))
                         
                         if(word2.isVerbf() == False):
@@ -2516,7 +2516,7 @@ class HebrewDictionary(App):
                     hifilW = Word("","")
                     hifilW.equalTo(word2)
                     hifilW.setText(word2.getText()[:-4]  + word2.first3())
-                    if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW0.firstX(4)[:-2]))))):
+                    if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW.firstX(4)[:-2]))))):
                         hifilW.setRoot(self.Final(hifilW.getText()[-4:-1]))
                         
                         if(word2.isVerbf() == False):
@@ -2576,7 +2576,7 @@ class HebrewDictionary(App):
                         hifilW = Word("","")
                         hifilW.equalTo(word2)
                         hifilW.setText(word2.getText()[:-5]  + word2.firstX(4)[:-2] + word2.first())
-                        if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW0.firstX(4)[:-2]))))):
+                        if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW.firstX(4)[:-2]))))):
                             hifilW.setRoot(self.Final(hifilW.getText()[-4:-1]))
                         
                             if(word2.isVerbf() == False):
@@ -2593,7 +2593,7 @@ class HebrewDictionary(App):
                         hifilW = Word("","")
                         hifilW.equalTo(word2)
                         hifilW.setText(word2.getText()[:-5]  + word2.firstX(4)[:-2] + word2.first())
-                        if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW0.firstX(4)[:-2]))))):
+                        if(not(hifilW.hasRoot() and (not((hifilW.getRoot()[1:] == hifilW.first3()[:-1])or(self.unFinal(hifilW.getRoot()[:1] + hifilW.getRoot()[-1:]) == hifilW.firstX(4)[:-2]))))):
                             hifilW.setRoot(self.Final(hifilW.getText()[-4:-1]))
                             
                             if(word2.isVerbf() == False):
