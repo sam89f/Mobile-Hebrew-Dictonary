@@ -4035,6 +4035,8 @@ class HebrewDictionary(App):
             infW = Word("","")
             infW.equalTo(word)
             infW.setText(word.getText()[:-1])
+            infW.setVerb()
+            infW.setTense(3)
             if(infW.getLen() > 3):
                 if(infW.nextToLast() == 'ו') and (self.num_of_p_roots(infW.getText()[2:]) < 3):
                     infW.setText(infW.last() + infW.getText()[2:])
@@ -4048,8 +4050,8 @@ class HebrewDictionary(App):
                 infW.setRoot(infW.getText())
                 self.irreg(look, infW)
                 
-            infW.setVerb()
-            infW.setTense(3)
+            #infW.setVerb()
+            #infW.setTense(3)
 
             if(infW.getLen() > 1):
                 self.FindHelper(look, infW, self.Dict)
