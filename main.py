@@ -4799,13 +4799,13 @@ class HebrewDictionary(App):
         if(word.first() in prefixL) and (self.prefixRuls(word, word.first(), h) == True):
             preW = Word("","")
             preW.equalTo(word)
-        #    if(word.nextToFirst() == 'ו'):
-        #        preW.setText(word.getText()[:-2] + 'י')
-        #        if(preW.getLen() > 2):
-        #            if(not(preW.hasRoot() and (not(preW.getRoot()[:2] == self.Final(preW.first3()[:2]))))):
-        #                preW.setRoot(self.Final(preW.first3()))
-        #    else:
-            preW.setText(word.getText()[:-1])
+            if(word.nextToFirst() == 'ו') and (not((word.isVerbf() == False)or(word.getVerbform() == 'Qal'))):
+                preW.setText(word.getText()[:-2] + 'י')
+                if(preW.getLen() > 2):
+                    if(not(preW.hasRoot() and (not(preW.getRoot()[:2] == self.Final(preW.first3()[:2]))))):
+                        preW.setRoot(self.Final(preW.first3()))
+            else:
+                preW.setText(word.getText()[:-1])
                 
             if(word.first() == 'ה'):
                 if word.isVerb() == False:
