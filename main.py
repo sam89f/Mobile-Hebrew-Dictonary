@@ -2632,6 +2632,8 @@ class HebrewDictionary(App):
                 hifilW = Word("","")
                 hifilW.equalTo(word2)
                 hifilW.setText(word2.getText()[:-1])
+                if(hifilW.first() == 'ו'):
+                    hifilW.setText(hifilW.getText()[:-1] + 'י')
                 if(not(hifilW.hasRoot() and (not(hifilW.getRoot() == self.Final(hifilW.first3()))))):
                     hifilW.setRoot(self.Final(hifilW.first3()))
                     
