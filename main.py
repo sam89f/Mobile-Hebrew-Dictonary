@@ -1678,7 +1678,7 @@ class HebrewDictionary(App):
                 s7b = ""
                 s8 = ''       
                 isR = ""
-
+                ARROW = "  =>  "
                 HR = False
                 #HR = w.hasRoot()
                 if(w.isRoot() == True):
@@ -1768,9 +1768,9 @@ class HebrewDictionary(App):
                 if (w.getConstruct() == True) and (w.getSuffix() == True):
                     cn = 5
                 
-                script = TAB2*n + TAB2 + val + (modern[:-3])*2 + prL + (pre) + (s6[:-(preN-1)])*(2) + preSP + (verbform)*2 + s1 + (tense2)*(2) + s2*mult + person + s3 + gender + s4 + s4b + (constr[:-1])*2 + s5 + (suff) + (s7[:-1])*(2) + suffSP + pl*2 + prR + "- " + isR + (w.getText()[:-1])*(2) + TAB + '-' + TAB
+                script = TAB2*n + TAB2 + val + (modern[:-3])*2 + prL + (pre) + (s6[:-(preN-1)])*(2) + preSP + (verbform)*2 + s1 + (tense2)*(2) + s2*mult + person + s3 + gender + s4 + s4b + (constr[:-1])*2 + s5 + (suff) + (s7[:-1])*(2) + suffSP + pl*2 + prR + ARROW + isR + (w.getText()[:-1])*(2) + TAB + '-' + TAB
                 spaces = len(script) - cn
-                self.wText += '\t\t'*n +  '\t\t' + val + modern + prL + pre + s6 + preSP + w.getVerbform() + s1 + tense + s2 + w.getPerson() + s3 + w.getGender() + s4 + s4b + constr + s5 + suff + s7 + suffSP + pl + prR + "- " + isR + w.getText() + '\t' + '-' + '\t' + self.fixDef(definition, spaces) + ';' + ' gmra. = ' + str(w.getGemontria()) + '\n'
+                self.wText += '\t\t'*n +  '\t\t' + val + modern + prL + pre + s6 + preSP + w.getVerbform() + s1 + tense + s2 + w.getPerson() + s3 + w.getGender() + s4 + s4b + constr + s5 + suff + s7 + suffSP + pl + prR + ARROW + isR + w.getText() + '\t' + '-' + '\t' + self.fixDef(definition, spaces) + ';' + ' gmra. = ' + str(w.getGemontria()) + '\n'
         else:
             self.wText += '\t\t'*n +  "No words found"
             self.wText += '\n'
