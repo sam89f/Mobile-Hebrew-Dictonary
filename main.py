@@ -3905,9 +3905,11 @@ class HebrewDictionary(App):
                     if(imperW.getLen() == 3):
                         imperW.setRoot(imperW.getText())
                     elif(imperW.getLen() == 2):
-                        imperW.setText(imperW.last() + 'ו' + imperW.first())
-                        imperW.setRoot(imperW.getText())
-                    self.FindHelper(look, imperW, self.Dict)
+                        hollow = Word("","")
+                        hollow.equalTo(imperW)
+                        hollow.setText(imperW.last() + 'ו' + imperW.first())
+                        hollow.setRoot(hollow.getText())
+                        self.FindHelper(look, hollow, self.Dict)
                 
                 if(not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())):
                     imperwNun = Word("","")
@@ -4003,9 +4005,12 @@ class HebrewDictionary(App):
                     elif(infW.getLen() == 3):
                         infW.setRoot(infW.getText())
                     elif(infW.getLen() == 2):
-                        infW.setText(infW.last() + 'ו' + infW.first())
-                        infW.setRoot(infW.getText())
-                        self.irreg(look, infW)
+                        hollow = Word("","")
+                        hollow.equalTo(infW)
+                        hollow.setText(infW.last() + 'ו' + infW.first())
+                        hollow.setRoot(hollow.getText())
+                        self.FindHelper(look, hollow, self.Dict)
+                        self.irreg(look, hollow)
                         
                     if(infW.getLen() > 1):
                         self.FindHelper(look, infW, self.Dict)
