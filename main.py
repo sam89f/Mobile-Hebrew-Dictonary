@@ -4002,7 +4002,7 @@ class HebrewDictionary(App):
                             infW.setRoot(infW.last3())
                     elif(infW.getLen() == 3):
                         infW.setRoot(infW.getText())
-                    elif(imperW.getLen() == 2):
+                    elif(infW.getLen() == 2):
                         infW.setText(infW.last() + 'ו' + infW.first())
                         infW.setRoot(infW.getText())
                         self.irreg(look, infW)
