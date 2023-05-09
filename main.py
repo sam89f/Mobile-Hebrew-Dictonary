@@ -5174,7 +5174,7 @@ class HebrewDictionary(App):
                                 pfimW.unSetNoun()
                             self.FindHelper(look, pfimW, self.Dict)
                             self.algorithm(look, pfimW)     
-                    if(fimW.nextToLast() == 'ו') and (self.num_of_p_roots(fimW.getText()[2:]) < 3) and (not(fimW.last() == 'י')) and (not(fimW.last() == 'ו')):
+                    if(fimW.nextToLast() == 'ו') and (self.num_of_p_roots(fimW.getText()[2:]) < 3) and (not(fimW.last() == 'י')) and (not(fimW.last() == 'ו')) and (fimW.getLen() > 4):
                         isPar = True
                         pfimW2 = Word("","")
                         pfimW2.equalTo(fimW)
@@ -5234,7 +5234,7 @@ class HebrewDictionary(App):
                             pfimW.unSetNoun()
                         self.FindHelper(look, pfimW, self.Dict)
                         self.algorithm(look, pfimW)        
-                if(fimW.nextToLast() == 'ו') and (self.num_of_p_roots(fimW.getText()[2:]) < 3) and (not(fimW.last() == 'י')) and (not(fimW.last() == 'ו')):
+                if(fimW.nextToLast() == 'ו') and (self.num_of_p_roots(fimW.getText()[2:]) < 3) and (not(fimW.last() == 'י')) and (not(fimW.last() == 'ו')) and (fimW.getLen() > 4):
                     isPar = True
                     pfimW2 = Word("","")
                     pfimW2.equalTo(fimW)
