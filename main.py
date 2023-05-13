@@ -1926,7 +1926,7 @@ class HebrewDictionary(App):
         if((w.getText() == self.CurrentWord.getText()) and (look.findText(w, Dict) == True)):
             return False
                 
-        if((w.getLen() < 3) and ((w.getTense() == 'Participle')or(w.getVerbform() in Hiphil)or(w.getVerbform() in Pual)or(w.getVerbform() in Piel))):
+        if((w.getLen() < 3) and ((w.getTense() == 'Participle')or(w.getVerbform() in Hiphil)or(w.getVerbform() in Pual)or((w.getVerbform() in Piel)and(not(w.getVerbform() == 'Pilpel'))))):
             return False
         else:
             return look.find(w, Dict)
@@ -2171,12 +2171,14 @@ class HebrewDictionary(App):
             tempW.setText(self.Final(tempW.getText()[1:]))
             tempWf = Word("","")
             tempWf.equalTo(tempW)
+            
             if(not((tempW.last() == 'י') or (tempW.last() == 'ו') or (tempW.last() == 'ה'))):
-                tempWf.setText(self.Final(tempW.getText()))
+                #tempWf.setText(self.Final(tempW.getText()))
                 if(word.isVerbf() == False):
                     tempWf.setVerbform(8)
                 else:
                     tempWf.setVerbform(rareVerbforms[word.getVerbform()])
+            self.FindHelper(look, tempWf, self.Dict)
             if(tempWf.getLen() > 2):
                 if(not(tempWf.hasRoot() and (not(tempWf.getRoot()[1:] == tempWf.last3()[1:])))) and (Stop == False):
                     tempWf.setRoot(tempWf.last3())
@@ -2184,6 +2186,8 @@ class HebrewDictionary(App):
                 self.irreg(look, tempWf)
                 self.FindHelper(look, tempWf, self.Dict)
             else:
+                self.irreg(look, tempWf)
+                self.FindHelper(look, tempWf, self.Dict)
                 Stop = True
                 
             if(not(tempW.last() == 'י')):
@@ -2243,8 +2247,10 @@ class HebrewDictionary(App):
                 self.verbForms(look, tempWf3)
                 self.FindHelper(look, tempWf, self.Dict)
                 self.FindHelper(look, tempWf2, self.Dict)
-                self.FindHelper(look, tempWf3, self.Dict)      
+                self.FindHelper(look, tempWf3, self.Dict)
                 return tempWf
+            if(tempWf.getLen() == 2) or (word.getRoot()[:2] == word.last2()):
+                self.FindHelper(look, tempWf, self.Dict)
                 
         return Word("", "")  
 
