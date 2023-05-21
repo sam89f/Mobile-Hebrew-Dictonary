@@ -1543,31 +1543,45 @@ class HebrewDictionary(App):
         Year = ''
         look = SearchWord()
         check = SearchWord()
+        ckYear = SearchWord()
         isVerb = False
         isNoun = False
         yWord = Word(text[i], "")
         confidence = 7
         
-        # checks to see if the text is in the format of a Hebrew year.
-        # if so format a string in 'Year' variable to display that year
-        if yWord.isYear() == True:
-            Year = 'Year: ' + str(yWord.getYear())
         
         # creating word object with text value of the string at indext 'i' (current index)
         word = Word(text[i], "")
         # initialize 'CurrentWord' variable to the word now being processed
         self.CurrentWord.equalTo(word)
         
-        # if text in word object is in the format of a Hebrew number, format a string in the 
-        # 'number' variable to display that number
-        if word.isNumb() == True:
-            number = '#: ' + str(word.getGemontria()) + '; '
-        # otherwise check to see if the text is in Hebrew number format with a prefix at the beginning of the text
+        # checks to see if the text is in the format of a Hebrew year.
+        # If so format a string in the 'Year' variable to display that year.
+        if yWord.isYear() == True:
+            Year = 'Year: ' + str(yWord.getYear()) + ';'
+        # otherwise check to see if the text is in the Hebrew year format with a prefix at the beginning of the text
+        else:
+            preYr = self.smPrefix(ckYear, yWord, False)
+            if preYr.getLen() > 0:
+                if(preYr.isYear() == True) and (not preYr.getText() == ""):
+                    Year = "prefix [" + preYr.getPrefixW() + '] ' + 'Year: ' + str(preYr.getYear()) + ';'
+
+        #if(Year == ''): #Only if text is not in the Hebrew year format do the following:
+        if word.isNumb() == True: #If text in word object is in the format of a Hebrew number, format a string in the 
+            #'number' variable to display that number.
+            if(not(Year == '')):
+                 number = '(#' + str(word.getGemontria()) + ') '
+            else:
+                number = '#' + str(word.getGemontria()) + ';'
+        # otherwise check to see if the text is in the Hebrew number format with a prefix at the beginning of the text
         else:
             preNum = self.smPrefix(check, word, False)
             if preNum.getLen() > 0:
-                if (preNum.isNumb() == True) and (not preNum.getText() == ""):
-                    number = '#: ' + "with prefix [" + preNum.getPrefixW() + '] ' + str(preNum.getGemontria()) + '; '
+                if(preNum.isNumb() == True) and (not preNum.getText() == ""):
+                    if(Year == ''):
+                        number = "prefix [" + preNum.getPrefixW() + '] ' + '#' + str(preNum.getGemontria()) + ';'
+                    else:
+                        Year = "prefix [" + preNum.getPrefixW() + '] ' + '(#' + str(preNum.getGemontria()) + ') ' + 'Year: ' + str(preYr.getYear()) + ';' 
         
         # This section of the code is dedicated to context recognition.
         # if the current word is not the first word check the word before it; and if the word
@@ -1607,37 +1621,37 @@ class HebrewDictionary(App):
         if word.getText() == "הוהי":
             word.setNoun()
             look.find(word, self.Dict)
-        else: # If the current word is not The Tetragramaton, then the current word may or may not be set to a noun or a verb
-              # based on the resalts from the context recognition part of the code
-            look.find(word, self.Dict) # search for the word as it appears in the text input field
-            self.algorithm(look, word) # determines the possible forms of the current word, and searches
-            # for the words that the current word may have be been derived from
+        else: #If the current word is not The Tetragramaton, then the current word may or may not be set to a noun or a verb
+              #based on the resalts from the context recognition part of the code
+            look.find(word, self.Dict) #search for the word as it appears in the text input field
+            self.algorithm(look, word) #determines the possible forms of the current word, and searches
+            #for the words that the current word may have be been derived from
 
             # These three blocks gets rid of any quotation marks just in cases thay interfered with the processing of the word.
-            #words must be searched with each single and double quotes missing and with both present (done above).
+            # words must be searched with each single and double quotes missing and with both present (done above).
             sText = word.getText()
             sText = sText.replace('\"', '')
 
-            if(not (word.getText() == sText)): # if there are quotation marks in the current word put stripped version in the algorithm
-                word.setText(sText)            # stored in the 'sText' variable.
+            if(not (word.getText() == sText)): #if there are quotation marks in the current word put stripped version in the algorithm
+                word.setText(sText)            #stored in the 'sText' variable.
                 self.CurrentWord.setText(sText)
                 look.find(word, self.Dict)
-                if not(word.getText() == "הוהי"): # see if current word is The Tetragramaton, this time without the quotation marks
+                if not(word.getText() == "הוהי"): #see if current word is The Tetragramaton, this time without the quotation marks
                     self.algorithm(look, word)
         
             sText2 = word.getText()
             sText2 = sText2.replace("\'", "")
             
-            if(not (word.getText() == sText2)): # if there are single quotes in the current word put stripped version in the algorithm
-                word.setText(sText2)            # stored in the 'sText2' variable.
+            if(not (word.getText() == sText2)): #if there are single quotes in the current word put stripped version in the algorithm
+                word.setText(sText2)            #stored in the 'sText2' variable.
                 self.CurrentWord.setText(sText2)
                 look.find(word, self.Dict)
-                if not(word.getText() == "הוהי"): # see if current word is The Tetragramaton, this time without the single quotes
+                if not(word.getText() == "הוהי"): #see if current word is The Tetragramaton, this time without the single quotes
                     self.algorithm(look, word)
         
-        WList = look.getWords() # store all the words found in the 'WList' variable
-        WList.sort(key=look.getValue, reverse = True) # store words according to closeness to the word as it appears in the input field
-                                                      # based on a formula in the algorithm for calculating the value, which is built in the 'Word' class
+        WList = look.getWords() #store all the words found in the 'WList' variable
+        WList.sort(key=look.getValue, reverse = True) #store words according to closeness to the word as it appears in the input field
+                                                      #based on a formula in the algorithm for calculating the value, which is built in the 'Word' class
         # This block of code is responsible for formatting and displaying the results.                                               
         if(len(look.getWords()) > 0):
             for wi in WList:  
@@ -4813,7 +4827,7 @@ class HebrewDictionary(App):
     def smPrefix(self, look, word, h):
         if(word.getLen() < 2) or (not(self.CurrentWord.first() in prefixL)) or ('-' in word.getText()): #or (word.getModern == True):
             return Word("","")
-                
+ 
         if(word.first() in prefixL) and (self.prefixRuls(word, word.first(), h) == True):
             preW = Word("","")
             preW.equalTo(word)
