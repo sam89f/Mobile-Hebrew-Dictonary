@@ -4436,6 +4436,7 @@ class HebrewDictionary(App):
                 plWt.equalTo(plW)
                 if(change3 > 0):
                     plWt.setPlural()
+                    plWt.setGender(0)
                     plWt.setNoun()
                     plWt.setText(self.revPhWords(plWt.getText(), "-"))
                     if(self.FindHelper(look, plWt, self.Dict) == True):
@@ -4451,6 +4452,7 @@ class HebrewDictionary(App):
                     if(change3C > 0):
                         plWc.setNoun()
                         plWc.setPlural()
+                        plWc.setGender(0)
                         #plWc.setConstruct()
                         plWc.setText(self.revPhWords(plWc.getText(), "-"))
                         if(self.FindHelper(look, plWc, self.Dict) == True):
@@ -4484,6 +4486,7 @@ class HebrewDictionary(App):
                     plW.setText(plW.getText().replace(" ", "-"))
                     plWt = Word("","")
                     plWt.equalTo(plW)
+                    plWt.setGender(0)
                     plWt.setText(self.revPhWords(plWt.getText(), "-"))
                     if(self.FindHelper(look, plWt, self.Dict) == True):
                         return plWt
@@ -4491,7 +4494,7 @@ class HebrewDictionary(App):
                     if(plW.getLen() > 1):
                         if(plW.last() == "ת"):
                             plWth = Word("","")
-                            plWth.equalTo(plW) 
+                            plWth.equalTo(plW)
                             plWth.setText('ה' + plW.getText()[1:])  
                             plWth.setText(self.revPhWords(plWth.getText(), "-"))
                             self.FindHelper(look, plWth, self.Dict)
@@ -4506,12 +4509,14 @@ class HebrewDictionary(App):
                         plWc.setText(plWc.getText().replace(" ", "-"))                         
                         plWc.setNoun()
                         plWc.setPlural()
+                        plWc.setGender(0)
                         
                         if(plWc.getLen() > 1):
                             if(plWc.last() == "ת"):
                                 plWch = Word("","")
                                 plWch.equalTo(plWc) 
-                                plWch.setText('ה' + plWc.getText()[1:])  
+                                plWch.setText('ה' + plWc.getText()[1:])
+                                plWch.setGender(2)
                                 plWch.setText(self.revPhWords(plWch.getText(), "-"))
                                 self.FindHelper(look, plWch, self.Dict)
                         
@@ -4536,6 +4541,7 @@ class HebrewDictionary(App):
                     if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
                         plW2 = Word("","")
                         plW2.equalTo(plW)
+                        plW2.setGender(0)
                         plW2.setText(self.revPhWords(plW2.getText(), "-"))
                         self.FindHelper(look, plW2, self.Dict)
                         self.algorithm(look, plW2)
@@ -4543,7 +4549,7 @@ class HebrewDictionary(App):
                             if(plW.last() == "ת"):
                                 plWWh = Word("","")
                                 plWWh.equalTo(plW) 
-                                plWWh.setText('ה' + plW.getText()[1:]) 
+                                plWWh.setText('ה' + plW.getText()[1:])                                
                                 if(plWWh.hasRoot()) and (plWWh.getLen() > 2):
                                     if(plWWh.getRoot()[1:] == plWWh.last3()[1:]):
                                         plWWh.setRoot(plWWh.last3())
@@ -4580,6 +4586,7 @@ class HebrewDictionary(App):
                 if(changef > 0):
                     plW.setNoun()
                     plW.setPlural2()
+                    plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
                     self.algorithm(look, plW)
                     if(self.FindHelper(look, plW, self.Dict) == True):
@@ -4590,6 +4597,7 @@ class HebrewDictionary(App):
                 if(changef > 0):
                     plW.setNoun()
                     plW.setPlural()
+                    plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
                     self.algorithm(look, plW)
                     if(self.FindHelper(look, plW, self.Dict) == True):
@@ -4600,6 +4608,7 @@ class HebrewDictionary(App):
                 if(changef > 0):
                     plW.setNoun()
                     plW.setPlural()
+                    plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
                     self.algorithm(look, plW)
                     if(self.FindHelper(look, plW, self.Dict) == True):
@@ -4616,6 +4625,7 @@ class HebrewDictionary(App):
                     plW.setText(plW.getText().replace(" ", "-"))
                     plW.setNoun()
                     plW.setPlural2()
+                    plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
                     self.algorithm(look, plW)
                     if(self.FindHelper(look, plW, self.Dict) == True):
@@ -4626,6 +4636,7 @@ class HebrewDictionary(App):
                     plW.setText(plW.getText().replace("-תו", "-ה"))
                     plW.setNoun()
                     plW.setPlural()
+                    plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
                     self.algorithm(look, plW)
                     if(self.FindHelper(look, plW, self.Dict) == True):
@@ -4636,6 +4647,7 @@ class HebrewDictionary(App):
                     plW.setText(plW.getText().replace("-תו", "-ת"))
                     plW.setNoun()
                     plW.setPlural()
+                    plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
                     self.algorithm(look, plW)
                     if(self.FindHelper(look, plW, self.Dict) == True):
@@ -4644,6 +4656,7 @@ class HebrewDictionary(App):
                     plW = Word("","")
                     plW.equalTo(cPhrasePl)
                     plW.setText(cPhrasePl.Final(cPhrasePl.getText()[2:]))
+                    plW.setGender(1)
                     if(not(word.getTense() == 'Participle')):
                         plW.setNoun()
                         
@@ -5133,6 +5146,7 @@ class HebrewDictionary(App):
         #if(not(word.getVerbform() in Pual)):
         hollow = Word("","")
         hollow.equalTo(word)
+        hollow.setGender(0)
         
         if(word.last3() == 'םיי') and (word.getLen() > 4):
             if((not((word.getRoot()[:2] == self.Final(word.lastX(4)[2:])) or (word.getRoot()[-2:] == word.lastX(4)[2:]) or (word.getRoot() == word.last3())))):
@@ -5142,13 +5156,19 @@ class HebrewDictionary(App):
             if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
                 hollow.setText(hollow.Final(hollow.getText()[2:]))
                 hollow.setPlural()
+                if(word.getGenderVal() == -1):
+                    hollow.setGender(0)
         elif(word.last2() == 'תו') and (word.getLen() > 3):
             if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
                 hollow.setText(hollow.Final(hollow.getText()[2:]))
                 hollow.setPlural()
+                if(word.getGenderVal() == -1):
+                    hollow.setGender(1)
         elif(word.last() == 'ה') and (word.getLen() > 2):
             if(not(word.getRoot()[:2] == word.last2())):
-                hollow.setText(hollow.Final(hollow.getText()[1:]))   
+                hollow.setText(hollow.Final(hollow.getText()[1:])) 
+                if(word.getGenderVal() == -1):
+                    hollow.setGender(1)
         
         if(hollow.getLen() == 2):
             hollow.setText(hollow.last() + 'ו' +  hollow.first())
@@ -5178,10 +5198,12 @@ class HebrewDictionary(App):
             if(rVcW.getText()[iM + 1] == "י"):
                 uther = True
         
-        if(word.last() == 'ת') and (not(word.nextToLast() == 'ו')) and (not(word.getConstruct() == True)) and (not(word.getRoot()[:2] == word.last2())) and (word.getLen() > 3):
+        if(word.last() == 'ת') and (not(word.nextToLast() == 'ו')) and (not(word.getConstruct() == True)) and (not(word.getRoot()[:2] == word.last2())) and (word.getLen() > 4):
             fimW = Word("","")
             fimW.equalTo(word)
             fimW.setText(self.Final(word.getText()[1:]))
+            if(word.getGenderVal() == -1):
+                fimW.setGender(1)
             pfimW = Word("","")
             
             if(fimW.first() == 'מ') and (not(fimW.getRoot()[-2:] == fimW.first2())):
@@ -5190,7 +5212,7 @@ class HebrewDictionary(App):
                 if(fimW.getLen() > 4) and ((fimW.isVerbf() == False) or (fimW.getVerbform() == 'Qal')):
                     if(fimW.third() == 'ו') and (self.num_of_a_roots(fimW.getText()[:-3]) < 3):
                         pfimW.equalTo(fimW)
-                        pfimW.setText('ה' + self.unFinal(fimW.getText()[:-3] + fimW.nextToFirst()))
+                        pfimW.setText(fimW.getText()[:-3] + fimW.nextToFirst())
                         if(not(pfimW.hasRoot() and (not((pfimW.getRoot()[:-1] == self.Final(pfimW.first3()[:-1]))or(self.unFinal(pfimW.getRoot()[:1] + pfimW.getRoot()[-1:]) == pfimW.first2()))))):
                             pfimW.setRoot(self.Final(pfimW.first3()))
                             if fimW.first() == 'ת':
@@ -5199,20 +5221,28 @@ class HebrewDictionary(App):
                             pfimW.setPar(1)
                             if((pfimW.getPlural() == True) or (pfimW.getDaul() == True)) and (not('ה' in pfimW.getPrixList())) and (self.CurrentWord.isNoun() == False):
                                 pfimW.unSetNoun()
+                            pfimWh = Word("","")
+                            pfimWh.equalTo(pfimW)
+                            pfimWh.setText('ה' + self.unFinal(pfimW.getText()))
                             self.FindHelper(look, pfimW, self.Dict)
+                            self.FindHelper(look, pfimWh, self.Dict)
                             self.algorithm(look, pfimW)     
                     if(fimW.nextToLast() == 'ו') and (self.num_of_p_roots(fimW.getText()[2:]) < 3) and (not(fimW.last() == 'י')) and (not(fimW.last() == 'ו')) and (fimW.getLen() > 4):
                         isPar = True
                         pfimW2 = Word("","")
                         pfimW2.equalTo(fimW)
-                        pfimW2.setText('ה' + self.unFinal(fimW.last() + fimW.getText()[2:-1]))
+                        pfimW2.setText(fimW.last() + fimW.getText()[2:-1])
                         if(not(pfimW2.hasRoot() and (not((pfimW2.getRoot()[1:] == pfimW2.lastX(4)[2:])or(self.unFinal(pfimW2.getRoot()[:1] + pfimW2.getRoot()[-1:]) == pfimW2.last3()[1:]))))):
-                            pfimW2.setRoot(self.Final(pfimW2.getText()[1:4]))
+                            pfimW2.setRoot(self.Final(pfimW2.first3()))
                             pfimW2.setTense(2)
                             pfimW2.setPar(0)
                             if((pfimW2.getPlural() == True) or (pfimW2.getDaul() == True)) and (not('ה' in pfimW2.getPrixList())) and (self.CurrentWord.isNoun() == False):
                                 pfimW2.unSetNoun()
+                            pfimWh = Word("","")
+                            pfimWh.equalTo(pfimW2)
+                            pfimWh.setText('ה' + self.unFinal(pfimW2.getText()))
                             self.FindHelper(look, pfimW2, self.Dict)
+                            self.FindHelper(look, pfimWh, self.Dict)
                             self.algorithm(look, pfimW2) 
                             return pfimW2
                     
@@ -5220,14 +5250,18 @@ class HebrewDictionary(App):
                     isPar = True
                     pfimW2 = Word("","")
                     pfimW2.equalTo(fimW)
-                    pfimW2.setText('ה' + self.unFinal(fimW.getText()[:-1]))
+                    pfimW2.setText(fimW.getText()[:-1])
                     if(not(pfimW2.hasRoot() and (not(pfimW2.getRoot()[:2] == self.Final(pfimW2.first3()[:2]))))):
                         pfimW2.setRoot(self.Final(pfimW2.first3()))
                     pfimW2.setTense(2)
                     pfimW2.setPar(1)
                     if((pfimW2.getPlural() == True) or (pfimW2.getDaul() == True)) and (not('ה' in pfimW2.getPrixList())) and (self.CurrentWord.isNoun() == False):
                         pfimW2.unSetNoun()
+                    pfimWh = Word("","")
+                    pfimWh.equalTo(pfimW2)
+                    pfimWh.setText('ה' + self.unFinal(pfimW2.getText()))
                     self.FindHelper(look, pfimW2, self.Dict)
+                    self.FindHelper(look, pfimWh, self.Dict)
                     self.algorithm(look, pfimW2) 
                     return pfimW2
                     
@@ -5235,14 +5269,18 @@ class HebrewDictionary(App):
                     isPar = True
                     pfimW2 = Word("","")
                     pfimW2.equalTo(fimW)
-                    pfimW2.setText('ה' + self.unFinal(fimW.getText()[:-1]))
+                    pfimW2.setText(fimW.getText()[:-1])
                     if(not(pfimW2.hasRoot() and (not(pfimW2.getRoot()[:2] == self.Final(pfimW2.first3()[:2]))))):
                         pfimW2.setRoot(self.Final(pfimW2.first3()))
                     pfimW2.setTense(2)
                     pfimW2.setPar(0)
                     if((pfimW2.getPlural() == True) or (pfimW2.getDaul() == True)) and (not('ה' in pfimW2.getPrixList())) and (self.CurrentWord.isNoun() == False):
                         pfimW2.unSetNoun()
+                    pfimWh = Word("","")
+                    pfimWh.equalTo(pfimW2)
+                    pfimWh.setText('ה' + self.unFinal(pfimW2.getText()))
                     self.FindHelper(look, pfimW2, self.Dict)
+                    self.FindHelper(look, pfimWh, self.Dict)
                     self.algorithm(look, pfimW2) 
                     return pfimW2
                 
@@ -5250,7 +5288,7 @@ class HebrewDictionary(App):
                 if(fimW.nextToFirst() == 'ו') and ((fimW.isVerbf() == False) or (fimW.getVerbform() == 'Qal')) and (self.num_of_a_roots(fimW.getText()[:-2]) < 3):
                     isPar = True
                     pfimW.equalTo(fimW)
-                    pfimW.setText('ה' + self.unFinal(fimW.getText()[:-2] + fimW.first()))
+                    pfimW.setText(fimW.getText()[:-2] + fimW.first())
                     if(not(pfimW.hasRoot() and (not((pfimW.getRoot()[:-1] == self.Final(pfimW.first3()[:-1]))or(self.unFinal(pfimW.getRoot()[:1] + pfimW.getRoot()[-1:]) == pfimW.first2()))))):
                         pfimW.setRoot(self.Final(pfimW.first3()))
                         if fimW.first() == 'ת':
@@ -5258,21 +5296,29 @@ class HebrewDictionary(App):
                         pfimW.setTense(2)
                         pfimW.setPar(1)
                         if((pfimW.getPlural() == True) or (pfimW.getDaul() == True)) and (not('ה' in pfimW.getPrixList())) and (self.CurrentWord.isNoun() == False):
-                            pfimW.unSetNoun()
+                            pfimW.unSetNoun
+                        pfimWh = Word("","")
+                        pfimWh.equalTo(pfimW)
+                        pfimWh.setText('ה' + self.unFinal(pfimW.getText()))
                         self.FindHelper(look, pfimW, self.Dict)
+                        self.FindHelper(look, pfimWh, self.Dict)
                         self.algorithm(look, pfimW)        
-                if(fimW.nextToLast() == 'ו') and (self.num_of_p_roots(fimW.getText()[2:]) < 3) and (not(fimW.last() == 'י')) and (not(fimW.last() == 'ו')) and (fimW.getLen() > 4):
+                if(fimW.nextToLast() == 'ו') and (self.num_of_p_roots(fimW.getText()[2:]) < 3) and (not(fimW.last() == 'י')) and (not(fimW.last() == 'ו')) and (fimW.getLen() > 3):
                     isPar = True
                     pfimW2 = Word("","")
                     pfimW2.equalTo(fimW)
-                    pfimW2.setText('ה' + self.unFinal(fimW.last() + fimW.getText()[2:]))
+                    pfimW2.setText(fimW.last() + fimW.getText()[2:])
                     if(not(pfimW2.hasRoot() and (not((pfimW2.getRoot()[1:] == pfimW2.lastX(4)[2:])or(self.unFinal(pfimW2.getRoot()[:1] + pfimW2.getRoot()[-1:]) == pfimW2.last3()[1:]))))):
-                        pfimW2.setRoot(self.Final(pfimW2.getText()[1:4]))
+                        pfimW2.setRoot(self.Final(pfimW2.first3()))
                         pfimW2.setTense(2)
                         pfimW2.setPar(0)
                         if((pfimW2.getPlural() == True) or (pfimW2.getDaul() == True)) and (not('ה' in pfimW2.getPrixList())) and (self.CurrentWord.isNoun() == False):
                             pfimW2.unSetNoun()
+                        pfimWh = Word("","")
+                        pfimWh.equalTo(pfimW2)
+                        pfimWh.setText('ה' + self.unFinal(pfimW2.getText()))
                         self.FindHelper(look, pfimW2, self.Dict)
+                        self.FindHelper(look, pfimWh, self.Dict)
                         self.algorithm(look, pfimW2)
                         return pfimW2
                 
@@ -5288,6 +5334,8 @@ class HebrewDictionary(App):
             if(word.first() == 'מ') and (not(word.getRoot()[-2:] == word.first2())):
                 word2 = Word("","")
                 word2.equalTo(word)
+                if(word.getGenderVal() == -1):
+                    word2.setGender(0)
                 if(word.nextToFirst() == 'ו'):
                     word2.setText(word.getText()[:-2] + 'י' + word.first())
                 if(word2.getLen() > 4) and ((word2.isVerbf() == False) or (word2.getVerbform() == 'Qal')):
@@ -5362,6 +5410,8 @@ class HebrewDictionary(App):
                 if(word.nextToFirst() == 'ו') and ((word.isVerbf() == False) or (word.getVerbform() == 'Qal')) and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת')and(word.getPlural() == False))) and (self.num_of_a_roots(word.getText()[:-2]) < 3): 
                     isPar = True
                     pword.equalTo(word)
+                    if(word.getGenderVal() == -1):
+                        pword.setGender(0)
                     pword.setText(word.getText()[:-2] + word.first())
                     if(pword.getLen() > 2):
                         if(not(pword.hasRoot() and (not((pword.getRoot()[:-1] == self.Final(pword.first3()[:-1]))or(self.unFinal(pword.getRoot()[:1] + pword.getRoot()[-1:]) == pword.first2()))))):
@@ -5380,6 +5430,8 @@ class HebrewDictionary(App):
                     isPar = True
                     pword2 = Word("","")
                     pword2.equalTo(word)
+                    if(word.getGenderVal() == -1):
+                        pword2.setGender(0)
                     pword2.setText(word.last() + word.getText()[2:])
                     if(pword2.getLen() > 2):
                          if(not(pword2.hasRoot() and (not((pword2.getRoot()[1:] == pword2.last3()[1:])or(pword2.getRoot()[:1] + pword2.getRoot()[-1:] == pword2.last2()))))): 
@@ -5448,6 +5500,7 @@ class HebrewDictionary(App):
                     if(not(word.getRoot()[:2] == word.last2())):
                         constW.setPlural()
                         constW.setConstruct()
+                        constW.setGender(0)
                         constW.setNoun()
                         if(constW.getLen() == 2):
                             hollow  = Word("","")
@@ -5461,6 +5514,7 @@ class HebrewDictionary(App):
                     constW2.equalTo(word)
                     constW2.setText('ם' + word.getText())
                     constW2.setConstruct()
+                    constW2.setGender(0)
                     constW2.setNoun()
                     self.FindHelper(look, constW2, self.Dict)
                     #self.algorithm(look, constW)
@@ -5485,6 +5539,7 @@ class HebrewDictionary(App):
                 constW.setNoun()
                 if(word.getPlural() == False):
                     constW.setConstruct2()
+                    constW.setGender(1)
                 if(constW.getLen() == 2):
                     hollow  = Word("","")
                     hollow.equalTo(constW)
@@ -5498,6 +5553,7 @@ class HebrewDictionary(App):
             constW2 = Word("", "")
             constW2.equalTo(word)
             constW2.setText('ה' + word.getText()[1:])
+            constW2.setGender(1)
             if(constW2.hasRoot()) and (constW2.getLen() > 2):
                 if(constW2.getRoot()[1:] == constW2.last3()[1:]):
                     constW2.setRoot(constW2.last3())
@@ -5554,6 +5610,7 @@ class HebrewDictionary(App):
                     
                 else:   
                     constW.setPlural()
+                    constW.setGender(0)
                     constW.setNoun()
                     constW.setText(self.revPhWords(constW.getText(), "-"))
                     
@@ -5569,12 +5626,14 @@ class HebrewDictionary(App):
                     constW2.equalTo(PhraseCostr)
                     constW2.setText('ם' + PhraseCostr.getText())
                     constW2.setConstruct()
+                    constW2.setGender(0)
                     constW2.setNoun()
                     constW2.setText(self.revPhWords(constW2.getText(), "-"))
                     self.FindHelper(look, constW2, self.Dict)
                     #self.algorithm(look, constW2)
                     constW3.setText('ה' + PhraseCostr.getText()[1:])
-                    constW.setConstruct2()
+                    constW3.setConstruct2()
+                    constW3.setGender(2)
                     constW3.setText(self.revPhWords(constW3.getText(), "-"))
                     self.FindHelper(look, constW3, self.Dict)
                     self.algorithm(look, constW3)
@@ -5588,6 +5647,7 @@ class HebrewDictionary(App):
                 plW.setText(PhraseCostr.Final(PhraseCostr.getText()[1:]))
                 plW.setNoun()
                 plW.setConstruct2()
+                plW.setGender(1)
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 self.algorithm(look, plW)
                 if(self.FindHelper(look, plW, self.Dict) == True):
