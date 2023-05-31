@@ -5493,6 +5493,7 @@ class HebrewDictionary(App):
                         daulW3.equalTo(word)
                         daulW3.setText('ה' + constW.getText()[1:])
                         daulW3.setConstruct2()
+                        daulW3.setDaul()
                         if(daulW3.hasRoot()) and (daulW3.getLen() > 2):
                             if(daulW3.getRoot()[1:] == daulW3.last3()[1:]):
                                 daulW3.setRoot(daulW3.last3())
@@ -5526,6 +5527,7 @@ class HebrewDictionary(App):
                     constW3.equalTo(word)
                     constW3.setText('ה' + word.getText()[1:])
                     constW3.setConstruct2()
+                    constW3.setPlural()
                     if(constW3.hasRoot()) and (constW3.getLen() > 2):
                         if(constW3.getRoot()[1:] == constW3.last3()[1:]):
                             constW3.setRoot(constW3.last3())
