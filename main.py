@@ -2336,7 +2336,7 @@ class HebrewDictionary(App):
         if(word.getLen() < 4) or ((word.isVerbf() == True) and (not(word.getVerbform() in rareVerbforms))):
             return Word("","")
 
-        if(word.XtoY(1, 3) == 'יי') and (len(word.getText()) > 4) and (self.num_of_a_roots(word.getText()[:-3]) < 3) and (not('יי' in word.getRoot())):
+        if(word.XtoY(1, 3) == 'יי') and (len(word.getText()) > 4) and (not('יי' in word.getRoot())): # and (self.num_of_a_roots(word.getText()[:-3]) < 3):
             pielW = Word("","")
             pielW.equalTo(word)
             pielW.setText(word.getText()[:-3] + word.first())
@@ -2351,7 +2351,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, pielW, self.Dict)
                 self.algorithm(look, pielW)
         
-        if(word.nextToFirst() == 'י') and (self.num_of_a_roots(word.getText()[:-2]) < 3):
+        if(word.nextToFirst() == 'י'): #and (self.num_of_a_roots(word.getText()[:-2]) < 3):
             pielW = Word("","")
             pielW.equalTo(word)
             pielW.setText(word.getText()[:-2] + word.first())
@@ -2369,7 +2369,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, pielW, self.Dict)
                 return pielW
             
-        if(len(word.getText()) > 5) and (word.first() in prefixL) and (word.XtoY(2, 4) == 'יי') and (self.num_of_a_roots(word.getText()[:-3]) < 4) and (not('יי' in word.getRoot())):
+        if(len(word.getText()) > 5) and (word.first() in prefixL) and (word.XtoY(2, 4) == 'יי') and (not('יי' in word.getRoot())): #and (self.num_of_a_roots(word.getText()[:-3]) < 4):
             pielW = Word("","")
             pielW.equalTo(word)
             pielW.setText(word.getText()[:-4] + word.nextToFirst() + word.first())
@@ -2390,7 +2390,7 @@ class HebrewDictionary(App):
                 if(word.first() == 'מ'):
                     return self.participle(look, pielW)
             
-        if(len(word.getText()) > 4) and (word.first() in prefixL) and (word.third() == 'י') and (self.num_of_a_roots(word.getText()[:-3]) < 3) and (not(word.getRoot() == self.Final(word.first3()))):
+        if(len(word.getText()) > 4) and (word.first() in prefixL) and (word.third() == 'י') and (not(word.getRoot() == self.Final(word.first3()))): #and (self.num_of_a_roots(word.getText()[:-3]) < 3):
             pielW = Word("","")
             pielW.equalTo(word)
             pielW.setText(word.getText()[:-3] + word.nextToFirst() + word.first())
@@ -2420,7 +2420,7 @@ class HebrewDictionary(App):
         if(word.getLen() < 4) or ((word.isVerbf() == True) and (not(word.getVerbform() in rareVerbforms))):
             return Word("","")
 
-        if(word.nextToFirst() == 'ו') and (self.num_of_a_roots(word.getText()[:-2]) < 3):
+        if(word.nextToFirst() == 'ו'): #and (self.num_of_a_roots(word.getText()[:-2]) < 3):
             if(word.first() in prefixL) and (self.prefixRuls(word, word.first(), False) == True) and (len(word.getText()) > 4):
                 return self.hufal(look, word)
             pualW = Word("","")
@@ -2437,7 +2437,7 @@ class HebrewDictionary(App):
                 self.FindHelper(look, pualW, self.Dict)
                 return pualW
             
-        if(len(word.getText()) > 4) and (word.first() in prefixL) and (word.third() == 'ו') and (self.num_of_a_roots(word.getText()[:-3]) < 3):
+        if(len(word.getText()) > 4) and (word.first() in prefixL) and (word.third() == 'ו'): #and (self.num_of_a_roots(word.getText()[:-3]) < 3):
             pualW = Word("","")
             pualW.equalTo(word)
             pualW.setText(word.getText()[:-3] + word.nextToFirst() + word.first())
