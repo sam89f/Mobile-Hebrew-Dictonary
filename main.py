@@ -1214,8 +1214,9 @@ class CustomInput(TextInput):
                 if(l < len(word)-1) and (l > 0):
                     if(word[l] + word[l+1] == "וֹ")and(word[l-1] in AlefBet):
                         words[w] = words[w].replace("וֹ","ו")
-                    if(word[l] + word[l+1] == "וֺ")and(word[l-1] in AlefBet):                                                              
+                    if(word[l] + word[l+1] == "וֺ")and(word[l-1] in AlefBet):
                         words[w] = words[w].replace("וֺ","ו")
+                    word = words[w]
 
             words[w] = words[w].replace("ֹ", "ו") 
             words[w] = words[w].replace("ֻ", "ו")
@@ -1446,6 +1447,7 @@ class HebrewDictionary(App):
                         words[w] = words[w].replace("וֹ","ו")
                     if(word[l] + word[l+1] == "וֺ")and(word[l-1] in AlefBet):
                         words[w] = words[w].replace("וֺ","ו")
+                    word = words[w]
                         
             words[w] = words[w].replace("[", " ")
             words[w] = words[w].replace("]", " ")
