@@ -66,7 +66,7 @@ Finals = ['ך', 'ם', 'ן', 'ף', 'ץ']
 finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
 unFinals = {'ך':'כ', 'ם':'מ', 'ן':'נ', 'ף':'פ', 'ץ':'צ'}
 prefixD = {"תת":"sub", "ה":"the", "ו":"and", "ב":"in", "מ":"from", "ל":"to", "כ":"as", "ש":"which"}
-ssuffix = {"ןהי":"their/them(f.)", "ןה":"their/them(f.)", "הנה":"their/them(f.)", "הנהי":"their/them(f.)", "ן":"their/them(f.)", "ןי":"their/them(f.)", "םהי":"their/them(m.)", "םה":"their/them(m.)", "ם":"their/them(m.)", "ומ":"their/them(m.)", "הי":"hers/her", "ה":"hers/her", "הנ":"hers/her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you(pl. f.)", "ןכ":"your/you(pl. f.)", "םכי":"your/you(pl.)", "םכ":"your/you(pl.)", "ךי":"you/your(m.)", "ך":"you/your(m.)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
+ssuffix = {"ןהי":"their/them (f.)", "ןה":"their/them (f.)", "הנה":"their/them (f.)", "הנהי":"their/them (f.)", "ן":"their/them (f.)", "ןי":"their/them (f.)", "םהי":"their/them (m.)", "םה":"their/them (m.)", "ם":"their/them (m.)", "ומ":"their/them (m.)", "הי":"hers/her", "ה":"hers/her", "הנ":"hers/her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you (pl. f.)", "ןכ":"your/you (pl. f.)", "םכי":"your/you (pl.)", "םכ":"your/you (pl.)", "ךי":"you/your (m.)", "ך":"you/your (m.)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
 #suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
 parti = {1:'Active', 0:'Passive', 2:''}
 gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
@@ -1179,36 +1179,12 @@ class CustomInput(TextInput):
     def clean(self, words):
         
         for w in range(len(words)):
-            word = words[w]
-            for l in range(len(word)):
-                if(l < len(word)-1) and (l > 0):
-                    if(word[l] + word[l+1] == "וֹ")and((word[l-1] in AlefBet)or(word[l-1] =="ׁ")or(word[l-1] =="ׂ")or(word[l-1] ==" ּ")):
-                        words[w] = words[w].replace("וֹ","ו")
-                    if(word[l] + word[l+1] == "וֺ")and((word[l-1] in AlefBet)or(word[l-1] =="ׁ")or(word[l-1] =="ׂ")or(word[l-1] ==" ּ")):                                                              
-                        words[w] = words[w].replace("וֺ","ו")
- 
-            words[w] = words[w].replace("ֹ", "ו") 
-            words[w] = words[w].replace("ֻ", "ו")
-            words[w] = words[w].replace("ֹיּ", "י")
-            words[w] = words[w].replace("ִיַ", "יי")
-            words[w] = words[w].replace("ֵ", "")
-            words[w] = words[w].replace("ִ", "")
-            words[w] = words[w].replace("ַ", "")
-            words[w] = words[w].replace("ָ", "")
-            words[w] = words[w].replace("ׁ", "")
-            words[w] = words[w].replace("ׂ", "")
-            words[w] = words[w].replace("ּ", "")   
-            words[w] = words[w].replace("ֱ", "")
-            words[w] = words[w].replace("ֵ", "")
-            words[w] = words[w].replace("ְ", "")
-            words[w] = words[w].replace("ֶ", "")
-            words[w] = words[w].replace("ֲ", "")
-            words[w] = words[w].replace("ֳ", "")
-            words[w] = words[w].replace("ֽ", "")
-            words[w] = words[w].replace("ֺ", "ו")
+            words[w] = words[w].replace("וֹ", "ו")
             words[w] = words[w].replace("שׁ", "ש")
             words[w] = words[w].replace("שׂ", "ש")
-            words[w] = words[w].replace("וֹ", "ו")
+            words[w] = words[w].replace("ׁ", "")
+            words[w] = words[w].replace("ׂ", "")
+            words[w] = words[w].replace("ּ", "")
             words[w] = words[w].replace("וּ", "ו")
             words[w] = words[w].replace("אָ", "א")
             words[w] = words[w].replace("אַ", "א")
@@ -1231,6 +1207,32 @@ class CustomInput(TextInput):
             words[w] = words[w].replace("שּׁ", "ש")
             words[w] = words[w].replace("שּׂ", "ש")
             words[w] = words[w].replace("תּ", "ת")
+            
+            word = words[w]
+            
+            for l in range(len(word)):
+                if(l < len(word)-1) and (l > 0):
+                    if(word[l] + word[l+1] == "וֹ")and(word[l-1] in AlefBet):
+                        words[w] = words[w].replace("וֹ","ו")
+                    if(word[l] + word[l+1] == "וֺ")and(word[l-1] in AlefBet):                                                              
+                        words[w] = words[w].replace("וֺ","ו")
+
+            words[w] = words[w].replace("ֹ", "ו") 
+            words[w] = words[w].replace("ֻ", "ו")
+            words[w] = words[w].replace("ֹיּ", "י")
+            words[w] = words[w].replace("ִיַ", "יי")
+            words[w] = words[w].replace("ֵ", "")
+            words[w] = words[w].replace("ִ", "")
+            words[w] = words[w].replace("ַ", "")
+            words[w] = words[w].replace("ָ", "")
+            words[w] = words[w].replace("ֱ", "")
+            words[w] = words[w].replace("ֵ", "")
+            words[w] = words[w].replace("ְ", "")
+            words[w] = words[w].replace("ֶ", "")
+            words[w] = words[w].replace("ֲ", "")
+            words[w] = words[w].replace("ֳ", "")
+            words[w] = words[w].replace("ֽ", "")
+            words[w] = words[w].replace("ֺ", "ו")
             
         return words
         
@@ -1407,13 +1409,44 @@ class HebrewDictionary(App):
     def clean(self, words):
         
         for w in range(len(words)):
+            words[w] = words[w].replace("וֹ", "ו")
+            words[w] = words[w].replace("שׁ", "ש")
+            words[w] = words[w].replace("שׂ", "ש")
+            words[w] = words[w].replace("ׁ", "")
+            words[w] = words[w].replace("ׂ", "")
+            words[w] = words[w].replace("ּ", "")
+            words[w] = words[w].replace("וּ", "ו")
+            words[w] = words[w].replace("אָ", "א")
+            words[w] = words[w].replace("אַ", "א")
+            words[w] = words[w].replace("בּ", "ב")
+            words[w] = words[w].replace("גּ", "ג")
+            words[w] = words[w].replace("דּ", "ד")
+            words[w] = words[w].replace("הּ", "ה")
+            words[w] = words[w].replace("זּ", "ז")
+            words[w] = words[w].replace("טּ", "ט")
+            words[w] = words[w].replace("יּ", "י")
+            words[w] = words[w].replace("יִ", "י")
+            words[w] = words[w].replace("כּ", "כ")
+            words[w] = words[w].replace("לּ", "ל")
+            words[w] = words[w].replace("מּ", "מ")
+            words[w] = words[w].replace("נּ", "נ")
+            words[w] = words[w].replace("סּ", "ס")
+            words[w] = words[w].replace("פּ", "פ")
+            words[w] = words[w].replace("צּ", "צ")
+            words[w] = words[w].replace("קּ", "ק")
+            words[w] = words[w].replace("שּׁ", "ש")
+            words[w] = words[w].replace("שּׂ", "ש")
+            words[w] = words[w].replace("תּ", "ת")
+            
             word = words[w]
+            
             for l in range(len(word)):
                 if(l < len(word)-1) and (l > 0):
-                    if(word[l] + word[l+1] == "וֹ")and((word[l-1] in AlefBet)or(word[l-1] =="ׁ")or(word[l-1] =="ׂ")or(word[l-1] ==" ּ")):
+                    if(word[l] + word[l+1] == "וֹ")and(word[l-1] in AlefBet):
                         words[w] = words[w].replace("וֹ","ו")
-                    if(word[l] + word[l+1] == "וֺ")and((word[l-1] in AlefBet)or(word[l-1] =="ׁ")or(word[l-1] =="ׂ")or(word[l-1] ==" ּ")):                                                              
+                    if(word[l] + word[l+1] == "וֺ")and(word[l-1] in AlefBet):
                         words[w] = words[w].replace("וֺ","ו")
+                        
             words[w] = words[w].replace("[", " ")
             words[w] = words[w].replace("]", " ")
             words[w] = words[w].replace("”", "")
@@ -1426,9 +1459,6 @@ class HebrewDictionary(App):
             words[w] = words[w].replace("ִ", "")
             words[w] = words[w].replace("ַ", "")
             words[w] = words[w].replace("ָ", "")
-            words[w] = words[w].replace("ׁ", "")
-            words[w] = words[w].replace("ׂ", "")
-            words[w] = words[w].replace("ּ", "")   
             words[w] = words[w].replace("ֱ", "")
             words[w] = words[w].replace("ֵ", "")
             words[w] = words[w].replace("ְ", "")
