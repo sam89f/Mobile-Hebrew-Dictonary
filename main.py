@@ -3014,7 +3014,7 @@ class HebrewDictionary(App):
                 if(perfW.last() == 'י'):
                     perfIh = Word("","")
                     perfIh.equalTo(perfW)
-                    perfIh.setText('ה' + self.Final(perfW.getText()[1:]))
+                    perfIh.setText('ה' + perfW.getText()[1:])
                     if(perfIh.getLen() > 2):
                         if(newRT == True):
                             perfIh.setRoot(self.Final(perfIh.last3()))
@@ -3070,7 +3070,7 @@ class HebrewDictionary(App):
                 if(perfW.last() == 'י'):
                     perfIh = Word("","")
                     perfIh.equalTo(perfW)
-                    perfIh.setText('ה' + self.Final(perfW.getText()[1:]))
+                    perfIh.setText('ה' + perfW.getText()[1:])
                     if(perfIh.getLen() > 2):
                         if(newRT == True):
                             perfIh.setRoot(self.Final(perfIh.last3()))
@@ -3126,7 +3126,7 @@ class HebrewDictionary(App):
                 if(perfW.last() == 'י'):
                     perfIh = Word("","")
                     perfIh.equalTo(perfW)
-                    perfIh.setText('ה' + self.Final(perfW.getText()[1:]))
+                    perfIh.setText('ה' + perfW.getText()[1:])
                     if(perfIh.getLen() > 2):
                         if(newRT == True):
                             perfIh.setRoot(self.Final(perfIh.last3()))
@@ -3182,7 +3182,7 @@ class HebrewDictionary(App):
                 if(perfW.last() == 'י'):
                     perfIh = Word("","")
                     perfIh.equalTo(perfW)
-                    perfIh.setText('ה' + self.Final(perfW.getText()[1:]))
+                    perfIh.setText('ה' + perfW.getText()[1:])
                     if(perfIh.getLen() > 2):
                         if(newRT == True):
                             perfIh.setRoot(self.Final(perfIh.last3()))
@@ -3238,7 +3238,7 @@ class HebrewDictionary(App):
                 if(perfW.last() == 'י'):
                     perfIh = Word("","")
                     perfIh.equalTo(perfW)
-                    perfIh.setText('ה' + self.Final(perfW.getText()[1:]))
+                    perfIh.setText('ה' + perfW.getText()[1:])
                     if(perfIh.getLen() > 2):
                         if(newRT == True):
                             perfIh.setRoot(self.Final(perfIh.last3()))
@@ -3294,7 +3294,7 @@ class HebrewDictionary(App):
             if(perfW.last() == 'י'):
                 perfIh = Word("","")
                 perfIh.equalTo(perfW)
-                perfIh.setText('ה' + self.Final(perfW.getText()[1:]))
+                perfIh.setText('ה' + perfW.getText()[1:])
                 if(perfIh.getLen() > 2):
                     if(newRT == True):
                         perfIh.setRoot(self.Final(perfIh.last3()))
@@ -3350,7 +3350,7 @@ class HebrewDictionary(App):
             if(perfW.last() == 'י'):
                 perfIh = Word("","")
                 perfIh.equalTo(perfW)
-                perfIh.setText('ה' + self.Final(perfW.getText()[1:]))
+                perfIh.setText('ה' + perfW.getText()[1:])
                 if(perfIh.getLen() > 2):
                     if(newRT == True):
                         perfIh.setRoot(self.Final(perfIh.last3()))
@@ -3408,7 +3408,7 @@ class HebrewDictionary(App):
             if(perfW.last() == 'י'):
                 perfIh = Word("","")
                 perfIh.equalTo(perfW)
-                perfIh.setText('ה' + self.Final(perfW.getText()[1:]))
+                perfIh.setText('ה' + perfW.getText()[1:])
                 if(perfIh.getLen() > 2):
                     if(newRT == True):
                         perfIh.setRoot(self.Final(perfIh.last3()))
