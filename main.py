@@ -1970,7 +1970,7 @@ class HebrewDictionary(App):
         
         self.prefix(look, word, False)
         
-        if (not(word.getVerbform() in Hiphil)) and (not(word.getVerbform() == 'Hophal')) and (not(word.getVerbform() in Hithpeal)):
+        if(not(word.getVerbform() in Hiphil)) and (not(word.getVerbform() == 'Hophal')) and (not(word.getVerbform() in Hithpeal)):
             self.participle(look, word)
         
         self.suffix(look, word, 2)
@@ -2026,11 +2026,12 @@ class HebrewDictionary(App):
                 mdrnW.setNoun()
                 self.FindHelper(look, mdrnW, self.Dict)
                 self.algorithm(look, mdrnW)
-                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not('ה' in word.getSufxList())):
+                if(not('ה' in word.getSufxList())):
                     mdrnWh = Word("","")
                     mdrnWh.equalTo(mdrnW)
                     mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
                     self.FindHelper(look, mdrnWh, self.Dict)
+                    self.algorithm(look, mdrnWh)
                 return mdrnW
                 
         if(word.getLen() > 5):
@@ -2043,11 +2044,12 @@ class HebrewDictionary(App):
                 mdrnW.setNoun()
                 self.FindHelper(look, mdrnW, self.Dict)
                 self.algorithm(look, mdrnW)
-                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not('ה' in word.getSufxList())):
+                if(not('ה' in word.getSufxList())):
                     mdrnWh = Word("","")
                     mdrnWh.equalTo(mdrnW)
                     mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
                     self.FindHelper(look, mdrnWh, self.Dict)
+                    self.algorithm(look, mdrnWh)
                 return mdrnW
                 
         if(word.getLen() > 4):
@@ -2067,11 +2069,12 @@ class HebrewDictionary(App):
                 mdrnW2.setNoun()
                 self.FindHelper(look, mdrnW2, self.Dict)
                 self.algorithm(look, mdrnW2)
-                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not('ה' in word.getSufxList())):
+                if(not('ה' in word.getSufxList())):
                     mdrnWh = Word("","")
                     mdrnWh.equalTo(mdrnW2)
                     mdrnWh.setText('ה' + self.unFinal(mdrnW2.getText()))
                     self.FindHelper(look, mdrnWh, self.Dict)
+                    self.algorithm(look, mdrnWh)
                 return mdrnW2
                 
         if(word.getLen() > 3):
@@ -2084,11 +2087,12 @@ class HebrewDictionary(App):
                 mdrnW.setNoun()
                 self.FindHelper(look, mdrnW, self.Dict)
                 self.algorithm(look, mdrnW)
-                if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not('ה' in word.getSufxList())):
+                if(not('ה' in word.getSufxList())):
                     mdrnWh = Word("","")
                     mdrnWh.equalTo(mdrnW)
                     mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
                     self.FindHelper(look, mdrnWh, self.Dict)
+                    self.algorithm(look, mdrnWh)
                 return mdrnW
             
         if (word.last() in modernL):
@@ -2100,11 +2104,12 @@ class HebrewDictionary(App):
             mdrnW.setNoun()
             self.FindHelper(look, mdrnW, self.Dict)
             self.algorithm(look, mdrnW)
-            if(not(('וה' in word.getSufxList())or('ןהי' in word.getSufxList())or('םה' in word.getSufxList()))) and (not(word.last() == 'ה')) and (not('ה' in word.getSufxList())):
+            if(not('ה' in word.getSufxList())):
                 mdrnWh = Word("","")
                 mdrnWh.equalTo(mdrnW)
                 mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
                 self.FindHelper(look, mdrnWh, self.Dict)
+                self.algorithm(look, mdrnWh)
                 
             return mdrnW
             
@@ -5090,7 +5095,7 @@ class HebrewDictionary(App):
         return Word("", "")  
     
     def suffix(self, look, word, p):
-        if(word.getLen() < 3) or (word.getConstruct() == True) or ('ה' in word.getPrixList()) or (word.isVerb() == True) or (word.getVerbform() == 'Pilpel') or (word.getVerbform() == 'Piel') or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (not (word.getTenseVal() == -1)) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
+        if(word.getLen() < 3) or (word.getConstruct() == True) or (word.getModern() == True) or ('ה' in word.getPrixList()) or (word.isVerb() == True) or (word.getVerbform() == 'Pilpel') or (word.getVerbform() == 'Piel') or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (not (word.getTenseVal() == -1)) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
             return Word("","")
             
         suff1 = Word("","")
@@ -5118,7 +5123,7 @@ class HebrewDictionary(App):
         return Word("","")
         
     def dirHey(self, look, word):
-        if(word.getLen() < 2) or ('ב' in word.getPrixList()) or (word.getVerbform() == 'Piel') or ('ל' in word.getPrixList()) or ('מ' in word.getPrixList()) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getTense() == 'Participle'):
+        if(word.getLen() < 2) or ('ב' in word.getPrixList())or (word.getModern() == True) or (word.getVerbform() == 'Piel') or ('ל' in word.getPrixList()) or ('מ' in word.getPrixList()) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDaul() == True) or (word.getConstruct() == True) or (word.getTense() == 'Participle'):
             return Word("","")
             
         cPhraseHey1 = Word("","")
@@ -5460,7 +5465,7 @@ class HebrewDictionary(App):
                             self.FindHelper(look, pfimW2, self.Dict)
                             self.FindHelper(look, pfimWh, self.Dict)
                             self.algorithm(look, pfimW2) 
-                            return pfimW2
+                            #return pfimW2
                     
                 if(fimW.getLen() > 3) and (((word.getVerbform() in Piel) and (uther == False)) or (word.getVerbform() in Hiphil)):
                     isPar = True
@@ -5586,7 +5591,7 @@ class HebrewDictionary(App):
                                 pword2.unSetNoun()
                             self.FindHelper(look, pword2, self.Dict)
                             self.algorithm(look, pword2)
-                            return pword2
+                            #return pword2
                 
                 if(word2.getLen() > 3) and (((word2.getVerbform() in Piel) and (uther == False)) or (word2.getVerbform() in Hiphil)):
                     isPar = True
