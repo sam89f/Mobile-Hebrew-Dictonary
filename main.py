@@ -3768,6 +3768,8 @@ class HebrewDictionary(App):
                         if(word.getPrixListEnd() == 'ו'):
                             futurWh.setTense(0)
                             futurWh.setVavSeq()
+                            if(not(futurWh.hasRoot())) and (futurWh.getLen() > 2):
+                                futurWh.setRoot(futurWh.last3())
                         if(futurWh.hasRoot()) and (futurWh.getLen() > 2):
                             if(futurWh.getRoot()[1:] == futurWh.last3()[1:]):
                                 futurWh.setRoot(futurWh.last3())
@@ -3877,6 +3879,8 @@ class HebrewDictionary(App):
                     if(word.getPrixListEnd() == 'ו'):
                         futurWh.setTense(0)
                         futurWh.setVavSeq()
+                        if(not(futurWh.hasRoot())) and (futurWh.getLen() > 2):
+                            futurWh.setRoot(futurWh.last3())
                     fh = self.FindHelper(look, futurWh, self.Dict)
                     self.irreg(look, futurWh)
                 return futurW
