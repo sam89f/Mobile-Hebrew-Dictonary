@@ -3765,6 +3765,9 @@ class HebrewDictionary(App):
                         futurWh = Word("","")
                         futurWh.equalTo(futurW)
                         futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                        if(word.getPrixListEnd() == 'ו'):
+                            futurWh.setTense(0)
+                            futurWh.setVavSeq()
                         if(futurWh.hasRoot()) and (futurWh.getLen() > 2):
                             if(futurWh.getRoot()[1:] == futurWh.last3()[1:]):
                                 futurWh.setRoot(futurWh.last3())
