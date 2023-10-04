@@ -2905,12 +2905,12 @@ class HebrewDictionary(App):
                     else:
                         hufalW.setVerbform(rareVerbforms[word.getVerbform()])
                         
-                if(word.first() == 'ל'):
-                    self.infinitive(look, hufalW)
-                if(self.prefixRuls(word, word.first(), True) == True):
-                    return self.smPrefix(look, hufalW, True)
-                else:
-                    return hufalW
+                    if(word.first() == 'ל'):
+                        self.infinitive(look, hufalW)
+                    if(self.prefixRuls(word, word.first(), True) == True):
+                        return self.smPrefix(look, hufalW, True)
+                    else:
+                        return hufalW
 
         return Word("", "")
     
@@ -2980,12 +2980,12 @@ class HebrewDictionary(App):
                 else:
                     hitpaelW.setVerbform(rareVerbforms[word.getVerbform()])
                     
-            if(word.first() == 'ל'):
-                self.infinitive(look, hitpaelW)
-            if(self.prefixRuls(word, word.first(), True) == True):
-                return self.smPrefix(look, hitpaelW, True)
-            else:
-                return hitpaelW
+                if(word.first() == 'ל'):
+                    self.infinitive(look, hitpaelW)
+                if(self.prefixRuls(word, word.first(), True) == True):
+                    return self.smPrefix(look, hitpaelW, True)
+                else:
+                    return hitpaelW
                 
         if(word.nextToFirst() == 'ת') and (word.first() == 'מ') and (not(word.first() =='ו')) and (not(word.getRoot()[-2:] == word.first2())):
             hitpaelW = Word("","")
@@ -3093,12 +3093,12 @@ class HebrewDictionary(App):
                 else:
                     hishtaphelW.setVerbform(rareVerbforms[word.getVerbform()])
                     
-            if(word.first() == 'ל'):
-                self.infinitive(look, hishtaphelW)
-            if(self.prefixRuls(word, word.first(), True) == True):
-                return self.smPrefix(look, hishtaphelW, True)
-            else:
-                return hishtaphelW
+                if(word.first() == 'ל'):
+                    self.infinitive(look, hishtaphelW)
+                if(self.prefixRuls(word, word.first(), True) == True):
+                    return self.smPrefix(look, hishtaphelW, True)
+                else:
+                    return hishtaphelW
 
         if(word.nextToFirst() == 'ש') and (word.third() == 'ת') and (word.first() == 'מ') and (not('תש' in word.getRoot())):
             hishtaphelW = Word("","")
