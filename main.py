@@ -2168,7 +2168,7 @@ class HebrewDictionary(App):
             if not (imper.getText() == ""):
                 if alg == True:
                     self.FindHelper(look, imper, self.Dict)
-                    self.verbForms(look, imper)
+                    self.piel(look, imper)
                 
         if(word.isTense() == False):
             cohor = Word("","")
@@ -2360,6 +2360,8 @@ class HebrewDictionary(App):
                 self.FindHelper(look, nifalW, self.Dict)
                 self.algorithm(look, nifalW)
                 return nifalW
+            if(not(word.getTense() == 'Infinitive abs.')):
+                return Word("","")
         
         if(word.first() == 'נ') and (not(word.getRoot()[-2:] == word.first2())):
             nifalW = Word("","")
