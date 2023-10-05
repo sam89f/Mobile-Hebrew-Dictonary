@@ -2168,7 +2168,7 @@ class HebrewDictionary(App):
             if not (imper.getText() == ""):
                 if alg == True:
                     self.FindHelper(look, imper, self.Dict)
-                    #self.algorithm(look, imper)
+                    self.verbForms(look, imper)
                 
         if(word.isTense() == False):
             cohor = Word("","")
