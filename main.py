@@ -2339,7 +2339,7 @@ class HebrewDictionary(App):
         if(word.getLen() < 3) or (word.getIrreg() == True) or (word.isParticiple() == True) or (word.getTense() == 'Imperfect') or ((word.isVerbf() == True) and (not(word.getVerbform() in rareVerbforms))):
             return Word("","")
                   
-        if(word.getTense() == 'Infinitive') or (word.getTense() == 'Infinitive abs.') or (word.getTense() == 'Imperative') or (word.isTense() == False):
+        if(word.getTense() == 'Infinitive') or (word.getTense() == 'Infinitive abs.') or (word.getTense() == 'Imperative'):
             if(word.first() == 'ה') and (not(word.getRoot()[-2:] == word.first2())):
                 nifalW = Word("","")
                 nifalW.equalTo(word)
@@ -2359,10 +2359,7 @@ class HebrewDictionary(App):
                     
                 self.FindHelper(look, nifalW, self.Dict)
                 self.algorithm(look, nifalW)
-                
-            if(word.isTense() == True):
-                return Word("","")
-
+                return nifalW
         
         if(word.first() == 'נ') and (not(word.getRoot()[-2:] == word.first2())):
             nifalW = Word("","")
@@ -2840,7 +2837,7 @@ class HebrewDictionary(App):
         if(word.getLen() < 4) or ((word.isVerbf() == True) and (not(word.getVerbform() in rareVerbforms))):
             return Word("","")
             
-        if(word.getPartiVal() == 1):
+        if(word.getPartiVal() == 1) or ((word.getTense() == "Imperfect") or (word.getTense() == "Perfect") or (word.getTense() == "Participle")):
             return Word("","")
        
         if(word.nextToFirst() == 'ו') and (not(word.getRoot()[-2:] == word.first3()[:-1]) or (word.getRoot()[:2] == self.Final(word.first3()[:-1]))):
@@ -4311,6 +4308,12 @@ class HebrewDictionary(App):
             imperW.setTense(4)
             imperW.setPerson(3)
             imperW.setGender(0)
+            
+            if(imperW.first() == 'ה'):
+                if(imperW.getLen() < 3):
+                    return self.nifal(look, imperW)
+                self.nifal(look, imperW)
+                
             self.FindHelper(look, imperW, self.Dict)
             return imperW
             
@@ -4322,6 +4325,11 @@ class HebrewDictionary(App):
             imperW.setTense(4)
             imperW.setPerson(2)
             imperW.setGender(1)
+            if(imperW.first() == 'ה'):
+                if(imperW.getLen() < 3):
+                    return self.nifal(look, imperW)
+                self.nifal(look, imperW)
+                
             self.FindHelper(look, imperW, self.Dict)
             return imperW
         
@@ -4343,6 +4351,11 @@ class HebrewDictionary(App):
                             imperW.setRoot(imperW.last3())
                     if(not(imperW.hasRoot())):
                         imperW.setRoot(imperW.last3())
+                        
+                        if(imperW.first() == 'ה'):
+                            if(imperW.getLen() < 3):
+                                return self.nifal(look, imperW)
+                            self.nifal(look, imperW)
                             
                         self.FindHelper(look, imperW, self.Dict)
                 else:
@@ -4372,6 +4385,11 @@ class HebrewDictionary(App):
                         imperW.setTense(4)
                         imperW.setPerson(2)
                         imperW.setGender(0)
+                        if(imperW.first() == 'ה'):
+                            if(imperW.getLen() < 3):
+                                return self.nifal(look, imperW)
+                            self.nifal(look, imperW)
+                            
                         self.FindHelper(look, imperW, self.Dict)
                         return imperW
      
@@ -4596,12 +4614,20 @@ class HebrewDictionary(App):
                         infW.setRoot(infW.last3())
                     infW.setTense(6)
                     infW.setVerb()
+                    if(infW.first() == 'ה'):
+                        if(infW.getLen() < 3):
+                            return self.nifal(look, infW)
+                        self.nifal(look, infW)
                     self.FindHelper(look, infW, self.Dict)
                     self.algorithm(look, infW)
                     if(not (infWp.last() == 'ה')) and (not('ה' in infWp.getSufxList())) and (not(infWp.getHey1() > 0)):
                         singleW2 = Word("","") 
                         singleW2.equalTo(infW)
                         singleW2.setText('ה' + self.unFinal(infW.getText()))
+                        if(singleW2.first() == 'ה'):
+                            if(singleW2.getLen() < 3):
+                                return self.nifal(look, singleW2)
+                            self.nifal(look, singleW2)
                         self.FindHelper(look, singleW2, self.Dict)
                         return singleW2
                     
