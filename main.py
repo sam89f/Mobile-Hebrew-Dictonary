@@ -2587,7 +2587,7 @@ class HebrewDictionary(App):
                     if(word2.last() == 'ה') and (word2.getLen() > 4):
                         self.cohortative(look, H_hollow)
                                 
-                        self.future(look, H_hollow)
+                    self.future(look, H_hollow)
                     return H_hollow
                 
         if(word2.getLen() > 4):
