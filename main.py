@@ -5722,7 +5722,7 @@ class HebrewDictionary(App):
                         hollow3.setRoot(hollow3.first3())
                         hollow3.setPar(1)
                         self.FindHelper(look, hollow3, self.Dict)
-                        if(word.last2() == 'תו') and (word.hollow3.getPlural() == True):
+                        if(word.last2() == 'תו') and (hollow3.getPlural() == True):
                             hollow3.setText(self.unFinal(hollow3.getText()) + 'ה')
                             if(hollow3.getLen() == 3):
                                 hollow3.setRoot(hollow3.first3())
