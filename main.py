@@ -5738,7 +5738,7 @@ class HebrewDictionary(App):
                             hollow4.setRoot(hollow4.first3())
                             hollow4.setPar(0)
                             self.FindHelper(look, hollow4, self.Dict)
-                            if(word.last2() == 'תו') and (word.hollow4.getPlural() == True):
+                            if(word.last2() == 'תו') and (hollow4.getPlural() == True):
                                 hollow4.setText(self.unFinal(hollow4.getText()) + 'ה')
                                 if(hollow4.getLen() == 3):
                                     hollow4.setRoot(hollow4.first3())
