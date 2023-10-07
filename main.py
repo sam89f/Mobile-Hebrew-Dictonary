@@ -5684,7 +5684,7 @@ class HebrewDictionary(App):
                         hollow.setRoot(hollow.last3())
                     hollow.setGender(1)
                     Holl = True
-            elif(word.last() == 'ה') and (word.getLen() > 2) and (word.getPlural() == False):
+            elif((word.last() == 'ה') or (word.last() == 'ת')) and (word.getLen() > 2) and (word.getPlural() == False):
                 if(not(word.getRoot()[:2] == word.last2())):
                     hollow.setText(hollow.Final(hollow.getText()[1:])) 
                     if(hollow.getLen() > 2):
@@ -5902,8 +5902,10 @@ class HebrewDictionary(App):
                     word2.setGender(1)
                 if(word.nextToFirst() == 'ו'):
                     word2.setText(word.getText()[:-2] + 'י' + word.first())
+                if(word2.getLen() > 5) and ((word2.last() == 'ה') or (word2.last() == 'ת')):
+                    word2.setText(self.Final(word2.getText()[1:]))
                 if(word2.getLen() > 4) and ((word2.isVerbf() == False) or (word2.getVerbform() == 'Qal')):
-                    if((word2.nextToLast() == 'ו') and (word2.third() == 'ו')) and (not((word2.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת')and(word2.getPlural() == False))) and (self.num_of_a_roots(word2.getText()[:-3]) < 3):
+                    if((word2.nextToLast() == 'ו') and (word2.getX(4) == 'ו')) and (not((word2.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת')and(word2.getPlural() == False))) and (self.num_of_a_roots(word2.getText()[:-3]) < 3):
                         isPar = True
                         pword.equalTo(word2)
                         pword.setText(word2.getText()[:-3] + word2.nextToFirst())
@@ -5919,7 +5921,7 @@ class HebrewDictionary(App):
                                 pword.Ht = False
                             self.FindHelper(look, pword, self.Dict)
                             self.algorithm(look, pword)
-                    if((word2.nextToLast() == 'ו') and (word2.third() == 'ו')) and (not((word2.last2() == 'תו')and((word2.getLen() > 4)))) and (self.num_of_p_roots(word2.getText()[2:]) < 3) and (not(word2.last() == 'י')) and (not(word2.last() == 'ו')):
+                    if((word2.nextToLast() == 'ו') and (word2.getX(4) == 'ו')) and (not((word2.last2() == 'תו')and((word2.getLen() > 4)))) and (self.num_of_p_roots(word2.getText()[2:]) < 3) and (not(word2.last() == 'י')) and (not(word2.last() == 'ו')):
                         isPar = True
                         pword2 = Word("","")
                         pword2.equalTo(word2)
@@ -5957,7 +5959,7 @@ class HebrewDictionary(App):
                     isPar = True
                     pword2 = Word("","")
                     pword2.equalTo(word2)
-                    pword2.setText(word.getText()[:-1])
+                    pword2.setText(word2.getText()[:-1])
                     if(not(pword2.hasRoot() and (not(pword2.getRoot()[:2] == self.Final(pword2.first3()[:2]))))):
                         pword2.setRoot(self.Final(pword2.first3()))
                     pword2.setTense(2)
@@ -5971,12 +5973,16 @@ class HebrewDictionary(App):
                     return pword2
                     
             if(word.isVerbf() == False) or (word.getVerbform() == 'Qal') or (word.getVerbform() == 'Niphal'):
-                if(word.nextToFirst() == 'ו') and ((word.isVerbf() == False) or (word.getVerbform() == 'Qal')) and (not((word.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת')and(word.getPlural() == False))) and (self.num_of_a_roots(word.getText()[:-2]) < 3): 
+                word3 = Word("","")
+                word3.equalTo(word)
+                if(word.getLen() > 4) and ((word.last() == 'ה') or (word.last() == 'ת')):
+                    word3.setText(self.Final(word.getText()[1:]))
+                if(word3.nextToFirst() == 'ו') and ((word3.isVerbf() == False) or (word3.getVerbform() == 'Qal')) and (not((word3.last() == 'ה')and(self.CurrentWord.getText()[d:1+d] == 'ת')and(word3.getPlural() == False))) and (self.num_of_a_roots(word3.getText()[:-2]) < 3): 
                     isPar = True
-                    pword.equalTo(word)
-                    #if(word.getGenderVal() == -1):
+                    pword.equalTo(word3)
+                    #if(word3.getGenderVal() == -1):
                     pword.setGender(0)
-                    pword.setText(word.getText()[:-2] + word.first())
+                    pword.setText(word3.getText()[:-2] + word3.first())
                     if(pword.getLen() > 2):
                         if(not(pword.hasRoot() and (not((pword.getRoot()[:-1] == self.Final(pword.first3()[:-1]))or(self.unFinal(pword.getRoot()[:1] + pword.getRoot()[-1:]) == pword.first2()))))):
                             pword.setRoot(self.Final(pword.first3()))
@@ -5986,17 +5992,17 @@ class HebrewDictionary(App):
                                 pword.resetConstruct()
                             if((pword.getPlural() == True) or (pword.getDaul() == True)) and (not('ה' in pword.getPrixList())) and (self.CurrentWord.isNoun() == False):
                                 pword.unSetNoun()
-                            if word.first() == 'ת':
+                            if word3.first() == 'ת':
                                 pword.Ht = False
                             self.FindHelper(look, pword, self.Dict)
                             self.algorithm(look, pword)      
-                if((word.nextToLast() == 'ו') and (word.third() == 'ו')) and (not((word.last2() == 'תו')and((word.getLen() > 4)))) and (self.num_of_p_roots(word.getText()[2:]) < 3) and (not(word.last() == 'י')) and (not(word.last() == 'ו')):
+                if((word3.nextToLast() == 'ו') and (word3.third() == 'ו')) and (not((word3.last2() == 'תו')and((word3.getLen() > 4)))) and (self.num_of_p_roots(word3.getText()[2:]) < 3) and (not(word3.last() == 'י')) and (not(word3.last() == 'ו')):
                     isPar = True
                     pword2 = Word("","")
-                    pword2.equalTo(word)
-                    #if(word.getGenderVal() == -1):
+                    pword2.equalTo(word3)
+                    #if(word3.getGenderVal() == -1):
                     pword2.setGender(0)
-                    pword2.setText(word.last() + word.getText()[2:])
+                    pword2.setText(word3.last() + word3.getText()[2:])
                     if(pword2.getLen() > 2):
                          if(not(pword2.hasRoot() and (not((pword2.getRoot()[1:] == pword2.last3()[1:])or(pword2.getRoot()[:1] + pword2.getRoot()[-1:] == pword2.last2()))))): 
                             pword2.setRoot(pword2.last3())
