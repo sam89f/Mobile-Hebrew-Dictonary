@@ -4411,7 +4411,7 @@ class HebrewDictionary(App):
         return Word("", "")
         
     def infinitive(self, look, word):
-        if((word.getLen() < 3) or ('-' in word.getText()) or (word.getPrixListEnd() == 'מ') or (word.getVerbform() == 'Hophal') or (word.getPrixListEnd() == 'ל') or (word.getPrixListEnd() == 'כ') or ('ה' in word.getPrixList()) or (word.isTense() == True) or (word.isNoun() == True) or (word.getVerbform() == 'Niphal') or (word.getVerbform() in Pual) or (word.getVerbform() in Piel)):
+        if((word.getLen() < 3) or ('-' in word.getText()) or (word.getPrixListEnd() == 'מ') or (word.getVerbform() == 'Hophal') or (word.getPrixListEnd() == 'ל') or (word.getPrixListEnd() == 'כ') or ('ה' in word.getPrixList()) or (word.isTense() == True) or (word.isNoun() == True) or (word.getVerbform() == 'Niphal') or (word.getVerbform() in Pual)):# or (word.getVerbform() in Piel)):
             return Word("","")
         
         singleW2 = Word("","")
@@ -5912,6 +5912,7 @@ class HebrewDictionary(App):
                     word2.setText(word.getText()[:-2] + 'י' + word.first())
                 if(word2.getLen() > 5) and ((word2.last() == 'ה') or (word2.last() == 'ת')):
                     word2.setText(self.Final(word2.getText()[1:]))
+                    word2.setGender(1)
                 if(word2.getLen() > 4):# and ((word2.isVerbf() == False) or (word2.getVerbform() == 'Qal')):
                     if((word2.nextToLast() == 'ו') and (word2.getX(4) == 'ו')) and (self.num_of_p_roots(word2.getText()[2:]) < 3):
                         isPar = True
