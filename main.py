@@ -4964,7 +4964,7 @@ class HebrewDictionary(App):
                             if(plWc.last() == "ת"):
                                 plWch = Word("","")
                                 plWch.equalTo(plWc) 
-                                plWch.setText('ה' + plWc.getText()[1:])  
+                                plWch.setText('ה' + plWc.getText()[1:])
                                 plWch.setText(self.revPhWords(plWch.getText(), "-"))
                                 self.FindHelper(look, plWch, self.Dict)
                                 
@@ -5752,7 +5752,7 @@ class HebrewDictionary(App):
         Holl = False
         
         if(word.getLen() == 2):
-            if(not(word.last() == 'ה')): 
+            if((not(word.last() == 'ה')) or (not(word.last() == 'ת'))): 
                 hollow.setGender(0)
             Holl = True
         else:
@@ -6103,11 +6103,12 @@ class HebrewDictionary(App):
                 word3.equalTo(word)
                 if(word.getLen() > 4) and ((word.last() == 'ה') or (word.last() == 'ת')):
                     word3.setText(self.Final(word.getText()[1:]))
+                    word3.setGender(1)
                 if(word3.nextToFirst() == 'ו') and ((word3.isVerbf() == False) or (word3.getVerbform() == 'Qal')) and (self.num_of_a_roots(word3.getText()[:-2]) < 3): 
                     isPar = True
                     pword.equalTo(word3)
                     #if(word3.getGenderVal() == -1):
-                    pword.setGender(0)
+                    #pword.setGender(0)
                     pword.setText(word3.getText()[:-2] + word3.first())
                     if(pword.getLen() > 2):
                         if(not(pword.hasRoot() and (not((pword.getRoot()[:-1] == self.Final(pword.first3()[:-1]))or(self.unFinal(pword.getRoot()[:1] + pword.getRoot()[-1:]) == pword.first2()))))):
@@ -6128,7 +6129,7 @@ class HebrewDictionary(App):
                     pword2 = Word("","")
                     pword2.equalTo(word3)
                     #if(word3.getGenderVal() == -1):
-                    pword2.setGender(0)
+                    #pword2.setGender(0)
                     pword2.setText(word3.last() + word3.getText()[2:])
                     if(pword2.getLen() > 2):
                          if(not(pword2.hasRoot() and (not((pword2.getRoot()[1:] == pword2.last3()[1:])or(pword2.getRoot()[:1] + pword2.getRoot()[-1:] == pword2.last2()))))): 
