@@ -938,10 +938,35 @@ class Word:
         if gemontria[n] >= 100:
             return 2
 
+class Word_ref:
+    
+    def __init__(self, Index):
+        self.value = 0
+        self.text= ""
+        self.index = Index
+        
+    def getVal(self):
+        return self.value
+        
+    def getText(self):
+        return self.text
+    
+    def getIndex(self):
+        return self.index
+        
+    def setVal(self, newVal):
+        self.value = newVal
+        
+    def setText(self, newText):
+        self.text = newText
+        
+    def setIndex(self, newIndex):
+        self.index = newIndex
 
 # This is a helper class which contain the methods for searching and choosing words. 
 # It also has at least one container to store and sort certain Word objects.
 class SearchWord:
+
     def __init__(self):
         self.Words = []
     
@@ -961,12 +986,59 @@ class SearchWord:
         for i in range(len(self.getWords())):
             if w.getText() == self.getWords()[i].getText():
                 return i
+        return -1
+        
+    def indexW_Plus(self, w):
+        indexes = []
+        for i in range(len(self.getWords())):
+            if w.getText() == self.getWords()[i].getText():
+                indexes.append(i)
+        return indexes
                 
-    def findText(self, w, Dict):
+    def findText(self, w):
         for word in self.getWords():
             if (w.getText() == word.getText()):
                 return True
         return False
+        
+    def findref_Text(self, w, refW):
+        for word in refW:
+            if (w.getText() == word.getText()):
+                return True
+        return False
+        
+    def sumOfV(self, index):
+        sumV = 0
+        for i in index:
+            sumV = sumV + self.Words[i].getValue()
+        return sumV
+        
+    def getSumOfV(self, ref):
+        return ref.getVal()
+    
+    def getValPerIndex(self, iV):
+        return self.getWords()[iV].getValue()
+    
+    def group(self):
+        temp_Words = []
+        W_ref = []
+        
+        for word in self.getWords():
+            if(self.findref_Text(word, W_ref) == False):
+                index = self.indexW_Plus(word)
+                index.sort(key=self.getValPerIndex, reverse = True)
+                new_ref = Word_ref(index)
+                new_ref.setText(word.getText())
+                new_ref.setVal(self.sumOfV(index))
+                W_ref.append(new_ref)
+           
+        W_ref.sort(key=self.getSumOfV, reverse = True)
+        
+        for ref in W_ref:
+            for i in ref.getIndex():
+                temp_Words.append(self.Words[i])
+        
+        self.Words = temp_Words
                 
     def find(self, w, Dict):
         if w in self.getWords():
@@ -1694,17 +1766,25 @@ class HebrewDictionary(App):
                 look.find(word, self.Dict)
                 if not(word.getText() == "הוהי"): #see if current word is The Tetragramaton, this time without the single quotes
                     self.algorithm(look, word)
-        
+        look.group()
         WList = look.getWords() #store all the words found in the 'WList' variable
-        WList.sort(key=look.getValue, reverse = True) #store words according to closeness to the word as it appears in the input field
+        #WList.sort(key=look.getValue, reverse = True) #store words according to closeness to the word as it appears in the input field
                                                       #based on a formula in the algorithm for calculating the value, which is built in the 'Word' class
         # This block of code is responsible for formatting and displaying the results.                                               
         if(len(look.getWords()) > 0):
-            for wi in WList:  
+            prevW = Word("", "")
+            start = True
+            for wi in WList:
                 w = Word("", "")
                 w.equalTo(wi)
                 w.setText(self.revPhWords(wi.getText(), '-'))
                 val = ""
+                
+                if((not(prevW.getText() == w.getText())) and (start == False)):
+                    self.wText += '\n'
+                prevW.equalTo(w)
+                
+                start = False
                 if w.isVerb() == True:
                     if((w.getPrixListEnd() == 'מ') or (w.getPrixListEnd() == 'ל')) and (w.isTense() == False):
                         w.unSetVerb()
@@ -1990,7 +2070,7 @@ class HebrewDictionary(App):
                 
     def FindHelper(self, look, w, Dict):
 
-        if((w.getText() == self.CurrentWord.getText()) and (look.findText(w, Dict) == True)):
+        if((w.getText() == self.CurrentWord.getText()) and (look.findText(w) == True)):
             return False
                 
         if((w.getLen() < 3) and ((w.getTense() == 'Participle')or(w.getVerbform() in Hiphil)or(w.getVerbform() in Pual)or((w.getVerbform() in Piel)and(not(w.getVerbform() == 'Pilpel'))))):
