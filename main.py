@@ -823,6 +823,11 @@ class Word:
     def addSuff(self, suff):
         self.sufW.append(suff)
         
+    def remSuff(self):
+        self.sufW.pop(0)
+        self.suffix1 = 0
+        self.value = 0
+        
     def setMdrn(self, modr):
         self.mdrnW = modr
         
@@ -1718,6 +1723,8 @@ class HebrewDictionary(App):
                     rightW = Word("", "")
                     rightW.equalTo(nounW)
                     rightW.setValue(INF*INF)
+                    
+                    
                     look.find(rightW, self.Dict)
                     self.algorithm(look, nounW)
         # if the current word is not the last word, and not The Tetragramaton, and not a noun,
@@ -2375,6 +2382,8 @@ class HebrewDictionary(App):
                 tempWf3 = Word("","")
                 tempWf3.equalTo(tempWf)
                 tempWf3.setText('ה' + self.unFinal(tempWf.getText()))
+                if('ה' in tempWf3.getSufxList()):
+                    tempWf3.remSuff();
                 if(tempWf3.getLen() > 2):
                     if(not(tempWf3.hasRoot() and (not(tempWf3.getRoot()[1:] == tempWf3.last3()[1:])))):
                         tempWf3.setRoot(tempWf3.last3())
@@ -2411,6 +2420,8 @@ class HebrewDictionary(App):
                         tempWf2.setRoot(tempWf2.last3())
                 tempWf3 = Word("","")
                 tempWf3.equalTo(tempWf)
+                if('ה' in tempWf3.getSufxList()):
+                    tempWf3.remSuff();
                 tempWf3.setText('ה' + self.unFinal(tempWf.getText()))
                 if(tempWf3.getLen() > 2):
                     if(not(tempWf3.hasRoot() and (not(tempWf3.getRoot()[1:] == tempWf3.last3()[1:])))):
@@ -3059,6 +3070,8 @@ class HebrewDictionary(App):
                     hitpaelWh = Word("","")
                     hitpaelWh.equalTo(hitpaelW)
                     hitpaelWh.setText('ה' + self.unFinal(hitpaelW.getText()))
+                    if('ה' in hitpaelWh.getSufxList()):
+                        hitpaelWh.remSuff();
                     self.FindHelper(look, hitpaelWh, self.Dict)
                 return hitpaelW
          
@@ -3112,6 +3125,8 @@ class HebrewDictionary(App):
                     nithpaelWh = Word("","")
                     nithpaelWh.equalTo(nithpaelW)
                     nithpaelWh.setText('ה' + self.unFinal(nithpaelW.getText()))
+                    if('ה' in nithpaelWh.getSufxList()):
+                        nithpaelWh.remSuff();
                     self.FindHelper(look, nithpaelWh, self.Dict)
             
         if((word.first2() == 'תי') or (word.first2() == 'תת' ) or (word.first2() == 'תא') or (word.first2() == 'תנ')) and (not(word.Ht == False)) and (not(word.getRoot()[-2:] == word.first2())):
@@ -3296,6 +3311,8 @@ class HebrewDictionary(App):
                     perfWh = Word("","")
                     perfWh.equalTo(perfW)
                     perfWh.setText('ה' + self.unFinal(perfW.getText()))
+                    if('ה' in perfWh.getSufxList()):
+                        perfWh.remSuff();
                     if(perfWh.hasRoot()) and (perfWh.getLen() > 2):
                         if(perfWh.getRoot()[1:] == perfWh.last3()[1:]):
                             perfWh.setRoot(perfWh.last3())
@@ -6388,6 +6405,8 @@ class HebrewDictionary(App):
                 irreghW = Word("","")
                 irreghW.equalTo(word)
                 irreghW.setText('ה' + self.unFinal(word.getText()))
+                if('ה' in irreghW.getSufxList()):
+                    irreghW.remSuff();
                 irreghW.setIrreg()
                 if(irreghW.getLen() > 2) and (self.CurrentWord.getLen() > 2):
                     if(not(irreghW.last3() == self.CurrentWord.last3())):
@@ -6461,6 +6480,8 @@ class HebrewDictionary(App):
 
                 if(not('ן' in word.getSufxList())):
                     irregWNN.setText('ן' + self.unFinal(irregW.getText()))
+                    if('ן' in irregWNN.getSufxList()):
+                        irregWNN.remSuff();
                 irregWNN.setIrreg()
                 self.FindHelper(look, irregWNN, self.Dict)
             if(not(word.last() == 'ה')) and ((word.isVavSeq() == True) or (word.getSuffix() == True)or(word.getHey1() > 0)) and (not(('ה' in word.getSufxList()) or (word.getHey1() > 0))) and (not((word.isVavSeq() == True)and(word.getTense() == 'Imperfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))) and (not((word.isVavSeq() == False)and(word.getTense() == 'Perfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))):   
@@ -6478,6 +6499,8 @@ class HebrewDictionary(App):
                 irregWNN = Word("","")
                 irregWNN.equalTo(irregW)
                 irregWNN.setText('ן' + self.unFinal(irregW.getText()))
+                if('ן' in irregWNN.getSufxList()):
+                    irregWNN.remSuff();
                 irregWNN.setIrreg()
                 self.FindHelper(look, irregWNN, self.Dict)
             if word.getLen() == 1:
