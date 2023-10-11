@@ -5860,6 +5860,7 @@ class HebrewDictionary(App):
         if(word.last() == 'ת') and (not(word.third() == 'ו')) and (not(word.getConstruct() == True)) and (not(word.getRoot()[:2] == word.last2())) and (word.getLen() > 4):
             fimW = Word("","")
             fimW.equalTo(word)
+            yod = False
             fimW.setText(self.Final(word.getText()[1:]))
             #if(word.getGenderVal() == -1):
             fimW.setGender(1)
@@ -5867,7 +5868,21 @@ class HebrewDictionary(App):
             
             if(fimW.first() == 'מ') and (not(fimW.getRoot()[-2:] == fimW.first2())):
                 if(fimW.nextToFirst() == 'ו'):
-                    fimW.setText(fimW.getText()[:-2] + 'י' + fimW.first())  
+                    fimW.setText(fimW.getText()[:-2] + 'י' + fimW.first())
+                    yod = True
+                    if(fimW.getLen() < 5):
+                        pYad = Word("","")
+                        pYad.equalTo(fimW)
+                        pYad.setText(fimW.getText()[:-1])
+                        if(pYad.getLen() > 2):
+                            if(not(pYad.hasRoot() and ((pYad.getRoot()[1:] == pYad.first2())))):
+                                pYad.setRoot(self.Final(pYad.first3()))
+                            pYad.setTense(2)
+                            if((pYad.getVerbform() == 'Hophal') or (pYad.getVerbform() in Pual) or (pYad.getVerbform() in Hithpeal)):
+                                pYad.setPar(0)
+                            else:
+                                pYad.setPar(1)
+                            self.FindHelper(look, pYad, self.Dict)
                 if(fimW.getLen() > 4):# and ((fimW.isVerbf() == False) or (fimW.getVerbform() == 'Qal')):
                     if(fimW.third() == 'ו') and (self.num_of_a_roots(fimW.getText()[:-3]) < 3):
                         pfimW.equalTo(fimW)
@@ -5914,7 +5929,7 @@ class HebrewDictionary(App):
                                 #self.algorithm(look, pfimW2) 
                                     #return pfimW2
                     
-                if(fimW.getLen() > 3) and (((word.getVerbform() in Piel) and (uther == False)) or (word.getVerbform() in Hiphil)):
+                if(fimW.getLen() > 3) and (((word.getVerbform() in Piel) and (uther == False)) or (word.getVerbform() in Hiphil)) or (yod == True):
                     isPar = True
                     pfimW2 = Word("","")
                     pfimW2.equalTo(fimW)
@@ -6004,24 +6019,24 @@ class HebrewDictionary(App):
             if(word.first() == 'מ') and (not(word.getRoot()[-2:] == word.first2())):
                 word2 = Word("","")
                 word2.equalTo(word)
-                if(word.nextToFirst() == 'ו'):
-                    word2.setText(word.getText()[:-2] + 'י' + word.first())
                 if(word2.getLen() > 5) and ((word2.last() == 'ה') or (word2.last() == 'ת')):
                     word2.setText(self.Final(word2.getText()[1:]))
                     word2.setGender(1)
-                if(word2.getLen() < 5):
-                    pYad = Word("","")
-                    pYad.equalTo(word2)
-                    pYad.setText(word2.getText()[:-1])
-                    if(pYad.getLen() > 2):
-                        if(not(pYad.hasRoot() and (not((pYad.getRoot()[1:] == pYad.first2()))))):
-                            pYad.setRoot(self.Final(pYad.first3()))
-                        pYad.setTense(2)
-                        if((pYad.getVerbform() == 'Hophal') or (pYad.getVerbform() in Pual) or (pYad.getVerbform() in Hithpeal)):
-                            pYad.setPar(0)
-                        else:
-                            pYad.setPar(1)
-                        self.FindHelper(look, pYad, self.Dict)
+                if(word2.nextToFirst() == 'ו'):
+                    word2.setText(word2.getText()[:-2] + 'י' + word2.first())
+                    if(word2.getLen() < 5):
+                        pYad = Word("","")
+                        pYad.equalTo(word2)
+                        pYad.setText(word2.getText()[:-1])
+                        if(pYad.getLen() > 2):
+                            if(not(pYad.hasRoot() and ((pYad.getRoot()[1:] == pYad.first2())))):
+                                pYad.setRoot(self.Final(pYad.first3()))
+                            pYad.setTense(2)
+                            if((pYad.getVerbform() == 'Hophal') or (pYad.getVerbform() in Pual) or (pYad.getVerbform() in Hithpeal)):
+                                pYad.setPar(0)
+                            else:
+                                pYad.setPar(1)
+                            self.FindHelper(look, pYad, self.Dict)
                 if(word2.getLen() > 4):# and ((word2.isVerbf() == False) or (word2.getVerbform() == 'Qal')):
                     if((word2.nextToLast() == 'ו') and (word2.getX(4) == 'ו')) and (self.num_of_p_roots(word2.getText()[2:]) < 3):
                         isPar = True
