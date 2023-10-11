@@ -1011,7 +1011,7 @@ class SearchWord:
         sumV = 0
         for i in index:
             sumV = sumV + self.Words[i].getValue()
-        return sumV
+        return sumV/len(index)
         
     def getSumOfV(self, ref):
         return ref.getVal()
