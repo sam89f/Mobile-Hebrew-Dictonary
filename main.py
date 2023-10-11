@@ -1715,7 +1715,10 @@ class HebrewDictionary(App):
                     nounW = Word("", "")
                     nounW.equalTo(word)
                     nounW.setNoun()
-                    look.find(nounW, self.Dict)
+                    rightW = Word("", "")
+                    rightW.equalTo(nounW)
+                    rightW.setValue(INF*INF)
+                    look.find(rightW, self.Dict)
                     self.algorithm(look, nounW)
         # if the current word is not the last word, and not The Tetragramaton, and not a noun,
         # and the next word is in the list variable 'obj', or is 'תא', there is a good chance
@@ -1729,7 +1732,10 @@ class HebrewDictionary(App):
                 verbW = Word("", "")
                 verbW.equalTo(word)
                 verbW.setVerb()
-                look.find(verbW, self.Dict)
+                rightW = Word("", "")
+                rightW.equalTo(verbW)
+                rightW.setValue(INF*INF)
+                look.find(rightW, self.Dict)
                 self.algorithm(look, verbW)
                         
         self.wText += '\t\t'*n + ':' + (self.revPhWords(text[i], '-')) + '   ' + number + Year + '\n'
@@ -1741,7 +1747,10 @@ class HebrewDictionary(App):
             look.find(word, self.Dict)
         else: #If the current word is not The Tetragramaton, then the current word may or may not be set to a noun or a verb
               #based on the resalts from the context recognition part of the code
-            look.find(word, self.Dict) #search for the word as it appears in the text input field
+            rightW = Word("", "")
+            rightW.equalTo(word)
+            rightW.setValue(INF*INF)
+            look.find(rightW, self.Dict) #search for the word as it appears in the text input field
             self.algorithm(look, word) #determines the possible forms of the current word, and searches
             #for the words that the current word may have be been derived from
 
@@ -1753,7 +1762,10 @@ class HebrewDictionary(App):
             if(not (word.getText() == sText)): #if there are quotation marks in the current word put stripped version in the algorithm
                 word.setText(sText)            #stored in the 'sText' variable.
                 self.CurrentWord.setText(sText)
-                look.find(word, self.Dict)
+                rightW = Word("", "")
+                rightW.equalTo(word)
+                rightW.setValue(INF*INF)
+                look.find(rightW, self.Dict)
                 if not(word.getText() == "הוהי"): #see if current word is The Tetragramaton, this time without the quotation marks
                     self.algorithm(look, word)
         
@@ -1763,7 +1775,10 @@ class HebrewDictionary(App):
             if(not (word.getText() == sText2)): #if there are single quotes in the current word put stripped version in the algorithm
                 word.setText(sText2)            #stored in the 'sText2' variable.
                 self.CurrentWord.setText(sText2)
-                look.find(word, self.Dict)
+                rightW = Word("", "")
+                rightW.equalTo(word)
+                rightW.setValue(INF*INF)
+                look.find(rightW, self.Dict)
                 if not(word.getText() == "הוהי"): #see if current word is The Tetragramaton, this time without the single quotes
                     self.algorithm(look, word)
         look.group()
@@ -5896,7 +5911,7 @@ class HebrewDictionary(App):
                                 pfimWh.setText('ה' + self.unFinal(pfimW2.getText()))
                                 self.FindHelper(look, pfimW2, self.Dict)
                                 self.FindHelper(look, pfimWh, self.Dict)
-                                self.algorithm(look, pfimW2) 
+                                #self.algorithm(look, pfimW2) 
                                     #return pfimW2
                     
                 if(fimW.getLen() > 3) and (((word.getVerbform() in Piel) and (uther == False)) or (word.getVerbform() in Hiphil)):
@@ -5974,7 +5989,7 @@ class HebrewDictionary(App):
                             pfimWh.setText('ה' + self.unFinal(pfimW2.getText()))
                             self.FindHelper(look, pfimW2, self.Dict)
                             self.FindHelper(look, pfimWh, self.Dict)
-                            self.algorithm(look, pfimW2)
+                           #self.algorithm(look, pfimW2)
                             return pfimW2
                 
             if isPar == True:
@@ -6106,7 +6121,8 @@ class HebrewDictionary(App):
                             if word3.first() == 'ת':
                                 pword.Ht = False
                             self.FindHelper(look, pword, self.Dict)
-                            self.algorithm(look, pword)      
+                            if(not(word3.getVerbform() == 'Qal')):
+                                self.algorithm(look, pword)      
                 if((word3.nextToLast() == 'ו') and (word3.third() == 'ו')):# and ((word3.getLen() > 4)) and (self.num_of_p_roots(word3.getText()[2:]) < 3) and (not(word3.last() == 'י')) and (not(word3.last() == 'ו')):
                     isPar = True
                     pword2 = Word("","")
@@ -6124,7 +6140,7 @@ class HebrewDictionary(App):
                             if((pword2.getPlural() == True) or (pword2.getDaul() == True)) and (not('ה' in pword2.getPrixList())) and (self.CurrentWord.isNoun() == False):
                                 pword2.unSetNoun()
                             self.FindHelper(look, pword2, self.Dict)
-                            self.algorithm(look, pword2)
+                            #self.algorithm(look, pword2)
                             return pword2
             if isPar == True:
                 return pword
