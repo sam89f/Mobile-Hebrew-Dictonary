@@ -2409,7 +2409,7 @@ class HebrewDictionary(App):
                 if(tempWf.getLen() > 2):
                     if(not(tempWf.hasRoot() and (not(tempWf.getRoot()[1:] == tempWf.last3()[1:])))):
                         tempWf.setRoot(tempWf.last3())
-                        self.verbForms(look, tempWf)
+                    self.verbForms(look, tempWf)
              
             if(not(word.getRoot()[:2] == word.last2())): 
                 tempWf2 = Word("","")
@@ -2420,9 +2420,9 @@ class HebrewDictionary(App):
                         tempWf2.setRoot(tempWf2.last3())
                 tempWf3 = Word("","")
                 tempWf3.equalTo(tempWf)
+                tempWf3.setText('ה' + self.unFinal(tempWf.getText()))
                 if('ה' in tempWf3.getSufxList()):
                     tempWf3.remSuff();
-                tempWf3.setText('ה' + self.unFinal(tempWf.getText()))
                 if(tempWf3.getLen() > 2):
                     if(not(tempWf3.hasRoot() and (not(tempWf3.getRoot()[1:] == tempWf3.last3()[1:])))):
                         tempWf3.setRoot(tempWf3.last3())
@@ -3073,6 +3073,7 @@ class HebrewDictionary(App):
                     if('ה' in hitpaelWh.getSufxList()):
                         hitpaelWh.remSuff();
                     self.FindHelper(look, hitpaelWh, self.Dict)
+                    self.FindHelper(look, hitpaelW, self.Dict)
                 return hitpaelW
          
         if(word.third() == 'ת') and (word.second() == 'ה'):
@@ -6441,10 +6442,16 @@ class HebrewDictionary(App):
                 self.irreg(look, irregipW3)
         
         if(word.getLen() > 1):
-            if(not(word.nextToFirst() == 'נ')) and ((word.first() == 'ה') or (word.first() == 'י')) and (not (word.getVerbform() == 'Niphal')) and (not((word.getVerbform() in Pual) or (word.getVerbform() in Piel) or (word.getPartiVal() == 1))) and (not(word.getRoot()[-2:] == word.first2())):
+            if(not(word.nextToFirst() == 'נ'))  and ((word.first() == 'ה') or (word.first() == 'י')) and (not (word.getVerbform() == 'Niphal')) and (not((word.getVerbform() in Pual) or (word.getVerbform() in Piel) or (word.getPartiVal() == 1))) and (not(word.getRoot()[-2:] == word.first2())):
                 irregW5 = Word("","")
                 irregW5.equalTo(word)
                 irregW5.setText(word.getText()[:-1] + 'נ')
+                if(word.first() == 'ה'):
+                    if(self.prefixRuls(word, word.first(), False) == False):
+                        return Word("", "")
+                    irregW5.addPre(word.first())
+                    irregW5.setPrefix()
+                    irregW5.setPrefixN(irregW5.heyVal)
                 irregW5.setIrreg()
                 self.FindHelper(look, irregW5, self.Dict)
                 self.irreg(look, irregW5)
