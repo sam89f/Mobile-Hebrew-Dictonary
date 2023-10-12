@@ -3328,10 +3328,10 @@ class HebrewDictionary(App):
                             #if(newRT == True):
                             if(not((perfVh.hasRoot()) and (perfVh.getRoot()[1:] == perfVh.last2()))):
                                 perfVh.setRoot(self.Final(perfVh.last3()))
-                                self.FindHelper(look, perfVh, self.Dict)
-                                self.algorithm(look, perfVh)
-                                if(perfVh.getLen() == 2):
-                                    hollow.equalTo(perfVh)
+                        self.FindHelper(look, perfVh, self.Dict)
+                        self.algorithm(look, perfVh)
+                        if(perfVh.getLen() == 2):
+                            hollow.equalTo(perfVh)
                                     
                 if(perfW.getLen() == 2):
                     hollow.setText(hollow.last() + 'ו' + hollow.first())
@@ -3399,13 +3399,12 @@ class HebrewDictionary(App):
                         perfVh.equalTo(perfW)
                         perfVh.setText(self.Final(perfW.getText()[1:]))
                         if(perfVh.getLen() > 2):
-                            #if(newRT == True):
                             if(not((perfVh.hasRoot()) and (perfVh.getRoot()[1:] == perfVh.last2()))):
                                 perfVh.setRoot(self.Final(perfVh.last3()))
-                                self.FindHelper(look, perfVh, self.Dict)
-                                self.algorithm(look, perfVh)
-                                if(perfVh.getLen() == 2):
-                                    hollow.equalTo(perfVh)
+                        self.FindHelper(look, perfVh, self.Dict)
+                        self.algorithm(look, perfVh)
+                        if(perfVh.getLen() == 2):
+                            hollow.equalTo(perfVh)
 
                 if(perfW.getLen() == 2):
                     hollow.setText(hollow.last() + 'ו' + hollow.first())
@@ -3498,8 +3497,8 @@ class HebrewDictionary(App):
                 newRT = False
                 if(perfW.getLen() > 2):
                    if(not(perfW.hasRoot())):
-                        perfW.setRoot(self.Final(perfW.last3()))
-                        newRT = True
+                       perfW.setRoot(self.Final(perfW.last3()))
+                       newRT = True
                 
                 if(word.getPrixListEnd() == 'ו'):
                     perfW.setTense(1)
@@ -3515,11 +3514,10 @@ class HebrewDictionary(App):
                     perfIh.equalTo(perfW)
                     perfIh.setText('ה' + perfW.getText()[1:])
                     if(perfIh.getLen() > 2):
-                        if(newRT == True):
+                        if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))) and (newRT == True):
                             perfIh.setRoot(self.Final(perfIh.last3()))
-                    if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
-                        self.FindHelper(look, perfIh, self.Dict)
-                        self.algorithm(look, perfIh)
+                            self.FindHelper(look, perfIh, self.Dict)
+                            self.algorithm(look, perfIh)
                 
                 hollow = Word("","")
                 hollow.equalTo(perfW)
@@ -3529,13 +3527,12 @@ class HebrewDictionary(App):
                         perfVh.equalTo(perfW)
                         perfVh.setText(self.Final(perfW.getText()[1:]))
                         if(perfVh.getLen() > 2):
-                            #if(newRT == True):
                             if(not((perfVh.hasRoot()) and (perfVh.getRoot()[1:] == perfVh.last2()))):
                                 perfVh.setRoot(self.Final(perfVh.last3()))
-                                self.FindHelper(look, perfVh, self.Dict)
-                                self.algorithm(look, perfVh)
-                                if(perfVh.getLen() == 2):
-                                    hollow.equalTo(perfVh)
+                        self.FindHelper(look, perfVh, self.Dict)
+                        self.algorithm(look, perfVh)
+                        if(perfVh.getLen() == 2):
+                            hollow.equalTo(perfVh)
                 
                 if(perfW.getLen() == 2):
                     hollow.setText(hollow.last() + 'ו' + hollow.first())
@@ -3587,11 +3584,10 @@ class HebrewDictionary(App):
                     perfIh.equalTo(perfW)
                     perfIh.setText('ה' + perfW.getText()[1:])
                     if(perfIh.getLen() > 2):
-                        if(newRT == True):
+                        if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))) and (newRT == True):
                             perfIh.setRoot(self.Final(perfIh.last3()))
-                    if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
-                        self.FindHelper(look, perfIh, self.Dict)
-                        self.algorithm(look, perfIh)
+                            self.FindHelper(look, perfIh, self.Dict)
+                            self.algorithm(look, perfIh)
                         
                 hollow = Word("","")
                 hollow.equalTo(perfW)
@@ -3601,13 +3597,12 @@ class HebrewDictionary(App):
                         perfVh.equalTo(perfW)
                         perfVh.setText(self.Final(perfW.getText()[1:]))
                         if(perfVh.getLen() > 2):
-                            #if(newRT == True):
                             if(not((perfVh.hasRoot()) and (perfVh.getRoot()[1:] == perfVh.last2()))):
                                 perfVh.setRoot(self.Final(perfVh.last3()))
-                                self.FindHelper(look, perfVh, self.Dict)
-                                self.algorithm(look, perfVh)
-                                if(perfVh.getLen() == 2):
-                                    hollow.equalTo(perfVh)
+                        self.FindHelper(look, perfVh, self.Dict)
+                        self.algorithm(look, perfVh)
+                        if(perfVh.getLen() == 2):
+                            hollow.equalTo(perfVh)
                 
                 if(perfW.getLen() == 2):
                     hollow.setText(hollow.last() + 'ו' + hollow.first())
@@ -3659,11 +3654,10 @@ class HebrewDictionary(App):
                 perfIh.equalTo(perfW)
                 perfIh.setText('ה' + perfW.getText()[1:])
                 if(perfIh.getLen() > 2):
-                    if(newRT == True):
+                    if(newRT == True) and (not(word.getRoot()[:2] == word.last2())):
                         perfIh.setRoot(self.Final(perfIh.last3()))
-                if(not(word.getRoot()[:2] == word.last2())):
-                    self.FindHelper(look, perfIh, self.Dict)
-                    self.algorithm(look, perfIh)
+                        self.FindHelper(look, perfIh, self.Dict)
+                        self.algorithm(look, perfIh)
             
             if(perfW.getLen() == 2):
                 hollow = Word("","")
@@ -3717,11 +3711,10 @@ class HebrewDictionary(App):
                 perfIh.equalTo(perfW)
                 perfIh.setText('ה' + perfW.getText()[1:])
                 if(perfIh.getLen() > 2):
-                    if(newRT == True):
+                    if(newRT == True) and (not(word.getRoot()[:2] == word.last2())):
                         perfIh.setRoot(self.Final(perfIh.last3()))
-                if(not(word.getRoot()[:2] == word.last2())):
-                    self.FindHelper(look, perfIh, self.Dict)
-                    self.algorithm(look, perfIh)
+                        self.FindHelper(look, perfIh, self.Dict)
+                        self.algorithm(look, perfIh)
                 
             hollow = Word("","")
             hollow.equalTo(perfW)
@@ -3731,13 +3724,12 @@ class HebrewDictionary(App):
                     perfVh.equalTo(perfW)
                     perfVh.setText(self.Final(perfW.getText()[1:]))
                     if(perfVh.getLen() > 2):
-                        #if(newRT == True):
-                            if(not((perfVh.hasRoot()) and (perfVh.getRoot()[1:] == perfVh.last2()))):
-                                perfVh.setRoot(self.Final(perfVh.last3()))
-                                self.FindHelper(look, perfVh, self.Dict)
-                                self.algorithm(look, perfVh)
-                                if(perfVh.getLen() == 2):
-                                    hollow.equalTo(perfVh)
+                        if(not((perfVh.hasRoot()) and (perfVh.getRoot()[1:] == perfVh.last2()))):
+                            perfVh.setRoot(self.Final(perfVh.last3()))
+                    self.FindHelper(look, perfVh, self.Dict)
+                    self.algorithm(look, perfVh)
+                    if(perfVh.getLen() == 2):
+                        hollow.equalTo(perfVh)
             
             if(perfW.getLen() == 2):
                 hollow.setText(hollow.last() + 'ו' + hollow.first())
@@ -3805,13 +3797,12 @@ class HebrewDictionary(App):
                     perfVh.equalTo(perfW)
                     perfVh.setText(self.Final(perfW.getText()[1:]))
                     if(perfVh.getLen() > 2):
-                        #if(newRT == True):
-                            if(not((perfVh.hasRoot()) and (perfVh.getRoot()[1:] == perfVh.last2()))):
-                                perfVh.setRoot(self.Final(perfVh.last3()))
-                                self.FindHelper(look, perfVh, self.Dict)
-                                self.algorithm(look, perfVh)
-                                if(perfVh.getLen() == 2):
-                                    hollow.equalTo(perfVh)
+                        if(not((perfVh.hasRoot()) and (perfVh.getRoot()[1:] == perfVh.last2()))):
+                            perfVh.setRoot(self.Final(perfVh.last3()))
+                    self.FindHelper(look, perfVh, self.Dict)
+                    self.algorithm(look, perfVh)
+                    if(perfVh.getLen() == 2):
+                        hollow.equalTo(perfVh)
             
             if(perfW.getLen() == 2):
                 hollow.setText(hollow.last() + 'ו' + hollow.first())
@@ -3884,7 +3875,6 @@ class HebrewDictionary(App):
                             if(futurW.getLen() > 2):
                                 if(not(futurW.hasRoot() and (not((futurW.getRoot()[1:] == futurW.last3()[1:])or(futurW.getRoot()[:1] + futurW.getRoot()[-1:] == futurW.last2()))))):
                                     futurW.setRoot(futurW.last3())
-                        
                    
                     hollow = Word("","")
                     hollow.equalTo(futurW)
@@ -4108,11 +4098,11 @@ class HebrewDictionary(App):
                         hollow.addToValue(-1)
                         hollow.setRoot(hollow.getText())
                         self.FindHelper(look, hollow, self.Dict)
-                    if(not(futurW.hasRoot()))and(futurW.getLen() > 2):
+                    if(not(word.getRoot()[:2] == word.last2()))and(futurW.getLen() > 2):
                         futurW.setRoot(futurW.last3())
                         
-                        f = self.FindHelper(look, futurW, self.Dict)
-                        self.algorithm(look, futurW)
+                    f = self.FindHelper(look, futurW, self.Dict)
+                    self.algorithm(look, futurW)
                     fh = False
                     if(not ('ה' in word.getSufxList())):
                         futurWh = Word("","")
@@ -4156,22 +4146,22 @@ class HebrewDictionary(App):
                     hollow.addToValue(-1)
                     hollow.setRoot(hollow.getText())
                     self.FindHelper(look, hollow, self.Dict)
+                if(not(word.getRoot()[:2] == word.last2()))and(futurW.getLen() > 2):
+                    futurW.setRoot(futurW.last3())
                 
-                if(futurW.getLen() > 1):
-                    if(not(word.getRoot()[:2] == word.last2())):
-                        f = self.FindHelper(look, futurW, self.Dict)
-                        self.algorithm(look, futurW)
-                        fh = False
-                    if(not ('ה' in word.getSufxList())):
-                        futurWh = Word("","")
-                        futurWh.equalTo(futurW)
-                        futurWh.setText('ה' + self.unFinal(futurW.getText()))
-                        futurWh.addToValue(2)
-                        if(futurWh.hasRoot()) and (futurWh.getLen() > 2):
-                            if(futurWh.getRoot()[1:] == futurWh.last3()[1:]):
-                                futurWh.setRoot(futurWh.last3())
-                        fh = self.FindHelper(look, futurWh, self.Dict)
-                        self.irreg(look, futurWh)
+                f = self.FindHelper(look, futurW, self.Dict)
+                self.algorithm(look, futurW)
+                fh = False
+                if(not ('ה' in word.getSufxList())):
+                    futurWh = Word("","")
+                    futurWh.equalTo(futurW)
+                    futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                    futurWh.addToValue(2)
+                    if(futurWh.hasRoot()) and (futurWh.getLen() > 2):
+                        if(futurWh.getRoot()[1:] == futurWh.last3()[1:]):
+                            futurWh.setRoot(futurWh.last3())
+                    fh = self.FindHelper(look, futurWh, self.Dict)
+                    self.irreg(look, futurWh)
                 elif 'ו' in word.getPrixList():
                     self.irreg(look, futurW)
                     
@@ -4202,27 +4192,27 @@ class HebrewDictionary(App):
                     hollow.addToValue(-1)
                     hollow.setRoot(hollow.getText())
                     self.FindHelper(look, hollow, self.Dict)
+                if(not(word.getRoot()[:2] == word.last2()))and(futurW.getLen() > 2):
+                    futurW.setRoot(futurW.last3())
                 
-                if(futurW.getLen() > 1):
-                    if(not(word.getRoot()[:2] == word.last2())):
-                        f = self.FindHelper(look, futurW, self.Dict)
-                        self.algorithm(look, futurW)
-                        fh = False
-                    if(not ('ה' in word.getSufxList())):
-                        futurWh = Word("","")
-                        futurWh.equalTo(futurW)
-                        futurWh.setText('ה' + self.unFinal(futurW.getText()))
-                        futurWh.addToValue(2)
-                        if(word.getPrixListEnd() == 'ו'):
-                            futurWh.setTense(0)
-                            futurWh.setVavSeq()
-                            if(not(futurWh.hasRoot())) and (futurWh.getLen() > 2):
-                                futurWh.setRoot(futurWh.last3())
-                        if(futurWh.hasRoot()) and (futurWh.getLen() > 2):
-                            if(futurWh.getRoot()[1:] == futurWh.last3()[1:]):
-                                futurWh.setRoot(futurWh.last3())
-                        fh = self.FindHelper(look, futurWh, self.Dict)
-                        self.irreg(look, futurWh)
+                f = self.FindHelper(look, futurW, self.Dict)
+                self.algorithm(look, futurW)
+                fh = False
+                if(not ('ה' in word.getSufxList())):
+                    futurWh = Word("","")
+                    futurWh.equalTo(futurW)
+                    futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                    futurWh.addToValue(2)
+                    if(word.getPrixListEnd() == 'ו'):
+                        futurWh.setTense(0)
+                        futurWh.setVavSeq()
+                        if(not(futurWh.hasRoot())) and (futurWh.getLen() > 2):
+                            futurWh.setRoot(futurWh.last3())
+                    if(futurWh.hasRoot()) and (futurWh.getLen() > 2):
+                        if(futurWh.getRoot()[1:] == futurWh.last3()[1:]):
+                            futurWh.setRoot(futurWh.last3())
+                    fh = self.FindHelper(look, futurWh, self.Dict)
+                    self.irreg(look, futurWh)
                     
                 elif 'ו' in word.getPrixList():
                     self.irreg(look, futurW)
@@ -4264,7 +4254,7 @@ class HebrewDictionary(App):
                     hollow.setRoot(hollow.getText())
                     self.FindHelper(look, hollow, self.Dict)
                 if(not(futurW.hasRoot()))and(futurW.getLen() > 2)and(word.getSuffix() == True):
-                        futurW.setRoot(futurW.last3())
+                    futurW.setRoot(futurW.last3())
                     
                 f = self.FindHelper(look, futurW, self.Dict)
                 self.algorithm(look, futurW)
@@ -4321,7 +4311,7 @@ class HebrewDictionary(App):
                     hollow.setRoot(hollow.getText())
                     self.FindHelper(look, hollow, self.Dict)
                 if(not(futurW.hasRoot()))and(futurW.getLen() > 2)and(word.getSuffix() == True):
-                        futurW.setRoot(futurW.last3())
+                    futurW.setRoot(futurW.last3())
                     
                 f = self.FindHelper(look, futurW, self.Dict)
                 self.algorithm(look, futurW)
@@ -4383,7 +4373,7 @@ class HebrewDictionary(App):
                     hollow.setRoot(hollow.getText())
                     self.FindHelper(look, hollow, self.Dict)
                 if(not(futurW.hasRoot()))and(futurW.getLen() > 2)and(word.getSuffix() == True):
-                        futurW.setRoot(futurW.last3())
+                    futurW.setRoot(futurW.last3())
                     
                 f = self.FindHelper(look, futurW, self.Dict)
                 self.algorithm(look, futurW)
@@ -4478,7 +4468,7 @@ class HebrewDictionary(App):
                     hollow.setRoot(hollow.getText())
                     self.FindHelper(look, hollow, self.Dict)
                 if(not(futurW.hasRoot()))and(futurW.getLen() > 2)and(word.getSuffix() == True):
-                        futurW.setRoot(futurW.last3())
+                    futurW.setRoot(futurW.last3())
                     
                 f = self.FindHelper(look, futurW, self.Dict)
                 self.algorithm(look, futurW)
