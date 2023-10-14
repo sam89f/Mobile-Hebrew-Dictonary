@@ -4291,7 +4291,7 @@ class HebrewDictionary(App):
                     futurW.setText(futurW.last() + futurW.getText()[2:]) 
                     futurW.addToValue(-2)
                     if(futurW.getLen() > 2):
-                        i#f(not(futurW.hasRoot() and (not((futurW.getRoot()[1:] == futurW.last3()[1:])or(futurW.getRoot()[:1] + futurW.getRoot()[-1:] == futurW.last2()))))):
+                        #if(not(futurW.hasRoot() and (not((futurW.getRoot()[1:] == futurW.last3()[1:])or(futurW.getRoot()[:1] + futurW.getRoot()[-1:] == futurW.last2()))))):
                         futurW.setRoot(futurW.last3())
                 elif(futurW.getLen() == 2):
                     hollow = Word("","")
