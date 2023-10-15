@@ -4727,7 +4727,7 @@ class HebrewDictionary(App):
                     self.irreg(look, hollow)
                     
         if(word.getLen() > 2):
-            if((word.first() == 'ל') and (word.last() == 'ת')) and (not(word.getRoot()[-2:] == word.first2())) and (not(perfW.getRoot()[:2] == perfW.last2())):
+            if((word.first() == 'ל') and (word.last() == 'ת')) and (not(word.getRoot()[-2:] == word.first2())) and (not(word.getRoot()[:2] == word.last2())):
                 infW = Word("","")
                 infW.equalTo(word)
                 infW.setText(self.Final(word.getText()[1:-1]))
