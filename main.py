@@ -65,7 +65,7 @@ p_roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף
 Finals = ['ך', 'ם', 'ן', 'ף', 'ץ']
 finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
 unFinals = {'ך':'כ', 'ם':'מ', 'ן':'נ', 'ף':'פ', 'ץ':'צ'}
-prefixD = {"תת":"sub", "ה":"the", "ו":"and", "ב":"in", "מ":"from", "ל":"to", "כ":"as", "ש":"which"}
+prefixD = {"תת":"sub", "ה":"the", "ו":"and", "ב":"in/at/by", "מ":"from", "ל":"to/for", "כ":"as/like", "ש":"which"}
 ssuffix = {"ןהי":"their/them (f.)", "ןה":"their/them (f.)", "הנה":"their/them (f.)", "הנהי":"their/them (f.)", "ן":"their/them (f.)", "ןי":"their/them (f.)", "םהי":"their/them (m.)", "םה":"their/them (m.)", "ם":"their/them (m.)", "ומ":"their/them (m.)", "הי":"hers/her", "ה":"hers/her", "הנ":"hers/her", "וי":"his/him", "ו":"his/him", "וה":"his/him", "ןכי":"your/you (pl. f.)", "ןכ":"your/you (pl. f.)", "םכי":"your/you (pl.)", "םכ":"your/you (pl.)", "ךי":"you/your (m.)", "ך":"you/your (m.)", "וני":"our/us", "ונ":"our/us", "ית":"my/me", "י":"my/me", "יי":"my/me", "ינ":"my/me"}
 suffFactors = {"ןהי":4, "ןה":3, "הנה":5, "הנהי":5, "ן":3, "ןי":4, "םהי":4, "םה":3, "ם":4, "ומ":5, "הי":3, "ה":2, "הנ":3, "וי":3, "ו":2, "וה":2, "ןכי":3, "ןכ":2, "םכי":3, "םכ":2, "ךי":3, "ך":3, "וני":3, "ונ":2, "ית":3, "י":1, "יי":2, "ינ":2}
 #suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
@@ -860,9 +860,14 @@ class Word:
         self.sufW.append(suff)
         
     def remSuff(self):
+        if(len(self.sufW[0]) == 1):
+            self.suffix1 = 0
+        elif(len(self.sufW[0]) == 2):
+            self.suffix2 = 0
+        elif(len(self.sufW[0]) == 3):
+            self.suffix3 = 0
         self.value = self.value + (suffFactors[self.sufW[0]])
         self.sufW.pop(0)
-        self.suffix1 = 0
         self.value = 0
         
     def setMdrn(self, modr):
@@ -6569,7 +6574,23 @@ class HebrewDictionary(App):
     def irreg(self, look, word):
         if(word.getLen() < 1) or ('-' in word.getText()) or (word.getIrregVal() > 15):
             return Word("", "")
-            
+        
+        if(word.getLen() > 1):
+            if(not(word.nextToFirst() == 'נ'))  and ((word.first() == 'ה') or (word.first() == 'י')) and (not (word.getVerbform() == 'Niphal')) and (not((word.getVerbform() in Pual) or (word.getVerbform() in Piel) or (word.getPartiVal() == 1))) and (not(word.getRoot()[-2:] == word.first2())):
+                irregW5 = Word("","")
+                irregW5.equalTo(word)
+                irregW5.setText(word.getText()[:-1] + 'נ')
+                if(word.first() == 'ה'):
+                    if(self.prefixRuls(word, word.first(), False) == False):
+                        return Word("", "")
+                    #irregW5.addPre(word.first())
+                    #irregW5.setPrefix()
+                    #irregW5.setPrefixN(irregW5.heyVal)
+                irregW5.setIrreg()
+                irregW5.setIrreg()
+                self.FindHelper(look, irregW5, self.Dict)
+                self.irreg(look, irregW5)
+                
         if((self.CurrentWord.first() == word.first()) or ((self.CurrentWord.second() == word.first())and(word.getPrixListEnd() == self.CurrentWord.first())and(len(word.getPrixList()) == 1))) and (word.getTense() == 'Imperative'):
             if(not (word.last() == 'ה')):
                 irreghW = Word("","")
@@ -6609,21 +6630,6 @@ class HebrewDictionary(App):
                 irregipW3.setIrreg()
                 self.FindHelper(look, irregipW3, self.Dict)
                 self.irreg(look, irregipW3)
-        
-        if(word.getLen() > 1):
-            if(not(word.nextToFirst() == 'נ'))  and ((word.first() == 'ה') or (word.first() == 'י')) and (not (word.getVerbform() == 'Niphal')) and (not((word.getVerbform() in Pual) or (word.getVerbform() in Piel) or (word.getPartiVal() == 1))) and (not(word.getRoot()[-2:] == word.first2())):
-                irregW5 = Word("","")
-                irregW5.equalTo(word)
-                irregW5.setText(word.getText()[:-1] + 'נ')
-                if(word.first() == 'ה'):
-                    if(self.prefixRuls(word, word.first(), False) == False):
-                        return Word("", "")
-                    irregW5.addPre(word.first())
-                    irregW5.setPrefix()
-                    irregW5.setPrefixN(irregW5.heyVal)
-                irregW5.setIrreg()
-                self.FindHelper(look, irregW5, self.Dict)
-                self.irreg(look, irregW5)
                 
             if(word.last() == 'י') and (not(word.getConstruct() == True)) and (not(self.CurrentWord.last() == 'י')) and (not(word.getRoot()[:2] == word.last2())) and (not(word.getPartiVal() == 0)):
                 irregW6 = Word("","")
