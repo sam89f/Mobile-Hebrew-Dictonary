@@ -249,6 +249,8 @@ class Word:
             return False
         if not (self.Noun == newWord.Noun):
             return False
+        if not (self.value == newWord.value):
+            return False
         if not (self.Verb == newWord.Verb):
             return False
         if not (self.partiW == newWord.partiW):
@@ -749,7 +751,12 @@ class Word:
         self.nonFactor = num
     
     def setSuffixX(self, suff):
-        self.suffix1 += suffFactors[suff]
+        if(len(suff) == 1):
+            self.suffix1 += suffFactors[suff]
+        elif(len(suff) == 2):
+            self.suffix2 += suffFactors[suff]
+        elif(len(suff) == 3):
+            self.suffix3 += suffFactors[suff]
         self.value = self.value - suffFactors[suff]
     
     def setSuffix1(self):
