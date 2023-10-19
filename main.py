@@ -3928,6 +3928,13 @@ class HebrewDictionary(App):
                 elif 'ו' in word.getPrixList():
                     self.irreg(look, futurW)
                 
+                if(not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())):
+                    imperwNun = Word("","")
+                    imperwNun.equalTo(futurW)
+                    imperwNun.setText('ן' + self.unFinal(futurW.getText()))
+                    imperwNun.addToValue(5)
+                    self.irreg(look, imperwNun)
+                
                 futurW2 = Word("","")
                 futurW2.equalTo(word)
                 futurW2.setText(futurW.getText())
@@ -3973,6 +3980,13 @@ class HebrewDictionary(App):
                     return futurW2
                 elif 'ו' in word.getPrixList():
                     return self.irreg(look, futurW2)
+                    
+                if(not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())):
+                    imperwNun = Word("","")
+                    imperwNun.equalTo(futurW2)
+                    imperwNun.setText('ן' + self.unFinal(futurW2.getText()))
+                    imperwNun.addToValue(5)
+                    self.irreg(look, imperwNun)
                     
             if(word.getPrixListEnd() == 'ו') and(((word.first2() == 'וי') and (word.last() == 'ו') and (self.imperRules(word, 'וי') == True)) or ((word.first2() == 'יי') and (word.last() == 'ו') and (self.imperRules(word, 'יי') == True))) and (not(word.getRoot()[-2:] == word.first3()[:-1]) or (word.getRoot()[:2] == self.Final(word.first3()[:-1]))) and (not(word.getRoot()[:2] == word.last2())):
                 futurW = Word("","")                                                                                                                                                                                                                                                                                      
@@ -4535,6 +4549,7 @@ class HebrewDictionary(App):
                 self.nifal(look, imperW)
                 
             self.FindHelper(look, imperW, self.Dict)
+            self.irreg(look, imperW)
             return imperW
             
         if (word.last() == 'י') and (word.getPlural() == False):
@@ -4551,6 +4566,7 @@ class HebrewDictionary(App):
                 self.nifal(look, imperW)
                 
             self.FindHelper(look, imperW, self.Dict)
+            self.irreg(look, imperW)
             return imperW
         
         if(word.getLen() > 2) and (not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
