@@ -6576,7 +6576,7 @@ class HebrewDictionary(App):
             return Word("", "")
         
         if(word.getLen() > 1):
-            if(not(word.nextToFirst() == 'נ'))  and ((word.first() == 'ה') or (word.first() == 'י')) and (not (word.getVerbform() == 'Niphal')) and (not((word.getVerbform() in Pual) or (word.getVerbform() in Piel) or (word.getPartiVal() == 1))) and (not(word.getRoot()[-2:] == word.first2())):
+            if(not(word.nextToFirst() == 'נ'))  and (word.getPrefix() == True) and (not (word.getVerbform() == 'Niphal')) and (not((word.getVerbform() in Pual) or (word.getVerbform() in Piel) or (word.getPartiVal() == 1))) and (not(word.getRoot()[-2:] == word.first2())):
                 irregW5 = Word("","")
                 irregW5.equalTo(word)
                 irregW5.setText(word.getText()[:-1] + 'נ')
