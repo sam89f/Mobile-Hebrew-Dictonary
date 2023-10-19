@@ -6638,22 +6638,22 @@ class HebrewDictionary(App):
                 irregipW3.setIrreg()
                 self.FindHelper(look, irregipW3, self.Dict)
                 self.irreg(look, irregipW3)
-                
-            if(word.last() == 'י') and (not(word.getConstruct() == True)) and (not(self.CurrentWord.last() == 'י')) and (not(word.getRoot()[:2] == word.last2())) and (not(word.getPartiVal() == 0)):
-                irregW6 = Word("","")
-                irregW6.equalTo(word)
-                irregW6.setText('ה' + word.getText()[1:])
-                irregW6.setIrreg()
-                self.FindHelper(look, irregW6, self.Dict)
-                self.irreg(look, irregW6)
-                if(irregW6.getLen() > 2):
-                    if(irregW6.nextToLast() == 'י') or (irregW6.nextToLast() == 'ו')  and (not(irregW6.getRoot()[:2] == irregW6.last2())):
-                        irregW7 = Word("","")
-                        irregW7.equalTo(word)
-                        irregW7.setText('ה' + word.getText()[2:])
-                        irregW7.setIrreg()
-                        self.FindHelper(look, irregW7, self.Dict)
-                        self.irreg(look, irregW7)
+            if(word.getLen() > 1):
+                if(word.last() == 'י') and (not(word.getConstruct() == True)) and (not(self.CurrentWord.last() == 'י')) and (not(word.getRoot()[:2] == word.last2())) and (not(word.getPartiVal() == 0)):
+                    irregW6 = Word("","")
+                    irregW6.equalTo(word)
+                    irregW6.setText('ה' + word.getText()[1:])
+                    irregW6.setIrreg()
+                    self.FindHelper(look, irregW6, self.Dict)
+                    self.irreg(look, irregW6)
+                    if(irregW6.getLen() > 2):
+                        if(irregW6.nextToLast() == 'י') or (irregW6.nextToLast() == 'ו')  and (not(irregW6.getRoot()[:2] == irregW6.last2())):
+                            irregW7 = Word("","")
+                            irregW7.equalTo(word)
+                            irregW7.setText('ה' + word.getText()[2:])
+                            irregW7.setIrreg()
+                            self.FindHelper(look, irregW7, self.Dict)
+                            self.irreg(look, irregW7)
                       
         if ((word.getLen() == 1) or ((word.getLen() == 2)and(word.last() == 'ת'))) and ((word.isTense() == True) or (word.getPrefix() == True)): #and (not(word.getTense() == 'Imperfect')and(word.getPerson() == '1st, pl.')) and (not (word.getVerbform() == 'Niphal')):
             irregW = Word("","")
