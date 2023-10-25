@@ -365,6 +365,15 @@ class Word:
     def getLen(self):
         return len(self.text)
         
+    def getphLen(self):
+        temp = self.text.replace("-", " ")
+        inputL = temp.split()
+        sz = len(temp)
+        for w in inputL:
+            if(len(w) < sz):
+                sz = len(w)
+        return sz
+        
     def getGemontria(self):
         g = 0
         nText = self.text.strip('"')
@@ -2140,7 +2149,7 @@ class HebrewDictionary(App):
                 
     def FindHelper(self, look, w, Dict):
 
-        if((w.getText() == self.CurrentWord.getText()) and (look.findText(w) == True)):
+        if((w.getText() == self.CurrentWord.getText()) and (look.findText(w) == True)) or ((w.first() == "-")  or (w.last() == "-")):
             return False
                 
         if((w.getLen() < 3) and ((w.getTense() == 'Participle')or(w.getVerbform() in Hiphil)or(w.getVerbform() in Pual)or((w.getVerbform() in Piel)and(not(w.getVerbform() == 'Pilpel'))))):
@@ -5035,7 +5044,7 @@ class HebrewDictionary(App):
         if(word.getPluralVal() > 3*word.plFactor):
             return Word("", "")
 
-        if(cPhrasePl.getLen() > 3):
+        if(cPhrasePl.getphLen() > 3):
             change = self.lstChain(cPhrasePl.getText(), "םיי")
             if(('-' in cPhrasePl.getText()) and (change > -1)):
                 plW = Word("","")
@@ -5209,9 +5218,9 @@ class HebrewDictionary(App):
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 #return plW
 
-        if(cPhrasePl.getLen() > 2):
+        if(cPhrasePl.getphLen() > 2):
             change3 = self.lstChain(cPhrasePl.getText(), "םי")
-            if(('-' in cPhrasePl.getText()) and (change3 > -1)):
+            if(('-' in cPhrasePl.getText()) and (change3 > -1)) and (cPhrasePl.getphLen() > 2):
                 plW = Word("","")
                 plW.equalTo(cPhrasePl)
                 plW.setText(plW.getText().replace("-םי", " "))
@@ -5280,7 +5289,7 @@ class HebrewDictionary(App):
                     
                 plW.setPlural()
                 change4 = self.lstChain(cPhrasePl2.getText(), cPhrasePl2.last2())
-                if(('-' in cPhrasePl2.getText()) and ((change4) > -1)):
+                if(('-' in cPhrasePl2.getText()) and ((change4) > -1)) and (cPhrasePl2.getphLen() > 2):
                     plW.setText(plW.getText().replace("-םי", " "))
                     plW.setText(self.FinalChain(plW.getText()))
                     plW.setText(plW.getText().replace(" ", "-"))
@@ -5345,7 +5354,7 @@ class HebrewDictionary(App):
                         if(self.FindHelper(look, plWh, self.Dict) == True) and (cPhrasePl.getSuffix() == False) and (cPhrasePl.getHeyDir() == False):
                             return plWh
                 else:
-                    if(cPhrasePl2.getLen() > 2):
+                    if(cPhrasePl2.getphLen() > 2):
                         if(not((cPhrasePl2.getRoot()[:2] == self.Final(cPhrasePl2.last3()[1:])) or (cPhrasePl2.getRoot()[-2:] == cPhrasePl2.last3()[1:]))):
                             plW2 = Word("","")
                             plW2.equalTo(plW)
@@ -5388,7 +5397,7 @@ class HebrewDictionary(App):
             
             cPhrasePl2 = Word("","")
             cPhrasePl2.equalTo(cPhrasePl)
-            if(cPhrasePl.getLen() > 3):
+            if(cPhrasePl.getLen() > 3) and (cPhrasePl.getphLen() > 2):
                 if((cPhrasePl.getSuffix() == True) or (cPhrasePl.getHeyDir() == True)) and (cPhrasePl.last() == 'י') and ((cPhrasePl.nextToLast() + cPhrasePl.thirdFromLast()) == 'תו') and (not(cPhrasePl.getRoot()[:2] == cPhrasePl.last2())):
                     cPhrasePl2.setText(self.Final(cPhrasePl.getText()[1:]))
                     cPhrasePl2.setText(self.revPhWords(cPhrasePl2.getText(), "-"))
@@ -5399,7 +5408,7 @@ class HebrewDictionary(App):
                     
             changef = self.lstChain(cPhrasePl2.getText(), "תו")
 
-            if(('-' in cPhrasePl2.getText()) and (changef > -1)):
+            if(('-' in cPhrasePl2.getText()) and (changef > -1)) and (cPhrasePl2.getphLen() > 2):
                 plW = Word("","")
                 plW.equalTo(cPhrasePl2)
                 plW.setText(plW.getText().replace("-תו", " "))
@@ -5438,7 +5447,7 @@ class HebrewDictionary(App):
                 
             if(cPhrasePl2.last2() == 'תו') and (not (cPhrasePl2.getTense() == 'Perfect')) and (not(cPhrasePl2.getTense() == 'Imperfect')) and (not(cPhrasePl2.getTense() == 'Imperative')) and (not(cPhrasePl2.getTense() == 'Infinitive')):
                 changef2 = self.lstChain(cPhrasePl2.getText(), cPhrasePl2.last2())
-                if(('-' in cPhrasePl2.getText()) and (changef2 > -1)):
+                if(('-' in cPhrasePl2.getText()) and (changef2 > -1)) and (cPhrasePl.getphLen() > 2):
                     plW = Word("","")
                     plW.equalTo(cPhrasePl2)
                     plW.setText(self.Final(plW.getText()[2:]))
