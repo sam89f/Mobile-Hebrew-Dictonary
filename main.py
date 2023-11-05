@@ -6065,14 +6065,14 @@ class HebrewDictionary(App):
                 hollow.setGender(0)
             Holl = True
         else:
-            if(word.last3() == 'םיי') and (word.getLen() > 4) and (word.getPlural() == False):
+            if(word.last3() == 'םיי') and (word.getLen() > 4) and (word.getPlural() == False) and ((word.getSuffix() == False) and (word.getHeyDir() == False)):
                 if((not((word.getRoot()[:2] == self.Final(word.lastX(4)[2:])) or (word.getRoot()[-2:] == word.lastX(4)[2:]) or (word.getRoot() == word.last3())))):
                     hollow.setText(hollow.Final(hollow.getText()[3:]))
                     hollow.setDaul()
                     if(hollow.getLen() > 2):
                         hollow.setRoot(hollow.last3())
                     Holl = True
-            elif(word.last2() == 'םי') and (word.getLen() > 3) and (word.getPlural() == False):
+            elif(word.last2() == 'םי') and (word.getLen() > 3) and (word.getPlural() == False) and ((word.getSuffix() == False) and (word.getHeyDir() == False)):
                 if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
                     hollow.setText(hollow.Final(hollow.getText()[2:]))
                     hollow.setPlural()
