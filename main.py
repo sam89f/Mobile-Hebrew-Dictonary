@@ -1834,7 +1834,6 @@ class HebrewDictionary(App):
                     rightW.equalTo(nounW)
                     rightW.setValue(INF*INF)
                     
-                    
                     look.find(rightW, self.Dict)
                     self.algorithm(look, nounW)
         # if the current word is not the last word, and not The Tetragramaton, and not a noun,
@@ -2613,7 +2612,7 @@ class HebrewDictionary(App):
     
     def piel(self, look, word):
 
-        rareVerbforms  = {'Qal':2, 'Pilpel':10}
+        rareVerbforms  = {'Qal':2, 'Hithpeal':6, 'Pilpel':10}
         
         if(word.getLen() < 4) or ((word.isVerbf() == True) and (not(word.getVerbform() in rareVerbforms))):
             return Word("","")
