@@ -418,12 +418,17 @@ class Word:
         inputL = temp.split()
         first = len(inputL) - 1
         
+        if(len(inputL) == 0):
+            return 0
+        
         return len(inputL[first])
         
     def getLstLen(self):
         temp = self.text.replace("-", " ")
         inputL = temp.split()
-        last = len(inputL) - 1
+        
+        if(len(inputL) == 0):
+            return 0
         
         return len(inputL[0])
         
@@ -5816,8 +5821,11 @@ class HebrewDictionary(App):
         cPhraseHey1.equalTo(word)
         cPhraseHey1.setText(self.revPhWords(word.getText(), "-"))
         
-        if(cPhraseHey1.getLstLen() < 3) and (word.isPhrase()) or (word.getRoot()[:2] == word.last2()):
+        if(cPhraseHey1.getLstLen() < 3) and (word.isPhrase()):
             return Word("", "")
+        if(word.hasRoot() == True):
+            if(word.getRoot()[:2] == word.last2()):
+                return Word("", "")
         
         if(cPhraseHey1.last() == 'ה'):
             hey1W = Word("","")
@@ -5827,7 +5835,12 @@ class HebrewDictionary(App):
             hey1W.setNoun()
 
             if(hey1W.getLstLen() > 1):
-                if(hey1W.last() == "ת") and (not (hey1W.getRoot()[:2] == hey1W.last2())):
+                last_eq = False
+                if(hey1W.hasRoot() == True):
+                    if(not (hey1W.getRoot()[:2] == hey1W.last2())):
+                        last_eq = True
+                        
+                if(hey1W.last() == "ת") and (last_eq() == False):
                     hey1Wh = Word("","")
                     hey1Wh.equalTo(hey1W) 
                     hey1Wh.setText('ה' + hey1W.getText()[1:])
