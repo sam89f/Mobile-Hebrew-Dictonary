@@ -5840,7 +5840,7 @@ class HebrewDictionary(App):
                     if(not (hey1W.getRoot()[:2] == hey1W.last2())):
                         last_eq = True
                         
-                if(hey1W.last() == "ת") and (last_eq() == False):
+                if(hey1W.last() == "ת") and (last_eq == False):
                     hey1Wh = Word("","")
                     hey1Wh.equalTo(hey1W) 
                     hey1Wh.setText('ה' + hey1W.getText()[1:])
