@@ -1214,21 +1214,55 @@ class Keyboard(GridLayout):
             else:
                 revInput += newInput[end-index]
                 
-        self.main.Input.text = self.revNum(str(revInput))
+        self.main.Input.text = self.num_parser(str(revInput))
         
-    def revNum(self, words):
-        numWords = ""
-        n = 0;
-        for i in range(len(words)):
-            if (not (words[i] in AlefBet)) and (not (words[i] in punctuation)):
-                n += 1
-            else:
-                for j in range(i-1, (i-1)-n, -1):
-                    numWords += words[j]
-                numWords += words[i]
-                n = 0
-                
-        return str(numWords)
+    def num_parser(self, words):
+        fixText = ""
+        c = False
+        d = ""
+        s =-1
+        delim = [',', ' ', '.', '-', '#', '+', '\"', '\'', ' ', ',', '.', '?', ';', ':', '-', ')', '(', '[', ']', '}', '{', '*', '!', '־']
+        for num in range(len(words)):
+            if(words[num].isdigit() == True):
+                c = False
+                if(s == -1):
+                    s = num
+                    n = 1
+                    if(num > n - 1):
+                        while((not(words[num - n] in delim)) and (num > n - 1)):
+                            s = num - n
+                            fixText = fixText[:-n]
+                            n += 1
+            elif(c == False):
+                if(not(s == -1)):
+                    if(words[num] in delim):
+                        c = True
+                        if(d == ""):
+                            d = words[num]
+                else:
+                    fixText += words[num]
+            elif(c == True):
+                fixText += self.rev_num(words[s:num - 1], d) + words[num - 1] + words[num]
+                s = -1
+                c = False
+        return fixText
+        
+    def rev_num(self, Num, d):
+        LstNum = Num.split(d)
+        rLstNum = []
+        FixNum = ""
+        end = len(LstNum)-1
+        for i in range(len(LstNum)):
+            rLstNum.append(self.revS(LstNum[end-i]))
+        FixNum = d.join(rLstNum)
+        return FixNum
+        
+    def revS(self, text):
+        revText = ""
+        end = len(text)-1
+        for i in range(len(text)):
+            revText += text[end-i]
+        return str(revText)
         
     def rWordsAction(self, instance):
         words = self.main.Input.text.split()
@@ -1334,21 +1368,55 @@ class CustomInput(TextInput):
             else:
                 revInput += newInput[end-index]
                 
-        return self.revNum(str(revInput))
-    
-    def revNum(self, words):
-        numWords = ""
-        n = 0;
-        for i in range(len(words)):
-            if (not (words[i] in AlefBet)) and (not (words[i] in punctuation)):
-                n += 1
-            else:
-                for j in range(i-1, (i-1)-n, -1):
-                    numWords += words[j]
-                numWords += words[i]
-                n = 0
-                
-        return str(numWords)
+        return self.num_parser(str(revInput))
+        
+    def num_parser(self, words):
+        fixText = ""
+        c = False
+        d = ""
+        s =-1
+        delim = [',', ' ', '.', '-', '#', '+', '\"', '\'', ' ', ',', '.', '?', ';', ':', '-', ')', '(', '[', ']', '}', '{', '*', '!', '־']
+        for num in range(len(words)):
+            if(words[num].isdigit() == True):
+                c = False
+                if(s == -1):
+                    s = num
+                    n = 1
+                    if(num > n - 1):
+                        while((not(words[num - n] in delim)) and (num > n - 1)):
+                            s = num - n
+                            fixText = fixText[:-n]
+                            n += 1
+            elif(c == False):
+                if(not(s == -1)):
+                    if(words[num] in delim):
+                        c = True
+                        if(d == ""):
+                            d = words[num]
+                else:
+                    fixText += words[num]
+            elif(c == True):
+                fixText += self.rev_num(words[s:num - 1], d) + words[num - 1] + words[num]
+                s = -1
+                c = False
+        return fixText
+        
+    def rev_num(self, Num, d):
+        LstNum = Num.split(d)
+        rLstNum = []
+        FixNum = ""
+        end = len(LstNum)-1
+        for i in range(len(LstNum)):
+            rLstNum.append(self.revS(LstNum[end-i]))
+        FixNum = d.join(rLstNum)
+        return FixNum
+        
+    def revS(self, text):
+        revText = ""
+        end = len(text)-1
+        for i in range(len(text)):
+            revText += text[end-i]
+        return str(revText)
           
     # check and see if there are final letters at the beginning of word (which should be at the end)
     def check(self, words):
