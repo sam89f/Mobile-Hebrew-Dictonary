@@ -1368,7 +1368,7 @@ class CustomInput(TextInput):
             else:
                 revInput += newInput[end-index]
                 
-        return self.num_parser(str(revInput))
+        return self.revChar(self.num_parser(str(revInput)))
         
     def num_parser(self, words):
         fixText = ""
@@ -1400,6 +1400,23 @@ class CustomInput(TextInput):
                 s = -1
                 c = False
         return fixText
+        
+    def revChar(self, words):
+        numWords = ""
+        n = 0;
+        for i in range(len(words)):
+            c = False
+            if(i + 1 < len(words)):
+                if((not(words[i+1] in AlefBet)) and (not(words[i+1] in punctuation)) and (words[i+1].isdigit() == False)):
+                    c = True
+            if((not(words[i] in AlefBet)) and (not(words[i] in punctuation)) and (words[i].isdigit() == False) or ((words[i] == ' ') and (c == True))):
+                n += 1
+            else:
+                for j in range(i-1, (i-1)-n, -1):
+                    numWords += words[j]
+                numWords += words[i]
+                n = 0
+        return str(numWords)
         
     def rev_num(self, Num, d):
         LstNum = Num.split(d)
