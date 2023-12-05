@@ -59,7 +59,11 @@ metathesis = ['ס', 'ש', 'צ']
 Obj = ['םתוא', 'ןתוא', 'ךתוא', 'התוא', 'ותוא', 'ונתוא', 'םהתא', 'ןהתא', 'םכתא', 'ןכתא']
 punctuation = ['\"', '\'', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
 delimiter = [',', '־', ' ', '-', ')', '(', '[', ']', '}', '{']
+operators = ['&", "|', '∥', '+', '-', '*', '/', '>', '<', '¬', '=', '<>', '¬=', '¬<', '¬>', '**', '<=', '>=']
 special_char = ['#', ')', '$', '&', '@', '^', '%', '~', '`', '*']
+punctuation2 = ['\"', '\'', ',', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
+delimiter2 = ['–', ',', ':', ' ', '=', ';', '.', '%', '-', ')', '(', '[', ']', '}', '{']
+special_char2 = ['#', '$', '@', '^', '~', '`']+punctuation2+delimiter2+operators
 vowels = ['ֵ']
 a_roots = ['א', 'ב', 'ג', 'ד', 'ז', 'ח', 'ט', 'כ', 'ל', 'מ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ף', 'ץ']
 roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף', 'ץ']
@@ -1221,57 +1225,152 @@ class Keyboard(GridLayout):
     def num_parser(self, words):
         fixText = ""
         c = False
-        d = ""
+        p = False
+        d = []
         s =-1
+        plus = ['+', '-']
+        brackets = ['(', ')', '[', ']', '{', '}']
         for num in range(len(words)):
-            if(words[num].isdigit() == True):
+            if(words[num].isdigit() == True) or (not(words[num] in AlefBet+delimiter+punctuation+special_char+plus)):
                 c = False
+                p = False
                 if(s == -1):
                     s = num
                     n = 1
                     if(num > n - 1):
-                        while((not(words[num - n] in delimiter)) and (num > n - 1)):
+                        while(not(words[num - n] in delimiter+punctuation)):
                             s = num - n
                             fixText = fixText[:-n]
                             n += 1
-            elif(c == False):
-                if(not(s == -1)):
-                    if(words[num] in delimiter):
-                        c = True
-                        if(d == ""):
-                            d = words[num]
-                else:
-                    fixText += words[num]
-            elif(c == True):
-                fixText += self.rev_num(words[s:num - 1], d) + words[num - 1] + words[num]
+            elif((c == True)):
+                temp = ""
+                tempW = words[s:num-1]
+                if(p == True):
+                    d.pop()
+                temp = self.revS(words[s:num-1])
+                for x in d:
+                    if(x in special_char+plus):
+                        if(words[num-1] in brackets):
+                            if(temp == ""):
+                                temp = self.rrev_wds(words[s:num-1], x)
+                            else:
+                                temp = self.rrev_wds(temp, x)
+                        else:     
+                            if(temp == ""):
+                                temp = words[s:num-1]
+                            else:
+                                temp = temp
+                    elif(x in punctuation):
+                        if(words[num-1] in brackets):
+                            if(temp == ""):
+                                temp = self.rrev_wds(words[s:num-1], x)
+                            else:
+                                temp = self.rrev_wds(temp, x)
+                        else:     
+                            if(temp == ""):
+                                 temp = words[s:num-1]
+                            else:
+                                temp = temp
+                    elif(x in delimiter):
+                        if(temp == ""):
+                            temp = words[s:num-1]
+                        else:
+                            temp = temp
+                    else:
+                        if(temp == ""):
+                            temp = self.revS(words[s:num-1])
+                        else:
+                            temp = self.revS(temp)
+                #if(words[num-1] == '־'):
+                #    fixText = fixText + (temp + words[num-1] + words[num])
+                #else:
+                fixText = fixText + (temp + words[num-1] + words[num])
+                d = []  
                 s = -1
                 c = False
+                p = False
+            elif(c == False):
+                if(not(s == -1)):
+                    if(words[num] in delimiter+special_char+punctuation+plus):
+                        c = True
+                        if(not(words[num] in d)):
+                            p = True
+                            d.append(words[num])
+                else:
+                    fixText += words[num]
+        #fixText = self.rottate(fixText, '+')     
         return fixText
         
     def revChar(self, words):
         numWords = ""
         n = 0;
+        pre = False
+        c = False
+        spch = [':', '-']
+        brackets = ['(', ')', '[', ']', '{', '}']
+        d = []
         for i in range(len(words)):
-            c = False
-            if(i + 1 < len(words)):
-                if((not(words[i+1] in AlefBet)) and (not(words[i+1] in punctuation)) and (words[i+1].isdigit() == False)):
+            if(i > 0):
+                if(not(words[i-1] in AlefBet+punctuation+spch)) and (words[i-1].isdigit() == False):
+                    pre = True
+            if((i+1) < len(words)):
+                if((not(words[i+1] in AlefBet+delimiter+spch)) and (words[i+1].isdigit() == False)):
                     c = True
-            if((not(words[i] in AlefBet)) and (not(words[i] in punctuation)) and (words[i].isdigit() == False) or ((words[i] == ' ') and (c == True))):
+            if((not(words[i] in AlefBet+punctuation+spch)) and (words[i].isdigit() == False) or ((words[i] == ':') and ((c == True)and(pre == True)))):# or (words[i].isdigit() == True):
+                if(words[i] in delimiter+punctuation+spch):
+                    if(not(words[i] in d)):
+                        d.append(words[i])
                 n += 1
             else:
-                for j in range(i-1, (i-1)-n, -1):
-                    numWords += words[j]
-                numWords += words[i]
+                temp = words[i-n:i]
+                for x in d:
+                    if(x == ':'):
+                        index = temp.index(x)
+                        if(temp[index] == temp[-1]):
+                            temp = temp
+                        else:
+                            temp = self.rev_wds((temp), x)
+                            #index2 = temp.index(x)
+                            #temp = (self.revS(temp[:index2]) + temp[index2-1:])
+                    elif(x == '-'):
+                        temp = self.revS(temp)
+                    elif(x == ' '):
+                        temp = temp
+                    else:
+                        temp = temp
+                if(words[i] in AlefBet):
+                    if(words[i-1] == '-'):
+                        numWords += (temp + words[i])
+                    else:
+                        numWords += (temp + words[i])
+                elif(words[i] == ' '):
+                    numWords += (temp + words[i])
+                elif(words[i] == ':'):
+                    numWords += self.revS(temp + words[i])
+                else:
+                    numWords += temp
+                    numWords += words[i]
                 n = 0
+                d = []
         return str(numWords)
-        
-    def rev_num(self, Num, d):
+            
+    def rrev_wds(self, Num, d):
         LstNum = Num.split(d)
         rLstNum = []
         FixNum = ""
         end = len(LstNum)-1
         for i in range(len(LstNum)):
             rLstNum.append(self.revS(LstNum[end-i]))
+        FixNum = d.join(rLstNum)
+        return FixNum
+        
+    def rev_wds(self, Num, d):
+        LstNum = Num.split(d)
+        rLstNum = []
+        FixNum = ""
+        end = len(LstNum)-1
+        for i in range(len(LstNum)):
+            rLstNum.append(LstNum[end-i])
         FixNum = d.join(rLstNum)
         return FixNum
         
@@ -1528,36 +1627,6 @@ class CustomInput(TextInput):
             word_lst.append(self.rrev_wds(w, delim))  
         reslt_words = ' '.join(word_lst)
         return reslt_words
-            
-    def XrevChar(self, words):
-        fixText = ""
-        c = False
-        d = ""
-        s =-1
-        for char in range(len(words)):
-            if(not(words[char] in AlefBet+delimiter+punctuation)) and (words[char].isdigit() == False):
-                c = False
-                if(s == -1):
-                    s = char
-                    n = 1
-                if(char > n - 1):
-                    while(not(words[char - n] in delimiter)):
-                        s = char - n
-                        fixText = fixText[:-n]
-                        n += 1
-            elif(c == False):
-                if(not(s == -1)):
-                    if(words[char] in delimiter):
-                        c = True
-                        if((d == "") and (words[char] in delimiter)):
-                            d = words[char]
-                else:
-                    fixText += words[char]
-            elif(c == True):
-                fixText += self.rrev_wds(words[s:char - 1], d) + words[char - 1] + words[char]
-                s = -1
-                c = False
-        return fixText
         
     def rrev_wds(self, Num, d):
         LstNum = Num.split(d)
@@ -1838,6 +1907,7 @@ class HebrewDictionary(App):
     def clean(self, words):
         
         for w in range(len(words)):
+            excep = punctuation+delimiter
             words[w] = words[w].replace("וֹ", "ו")
             words[w] = words[w].replace("שׁ", "ש")
             words[w] = words[w].replace("שׂ", "ש")
@@ -1899,18 +1969,18 @@ class HebrewDictionary(App):
             words[w] = words[w].replace("ֺ", "ו")
             
         for i in range(len(words)):
-            for j in range(len(punctuation)):
-                if punctuation[j] =="'":
+            for j in range(len(excep)):
+                if excep[j] =="'":
                     continue
                 else:
-                    words[i] = words[i].strip(punctuation[j])
+                    words[i] = words[i].strip(excep[j])
                     
         for i in range(len(words)):
-            for j in range(len(punctuation)):
-                if punctuation[j] =="'":
+            for j in range(len(excep)):
+                if excep[j] =="'":
                     continue
                 else:
-                    words[i] = words[i].strip(punctuation[j])
+                    words[i] = words[i].strip(excep[j])
         
         return words
 
