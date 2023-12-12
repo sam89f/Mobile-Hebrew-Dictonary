@@ -1491,15 +1491,22 @@ class CustomInput(TextInput):
         #        revInput += newInput[end-index]
         
         #return self.revChar(self.num_parser(str(revInput)))
-        temp = text.split(' ')
-        words = ""
-        for w in temp:
-            words += self.parse(w, ['|']) + ' ' 
-        
+        #temp = text.split(' ')
+        #words = ""
+        #for w in temp:
+            #words += self.parse(w, ['|']) + ' ' 
+        text = self.chainParse(text, ['|'])
         brac = [['{','}'],['[',']'],['(',')']]
-        return self.revChar(self.num_parser(self.parseAnybrac(words, brac, 0)))
+        return self.revChar(self.parseAnybrac(text, brac, 0))
         #return self.parse_bracs(text)
         
+    def chainParse(self, str_words, delims):
+        temp = str_words.split(' ')
+        words = ""
+        for w in temp:
+            words += self.parse(w, delims) + ' '
+        return words
+            
     def parse(self, str_words, delims):
         l_brac = ['(', '[', '{']
         r_brac = [')', ']', '}']
@@ -1704,7 +1711,7 @@ class CustomInput(TextInput):
         elif(n < len(brac)-1):
             return self.parseAnybrac(str_words, brac, n+1)
         else:
-           return self.revS(str_words) 
+            return self.num_parser(self.revS(str_words))
                
     def num_parser(self, words):
         fixText = ""
