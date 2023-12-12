@@ -1495,21 +1495,21 @@ class CustomInput(TextInput):
         #words = ""
         #for w in temp:
             #words += self.parse(w, ['|']) + ' ' 
-        text = self.chainParse(text, ['|'])
+        text = self.chainParse(text, '|')
         brac = [['{','}'],['[',']'],['(',')']]
         return self.revChar(self.parseAnybrac(text, brac, 0))
         #return self.parse_bracs(text)
         
-    def chainParse(self, str_words, delims):
+    def chainParse(self, str_words, delim):
         temp = str_words.split(' ')
         words = ""
         for w in temp:
-            words += self.parse(w, delims) + ' '
+            if(len(words) > 0):
+                words += ' '
+            words += self.rrev_wds(w, delim)
         return words
             
     def parse(self, str_words, delims):
-        l_brac = ['(', '[', '{']
-        r_brac = [')', ']', '}']
         cdelims = delims.copy()
         new_list = []
         words_plus = ""
