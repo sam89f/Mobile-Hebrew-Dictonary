@@ -57,13 +57,6 @@ prephrase = ['ת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
 plural = ['תו', 'םי', 'םיי']
 metathesis = ['ס', 'ש', 'צ']
 Obj = ['םתוא', 'ןתוא', 'ךתוא', 'התוא', 'ותוא', 'ונתוא', 'םהתא', 'ןהתא', 'םכתא', 'ןכתא']
-punctuation = ['\"', '\'', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
-delimiter = [',', '־', ' ', '-', ')', '(', '[', ']', '}', '{']
-operators = ['&", "|', '∥', '+', '-', '*', '/', '>', '<', '¬', '=', '<>', '¬=', '¬<', '¬>', '**', '<=', '>=']
-special_char = ['#', ')', '$', '&', '@', '^', '%', '~', '`', '*']
-punctuation2 = ['\"', '\'', ',', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
-delimiter2 = ['–', ',', ':', ' ', '=', ';', '.', '%', '-', ')', '(', '[', ']', '}', '{']
-special_char2 = ['#', '$', '@', '^', '~', '`']+punctuation2+delimiter2+operators
 vowels = ['ֵ']
 a_roots = ['א', 'ב', 'ג', 'ד', 'ז', 'ח', 'ט', 'כ', 'ל', 'מ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ף', 'ץ']
 roots = ['ג', 'ד', 'ז', 'ח', 'ט', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ף', 'ץ']
@@ -77,7 +70,15 @@ suffFactors = {"ןהי":4, "ןה":3, "הנה":4, "הנהי":4, "ן":3, "ןי":4,
 #suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
 parti = {1:'Active', 0:'Passive', 2:''}
 gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
-
+brackets = ['(', ')', '[', ']', '{', '}']
+punctuation = ['\"', '\'', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
+delimiter = [',', '־', ' ', '-', ')', '(', '[', ']', '}', '{']
+operators = ['&", "|', '∥', '+', '-', '*', '/', '>', '<', '¬', '=', '<>', '¬=', '¬<', '¬>', '**', '<=', '>=']
+special_char = ['#', ')', '$', '&', '@', '^', '%', '~', '`', '*']
+punctuation2 = ['\"', '\'', ',', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
+delimiter2 = ['–', ',', ':', ' ', '=', ';', '.', '%', '-', ')', '(', '[', ']', '}', '{']
+special_char2 = ['#', '$', '@', '^', '~', '`']+punctuation2+delimiter2+operators
+escape_char = ['\"', '\'', '\b', '\f', '\ooo', '\\', '\n', '\r', '\t']
 dirHey = "ה- to/toward"
 INF = 100000000000
 
@@ -1137,7 +1138,7 @@ class SearchWord:
         for i in index:
             sumV = sumV + self.Words[i].getValue()
             
-        return ((len(index))/2) + ((pow(sumV, 1.0))/(len(index)))
+        return 0.000000000000000005*((pow(sumV, 0.5))/(len(index))) + ((pow(sumV, 1.0))/(len(index))) + 0.0000000000000005*((pow(sumV, 1.5))/(len(index)))
         
     def getSumOfV(self, ref):
         return ref.getVal()
@@ -1228,8 +1229,8 @@ class Keyboard(GridLayout):
         p = False
         d = []
         s =-1
-        plus = ['+', '-']
         brackets = ['(', ')', '[', ']', '{', '}']
+        plus = ['+', '-']
         for num in range(len(words)):
             if(words[num].isdigit() == True) or (not(words[num] in AlefBet+delimiter+punctuation+special_char+plus)):
                 c = False
@@ -1242,6 +1243,8 @@ class Keyboard(GridLayout):
                             s = num - n
                             fixText = fixText[:-n]
                             n += 1
+                if(num == len(words)-1):
+                    fixText += self.revS(words[s:num+1])
             elif((c == True)):
                 temp = ""
                 tempW = words[s:num-1]
@@ -1316,7 +1319,7 @@ class Keyboard(GridLayout):
             if((i+1) < len(words)):
                 if((not(words[i+1] in AlefBet+delimiter+spch)) and (words[i+1].isdigit() == False)):
                     c = True
-            if((not(words[i] in AlefBet+punctuation+spch)) and (words[i].isdigit() == False) or ((words[i] == ':') and ((c == True)and(pre == True)))):# or (words[i].isdigit() == True):
+            if(i < len(words)-1) and ((not(words[i] in AlefBet+punctuation+spch)) and (words[i].isdigit() == False) or ((words[i] == ':') and ((c == True)and(pre == True)))):# or (words[i].isdigit() == True):
                 if(words[i] in delimiter+punctuation+spch):
                     if(not(words[i] in d)):
                         d.append(words[i])
@@ -1455,12 +1458,14 @@ class CustomInput(TextInput):
             inputBuff = Clipboard.paste()
             words = inputBuff.split()
             words = self.clean(words)
+            for index in range(len(words)):
+                words[index] = self.parse(words[index], ['|'])
             word = ' '.join(words)
  
-            if self.check(word): # maker sure text order is correct; if not, reverse input text
-                self.text = self.revT(word)
-            else:
-                self.text = word
+            #if self.check(word): # maker sure text order is correct; if not, reverse input text
+            self.text = self.revT(word)
+            #else:
+                #self.text = word
                 
         print("triple tap confirmed")
      
@@ -1469,33 +1474,251 @@ class CustomInput(TextInput):
         newInput = text
         revInput = ""
         end = len(text)-1
-        for index in range(end+1):
-            if newInput[end-index] == '(':
-                    revInput += ')'
-            elif newInput[end-index] == ')':
-                revInput += '('
-            elif newInput[end-index] == '[':
-                revInput += ']'
-            elif newInput[end-index] == ']':
-                revInput += '['
-            elif newInput[end-index] == '{':
-                revInput += '}'
-            elif newInput[end-index] == '}':
-                revInput += '{'
-            else:
-                revInput += newInput[end-index]
-                
-        return self.revChar(self.num_parser(str(revInput)))
+        #for index in range(end+1):
+        #    if newInput[end-index] == '(':
+        #        revInput += ')'
+        #    elif newInput[end-index] == ')':
+        #        revInput += '('
+        #    elif newInput[end-index] == '[':
+        #        revInput += ']'
+        #    elif newInput[end-index] == ']':
+        #        revInput += '['
+        #    elif newInput[end-index] == '{':
+        #        revInput += '}'
+        #    elif newInput[end-index] == '}':
+        #        revInput += '{'
+        #    else:
+        #        revInput += newInput[end-index]
         
+        #return self.revChar(self.num_parser(str(revInput)))
+        temp = text.split(' ')
+        words = ""
+        for w in temp:
+            words += self.parse(w, ['|']) + ' ' 
+        
+        brac = [['{','}'],['[',']'],['(',')']]
+        return self.revChar(self.num_parser(self.parseAnybrac(words, brac, 0)))
+        #return self.parse_bracs(text)
+        
+    def parse(self, str_words, delims):
+        l_brac = ['(', '[', '{']
+        r_brac = [')', ']', '}']
+        cdelims = delims.copy()
+        new_list = []
+        words_plus = ""
+        if(len(cdelims) > 0):
+            d = cdelims.pop()
+            list_words = str_words.split(d)
+            for index in range(len(list_words)-1, -1, -1):
+                new_list.append(self.parse(list_words[index], cdelims))
+            words_plus = d.join(new_list)
+            return words_plus
+        else:
+            return self.revS(str_words)
+            
+    def parse_bracs(self, str_words):
+        if(n > len(brac)-1):
+            return str_words
+        l = 0
+        r = 0
+        opn = 0
+        clsd = 0
+        list_words = []
+        Ls = []
+        C = False
+        new_list = []
+        Prth = ['(',')']
+        L = Prth[0]
+        R = Prth[1]
+        Opn = L
+        Cls = R
+            
+        for c in range(len(str_words)):
+            if(c == 0):
+                if(str_words[c] == Cls):
+                    list_words.append(str_words[c])
+                    r = 1
+                    C = True
+                elif(str_words[c] == Opn):
+                    l = 0
+                    Ls.append(c)
+                    C = True
+                    opn = 1
+                    
+            elif(c == len(str_words)):
+                if(opn == 0):
+                    if(str_words[c] == Opn):
+                        list_words.append(str_words[r:c])
+                        list_words.append(str_words[c])
+                    if(str_words[c] == Cls):
+                        list_words.append(str_words[r:c] + str_words[c])
+                    else:
+                        list_words.append(str_words[r:c+1])
+                if(opn == 1):
+                    if(str_words[c] == Opn):
+                        list_words.append(str_words[r:c])
+                        list_words.append(str_words[c])
+                    else:
+                        l1 = Ls[-1]
+                        list_words.append(str_words[l1-1:c] + str_words[c])
+                if(opn > 1):
+                    if(str_words[c] == Cls):
+                        l1 = Ls[-1]
+                        l2 = Ls[0]
+                        list_words.append(str_words[l2:l1])
+                        list_words.append(str_words[l1:c] + str_words[c])
+                    else:
+                        l1 = Ls[-1]
+                        l2 = Ls[0]
+                        list_words.append(str_words[l2:l1])
+                        list_words.append(str_words[l1:c] + str_words[c])
+           
+                #list_words.append(str_words[l:c] + str_words[c])
+            else:
+                if(str_words[c] == Opn):
+                    if(opn == 0):
+                        if(c > r):
+                            list_words.append(str_words[r:c])
+                        l = c
+                    Ls.append(c)
+                    opn += 1
+                    
+                if(str_words[c] == Cls):
+                    opn = opn - 1
+                    if(len(Ls) == 0):
+                        list_words.append(str_words[r:c] + str_words[c])
+                        r = c + 1
+                        opn = 0
+                    else:
+                        Ls.pop
+                        if(opn == 0):
+                            if(c > l):
+                                list_words.append(str_words[l:c] + str_words[c])
+                            r = c + 1
+ 
+        if(r > 0) or (l > 0) or (C == True):
+            for index in range(len(list_words)-1, -1, -1):
+                if(list_words[index][0] == Opn) and (list_words[index][-1] == Cls):
+                    new_list.append(Opn + self.parse_bracs(list_words[index][1:-1]) + Cls)
+                elif(list_words[index][0] == Opn):
+                    new_list.append(self.parse_bracs(list_words[index][1:]) + Cls)
+                elif(list_words[index][-1] == Cls):
+                    new_list.append(Opn + self.parse_bracs(list_words[index][:-1]))
+                else:
+                    new_list.append(self.parse_bracs(list_words[index]))
+            return ''.join(new_list)
+        else:
+           return self.revS(str_words) 
+    
+    def parseAnybrac(self, str_words, brac, n):
+        if(n > len(brac)-1):
+            return str_words
+        l = 0
+        r = 0
+        opn = 0
+        clsd = 0
+        list_words = []
+        new_list = []
+        L = brac[n][0]
+        R = brac[n][1]
+        Ls = []
+        C = False
+        Opn = L
+        Cls = R
+            
+        for c in range(len(str_words)):
+            if(c == 0):
+                if(str_words[c] == Cls):
+                    list_words.append(str_words[c])
+                    r = 1
+                    C = True
+                elif(str_words[c] == Opn):
+                    l = 0
+                    Ls.append(c)
+                    C = True
+                    opn = 1
+                    
+            elif(c == len(str_words) - 1):
+                if(opn == 0):
+                    if(str_words[c] == Opn):
+                        list_words.append(str_words[r:c])
+                        list_words.append(str_words[c])
+                    if(str_words[c] == Cls):
+                       
+                        list_words.append(str_words[r:c] + str_words[c])
+                    else:
+                        list_words.append(str_words[r:c+1])
+                if(opn == 1):
+                    if(str_words[c] == Opn):
+                        list_words.append(str_words[r:c])
+                        list_words.append(str_words[c])
+                    else:
+                        list_words.append(str_words[l:c] + str_words[c])
+                if(opn > 1):
+                    if(str_words[c] == Cls):
+                        l1 = Ls.pop()
+                        l2 = Ls.pop()
+                        list_words.append(str_words[l2:l1])
+                        list_words.append(str_words[l1:c] + str_words[c])
+           
+                #list_words.append(str_words[l:c] + str_words[c])
+            else:
+                if(str_words[c] == Opn):
+                    if(opn == 0):
+                        if(c > r):
+                            list_words.append(str_words[r:c])
+                        l = c
+                    Ls.append(c)
+                    opn += 1
+                    
+                if(str_words[c] == Cls):
+                    opn = opn - 1
+                    if(len(Ls) == 0):
+                        list_words.append(str_words[r:c] + str_words[c])
+                        r = c + 1
+                        opn = 0
+                    else:
+                        Ls.pop
+                        if(opn == 0):
+                            if(c > l):
+                                list_words.append(str_words[l:c] + str_words[c])
+                            r = c + 1
+ 
+        if(r > 0) or (l > 0) or (C == True):
+            for index in range(len(list_words)-1, -1, -1):
+                if(list_words[index][0] == Opn) and (list_words[index][-1] == Cls):
+                    new_list.append(Opn + self.parseAnybrac(list_words[index][1:-1], brac, n) + Cls)
+                elif(list_words[index][0] == Opn):
+                    new_list.append(self.parseAnybrac(list_words[index][1:], brac, n) + Cls)
+                elif(list_words[index][-1] == Cls):
+                    new_list.append(Opn + self.parseAnybrac(list_words[index][:-1], brac, n))
+                else:
+                    new_list.append(self.parseAnybrac(list_words[index], brac, n))
+            if(len(new_list) > 1):
+                return ''.join(new_list)
+            elif (len(new_list) > 0):
+                return new_list[0]
+            else: 
+                return str_words
+            
+        elif(n < len(brac)-1):
+            return self.parseAnybrac(str_words, brac, n+1)
+        else:
+           return self.revS(str_words) 
+               
     def num_parser(self, words):
         fixText = ""
         c = False
         p = False
         d = []
         s =-1
-        plus = ['+', '-']
+        if('|' in words.split()):
+            return words
         brackets = ['(', ')', '[', ']', '{', '}']
+        plus = ['+', '-']
         for num in range(len(words)):
+            if(words[num] == '|'):
+                return words
             if(words[num].isdigit() == True) or (not(words[num] in AlefBet+delimiter+punctuation+special_char+plus)):
                 c = False
                 p = False
@@ -1503,10 +1726,12 @@ class CustomInput(TextInput):
                     s = num
                     n = 1
                     if(num > n - 1):
-                        while(not(words[num - n] in delimiter+punctuation)):
+                        while(not(words[num - n] in self.exclude(delimiter+punctuation, ['|']))):
                             s = num - n
                             fixText = fixText[:-n]
                             n += 1
+                if(num == len(words)-1):
+                    fixText += self.revS(words[s:num+1])
             elif((c == True)):
                 temp = ""
                 tempW = words[s:num-1]
@@ -1546,9 +1771,6 @@ class CustomInput(TextInput):
                             temp = self.revS(words[s:num-1])
                         else:
                             temp = self.revS(temp)
-                #if(words[num-1] == '־'):
-                #    fixText = fixText + (temp + words[num-1] + words[num])
-                #else:
                 fixText = fixText + (temp + words[num-1] + words[num])
                 d = []  
                 s = -1
@@ -1556,7 +1778,7 @@ class CustomInput(TextInput):
                 p = False
             elif(c == False):
                 if(not(s == -1)):
-                    if(words[num] in delimiter+special_char+punctuation+plus):
+                    if(words[num] in self.exclude(delimiter+special_char+punctuation+plus, ['|'])):
                         c = True
                         if(not(words[num] in d)):
                             p = True
@@ -1581,7 +1803,7 @@ class CustomInput(TextInput):
             if((i+1) < len(words)):
                 if((not(words[i+1] in AlefBet+delimiter+spch)) and (words[i+1].isdigit() == False)):
                     c = True
-            if((not(words[i] in AlefBet+punctuation+spch)) and (words[i].isdigit() == False) or ((words[i] == ':') and ((c == True)and(pre == True)))):# or (words[i].isdigit() == True):
+            if(i < len(words)-1) and ((not(words[i] in AlefBet+punctuation+spch)) and (words[i].isdigit() == False) or ((words[i] == ':') and ((c == True)and(pre == True)))):# or (words[i].isdigit() == True):
                 if(words[i] in delimiter+punctuation+spch):
                     if(not(words[i] in d)):
                         d.append(words[i])
@@ -1618,6 +1840,20 @@ class CustomInput(TextInput):
                 n = 0
                 d = []
         return str(numWords)
+    
+    def exclude(self, b, a):
+        c = []
+        for e in b:
+            if(not(e in a)):
+                c.append(e)
+        return c
+        
+    def intrsc(self, h, g):
+        v = []
+        for e in h:
+            if(e in g):
+                v.append(e)
+        return v
         
     def rottate(self, words, delim):
         lst_of_words = words.split()
