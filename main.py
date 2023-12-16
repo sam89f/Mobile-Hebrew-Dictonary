@@ -1407,14 +1407,14 @@ class Keyboard(GridLayout):
         for num in range(len(words)):
             if(words[num] == '|'):
                 return words
-            if(words[num].isdigit() == True) or (not(words[num] in AlefBet+delimiter+punctuation+special_char+plus)):
+            if(words[num].isdigit() == True) or (not(words[num] in AlefBet+delimiter+punctuation+special_char+operators)):
                 c = False
                 p = False
                 if(s == -1):
                     s = num
- 
+                
                 if(num == len(words)-1):
-                    fixText += words[s:num+1]
+                    fixText += self.revS(words[s:num+1])
             elif((c == True)):
                 temp = ""
                 tempW = words[s:num-1]
@@ -1425,9 +1425,9 @@ class Keyboard(GridLayout):
                     if(x in special_char+plus):
                         if(words[num-1] in brackets):
                             if(temp == ""):
-                                temp = self.rrev_wds(words[s:num-1], x)
+                                temp = words[s:num-1]
                             else:
-                                temp = self.rrev_wds(temp, x)
+                                temp = temp
                         else:     
                             if(temp == ""):
                                 temp = words[s:num-1]
@@ -1436,9 +1436,9 @@ class Keyboard(GridLayout):
                     elif(x in punctuation):
                         if(words[num-1] in brackets):
                             if(temp == ""):
-                                temp = self.rrev_wds(words[s:num-1], x)
+                                 temp = words[s:num-1]
                             else:
-                                temp = self.rrev_wds(temp, x)
+                                temp = temp
                         else:     
                             if(temp == ""):
                                  temp = words[s:num-1]
@@ -1461,16 +1461,17 @@ class Keyboard(GridLayout):
                 p = False
             elif(c == False):
                 if(not(s == -1)):
-                    if(words[num] in delimiter+special_char+punctuation+plus):
+                    if(words[num] in (delimiter+special_char+punctuation+plus)):
                         c = True
                         if(not(words[num] in d)):
                             p = True
                             d.append(words[num])
                     if(num == len(words)-1):
-                        fixText += words[s:num+1]
+                        fixText += self.revS(words[s:num+1])
                 else:
                     fixText += words[num]
         return fixText
+        
     
     def exclude(self, b, a):
         c = []
@@ -1976,14 +1977,14 @@ class CustomInput(TextInput):
         for num in range(len(words)):
             if(words[num] == '|'):
                 return words
-            if(words[num].isdigit() == True) or (not(words[num] in AlefBet+delimiter+punctuation+special_char+plus)):
+            if(words[num].isdigit() == True) or (not(words[num] in AlefBet+delimiter+punctuation+special_char+operators)):
                 c = False
                 p = False
                 if(s == -1):
                     s = num
- 
+                
                 if(num == len(words)-1):
-                    fixText += words[s:num+1]
+                    fixText += self.revS(words[s:num+1])
             elif((c == True)):
                 temp = ""
                 tempW = words[s:num-1]
@@ -1994,9 +1995,9 @@ class CustomInput(TextInput):
                     if(x in special_char+plus):
                         if(words[num-1] in brackets):
                             if(temp == ""):
-                                temp = self.rrev_wds(words[s:num-1], x)
+                                temp = words[s:num-1]
                             else:
-                                temp = self.rrev_wds(temp, x)
+                                temp = temp
                         else:     
                             if(temp == ""):
                                 temp = words[s:num-1]
@@ -2005,9 +2006,9 @@ class CustomInput(TextInput):
                     elif(x in punctuation):
                         if(words[num-1] in brackets):
                             if(temp == ""):
-                                temp = self.rrev_wds(words[s:num-1], x)
+                                 temp = words[s:num-1]
                             else:
-                                temp = self.rrev_wds(temp, x)
+                                temp = temp
                         else:     
                             if(temp == ""):
                                  temp = words[s:num-1]
@@ -2030,13 +2031,13 @@ class CustomInput(TextInput):
                 p = False
             elif(c == False):
                 if(not(s == -1)):
-                    if(words[num] in delimiter+special_char+punctuation+plus):
+                    if(words[num] in (delimiter+special_char+punctuation+plus)):
                         c = True
                         if(not(words[num] in d)):
                             p = True
                             d.append(words[num])
                     if(num == len(words)-1):
-                        fixText += words[s:num+1]
+                        fixText += self.revS(words[s:num+1])
                 else:
                     fixText += words[num]
         return fixText
