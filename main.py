@@ -77,7 +77,7 @@ operators = ['&", "|', '∥', '+', '-', '*', '/', '>', '<', '¬', '=', '<>', '¬
 special_char = ['#', ')', '$', '&', '@', '^', '%', '~', '`', '*']
 punctuation2 = ['\"', '\'', ',', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
 delimiter2 = ['–', ',', ':', ' ', '=', ';', '.', '%', '-', ')', '(', '[', ']', '}', '{']
-special_char2 = ['#', '$', '@', '^', '~', '`']+punctuation2+delimiter2+operators
+special_char2 = special_char+punctuation2+delimiter2+operators
 escape_char = ['\"', '\'', '\b', '\f', '\ooo', '\\', '\n', '\r', '\t']
 dirHey = "ה- to/toward"
 INF = 100000000000
@@ -1412,14 +1412,9 @@ class Keyboard(GridLayout):
                 p = False
                 if(s == -1):
                     s = num
-                    n = 1
-                    if(num > n - 1):
-                        while(not(words[num - n] in self.exclude(delimiter+punctuation, ['|']))):
-                            s = num - n
-                            fixText = fixText[:-n]
-                            n += 1
+ 
                 if(num == len(words)-1):
-                    fixText += self.revS(words[s:num+1])
+                    fixText += words[s:num+1]
             elif((c == True)):
                 temp = ""
                 tempW = words[s:num-1]
@@ -1466,14 +1461,15 @@ class Keyboard(GridLayout):
                 p = False
             elif(c == False):
                 if(not(s == -1)):
-                    if(words[num] in self.exclude(delimiter+special_char+punctuation+plus, ['|'])):
+                    if(words[num] in delimiter+special_char+punctuation+plus):
                         c = True
                         if(not(words[num] in d)):
                             p = True
                             d.append(words[num])
+                    if(num == len(words)-1):
+                        fixText += words[s:num+1]
                 else:
                     fixText += words[num]
-        #fixText = self.rottate(fixText, '+')     
         return fixText
     
     def exclude(self, b, a):
@@ -1643,8 +1639,8 @@ class CustomInput(TextInput):
         else:
             inputBuff = Clipboard.paste()
             words = inputBuff.split()
-            words = self.clean(words)
-            temp = ' '.join(words)
+            words2 = self.clean(words)
+            temp = ' '.join(words2)
             for index in range(len(words)):
                 words[index] = self.parse(words[index], ['|'])
             word = ' '.join(words)
@@ -1985,14 +1981,9 @@ class CustomInput(TextInput):
                 p = False
                 if(s == -1):
                     s = num
-                    n = 1
-                    if(num > n - 1):
-                        while(not(words[num - n] in self.exclude(delimiter+punctuation, ['|']))):
-                            s = num - n
-                            fixText = fixText[:-n]
-                            n += 1
+ 
                 if(num == len(words)-1):
-                    fixText += self.revS(words[s:num+1])
+                    fixText += words[s:num+1]
             elif((c == True)):
                 temp = ""
                 tempW = words[s:num-1]
@@ -2039,14 +2030,15 @@ class CustomInput(TextInput):
                 p = False
             elif(c == False):
                 if(not(s == -1)):
-                    if(words[num] in self.exclude(delimiter+special_char+punctuation+plus, ['|'])):
+                    if(words[num] in delimiter+special_char+punctuation+plus):
                         c = True
                         if(not(words[num] in d)):
                             p = True
                             d.append(words[num])
+                    if(num == len(words)-1):
+                        fixText += words[s:num+1]
                 else:
                     fixText += words[num]
-        #fixText = self.rottate(fixText, '+')     
         return fixText
         
     def revChar(self, words):
@@ -2171,65 +2163,74 @@ class CustomInput(TextInput):
         return False
         
     def clean(self, words):
-        
+        excep = punctuation+delimiter+operators
+        words2 = list(words)
         for w in range(len(words)):
-            words[w] = words[w].replace("וֹ", "ו")
-            words[w] = words[w].replace("שׁ", "ש")
-            words[w] = words[w].replace("שׂ", "ש")
-            words[w] = words[w].replace("ׁ", "")
-            words[w] = words[w].replace("ׂ", "")
-            words[w] = words[w].replace("ּ", "")
-            words[w] = words[w].replace("וּ", "ו")
-            words[w] = words[w].replace("אָ", "א")
-            words[w] = words[w].replace("אַ", "א")
-            words[w] = words[w].replace("בּ", "ב")
-            words[w] = words[w].replace("גּ", "ג")
-            words[w] = words[w].replace("דּ", "ד")
-            words[w] = words[w].replace("הּ", "ה")
-            words[w] = words[w].replace("זּ", "ז")
-            words[w] = words[w].replace("טּ", "ט")
-            words[w] = words[w].replace("יּ", "י")
-            words[w] = words[w].replace("יִ", "י")
-            words[w] = words[w].replace("כּ", "כ")
-            words[w] = words[w].replace("לּ", "ל")
-            words[w] = words[w].replace("מּ", "מ")
-            words[w] = words[w].replace("נּ", "נ")
-            words[w] = words[w].replace("סּ", "ס")
-            words[w] = words[w].replace("פּ", "פ")
-            words[w] = words[w].replace("צּ", "צ")
-            words[w] = words[w].replace("קּ", "ק")
-            words[w] = words[w].replace("שּׁ", "ש")
-            words[w] = words[w].replace("שּׂ", "ש")
-            words[w] = words[w].replace("תּ", "ת")
+            words2[w] = words2[w].replace("וֹ", "ו")
+            words2[w] = words2[w].replace("שׁ", "ש")
+            words2[w] = words2[w].replace("שׂ", "ש")
+            words2[w] = words2[w].replace("ׁ", "")
+            words2[w] = words2[w].replace("ׂ", "")
+            words2[w] = words2[w].replace("ּ", "")
+            words2[w] = words2[w].replace("וּ", "ו")
+            words2[w] = words2[w].replace("אָ", "א")
+            words2[w] = words2[w].replace("אַ", "א")
+            words2[w] = words2[w].replace("בּ", "ב")
+            words2[w] = words2[w].replace("גּ", "ג")
+            words2[w] = words2[w].replace("דּ", "ד")
+            words2[w] = words2[w].replace("הּ", "ה")
+            words2[w] = words2[w].replace("זּ", "ז")
+            words2[w] = words2[w].replace("טּ", "ט")
+            words2[w] = words2[w].replace("יּ", "י")
+            words2[w] = words2[w].replace("יִ", "י")
+            words2[w] = words2[w].replace("כּ", "כ")
+            words2[w] = words2[w].replace("לּ", "ל")
+            words2[w] = words2[w].replace("מּ", "מ")
+            words2[w] = words2[w].replace("נּ", "נ")
+            words2[w] = words2[w].replace("סּ", "ס")
+            words2[w] = words2[w].replace("פּ", "פ")
+            words2[w] = words2[w].replace("צּ", "צ")
+            words2[w] = words2[w].replace("קּ", "ק")
+            words2[w] = words2[w].replace("שּׁ", "ש")
+            words2[w] = words2[w].replace("שּׂ", "ש")
+            words2[w] = words2[w].replace("תּ", "ת")
             
-            word = words[w]
+            word = words2[w]
             
             for l in range(len(word)):
                 if(l < len(word)-1) and (l > 0):
                     if(word[l] + word[l+1] == "וֹ")and(word[l-1] in AlefBet):
-                        words[w] = words[w].replace("וֹ","ו")
+                        words2[w] = words2[w].replace("וֹ","ו")
                     if(word[l] + word[l+1] == "וֺ")and(word[l-1] in AlefBet):
-                        words[w] = words[w].replace("וֺ","ו")
-                    word = words[w]
+                        words2[w] = words2[w].replace("וֺ","ו")
+                    word = words2[w]
 
-            words[w] = words[w].replace("ֹ", "ו") 
-            words[w] = words[w].replace("ֻ", "ו")
-            words[w] = words[w].replace("ֹיּ", "י")
-            words[w] = words[w].replace("ִיַ", "יי")
-            words[w] = words[w].replace("ֵ", "")
-            words[w] = words[w].replace("ִ", "")
-            words[w] = words[w].replace("ַ", "")
-            words[w] = words[w].replace("ָ", "")
-            words[w] = words[w].replace("ֱ", "")
-            words[w] = words[w].replace("ֵ", "")
-            words[w] = words[w].replace("ְ", "")
-            words[w] = words[w].replace("ֶ", "")
-            words[w] = words[w].replace("ֲ", "")
-            words[w] = words[w].replace("ֳ", "")
-            words[w] = words[w].replace("ֽ", "")
-            words[w] = words[w].replace("ֺ", "ו")
+            words2[w] = words2[w].replace("ֹ", "ו") 
+            words2[w] = words2[w].replace("ֻ", "ו")
+            words2[w] = words2[w].replace("ֹיּ", "י")
+            words2[w] = words2[w].replace("ִיַ", "יי")
+            words2[w] = words2[w].replace("ֵ", "")
+            words2[w] = words2[w].replace("ִ", "")
+            words2[w] = words2[w].replace("ַ", "")
+            words2[w] = words2[w].replace("ָ", "")
+            words2[w] = words2[w].replace("ֱ", "")
+            words2[w] = words2[w].replace("ֵ", "")
+            words2[w] = words2[w].replace("ְ", "")
+            words2[w] = words2[w].replace("ֶ", "")
+            words2[w] = words2[w].replace("ֲ", "")
+            words2[w] = words2[w].replace("ֳ", "")
+            words2[w] = words2[w].replace("ֽ", "")
+            words2[w] = words2[w].replace("ֺ", "ו")
             
-        return words
+        for i in range(len(words2)):
+            for j in range(len(excep)):
+                words2[i] = words2[i].strip(excep[j])
+                    
+        for i in range(len(words2)):
+            for j in range(len(excep)):
+                words2[i] = words2[i].strip(excep[j])
+            
+        return words2
         
 
     # Interface for displaying the words found, their diffinition, and some gramatical properties.  
@@ -2404,82 +2405,83 @@ class HebrewDictionary(App):
     def clean(self, words):
         
         for w in range(len(words)):
-            excep = punctuation+delimiter
-            words[w] = words[w].replace("וֹ", "ו")
-            words[w] = words[w].replace("שׁ", "ש")
-            words[w] = words[w].replace("שׂ", "ש")
-            words[w] = words[w].replace("ׁ", "")
-            words[w] = words[w].replace("ׂ", "")
-            words[w] = words[w].replace("ּ", "")
-            words[w] = words[w].replace("וּ", "ו")
-            words[w] = words[w].replace("אָ", "א")
-            words[w] = words[w].replace("אַ", "א")
-            words[w] = words[w].replace("בּ", "ב")
-            words[w] = words[w].replace("גּ", "ג")
-            words[w] = words[w].replace("דּ", "ד")
-            words[w] = words[w].replace("הּ", "ה")
-            words[w] = words[w].replace("זּ", "ז")
-            words[w] = words[w].replace("טּ", "ט")
-            words[w] = words[w].replace("יּ", "י")
-            words[w] = words[w].replace("יִ", "י")
-            words[w] = words[w].replace("כּ", "כ")
-            words[w] = words[w].replace("לּ", "ל")
-            words[w] = words[w].replace("מּ", "מ")
-            words[w] = words[w].replace("נּ", "נ")
-            words[w] = words[w].replace("סּ", "ס")
-            words[w] = words[w].replace("פּ", "פ")
-            words[w] = words[w].replace("צּ", "צ")
-            words[w] = words[w].replace("קּ", "ק")
-            words[w] = words[w].replace("שּׁ", "ש")
-            words[w] = words[w].replace("שּׂ", "ש")
-            words[w] = words[w].replace("תּ", "ת")
+            words2 = list(words)
+            excep = punctuation+delimiter+operators
+            words2[w] = words2[w].replace("וֹ", "ו")
+            words2[w] = words2[w].replace("שׁ", "ש")
+            words2[w] = words2[w].replace("שׂ", "ש")
+            words2[w] = words2[w].replace("ׁ", "")
+            words2[w] = words2[w].replace("ׂ", "")
+            words2[w] = words2[w].replace("ּ", "")
+            words2[w] = words2[w].replace("וּ", "ו")
+            words2[w] = words2[w].replace("אָ", "א")
+            words2[w] = words2[w].replace("אַ", "א")
+            words2[w] = words2[w].replace("בּ", "ב")
+            words2[w] = words2[w].replace("גּ", "ג")
+            words2[w] = words2[w].replace("דּ", "ד")
+            words2[w] = words2[w].replace("הּ", "ה")
+            words2[w] = words2[w].replace("זּ", "ז")
+            words2[w] = words2[w].replace("טּ", "ט")
+            words2[w] = words2[w].replace("יּ", "י")
+            words2[w] = words2[w].replace("יִ", "י")
+            words2[w] = words2[w].replace("כּ", "כ")
+            words2[w] = words2[w].replace("לּ", "ל")
+            words2[w] = words2[w].replace("מּ", "מ")
+            words2[w] = words2[w].replace("נּ", "נ")
+            words2[w] = words2[w].replace("סּ", "ס")
+            words2[w] = words2[w].replace("פּ", "פ")
+            words2[w] = words2[w].replace("צּ", "צ")
+            words2[w] = words2[w].replace("קּ", "ק")
+            words2[w] = words2[w].replace("שּׁ", "ש")
+            words2[w] = words2[w].replace("שּׂ", "ש")
+            words2[w] = words2[w].replace("תּ", "ת")
             
-            word = words[w]
+            word = words2[w]
             
             for l in range(len(word)):
                 if(l < len(word)-1) and (l > 0):
                     if(word[l] + word[l+1] == "וֹ")and(word[l-1] in AlefBet):
-                        words[w] = words[w].replace("וֹ","ו")
+                        words2[w] = words2[w].replace("וֹ","ו")
                     if(word[l] + word[l+1] == "וֺ")and(word[l-1] in AlefBet):
-                        words[w] = words[w].replace("וֺ","ו")
-                    word = words[w]
+                        words2[w] = words2[w].replace("וֺ","ו")
+                    word = words2[w]
                         
-            words[w] = words[w].replace("[", " ")
-            words[w] = words[w].replace("]", " ")
-            words[w] = words[w].replace("”", "")
-            words[w] = words[w].replace("״", "\"")
-            words[w] = words[w].replace("׳", "\'")
-            words[w] = words[w].replace("ֹ", "ו") 
-            words[w] = words[w].replace("ֻ", "ו")
-            words[w] = words[w].replace("ִיַ", "יי")
-            words[w] = words[w].replace("ֵ", "")
-            words[w] = words[w].replace("ִ", "")
-            words[w] = words[w].replace("ַ", "")
-            words[w] = words[w].replace("ָ", "")
-            words[w] = words[w].replace("ֱ", "")
-            words[w] = words[w].replace("ֵ", "")
-            words[w] = words[w].replace("ְ", "")
-            words[w] = words[w].replace("ֶ", "")
-            words[w] = words[w].replace("ֲ", "")
-            words[w] = words[w].replace("ֳ", "")
-            words[w] = words[w].replace("ֽ", "")
-            words[w] = words[w].replace("ֺ", "ו")
+            words2[w] = words2[w].replace("[", " ")
+            words2[w] = words2[w].replace("]", " ")
+            words2[w] = words2[w].replace("”", "")
+            words2[w] = words2[w].replace("״", "\"")
+            words2[w] = words2[w].replace("׳", "\'")
+            words2[w] = words2[w].replace("ֹ", "ו") 
+            words2[w] = words2[w].replace("ֻ", "ו")
+            words2[w] = words2[w].replace("ִיַ", "יי")
+            words2[w] = words2[w].replace("ֵ", "")
+            words2[w] = words2[w].replace("ִ", "")
+            words2[w] = words2[w].replace("ַ", "")
+            words2[w] = words2[w].replace("ָ", "")
+            words2[w] = words2[w].replace("ֱ", "")
+            words2[w] = words2[w].replace("ֵ", "")
+            words2[w] = words2[w].replace("ְ", "")
+            words2[w] = words2[w].replace("ֶ", "")
+            words2[w] = words2[w].replace("ֲ", "")
+            words2[w] = words2[w].replace("ֳ", "")
+            words2[w] = words2[w].replace("ֽ", "")
+            words2[w] = words2[w].replace("ֺ", "ו")
             
-        for i in range(len(words)):
+        for i in range(len(words2)):
             for j in range(len(excep)):
                 if excep[j] =="'":
                     continue
                 else:
-                    words[i] = words[i].strip(excep[j])
+                    words2[i] = words2[i].strip(excep[j])
                     
-        for i in range(len(words)):
+        for i in range(len(words2)):
             for j in range(len(excep)):
                 if excep[j] =="'":
                     continue
                 else:
-                    words[i] = words[i].strip(excep[j])
+                    words2[i] = words2[i].strip(excep[j])
         
-        return words
+        return words2
 
     def findAction(self, instance):
         if len(self.Input.text) == 0:
@@ -2489,6 +2491,9 @@ class HebrewDictionary(App):
         inputBuff = inputBuff.replace('-', ' ')
         inputBuff = inputBuff.replace('[', ' ')
         inputBuff = inputBuff.replace(']', ' ')
+        inputBuff = inputBuff.replace("|", " | ")
+        inputBuff = inputBuff.replace("/", " / ")
+        inputBuff = inputBuff.replace("'\\'", " \\ ")
         words = inputBuff.split()
         words = self.clean(words)
         words = self.revWords(words)
