@@ -73,7 +73,7 @@ gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט
 brackets = ['(', ')', '[', ']', '{', '}']
 punctuation = ['\"', '\'', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
 delimiter = [',', '־', ' ', '-', ')', '(', '[', ']', '}', '{']
-operators = ['&", "|', '∥', '+', '-', '*', '/', '>', '<', '¬', '=', '<>', '¬=', '¬<', '¬>', '**', '<=', '>=']
+operators = ['&', '|', '∥', '+', '-', '*', '/', '>', '<', '¬', '=', '<>', '¬=', '¬<', '¬>', '**', '<=', '>=']
 special_char = ['#', ')', '$', '&', '@', '^', '%', '~', '`', '*']
 punctuation2 = ['\"', '\'', ',', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
 delimiter2 = ['–', ',', ':', ' ', '=', ';', '.', '%', '-', ')', '(', '[', ']', '}', '{']
@@ -1649,7 +1649,7 @@ class CustomInput(TextInput):
             if self.check(temp): # maker sure text order is correct; if not, reverse input text
                 self.text = self.revT(word)
             else:
-                self.text = temp
+                self.text = words
                 
         print("triple tap confirmed")
      
@@ -2403,11 +2403,25 @@ class HebrewDictionary(App):
         self.store.put(self.Word.Word.text, text=self.Word.Word.text, definition=self.Word.Definition.text.split(",  "))
         self.Word.Definition.text = ""
     
+    def exclude(self, b, a):
+        c = []
+        for e in b:
+            if(not(e in a)):
+                c.append(e)
+        return c
+        
+    def intrsc(self, h, g):
+        v = []
+        for e in h:
+            if(e in g):
+                v.append(e)
+        return v
+    
     def clean(self, words):
         
         for w in range(len(words)):
             words2 = list(words)
-            excep = punctuation+delimiter+operators
+            excep = punctuation+delimiter
             words2[w] = words2[w].replace("וֹ", "ו")
             words2[w] = words2[w].replace("שׁ", "ש")
             words2[w] = words2[w].replace("שׂ", "ש")
@@ -2470,14 +2484,14 @@ class HebrewDictionary(App):
             
         for i in range(len(words2)):
             for j in range(len(excep)):
-                if excep[j] =="'":
+                if(excep[j] =="'"):
                     continue
                 else:
                     words2[i] = words2[i].strip(excep[j])
                     
         for i in range(len(words2)):
             for j in range(len(excep)):
-                if excep[j] =="'":
+                if(excep[j] =="'"):
                     continue
                 else:
                     words2[i] = words2[i].strip(excep[j])
@@ -2492,9 +2506,9 @@ class HebrewDictionary(App):
         inputBuff = inputBuff.replace('-', ' ')
         inputBuff = inputBuff.replace('[', ' ')
         inputBuff = inputBuff.replace(']', ' ')
-        inputBuff = inputBuff.replace("|", " | ")
-        inputBuff = inputBuff.replace("/", " / ")
-        inputBuff = inputBuff.replace("'\\'", " \\ ")
+        operator = operators + ['\\']
+        for o in operator:
+            inputBuff = inputBuff.replace(o, " " + o + " ")
         words = inputBuff.split()
         words = self.clean(words)
         words = self.revWords(words)
