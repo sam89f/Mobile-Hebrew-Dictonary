@@ -4897,7 +4897,7 @@ class HebrewDictionary(App):
                 futurW.setPerson(3)
                 futurW.setGender(1)
                 
-                if(futurW.getLen() > 1):
+                if(futurW.getLen() > 2):
                     if(not((futurW.hasRoot()) and (not((futurW.getRootLast2() == self.Final(futurW.last3()[1:])) or (futurW.getRootLast2() == futurW.last2()))))):
                         if((futurW.nextToLast() == 'ו') and (not((futurW.getVerbform() == 'Qal') and (not(futurW.third() == 'ו'))))) and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')):
                             futurW.setText(futurW.last() + futurW.getText()[2:])
@@ -5019,7 +5019,7 @@ class HebrewDictionary(App):
                 futurW.setGender(0)
                 futurW.setVavSeq()
                 holl2 = True
-                if(futurW.getLen() > 1):
+                if(futurW.getLen() > 2):
                     if(not((futurW.hasRoot()) and (not((futurW.getRootLast2() == self.Final(futurW.last3()[1:])) or (futurW.getRootLast2() == futurW.last2()))))):
                         if((futurW.nextToLast() == 'ו') and (not((futurW.getVerbform() == 'Qal') and (not(futurW.third() == 'ו'))))) and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')):
                             futurW.setText(futurW.last() + futurW.getText()[2:])
@@ -5071,7 +5071,7 @@ class HebrewDictionary(App):
                 futurW.setGender(0)
                 futurW.setVavSeq()
                 
-                if(futurW.getLen() > 1):
+                if(futurW.getLen() > 2):
                     if((futurW.nextToLast() == 'ו') and (not((futurW.getVerbform() == 'Qal') and (not(futurW.third() == 'ו'))))) and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')) and (not((futurW.hasRoot()) and (not((futurW.getRootLast2() == self.Final(futurW.last3()[1:])) or (futurW.getRootLast2() == futurW.last2()))))):
                         futurW.setText(futurW.last() + futurW.getText()[2:])
                         #futurW.addToValue(-2)
@@ -5125,7 +5125,7 @@ class HebrewDictionary(App):
                 if(futurW.getLen() > 2):
                     futurW.setRoot(self.Final(futurW.first3()))
                 
-                if(futurW.getLen() > 1):
+                if(futurW.getLen() > 2):
                     if((futurW.nextToLast() == 'ו') and (not((futurW.getVerbform() == 'Qal') and (not(futurW.third() == 'ו'))))) and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')) and (not((futurW.hasRoot()) and (not((futurW.getRootLast2() == self.Final(futurW.last3()[1:])) or (futurW.getRootLast2() == futurW.last2()))))):
                         futurW.setText(futurW.last() + futurW.getText()[2:])
                         #futurW.addToValue(-2)
@@ -5278,7 +5278,7 @@ class HebrewDictionary(App):
                 if(not(futurW.hasRoot() and (not(futurW.getRoot()[:2] == self.Final(futurW.first3()[:2]))))):
                     futurW.setRoot(self.Final(futurW.first3()))
         
-            if(futurW.getLen() > 1):
+            if(futurW.getLen() > 2):
                 if((futurW.nextToLast() == 'ו') and (not((futurW.getVerbform() == 'Qal') and (not(futurW.third() == 'ו'))))) and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')) and (not((futurW.hasRoot()) and (not((futurW.getRootLast2() == self.Final(futurW.last3()[1:])) or (futurW.getRootLast2() == futurW.last2()))))):
                     futurW.setText(futurW.last() + futurW.getText()[2:])
                     #futurW.addToValue(-2)
@@ -5332,7 +5332,7 @@ class HebrewDictionary(App):
                 #if(not(futurW.hasRoot() and (not(futurW.getRootLast2() == self.Final(futurW.first3()[:2]))))):
                 futurW.setRoot(self.Final(futurW.first3()))
         
-            if(futurW.getLen() > 1):
+            if(futurW.getLen() > 2):
                 if((futurW.nextToLast() == 'ו') and (not((futurW.getVerbform() == 'Qal') and (not(futurW.third() == 'ו'))))) and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')) and (not((futurW.hasRoot()) and (not((futurW.getRootLast2() == self.Final(futurW.last3()[1:])) or (futurW.getRootLast2() == futurW.last2()))))):
                     futurW.setText(futurW.last() + futurW.getText()[2:]) 
                     #futurW.addToValue(-2)
@@ -5393,7 +5393,7 @@ class HebrewDictionary(App):
                 if(not(futurW.hasRoot() and (not(futurW.getRoot()[:2] == self.Final(futurW.first3()[:2]))))):
                     futurW.setRoot(self.Final(futurW.first3()))
         
-            if(futurW.getLen() > 1):
+            if(futurW.getLen() > 2):
                 if((futurW.nextToLast() == 'ו') and (not((futurW.getVerbform() == 'Qal') and (not(futurW.third() == 'ו'))))) and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')) and (not((futurW.hasRoot()) and (not((futurW.getRootLast2() == self.Final(futurW.last3()[1:])) or (futurW.getRootLast2() == futurW.last2()))))):
                     futurW.setText(futurW.last() + futurW.getText()[2:])
                     #futurW.addToValue(-2)
@@ -5489,7 +5489,7 @@ class HebrewDictionary(App):
                 if(not(futurW.hasRoot() and (not(futurW.getRoot()[:2] == self.Final(futurW.first3()[:2]))))):
                     futurW.setRoot(self.Final(futurW.first3()))
               
-            if(futurW.getLen() > 1):
+            if(futurW.getLen() > 2):
                 if((futurW.nextToLast() == 'ו') and (not((futurW.getVerbform() == 'Qal') and (not(futurW.third() == 'ו'))))) and ((futurW.isVerbf() == False) or (futurW.getVerbform() == 'Qal')) and (not((futurW.hasRoot()) and (not((futurW.getRootLast2() == self.Final(futurW.last3()[1:])) or (futurW.getRootLast2() == futurW.last2()))))):
                     futurW.setText(futurW.last() + futurW.getText()[2:])
                     #futurW.addToValue(-2)
