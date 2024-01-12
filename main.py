@@ -1712,7 +1712,7 @@ class CustomInput(TextInput):
             if self.check(temp): # maker sure text order is correct; if not, reverse input text
                 self.text = self.revT(word)
             else:
-                self.text = words
+                self.text = temp
                 
         print("triple tap confirmed")
      
