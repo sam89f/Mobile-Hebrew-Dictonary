@@ -2542,9 +2542,8 @@ class HebrewDictionary(App):
         return v
     
     def clean(self, words):
-        
+        words2 = list(words)
         for w in range(len(words)):
-            words2 = list(words)
             excep = punctuation+delimiter
             words2[w] = words2[w].replace("וֹ", "ו")
             words2[w] = words2[w].replace("שׁ", "ש")
