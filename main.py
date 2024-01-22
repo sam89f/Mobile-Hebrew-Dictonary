@@ -2805,7 +2805,7 @@ class HebrewDictionary(App):
                 look.find(rightW, self.Dict)
                 self.algorithm(look, verbW)
                         
-        self.wText += '\t\t'*n + ':' + (self.revPhWords(text[i], '-')) + '   ' + number + Year + '\n'
+        self.wText += '\t\t'*n + ':' + (self.revPhWords(text[i], '-')) + '   ' + number + Year + '\n\n'
          
         # If the current word is The Tetragramaton, then we don't need to process the word any further
         # we already know this is the proper name of G_d and a proper noun.
@@ -3000,7 +3000,7 @@ class HebrewDictionary(App):
                 script = TAB2*n + TAB2 + val + (modern[:-3])*2 + prL + (pre) + (s6[:-(preN-1)])*(2) + preSP + (verbform)*2 + s1 + (tense2)*(2) + s2*mult + person + s3 + gender + s4 + s4b + (constr[:-1])*2 + s5 + (suff) + (s7[:-1])*(2) + suffSP + pl*2 + prR + ARROW + isR + (w.getText()[:-1])*(2) + TAB + '-' + TAB
                 spaces = len(script) - cn
                 self.wText += '\t\t'*n +  '\t\t' + val + modern + prL + pre + s6 + preSP + w.getVerbform() + s1 + tense + s2 + w.getPerson() + s3 + w.getGender() + s4 + s4b + constr + s5 + suff + s7 + suffSP + pl + prR + ARROW + isR + w.getText() + '\t' + '-' + '\t' + self.fixDef(definition, spaces) + ';' + ' gmra. = ' + str(w.getGemontria()) + '\n'
-        else:
+        elif number + Year == "":
             self.wText += '\t\t'*n +  "No words found"
             self.wText += '\n'
             
