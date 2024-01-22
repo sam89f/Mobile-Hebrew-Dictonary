@@ -7935,7 +7935,7 @@ class HebrewDictionary(App):
         
     def build(self):
         # collecting user words form Json file (the database)
-        self.store = JsonStore('data/WordsFinalFixed.json')
+        self.store = JsonStore("data/WordsFinalFixed.json")
         
         # Building .kv file
         #with open('hebrewdictionary2.kv', encoding='utf8') as f:
