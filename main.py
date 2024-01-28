@@ -6165,26 +6165,33 @@ class HebrewDictionary(App):
                         if(self.FindHelper(look, plWh, self.Dict) == True):
                             return plWh
                 else:
+                    Go2 = False
+                    if((cPhrasePl2.getLen() > 2) and ((cPhrasePl2.getSuffix() == True) or (cPhrasePl2.getHeyDir() == True))):
+                        Go2 = True
                     if(cPhrasePl2.getLen() > 3):               
                         if((not((cPhrasePl2.getRoot()[:2] == self.Final(cPhrasePl2.lastX(4)[2:])) or (cPhrasePl2.getRoot()[-2:] == cPhrasePl2.lastX(4)[2:]) or (cPhrasePl2.getRoot() == cPhrasePl2.last3())))):
-                            plW2 = Word("","")
-                            plW2.equalTo(plW)
-                            plW2.setText(self.revPhWords(plW2.getText(), "-"))
-                            self.FindHelper(look, plW2, self.Dict)
-                            self.algorithm(look, plW2)
+                            Go2 = True
                             
-                            if(plW.getLen() > 1):
-                                if(plW.last() == "ת"):
-                                    plWWh = Word("","")
-                                    plWWh.equalTo(plW) 
-                                    plWWh.setText('ה' + plW.getText()[1:])  
-                                    plWWh.addToValue(1)
-                                    if(plWWh.hasRoot()) and (plWWh.getLen() > 2):
-                                        if(plWWh.getRoot()[1:] == plWWh.last3()[1:]):
-                                            plWWh.setRoot(plWWh.last3())
-                                    plWWh.setText(self.revPhWords(plWWh.getText(), "-"))
-                                    self.FindHelper(look, plWWh, self.Dict)
+                    if(Go2 == True):
+                        plW2 = Word("","")
+                        plW2.equalTo(plW)
+                        plW2.setText(self.revPhWords(plW2.getText(), "-"))
+                        self.FindHelper(look, plW2, self.Dict)
+                        self.algorithm(look, plW2)
+                        
+                        if(plW.getLen() > 1):
+                            if(plW.last() == "ת"):
+                                plWWh = Word("","")
+                                plWWh.equalTo(plW) 
+                                plWWh.setText('ה' + plW.getText()[1:])  
+                                plWWh.addToValue(1)
+                                if(plWWh.hasRoot()) and (plWWh.getLen() > 2):
+                                    if(plWWh.getRoot()[1:] == plWWh.last3()[1:]):
+                                        plWWh.setRoot(plWWh.last3())
+                                plWWh.setText(self.revPhWords(plWWh.getText(), "-"))
+                                self.FindHelper(look, plWWh, self.Dict)
                                     
+                    if((cPhrasePl2.getLen() > 3) or ((cPhrasePl2.getLen() > 2) and ((cPhrasePl2.getSuffix() == True) or (cPhrasePl2.getHeyDir() == True)))):
                         if(not((cPhrasePl2.getRoot()[:2] == self.Final(cPhrasePl2.last3()[1:])) or (cPhrasePl2.getRoot()[-2:] == cPhrasePl2.last3()[1:]))):
                             singleW.setText('ה' + self.unFinal(plW.getText()))
                             singleW.setDaul2()
@@ -6254,7 +6261,7 @@ class HebrewDictionary(App):
             plural = False
             cPhrasePl2 = Word("","")
             cPhrasePl2.equalTo(cPhrasePl)
-            if(cPhrasePl.getSuffix() == True) or (cPhrasePl.getHeyDir() == True):
+            if((cPhrasePl.getSuffix() == True) or (cPhrasePl.getHeyDir() == True)):
                 if(cPhrasePl.last() == 'י') and (not((cPhrasePl.nextToLast() + cPhrasePl.thirdFromLast()) == 'תו')) and (cPhrasePl.getLstLen() > 2) and (not (cPhrasePl.getTense() == 'Perfect')) and (not(cPhrasePl.getRootLast2() == cPhrasePl.last2())):
                     plural = True
                     plW = Word("","")
@@ -6278,7 +6285,7 @@ class HebrewDictionary(App):
                     
                 plW.setPlural()
                 change4 = self.lstChain(cPhrasePl2.getText(), cPhrasePl2.last2())
-                if((cPhrasePl2.isPhrase()) and ((change4) > -1)) and (cPhrasePl2.getExphLen() > 2):
+                if(((cPhrasePl2.isPhrase()) and ((change4) > -1)) and ((cPhrasePl2.getExphLen() > 2) or ((cPhrasePl2.getExphLen() > 1) and ((cPhrasePl2.getSuffix() == True) or (cPhrasePl2.getHeyDir() == True))))):
                     plW.setText(plW.getText().replace("-םי", " "))
                     plW.setText(self.FinalChain(plW.getText()))
                     plW.setText(plW.getText().replace(" ", "-"))
@@ -6343,26 +6350,33 @@ class HebrewDictionary(App):
                         if(self.FindHelper(look, plWh, self.Dict) == True) and (cPhrasePl.getSuffix() == False) and (cPhrasePl.getHeyDir() == False):
                             return plWh
                 else:
-                    if(cPhrasePl2.getLen() > 2):
+                    Go = False
+                    if((cPhrasePl2.getLen() > 1) and ((cPhrasePl2.getSuffix() == True) or (cPhrasePl2.getHeyDir() == True))):
+                        Go = True
+                    if(cPhrasePl2.getLen() > 2):               
                         if(not((cPhrasePl2.getRoot()[:2] == self.Final(cPhrasePl2.last3()[1:])) or (cPhrasePl2.getRoot()[-2:] == cPhrasePl2.last3()[1:]))):
-                            plW2 = Word("","")
-                            plW2.equalTo(plW)
-                            plW2.setGender(0)
-                            plW2.setText(self.revPhWords(plW2.getText(), "-"))
-                            self.FindHelper(look, plW2, self.Dict)
-                            self.algorithm(look, plW2)
-                            if(plW.getLstLen() > 1):
-                                if(plW.last() == "ת"):
-                                    plWWh = Word("","")
-                                    plWWh.equalTo(plW) 
-                                    plWWh.setText('ה' + plW.getText()[1:])   
-                                    plWWh.addToValue(1)
-                                    if(plWWh.hasRoot()) and (plWWh.getLen() > 2):
-                                        if(plWWh.getRoot()[1:] == plWWh.last3()[1:]):
-                                            plWWh.setRoot(plWWh.last3())
-                                    plWWh.setText(self.revPhWords(plWWh.getText(), "-"))
-                                    self.FindHelper(look, plWWh, self.Dict)
+                            Go = True
+                            
+                    if(Go == True):
+                        plW2 = Word("","")
+                        plW2.equalTo(plW)
+                        plW2.setGender(0)
+                        plW2.setText(self.revPhWords(plW2.getText(), "-"))
+                        self.FindHelper(look, plW2, self.Dict)
+                        self.algorithm(look, plW2)
+                        if(plW.getLstLen() > 1):
+                            if(plW.last() == "ת"):
+                                plWWh = Word("","")
+                                plWWh.equalTo(plW) 
+                                plWWh.setText('ה' + plW.getText()[1:])   
+                                plWWh.addToValue(1)
+                                if(plWWh.hasRoot()) and (plWWh.getLen() > 2):
+                                    if(plWWh.getRoot()[1:] == plWWh.last3()[1:]):
+                                        plWWh.setRoot(plWWh.last3())
+                                plWWh.setText(self.revPhWords(plWWh.getText(), "-"))
+                                self.FindHelper(look, plWWh, self.Dict)
                         
+                    if((cPhrasePl2.getLen() > 2) or ((cPhrasePl2.getLen() > 1) and ((cPhrasePl2.getSuffix() == True) or (cPhrasePl2.getHeyDir() == True)))):
                         if(not(cPhrasePl2.getRoot()[:2] == cPhrasePl2.last2())):
                             singleW.setText('ה' + self.unFinal(plW.getText()))
                             singleW.setPlural2()
