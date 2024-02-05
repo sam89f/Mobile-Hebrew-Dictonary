@@ -1,4 +1,4 @@
-#Hebrew Dictionary mobile aplication python file (Tablet Version)
+#Hebrew Dictionary mobile aplication python file
 #==============================================================================
 
 #This file displays the UI, and the main fuction buttons and input text field, while the .kv file
@@ -26,7 +26,7 @@ import os
 import sys
 import unicodedata
 
-Display_Size = 30
+Display_Size = 22
 
 # color values
 red = [1, 0, 0, 1]
@@ -2386,8 +2386,8 @@ class AddWord(GridLayout):
         super(AddWord, self).__init__(**kwargs)
         self.cols = 2
         
-        self.wLabel = Label(text='[color=3333ff]Word[color=3333ff]', outline_color=black, font_size=50, markup=True)
-        self.dLabel = Label(text='[color=3333ff]Diffinition[color=3333ff]', outline_color=black, font_size=50, markup=True)
+        self.wLabel = Label(text='[color=3333ff]Word[color=3333ff]', outline_color=black, font_size=30, markup=True)
+        self.dLabel = Label(text='[color=3333ff]Diffinition[color=3333ff]', outline_color=black, font_size=30, markup=True)
         self.Word = TextInput(text="", readonly=True, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         self.Definition= TextInput(text="", readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         
@@ -2644,7 +2644,7 @@ class HebrewDictionary(App):
             self.getWList(words, i, tk, k, 0)
             if not(i == len(words)):
                 self.wText += '\n'
-                self.wText += "*"*125
+                self.wText += "*"*160
                 self.wText += '\n\n'
         
         # scrolls to the beginning of the text input once all the resalts are displayed
