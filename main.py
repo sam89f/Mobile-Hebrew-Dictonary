@@ -6862,7 +6862,7 @@ class HebrewDictionary(App):
             if(cPhraseSuf.isPhrase()):
                 return suffW
 
-            if(suffW.getLen() > 2):
+            if(suffW.getLen() > 1):
                 if(not(cPhraseSuf.last() == 'ה')):
                     suffWh2 = Word("","")
                     suffWh2.equalTo(suffW)
@@ -6926,7 +6926,7 @@ class HebrewDictionary(App):
                 if(cPhraseSuf.isPhrase()):
                     return suffW           
                 
-                if(suffW.getLen() > 3):
+                if(suffW.getLen() > 1):
                     if(not(cPhraseSuf.last3()[2:] == 'ה')) and (not ('ה' in cPhraseSuf.getSufxList())) and (not(cPhraseSuf.getRoot()[:2] == cPhraseSuf.last2())):
                         suffWh2 = Word("","")
                         suffWh2.equalTo(suffW)
@@ -6992,7 +6992,7 @@ class HebrewDictionary(App):
                 if(cPhraseSuf.isPhrase()):
                     return suffW
                    
-                if(suffW.getLen() > 4):
+                if(suffW.getLen() > 1):
                     if(not(cPhraseSuf.lastX(4)[3:] == 'ה')) and (not ('ה' in cPhraseSuf.getSufxList())) and (not((cPhraseSuf.getRoot()[:2] == self.Final(cPhraseSuf.last3()[1:])) or (cPhraseSuf.getRoot()[-2:] == cPhraseSuf.last3()[1:]))):
                         suffWh2 = Word("","")
                         suffWh2.equalTo(suffW)
