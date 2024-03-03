@@ -3164,17 +3164,6 @@ class HebrewDictionary(App):
         if(word.getLen() < 3) or (word.isPhrase()) or (word.isTense() == True) or ((word.isVerbf() == True)and(not(word.getVerbform() == 'Qal'))):
             return Word("", "")
                 
-            if (word.first2() == 'תת') and (word.getSuffix() == False) and (word.getHey1() == 0) and (not(word.getPartiVal() == 1)):
-                mdrnW = Word("","")
-                mdrnW.equalTo(word)
-                mdrnW.setText(word.getText()[:-2])
-                mdrnW.setPrefix()
-                mdrnW.addPre('תת')
-                mdrnW.setNoun()
-                self.FindHelper(look, mdrnW, self.Dict)
-                self.algorithm(look, mdrnW)
-                return mdrnW
-                
         if(word.getPartiVal() == 0) or (word.getSuffix() == True) or (word.getHey1() > 0):
             return Word("","")
                 
@@ -6621,8 +6610,24 @@ class HebrewDictionary(App):
         
         cPhrasePre.setText(self.revPhWords(cPhrasePre.getText(), "-"))
 
-        if(cPhrasePre.getFrsLen() < 2):
-            return Word("", "")
+        if(cPhrasePre.getFrsLen() > 2): 
+            if (cPhrasePre.first2() in prefixL) and (self.prefixRuls(cPhrasePre, cPhrasePre.first2(), False) == True):
+                preW = Word("","")
+                preW.equalTo(cPhrasePre)
+                preW.setText(cPhrasePre.getText()[:-2])
+                preW.setPrefix()
+                preW.addPre(cPhrasePre.first2())
+                preW.setText(self.revPhWords(preW.getText(), "-"))
+                
+                self.FindHelper(look, preW, self.Dict) 
+                self.plural(look, preW)
+                self.suffix(look, preW, 1)
+                preWend = Word("","")
+                preWend.equalTo(self.prefix(look, preW, False))
+                if preWend.getText() == "":
+                    return preW
+                else:
+                    return preWend
           
         if (cPhrasePre.first() in prefixL) and (self.prefixRuls(cPhrasePre, cPhrasePre.first(), False) == True):
             preW = Word("","")
@@ -6692,9 +6697,28 @@ class HebrewDictionary(App):
         return Word("", "")
 
     def smPrefix(self, look, word, h):
-        if(word.getLen() < 2) or (not(self.CurrentWord.first() in prefixL)) or (word.isPhrase()): #or (word.getModern == True):
+        if(word.getLen() < 2) or (not((self.CurrentWord.first() in prefixL) or (self.CurrentWord.first2() in prefixL))) or (word.isPhrase()): #or (word.getModern == True):
             return Word("","")
- 
+            
+        if(word.getLen() > 2):
+            if(word.first2() in prefixL):
+                preW = Word("","")
+                preW.equalTo(word)
+                if(word.third() == 'ו') and (not((word.isVerbf() == False)or(word.getVerbform() == 'Qal'))):
+                    preW.setText(word.getText()[:-3] + 'י')
+                    if(preW.getLen() > 3):
+                        if(not(preW.hasRoot() and (not(preW.getRoot()[:2] == self.Final(preW.firstX(4)[:2]))))):
+                            preW.setRoot(self.Final(preW.first3()))
+                else:
+                    preW.setText(word.getText()[:-2])
+                    
+                preW.setPrefix()
+                preW.addPre(word.first2())
+                self.FindHelper(look, preW, self.Dict)
+                self.algorithm(look, preW)
+                return preW
+                
+        
         if(word.first() in prefixL) and (self.prefixRuls(word, word.first(), h) == True):
             preW = Word("","")
             preW.equalTo(word)
