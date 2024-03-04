@@ -21,6 +21,7 @@ from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from codecs import decode
 from kivy.core.clipboard import Clipboard
+import math
 import string
 import os
 import sys
@@ -2851,7 +2852,7 @@ class HebrewDictionary(App):
         look.group()
         WList = look.getWords() #store all the words found in the 'WList' variable
         #WList.sort(key=look.getValue, reverse = True) #store words according to closeness to the word as it appears in the input field
-                                                      #based on a formula in the algorithm for calculating the value, which is built in the 'Word' class
+        #based on a formula in the algorithm for calculating the value, which is built in the 'Word' class
         # This block of code is responsible for formatting and displaying the results.                                               
         if(len(look.getWords()) > 0):
             prevW = Word("", "")
@@ -2861,7 +2862,7 @@ class HebrewDictionary(App):
                 w.equalTo(wi)
                 w.setText(self.revPhWords(wi.getText(), '-'))
                 val = ""
-                
+                OutPut = []
                 if((not(prevW.getText() == w.getText())) and (start == False)):
                     self.wText += '\n'
                 prevW.equalTo(w)
@@ -2898,81 +2899,24 @@ class HebrewDictionary(App):
                 constr = ''
                 s1 = ""
                 s2 = ""
-                s3 = ''
-                s4 = ''
-                s4b = ""
-                s5 = ''
-                s6 = ''
-                s7 = ''
-                s7b = ""
-                s8 = ''       
+                sf7 = ''
+                      
                 isR = ""
                 ARROW = "  =>  "
+                X = ""
                 HR = False
                 #HR = w.hasRoot()
                 if(w.isRoot() == True):
                     isR = "(r) "
                 
-                if(not(w.getVerbformVal() == -1)) or (not(w.getTenseVal() == -1)) or (not(w.getPersonVal() == -1)) or (not(w.getGenderVal() == -1)) or (w.getPlural() == True) or (w.getDaul() == True) or (w.getHey1() > 0) or (w.getSuffix() == True) or (w.getPrefix() == True) or (HR == True) or (w.getConstruct() == True):
+                if(not(w.getVerbformVal() == -1)) or (not(w.getTenseVal() == -1)) or (not(w.getPersonVal() == -1)) or (not(w.getGenderVal() == -1)) or (w.getPlural() == True) or (w.getModern() == True) or (w.getDaul() == True) or (w.getHey1() > 0) or (w.getSuffix() == True) or (w.getPrefix() == True) or (HR == True) or (w.getConstruct() == True):
                     gr = True
-                if w.getModern() == True:
-                    if gr == True:
-                        modern = "modern suffix:" + " [" + w.getModernW() + ']' + " "
-                    else:
-                        modern = "modern suffix:" + " [" + w.getModernW() + ']'
-                if (not(w.getVerbform() == '')):
-                    if(w.getPlural() == True) or (w.getDaul() == True) or (not(w.getTenseVal() == -1)) or (w.getSuffix() == True) or (w.getHey1() > 0) or (w.getConstruct() == True) or (w.isGender() == True) or (w.isPerson() == True) or (HR == True):
-                        s1 = " "
-                if (not(w.getTense() == '')):
-                    if(w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True)  or (w.getHey1() > 0) or (w.getConstruct() == True) or (w.isGender() == True) or (w.isPerson() == True) or (HR == True):
-                        s2 = " "
-                if (w.isPerson() == True):
-                    if(w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True) or (w.getHey1() > 0) or (w.getConstruct() == True) or (w.isGender() == True) or (HR == True):
-                        s3 = " "
-                if (w.getGenderVal() == 0) or (w.getGenderVal() == 1):
-                    if(w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True) or (w.getHey1() > 0) or (w.getConstruct() == True) or (HR == True):
-                        s4 = " "
-                if(HR == True):
-                    if(w.getConstruct() == True) or (w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True) or (w.getHey1() > 0):
-                        s4b = "[R: " + w.getRoot() + "] "
-                    else:
-                        s4b = "[R: " + w.getRoot() + "]"
-                
-                if w.getConstruct() == True:
-                    constr = "cnstr."
-                    if(w.getPlural() == True) or (w.getDaul() == True) or (w.getSuffix() == True) or (w.getHey1() > 0):
-                        s5 = " "
-                if w.getPrefix() == True:
-                    pre = "prefix"
-                    s6 = " [" + w.getPrefixW() + ']'
-                    if(w.getPlural() == True) or (w.getDaul() == True) or (not(w.getTenseVal() == -1)) or (w.getHey1() > 0) or (w.getSuffix() == True) or (w.getConstruct() == True) or (w.isGender() == True) or (w.isPerson() == True) or (w.isVerbf() == True):
-                        preSP = ' '
-                        
-                if w.getSuffix() == True:
-                    suff = "suffix"
-                    if w.getHey1() > 0:
-                        s7 = " [" + w.getSuffixW() + ',' + ' ' + dirHey + ']'  
-                    else:
-                        s7 = " [" + w.getSuffixW() + ']'
-                    if(w.getPlural() == True) or (w.getDaul() == True):
-                        suffSP = ' '
-                        
-                else:       
-                    if w.getHey1() > 0:
-                        suff = "suffix"
-                        s7 = " [" + dirHey + ']'
-                        if(w.getPlural() == True) or (w.getDaul() == True):
-                            suffSP = ' '
 
 
                 if w.getPlural() == True:
                     pl = "pl."
-                    s8 = " "
                 if w.getDaul() == True:
                     pl = "daul"
-                    s8 = " "
-                
-                #val = "val = " + str(w.getValue()) + " -- "
                     
                 definition = ", ".join(w.definition)
                 if gr == True:
@@ -2980,26 +2924,83 @@ class HebrewDictionary(App):
                     prR = ')'
                     
                 verbform = w.getVerbform()
-                mult = 1
+                #mult = 1
                 if(w.getTense() == 'Participle'):
                     tense = w.getPar() + " " + w.getTense()
                     tense2 = w.getPar() + "        "
-                    #mult = 2
                 else:
                     tense = w.getTense()
                     tense2 = tense
-                    mult = 6
+                   # mult = 6
                 person = w.getPerson()
                 gender = w.getGender()
                 
-                preN = w.getPrefixVal()
-                cn = 0
-                if (w.getConstruct() == True) and (w.getSuffix() == True):
-                    cn = 5
+                if w.getPrefix() == True:
+                    pr = "prefix [" + w.getPrefixW() + ']'
+                    OutPut.append(pr)
+                    X += 'x'*math.floor(len(pr)/4)
+                    
+                if (not(verbform == "")):
+                    OutPut.append(verbform)
+                    X += 'xxx'
+                    
+                if (not(tense == "")):
+                    OutPut.append(tense)
+                    X += 'xxx'
+                    
+                if (not(person == "")):
+                    OutPut.append(person)
+                    X += 'xxx'
+                    
+                if (not(w.getGenderVal() == -1)) and ((w.getPlural() == True) or (w.getDaul() == True)):
+                    OutPut.append(gender)
+                    X += 'xxx'
+                    
+                if w.getConstruct() == True:
+                    contr = "cnstr."
+                    OutPut.append(contr)
+                    X += 'xxx'
+                    
+                if(w.getPlural() == True) or (w.getDaul() == True):
+                    OutPut.append(pl)
+                    X += 'xx'
+                    
+                if w.getModern() == True:
+                    X += 'xxxxxxxx'
+                    suff = "modern suffix:"
+                    sf7 = " [" + w.getModernW() + ']'
+                    OutPut.append(suff + sf7)
+                elif w.getSuffix() == True:
+                    suff = "suffix"
+                    if w.getHey1() > 0:
+                        sf7 = " [" + w.getSuffixW() + ',' + ' ' + dirHey + ']'  
+                    else:
+                        sf7 = " [" + w.getSuffixW() + ']'
+                    X += 'x'*math.floor(len(suff + sf7)/4)
+                    OutPut.append(suff + sf7)
+                else:       
+                    if w.getHey1() > 0:
+                        suff = "suffix"
+                        sf7 = " [" + dirHey + ']'
+                        OutPut.append(suff + sf7)
+                        X += 'x'*math.floor(len(suff + sf7)/4)
+                   
+                speech = "" 
+                speechB = ""
+                for t in range(len(OutPut)):
+                    speech += OutPut[t]
+                    speechB += OutPut[t]
+                    if(t < len(OutPut)-1):
+                        speech += " "
+                        speechB += " "
                 
-                script = TAB2*n + TAB2 + val + (modern[:-3])*2 + prL + (pre) + (s6[:-(preN-1)])*(2) + preSP + (verbform)*2 + s1 + (tense2)*(2) + s2*mult + person + s3 + gender + s4 + s4b + (constr[:-1])*2 + s5 + (suff) + (s7[:-1])*(2) + suffSP + pl*2 + prR + ARROW + isR + (w.getText()[:-1])*(2) + TAB + '-' + TAB
-                spaces = len(script) - cn
-                self.wText += '\t\t'*n +  '\t\t' + val + modern + prL + pre + s6 + preSP + w.getVerbform() + s1 + tense + s2 + w.getPerson() + s3 + w.getGender() + s4 + s4b + constr + s5 + suff + s7 + suffSP + pl + prR + ARROW + isR + w.getText() + '\t' + '-' + '\t' + self.fixDef(definition, spaces) + ';' + ' gmra. = ' + str(w.getGemontria()) + '\n'
+                
+                script = TAB2*n + TAB2 + val + prL + speechB + X #(pre) + (s6[:-(preN-1)])*(2) + preSP + (verbform)*2 + s1 + (tense2)*(2) + s2*mult + person + s3 + gender + s4 + s4b + (constr[:-1])*2 + s5 + (suff) + (s7[:-1])*(2) + suffSP + pl*2 
+                script+= prR + ARROW + isR + (w.getText()[:-1])*(2) + TAB + '-' + TAB
+                spaces = len(script)
+                
+                self.wText += '\t\t'*n +  '\t\t' + val + prL + speech #pre + s6 + preSP + w.getVerbform() + s1 + tense + s2 + w.getPerson() + s3 + w.getGender() + s4 + s4b + constr + s5 + suff + s7 + suffSP + pl
+                self.wText += prR + ARROW + isR + w.getText() + '\t' + '-' + '\t' + self.fixDef(definition, spaces) + ';' + ' gmra. = ' + str(w.getGemontria()) + '\n'
         elif number + Year == "":
             self.wText += '\t\t'*n +  "No words found"
             self.wText += '\n'
@@ -3053,7 +3054,7 @@ class HebrewDictionary(App):
         for i in range(len(words)):
             diff += len(words[i]) + 1
             if ((diff + spaces*0.70) > n):
-                fixedL[i] = words[i] + '\n' + (' ')*spaces
+                fixedL[i] = words[i] + '\n' + (' ')*spaces + (' ')*math.floor(spaces/10)
                 diff = 0
             else:
                 fixedL[i] = words[i]
