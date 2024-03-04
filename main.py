@@ -2970,7 +2970,7 @@ class HebrewDictionary(App):
                     suff = "modern suffix:"
                     sf7 = " [" + w.getModernW() + ']'
                     OutPut.append(suff + sf7)
-                elif w.getSuffix() == True:
+                if w.getSuffix() == True:
                     suff = "suffix"
                     if w.getHey1() > 0:
                         sf7 = " [" + w.getSuffixW() + ',' + ' ' + dirHey + ']'  
@@ -3164,7 +3164,7 @@ class HebrewDictionary(App):
         if(word.getLen() < 3) or (word.isPhrase()) or (word.isTense() == True) or ((word.isVerbf() == True)and(not(word.getVerbform() == 'Qal'))):
             return Word("", "")
                 
-        if(word.getPartiVal() == 0) or (word.getSuffix() == True) or (word.getHey1() > 0):
+        if(word.getPartiVal() == 0):
             return Word("","")
                 
         if(word.getLen() > 6):
