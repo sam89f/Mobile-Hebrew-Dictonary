@@ -53,7 +53,7 @@ Piel = ['Piel', 'Poel', 'Pilpel', 'Pilel', 'Palel', 'Polel', 'Pealal', 'Hothpaal
 suffix = ['הנה', 'ןכי', 'ונ', 'םכ', 'ןכ', 'םה', 'ומ', 'ם', 'ןה', 'ן', 'ית', 'ינ', 'י', 'ה', 'הנ', 'וה', 'ו', 'ך']
 suffixPos= ['הנהי', 'םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'יי', 'ןי', 'וני']
 prefixL = ['תת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
-modernL = ['קינ', 'רטמ', 'הקס', 'םינו', 'דיאו', 'ןמ', 'הינמ', 'סיזניק', 'פוקס', 'היפרג', 'היצ', 'ןקי', 'הקי', 'טסי', 'םזי', 'הז', 'יל', 'יא', 'תי']
+modernL = ['קינ', 'רטמ', 'הקס', 'םינו', 'דיאו', 'ןמ', 'הינמ', 'סיזניק', 'פוקס', 'היפרג', 'היצ', 'ןקי', 'הקי', 'טסי', 'םזי', 'הז', 'יל', 'יא', 'תי', 'תויו']
 prephrase = ['ת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
 plural = ['תו', 'םי', 'םיי']
 metathesis = ['ס', 'ש', 'צ']
@@ -2952,7 +2952,7 @@ class HebrewDictionary(App):
                     OutPut.append(person)
                     X += 'xxx'
                     
-                if (not(w.getGenderVal() == -1)) and ((w.getPlural() == True) or (w.getDaul() == True)):
+                if (not(w.getGenderVal() == -1)):
                     OutPut.append(gender)
                     X += 'xxx'
                     
@@ -3185,6 +3185,13 @@ class HebrewDictionary(App):
                     mdrnWh.addToValue(4)
                     self.FindHelper(look, mdrnWh, self.Dict)
                     self.algorithm(look, mdrnWh)
+                if(not('ת' in word.getSufxList())):
+                    mdrnWt = Word("","")
+                    mdrnWt.equalTo(mdrnW)
+                    mdrnWt.setText('ת' + self.unFinal(mdrnW.getText()))
+                    mdrnWt.addToValue(4)
+                    self.FindHelper(look, mdrnWt, self.Dict)
+                    self.algorithm(look, mdrnWt)
                 return mdrnW
                 
         if(word.getLen() > 5):
@@ -3204,6 +3211,20 @@ class HebrewDictionary(App):
                     mdrnWh.addToValue(4)
                     self.FindHelper(look, mdrnWh, self.Dict)
                     self.algorithm(look, mdrnWh)
+                if(not('ת' in word.getSufxList())):
+                    mdrnWt = Word("","")
+                    mdrnWt.equalTo(mdrnW)
+                    mdrnWt.setText('ת' + self.unFinal(mdrnW.getText()))
+                    mdrnWt.addToValue(4)
+                    self.FindHelper(look, mdrnWt, self.Dict)
+                    self.algorithm(look, mdrnWt)
+                if((word.getPlural() == False) or (not(word.getGenderVal() == 1))):
+                    mdrnWth = Word("","")
+                    mdrnWth.equalTo(mdrnW)
+                    mdrnWth.setText('תו' + self.unFinal(mdrnW.getText()))
+                    mdrnWth.addToValue(4)
+                    self.FindHelper(look, mdrnWth, self.Dict)
+                    self.algorithm(look, mdrnWth)
                 return mdrnW
                 
         if(word.getLen() > 4):
@@ -3230,6 +3251,13 @@ class HebrewDictionary(App):
                     mdrnWh.addToValue(4)
                     self.FindHelper(look, mdrnWh, self.Dict)
                     self.algorithm(look, mdrnWh)
+                if(not('ת' in word.getSufxList())):
+                    mdrnWt = Word("","")
+                    mdrnWt.equalTo(mdrnW2)
+                    mdrnWt.setText('ת' + self.unFinal(mdrnW2.getText()))
+                    mdrnWt.addToValue(4)
+                    self.FindHelper(look, mdrnWt, self.Dict)
+                    self.algorithm(look, mdrnWt)
                 return mdrnW2
                 
         if(word.getLen() > 3):
@@ -3249,6 +3277,13 @@ class HebrewDictionary(App):
                     mdrnWh.addToValue(4)
                     self.FindHelper(look, mdrnWh, self.Dict)
                     self.algorithm(look, mdrnWh)
+                if(not('ת' in word.getSufxList())):
+                    mdrnWt = Word("","")
+                    mdrnWt.equalTo(mdrnW)
+                    mdrnWt.setText('ת' + self.unFinal(mdrnW.getText()))
+                    mdrnWt.addToValue(4)
+                    self.FindHelper(look, mdrnWt, self.Dict)
+                    self.algorithm(look, mdrnWt)
                 return mdrnW
             
         if (word.last() in modernL):
@@ -3267,6 +3302,13 @@ class HebrewDictionary(App):
                 mdrnWh.addToValue(4)
                 self.FindHelper(look, mdrnWh, self.Dict)
                 self.algorithm(look, mdrnWh)
+            if(not('ת' in word.getSufxList())):
+                mdrnWt = Word("","")
+                mdrnWt.equalTo(mdrnW)
+                mdrnWt.setText('ת' + self.unFinal(mdrnW.getText()))
+                mdrnWt.addToValue(4)
+                self.FindHelper(look, mdrnWt, self.Dict)
+                self.algorithm(look, mdrnWt)
                 
             return mdrnW
             
