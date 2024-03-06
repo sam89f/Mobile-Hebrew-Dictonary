@@ -2952,7 +2952,7 @@ class HebrewDictionary(App):
                     OutPut.append(person)
                     X += 'xxx'
                     
-                if (not(w.getGenderVal() == -1)):
+                if (not((w.getGenderVal() == -1)or(w.getGenderVal() == 2))):
                     OutPut.append(gender)
                     X += 'xxx'
                     
