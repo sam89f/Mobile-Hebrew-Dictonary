@@ -6619,8 +6619,8 @@ class HebrewDictionary(App):
             return False
         if ((p == 'ו') and (word.getPrefix() == True)):
             return False
-        #if ((p == 'ה') and (word.getSuffix() == True)):
-          #  return False
+        if ((not(p == 'תת')) and (word.getPrixListEnd() == 'תת')):
+            return False
         if ('ה' in word.getPrixList()):
             return False
         if (word.getPrixListEnd() == p):
