@@ -91,13 +91,13 @@ class Word:
         self.text = t
         self.definition = d
         self.value = INF
-        self.heyVal = 1
+        self.heyVal = 0.5
         self.lamedVal = 3
-        self.memVal = 4
-        self.betVal = 4
-        self.cafVal = 5
-        self.shinVal = 5
-        self.vavVal = 0
+        self.memVal = 2
+        self.betVal = 2
+        self.cafVal = 4
+        self.shinVal = 4
+        self.vavVal = 0.25
         self.vrbFactor = 0
         self.nonFactor = 0
         self.prefactor = 4
@@ -105,10 +105,10 @@ class Word:
         self.suffactor3 = 4
         self.suffactor = 4
         self.hey1factor = 4
-        self.plFactor = 2
-        self.plFactor2 = 3
-        self.dlFactor = 3
-        self.dlFactor2 = 4
+        self.plFactor = 1
+        self.plFactor2 = 2
+        self.dlFactor = 2
+        self.dlFactor2 = 3
         self.mdrnFactor = 6
         self.cnstFactor = 4
         self.cnstFactor2 = 3
@@ -6705,7 +6705,7 @@ class HebrewDictionary(App):
             return False
         if ((not(p == 'תת')) and (word.getPrixListEnd() == 'תת')):
             return False
-        if ('ה' in word.getPrixList()):
+        if (('ה' in word.getPrixList()) and (not(p == 'תת'))):
             return False
         if (word.getPrixListEnd() == p):
             return False
