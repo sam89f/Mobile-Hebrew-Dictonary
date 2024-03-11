@@ -110,7 +110,7 @@ class Word:
         self.dlFactor = 2
         self.dlFactor2 = 3
         self.mdrnFactor = 6
-        self.cnstFactor = 4
+        self.cnstFactor = 3
         self.cnstFactor2 = 3
         self.irrgFactor = 8
         self.root = "000"
@@ -1136,10 +1136,18 @@ class SearchWord:
         
     def sumOfV(self, index):
         sumV = 0
+        start = False
+        largest = 0
         for i in index:
+            if start == False:
+                largest = self.Words[i].getValue()
+                start = True
+            elif largest < self.Words[i].getValue():
+                largest = self.Words[i].getValue()
+            
             sumV = sumV + self.Words[i].getValue()
             
-        return sumV/(len(index))
+        return largest + sumV/(len(index))
         
     def getSumOfV(self, ref):
         return ref.getVal()
