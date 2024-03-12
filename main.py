@@ -66,7 +66,7 @@ Finals = ['ך', 'ם', 'ן', 'ף', 'ץ']
 finals = {'כ':'ך', 'מ':'ם', 'נ':'ן', 'פ':'ף', 'צ':'ץ'}
 unFinals = {'ך':'כ', 'ם':'מ', 'ן':'נ', 'ף':'פ', 'ץ':'צ'}
 prefixD = {"תת":"sub", "ה":"the", "ו":"and", "ב":"in/at/with/by/during", "מ":"from", "ל":"to/toward/for", "כ":"as/like", "ש":"which"}
-ssuffix = {"ןה":"their/them (f.)", "הנה":"their/them (f.)", "ן":"their/them (f.)", "םה":"their/them (m.)", "ם":"their/them (m.)", "ומ":"their/them (m.)", "ה":"hers/her", "הנ":"hers/her", "ו":"his/him", "וה":"his/him", "ןכ":"your/you (pl. f.)", "םכ":"your/you (pl.)", "ך":"you/your (m.)", "ונ":"our/us", "ית":"my/me", "י":"my/me", "ינ":"my/me"}
+ssuffix = {"ןה":"their/them (f.)", "הנה":"their/them (f.)", "ן":"their/them (f.)", "םה":"their/them (m.)", "ם":"their/them (m.)", "ומ":"their/them (m.)", "ה":"hers/her", "הנ":"hers/her", "ו":"his/him", "וה":"his/him", "ןכ":"your/you (pl. f.)", "םכ":"your/you (pl. m.)", "ך":"you/your (m.)", "ונ":"our/us", "ית":"my/me", "י":"my/me", "ינ":"my/me"}
 suffFactors = {"ןה":3, "הנה":5, "ן":4, "םה":3, "ם":4, "ומ":4, "ה":2, "הנ":3, "ו":3, "וה":2.5, "ןכ":3, "םכ":3, "ך":3, "ונ":3, "ית":3, "י":2, "ינ":3}
 #suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
 parti = {1:'Active', 0:'Passive', 2:''}
@@ -5253,29 +5253,29 @@ class HebrewDictionary(App):
                         holl2 = False
                         if(futurW.getLen() > 2):
                             futurW.setRoot(futurW.last3())
-                    if(futurW.getLen() == 2) and (holl2 == True):
-                        hollow = Word("","")
-                        hollow.equalTo(futurW)
-                        hollow.setText(hollow.last() + 'ו' + hollow.first())
-                        hollow.addToValue(1)
-                        hollow.setRoot(hollow.getText())
-                        self.FindHelper(look, hollow, self.Dict)
-                    if(not(word.getRoot()[:2] == word.last2()))and(futurW.getLen() > 2):
-                        futurW.setRoot(futurW.last3())
-                        
-                    f = self.FindHelper(look, futurW, self.Dict)
-                    self.algorithm(look, futurW)
-                    fh = False
-                    if(not ('ה' in word.getSufxList())):
-                        futurWh = Word("","")
-                        futurWh.equalTo(futurW)
-                        futurWh.setText('ה' + self.unFinal(futurW.getText()))
-                        futurWh.addToValue(3)
-                        if(futurWh.hasRoot()) and (futurWh.getLen() > 2):
-                            if(futurWh.getRoot()[1:] == futurWh.last3()[1:]):
-                                futurWh.setRoot(futurWh.last3())
-                        fh = self.FindHelper(look, futurWh, self.Dict)
-                        self.irreg(look, futurWh)
+                if(futurW.getLen() == 2) and (holl2 == True):
+                    hollow = Word("","")
+                    hollow.equalTo(futurW)
+                    hollow.setText(hollow.last() + 'ו' + hollow.first())
+                    hollow.addToValue(1)
+                    hollow.setRoot(hollow.getText())
+                    self.FindHelper(look, hollow, self.Dict)
+                if(not(word.getRoot()[:2] == word.last2()))and(futurW.getLen() > 2):
+                    futurW.setRoot(futurW.last3())
+                    
+                f = self.FindHelper(look, futurW, self.Dict)
+                self.algorithm(look, futurW)
+                fh = False
+                if(not ('ה' in word.getSufxList())):
+                    futurWh = Word("","")
+                    futurWh.equalTo(futurW)
+                    futurWh.setText('ה' + self.unFinal(futurW.getText()))
+                    futurWh.addToValue(3)
+                    if(futurWh.hasRoot()) and (futurWh.getLen() > 2):
+                        if(futurWh.getRoot()[1:] == futurWh.last3()[1:]):
+                            futurWh.setRoot(futurWh.last3())
+                    fh = self.FindHelper(look, futurWh, self.Dict)
+                    self.irreg(look, futurWh)
 
                 elif 'ו' in word.getPrixList():
                     self.irreg(look, futurW)
