@@ -5411,6 +5411,15 @@ class HebrewDictionary(App):
                         full = True
                         if(futurW.getLen() > 2):
                             futurW.setRoot(futurW.last3())
+                            
+                if(not(futurW.first() == 'א')) and (futurW.getLen() == 2):
+                    AfuturW = Word("","")
+                    AfuturW.equalTo(futurW)
+                    AfuturW.setText(futurW.getText() + 'א')
+                    AfuturW.addToValue(3)
+                    AfuturW.setRoot(AfuturW.getText())
+                    self.FindHelper(look, AfuturW, self.Dict)
+                            
                 if(futurW.getLen() == 2) and (full == False):
                     hollow = Word("","")
                     hollow.equalTo(futurW)
@@ -5622,6 +5631,14 @@ class HebrewDictionary(App):
                         full = True
                         if(futurW.getLen() > 2):
                             futurW.setRoot(futurW.last3())
+                            
+                if(not(futurW.first() == 'נ')) and (futurW.getLen() == 2):
+                    NfuturW = Word("","")
+                    NfuturW.equalTo(futurW)
+                    NfuturW.setText(futurW.getText() + 'נ')
+                    NfuturW.addToValue(3)
+                    NfuturW.setRoot(NfuturW.getText())
+                    self.FindHelper(look, NfuturW, self.Dict)
                             
                 if(futurW.getLen() == 2) and (full == False):
                     hollow = Word("","")
@@ -7961,7 +7978,7 @@ class HebrewDictionary(App):
                 if('ן' in irregWNN.getSufxList()):
                     irregWNN.remSuff();
                 irregWNN.setIrreg()
-                self.FindHelperCheck(look, irregWNN, self.Dict)
+                self.FindHelper(look, irregWNN, self.Dict)
             if word.getLen() == 1:
                 return Word("", "")
         
