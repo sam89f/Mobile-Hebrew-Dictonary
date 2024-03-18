@@ -2840,7 +2840,7 @@ class HebrewDictionary(App):
             rightW = Word("", "")
             rightW.equalTo(word)
             rightW.setValue(INF*INF)
-            
+            self.FindHelper(look, rightW, self.Dict, Check)
 
             # These three blocks gets rid of any quotation marks just in cases thay interfered with the processing of the word.
             # words must be searched with each single and double quotes missing and with both present (done above).
