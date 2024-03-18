@@ -3912,7 +3912,7 @@ class HebrewDictionary(App):
                         hifilW.setVerbform(rareVerbforms[word2.getVerbform()])
                                 
                     self.FindHelper(look, hifilW, self.Dict, Check)
-                    self.perfect(look, hifilW, Check, Check)
+                    self.perfect(look, hifilW, Check)
                     self.imperative(look, hifilW, Check)
                 
                 if((word2.first() == 'י') or (word2.first() == 'נ' ) or (word2.first() == 'ת' ) or (word2.first() == 'א')) and (not((word2.hasRoot()) and (not((word2.getRootLast2() == word2.XtoY(2, 4)) or (word2.getRootLast2() == word2.XtoY(3, 5)))))):
