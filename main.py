@@ -8211,7 +8211,7 @@ class HebrewDictionary(App):
                 irregW2.equalTo(word)
                 irregW2.setText(word.getText() + 'נ')
                 irregW2.setIrreg()
-                self.FindHelperCheck(look, irregW2, self.Dict)
+                self.FindHelper(look, irregW2, self.Dict, Check)
                 self.irreg(look, irregW2, Check)
                 if(not('ה' in word.getSufxList())) and (not(word.last() == 'ה')) and (not (self.CurrentWord.last() == 'ה')) and (not((word.isVavSeq() == True)and(word.getTense() == 'Imperfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))) and (not((word.isVavSeq() == False)and(word.getTense() == 'Perfect')and(word.getPerson() == '3rd, sg.')and(word.getGender() == 'f.'))):
                     irregWh = Word("","")
