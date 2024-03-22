@@ -3809,7 +3809,7 @@ class HebrewDictionary(App):
                             word_P.setVerbform(4)
                         else:
                             H_hollow.setVerbform(rareVerbforms[word2.getVerbform()])
-                            word_P.setVerbform(4).setVerbform(rareVerbforms[word2.getVerbform()])
+                            word_P.setVerbform(rareVerbforms[word2.getVerbform()])
                                     
                         self.participle(look, H_hollow, Check)
                         #self.participle(look, word_P, Check) 
