@@ -6247,7 +6247,7 @@ class HebrewDictionary(App):
         
     def FinalChain(self, text):
         inputL = text.split()
-        if len(text) > 1:
+        if len(inputL) > 1:
             for i in range(len(inputL)):
                 inputL[i] = self.wFinal(inputL[i])
             text =  " ".join(inputL)  
@@ -6260,7 +6260,7 @@ class HebrewDictionary(App):
         inputL = temp.split()
         s = len(end)
         count = 0
-        if len(text) > 1:
+        if len(inputL) > 1:
             for i in range(len(inputL)):
                 if(inputL[i][0:s] == end):
                     count = count + 1
@@ -6272,19 +6272,32 @@ class HebrewDictionary(App):
         text = phrase.getText()
         temp = text.replace("-", " ")
         inputL = temp.split()
-        if len(text) > 1:
+        if len(inputL) > 1:
             for i in range(len(inputL)):
                 if(len(inputL[i]) < size):
                     return False
         return True
         
+    def sizChainSub(self, phrase, suffix):
+        text = phrase.getText()
+        temp = text.replace("-", " ")
+        inputL = temp.split()
+        if len(inputL) > 1:
+            for i in range(len(inputL)):
+                if len(inputL[i]) >= len(suffix):
+                    if inputL[i][0:len(suffix)] == suffix:
+                        inputL[i] = inputL[i][2:]
+                    if(len(inputL[i]) < 2):
+                        return False
+        return True
+        
     #def getFrsLen(self, phrase):
-        text = self.rev(phrase.getText())
+        #text = self.rev(phrase.getText())
         
         #return text.find("-")
         
     #def getLstLen(self, phrase):
-        text = phrase.getText()
+        #text = phrase.getText()
         
         #return text.find("-")
             
@@ -6299,7 +6312,7 @@ class HebrewDictionary(App):
         if(word.getPluralVal() > 3*word.plFactor):
             return Word("", "")
 
-        if(cPhrasePl.getLen() > 3):
+        if (self.sizChainSub(cPhrasePl, "םיי")):
             change = self.lstChain(cPhrasePl.getText(), "םיי")
             if((cPhrasePl.isPhrase()) and (change > -1)) and (cPhrasePl.getExphLen() > 3):
                 plW = Word("","")
@@ -6480,7 +6493,7 @@ class HebrewDictionary(App):
                 plW.setText(self.revPhWords(plW.getText(), "-"))
                 #return plW
 
-        if(cPhrasePl.getLen() > 2):
+        if(self.sizChainSub(cPhrasePl, "םי")):
             change3 = self.lstChain(cPhrasePl.getText(), "םי")
             if((cPhrasePl.isPhrase()) and (change3 > -1)) and (cPhrasePl.getExphLen() > 2):
                 plW = Word("","")
@@ -6888,7 +6901,7 @@ class HebrewDictionary(App):
         
         cPhrasePre.setText(self.revPhWords(cPhrasePre.getText(), "-"))
 
-        if(cPhrasePre.getFrsLen() > 2): 
+        if(cPhrasePre.getFrsLen() > 3): 
             if (cPhrasePre.first2() in prefixL) and (self.prefixRuls(cPhrasePre, cPhrasePre.first2(), False) == True):
                 preW = Word("","")
                 preW.equalTo(cPhrasePre)
@@ -6906,39 +6919,40 @@ class HebrewDictionary(App):
                     return preW
                 else:
                     return preWend
-          
-        if (cPhrasePre.first() in prefixL) and (self.prefixRuls(cPhrasePre, cPhrasePre.first(), False) == True):
-            preW = Word("","")
-            preW.equalTo(cPhrasePre)
-            preW.setText(cPhrasePre.getText()[:-1])
-            if(cPhrasePre.first() == "ה"):
-                preW.setPrefixN(preW.heyVal)
-            elif(cPhrasePre.first() == 'ל'):
-                preW.setPrefixN(preW.lamedVal)
-            elif(cPhrasePre.first() == 'ב'):
-                preW.setPrefixN(preW.betVal)
-            elif(cPhrasePre.first() == 'ו'):
-                preW.setPrefixN(preW.vavVal)
-            elif(cPhrasePre.first() == 'כ'):
-                preW.setPrefixN(preW.cafVal)
-            elif(cPhrasePre.first() == 'מ'):
-                preW.setPrefixN(preW.memVal)
-            elif(cPhrasePre.first() == 'ש'):
-                preW.setPrefixN(preW.shinVal)
-            else:
-                preW.setPrefix()
-            preW.addPre(cPhrasePre.first())
-            preW.setText(self.revPhWords(preW.getText(), "-"))
-            
-            self.FindHelper(look, preW, self.Dict, Check) 
-            self.plural(look, preW, Check)
-            self.suffix(look, preW, 1, Check)
-            preWend = Word("","")
-            preWend.equalTo(self.prefix(look, preW, False, Check))
-            if preWend.getText() == "":
-                return preW
-            else:
-                return preWend
+                    
+        if(cPhrasePre.getFrsLen() > 2):
+            if (cPhrasePre.first() in prefixL) and (self.prefixRuls(cPhrasePre, cPhrasePre.first(), False) == True):
+                preW = Word("","")
+                preW.equalTo(cPhrasePre)
+                preW.setText(cPhrasePre.getText()[:-1])
+                if(cPhrasePre.first() == "ה"):
+                    preW.setPrefixN(preW.heyVal)
+                elif(cPhrasePre.first() == 'ל'):
+                    preW.setPrefixN(preW.lamedVal)
+                elif(cPhrasePre.first() == 'ב'):
+                    preW.setPrefixN(preW.betVal)
+                elif(cPhrasePre.first() == 'ו'):
+                    preW.setPrefixN(preW.vavVal)
+                elif(cPhrasePre.first() == 'כ'):
+                    preW.setPrefixN(preW.cafVal)
+                elif(cPhrasePre.first() == 'מ'):
+                    preW.setPrefixN(preW.memVal)
+                elif(cPhrasePre.first() == 'ש'):
+                    preW.setPrefixN(preW.shinVal)
+                else:
+                    preW.setPrefix()
+                preW.addPre(cPhrasePre.first())
+                preW.setText(self.revPhWords(preW.getText(), "-"))
+                
+                self.FindHelper(look, preW, self.Dict, Check) 
+                self.plural(look, preW, Check)
+                self.suffix(look, preW, 1, Check)
+                preWend = Word("","")
+                preWend.equalTo(self.prefix(look, preW, False, Check))
+                if preWend.getText() == "":
+                    return preW
+                else:
+                    return preWend
                 
         return Word("", "")
     
