@@ -1172,8 +1172,8 @@ class SearchWord:
     def find(self, w, Dict):
         if w in self.getWords():
             index = self.indexWords(w)
-            # if self.Words[index].getValue() < w.getValue():
-                #self.Words[index].setValue(w.getValue())
+            if self.Words[index].getValue() < w.getValue():
+                self.Words[index].setValue(w.getValue())
             return True
         elif w.getText() in Dict.keys():
             definition = Dict[w.getText()]["definition"]
@@ -2741,12 +2741,12 @@ class HebrewDictionary(App):
         Skip = False
         Check = False
         tempWord = Word("", "")
-        
+        word0 = Word("", "")
         # creating word object with text value of the string at indext 'i' (current index)
         word = Word(text[i], "")
         # initialize 'CurrentWord' variable to the word now being processed
         self.CurrentWord.equalTo(word)
-        
+        word0.equalTo(word)
         # checks to see if the text is in the format of a Hebrew year.
         # If so format a string in the 'Year' variable to display that year.
         if yWord.isYear() == True:
@@ -2779,6 +2779,7 @@ class HebrewDictionary(App):
         # if the current word is not the first word check the word before it; and if the word
         # before it is one if the Hebrew words below in the if statement, then the current word 
         # is most likely a noun
+        rightW = Word("", "")
         if i > 0:
             if((text[i-1] == 'תא') or (text[i-1] == 'תאו')):
                 isNoun = True
@@ -2791,7 +2792,7 @@ class HebrewDictionary(App):
                     nounW.setNoun()
                     rightW = Word("", "")
                     rightW.equalTo(nounW)
-                    rightW.setValue(INF*INF)
+                    rightW.setValue(INF)
                     look.find(rightW, self.Dict)
                     self.algorithm(look, nounW, False)
                     
@@ -2809,7 +2810,7 @@ class HebrewDictionary(App):
                 verbW.setVerb()
                 rightW = Word("", "")  
                 rightW.equalTo(verbW)
-                rightW.setValue(INF*INF)
+                rightW.setValue(INF)
                 look.find(rightW, self.Dict)
                 self.algorithm(look, verbW, False)
                         
@@ -2819,55 +2820,44 @@ class HebrewDictionary(App):
         # we already know this is the proper name of G_d and a proper noun.
         if word.getText() == "הוהי":
             word.setNoun()
-            look.find(word, self.Dict)
+            look.find(word0, self.Dict)
         else: #If the current word is not The Tetragramaton, then the current word may or may not be set to a noun or a verb
               #based on the resalts from the context recognition part of the code
             if(isVerb == True) or (isNoun == True):
                 Check = True
-                
-            rightW = Word("", "")
-            rightW.equalTo(word)
-            rightW.setValue(INF*INF)
-            self.FindHelper(look, rightW, self.Dict, Check)
-            self.smPrefix(look, rightW, False, Check)
+                word0.equalTo(rightW)
+            else:
+                rightW.equalTo(word0)
+                rightW.setValue(INF)
+                self.FindHelper(look, rightW, self.Dict, Check)
+                self.algorithm(look, rightW, Check) #determines the possible forms of the current word, and searches
 
             # These three blocks gets rid of any quotation marks just in cases thay interfered with the processing of the word.
             # words must be searched with each single and double quotes missing and with both present (done above).
-            sText = word.getText()
+            sText = word0.getText()
             sText = sText.replace('\"', '')
 
-            if(not (word.getText() == sText)): #if there are quotation marks in the current word put stripped version in the algorithm
-                word.setText(sText)            #stored in the 'sText' variable.
+            if(not (word0.getText() == sText)): #if there are quotation marks in the current word put stripped version in the algorithm
+                word0.setText(sText)            #stored in the 'sText' variable.
                 self.CurrentWord.setText(sText)
                 rightW = Word("", "")
-                rightW.equalTo(word)
-                rightW.setValue(INF*INF)
-            else:
-                if Check == False:
-                    look.find(rightW, self.Dict) #search for the word as it appears in the text input field
-                self.algorithm(look, word, Check) #determines the possible forms of the current word, and searches
-                #for the words that the current word may have be been derived from
-                Skip = True
-        
-            if Skip == False:
-                sText2 = word.getText()
-                sText2 = sText2.replace("\'", "")
+                rightW.equalTo(word0)
+                rightW.setValue(INF)
+                self.FindHelper(look, rightW, self.Dict, Check)
+                self.algorithm(look, rightW, Check)
                 
-                if(not (word.getText() == sText2)): #if there are single quotes in the current word put stripped version in the algorithm
-                    word.setText(sText2)            #stored in the 'sText2' variable.
-                    self.CurrentWord.setText(sText2)
-                    rightW = Word("", "")
-                    rightW.equalTo(word)
-                    rightW.setValue(INF*INF)
-                    if Check == False:
-                        look.find(rightW, self.Dict)
-                    if not(word.getText() == "הוהי"): #see if current word is The Tetragramaton, this time without the single quotes
-                        self.algorithm(look, word, Check)
-                else:
-                    if Check == False:
-                        look.find(rightW, self.Dict)
-                    if not(word.getText() == "הוהי"): #see if current word is The Tetragramaton, this time without the quotation marks
-                        self.algorithm(look, word, Check)
+        
+            sText2 = word0.getText()
+            sText2 = sText2.replace("\'", "")
+            
+            if(not (word0.getText() == sText2)): #if there are single quotes in the current word put stripped version in the algorithm
+                word0.setText(sText2)            #stored in the 'sText2' variable.
+                self.CurrentWord.setText(sText2)
+                rightW = Word("", "")
+                rightW.equalTo(word0)
+                rightW.setValue(INF)
+                self.FindHelper(look, rightW, self.Dict, Check)
+                self.algorithm(look, rightW, Check)
                                     
         look.group()
         WList = look.getWords() #store all the words found in the 'WList' variable
@@ -2930,10 +2920,12 @@ class HebrewDictionary(App):
                 ARROW = "  =>  "
                 X = ""
                 HR = False
+                #Val = "[" + str(w.getValue()) + "]"
                 #HR = w.hasRoot()
                 if(w.isRoot() == True):
-                    isR = "(r) "
-                
+                    isR = "(r) "# + Val + " "
+                #else:
+                    #isR = " " + Val + " "
                 if(not(w.getVerbformVal() == -1)) or (not(w.getTenseVal() == -1)) or (not(w.getPersonVal() == -1)) or (not(w.getGenderVal() == -1)) or (w.getPlural() == True) or (w.getModern() == True) or (w.getDual() == True) or (w.getHey1() > 0) or (w.getSuffix() == True) or (w.getPrefix() == True) or (HR == True) or (w.getConstruct() == True):
                     gr = True
 
