@@ -53,6 +53,7 @@ Piel = ['Piel', 'Poel', 'Pilpel', 'Pilel', 'Palel', 'Polel', 'Pealal', 'Hothpaal
 suffix = ['הנה', 'ןכ', 'ונ', 'םכ', 'ןכ', 'םה', 'ומ', 'ם', 'ןה', 'ן', 'ית', 'ינ', 'י', 'ה', 'הנ', 'וה', 'ו', 'ך']
 suffixPos= ['הנהי', 'םכי', 'ןכי', 'םהי', 'ןהי', 'הי', 'וי', 'ךי', 'יי', 'ןי', 'וני']
 prefixL = ['תת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
+prefixV = {"תת":4, 'ה':0.5, 'ו':0.25, 'מ':2, 'ב':2,'כ':3, 'ש':3, 'ל':3}
 modernL = ['קינ', 'רטמ', 'הקס', 'םינו', 'דיאו', 'ןמ', 'הינמ', 'סיזניק', 'פוקס', 'היפרג', 'היצ', 'ןקי', 'הקי', 'טסי', 'םזי', 'הז', 'יל', 'יא', 'תי', 'תויו']
 prephrase = ['ת', 'ה', 'ו', 'מ', 'ב','כ', 'ש', 'ל']
 plural = ['תו', 'םי', 'םיי']
@@ -101,9 +102,9 @@ class Word:
         self.vrbFactor = 0
         self.nonFactor = 0
         self.prefactor = 4
-        self.suffactor2 = 4
+        self.suffactor2 = 3
         self.suffactor3 = 4
-        self.suffactor = 4
+        self.suffactor = 3
         self.hey1factor = 4
         self.plFactor = 1
         self.plFactor2 = 2
@@ -165,8 +166,8 @@ class Word:
         self.tense = value.tense
         self.person = value.person
         self.gender = value.gender
-        self.preW = value.preW
-        self.sufW = value.sufW
+        self.preW = value.preW.copy()
+        self.sufW = value.sufW.copy()
     
     def equalTo(self, newWord):
         self.value = newWord.value
@@ -754,13 +755,13 @@ class Word:
             return text
 
     def setPrefixN(self, n):
-        self.prefix += self.prefactor
-        self.value = (self.value - n*(1 + 0.5*(len(self.preW))))
+        self.prefix = self.prefix +  n
+        self.value = self.value - (n*(self.prefix/2))
         
     
     def setPrefix(self):
-        self.prefix += self.prefactor
-        self.value = self.value - (self.prefactor*(1 + 0.5*len(self.preW)))
+        self.prefix = self.prefix +  self.prefactor
+        self.value = self.value - (self.prefactor*(self.prefix/2)) 
         
     def setRoot(self, R2):
         if(not('-' in self.text)):
@@ -774,14 +775,13 @@ class Word:
         self.value = self.value - self.hey1factor
         
     def decPrefix(self):
-        if self.prefix > 0:
-            self.prefix = self.prefix - self.prefactor
-            self.value = self.value + (self.prefactor*(1 + 0.5*(len(self.preW)-1)))
+        temp = self.prefix
+        self.prefix = self.prefix - self.prefactor
+        self.value = self.value + (self.prefactor*(temp/2))
         
     def decSuffix1(self):
-        if self.suffix1 > 0:
-            self.suffix1 = self.suffix1 - self.suffactor
-            self.value = self.value + self.suffactor
+        self.suffix1 = self.suffix1 - self.suffactor
+        self.value = self.value + self.suffactor
             
     def setVavSeq(self):
         self.VavSeq = True
@@ -792,29 +792,20 @@ class Word:
             return
         self.Verb = True
         self.Noun = False
-        if((INF - (self.value + self.vrbFactor)) > 0):
-            self.value += self.vrbFactor
-        else:
-            self.value = INF - 1
-        
+        self.value = self.value + self.vrbFactor
+       
     def setNoun(self):
         if self.Noun == True:
             return
         self.Noun = True
         self.Verb = False
-        if((INF - (self.value + self.nonFactor)) > 0):
-            self.value += self.nonFactor
-        else:
-            self.value = INF - 1
+        self.value = self.value + self.nonFactor
         
     def unSetVerb(self):
         if self.Verb == False:
             return
         self.verb = False
-        if((INF - (self.value - self.vrbFactor)) > 0):
-            self.value = self.value - self.vrbFactor
-        else:
-            self.value = INF - 1
+        self.value = self.value - self.vrbFactor
         
     def setVfactor(self, num):
         self.vrbFactor = num
@@ -823,10 +814,7 @@ class Word:
         if self.Noun == False:
             return
         self.Noun = False
-        if((INF - (self.value - self.nonFactor)) > 0):
-            self.value = self.value - self.nonFactor
-        else:
-            self.value = INF - 1
+        self.value = self.value - self.nonFactor
         
     def setNfactor(self, num):
         self.nonFactor = num
@@ -1098,7 +1086,7 @@ class SearchWord:
         self.Words = []
     
     def getWords(self):
-        return list(self.Words)
+        return list(self.Words.copy())
         
     def getNumWds(self):
         return len(self.Words)
@@ -1152,7 +1140,7 @@ class SearchWord:
             
             sumV = sumV + self.Words[i].getValue()
             
-        return largest + sumV/(len(index))
+        return largest + sumV/((len(index)))
         
     def getSumOfV(self, ref):
         return ref.getVal()
@@ -1179,7 +1167,7 @@ class SearchWord:
             for i in ref.getIndex():
                 temp_Words.append(self.Words[i])
         
-        self.Words = temp_Words
+        self.Words = temp_Words.copy()
                 
     def find(self, w, Dict):
         if w in self.getWords():
@@ -2752,7 +2740,7 @@ class HebrewDictionary(App):
         confidence = 7
         Skip = False
         Check = False
-        
+        tempWord = Word("", "")
         
         # creating word object with text value of the string at indext 'i' (current index)
         word = Word(text[i], "")
@@ -2769,7 +2757,7 @@ class HebrewDictionary(App):
             if preYr.getLen() > 0:
                 if(preYr.isYear() == True) and (not preYr.getText() == ""):
                     Year = "prefix [" + preYr.getPrefixW() + '] ' + 'Year: ' + str(preYr.getYear()) + ';'
-
+        tempWord.equalTo(word)
         #if(Year == ''): #Only if text is not in the Hebrew year format do the following:
         if word.isNumb() == True: #If text in word object is in the format of a Hebrew number, format a string in the 
             #'number' variable to display that number.
@@ -2779,7 +2767,7 @@ class HebrewDictionary(App):
                 number = '#' + str(word.getGemontria()) + ';'
         # otherwise check to see if the text is in the Hebrew number format with a prefix at the beginning of the text
         else:
-            preNum = self.smPrefix(check, word, False, False)
+            preNum = self.smPrefix(check, tempWord, False, False)
             if preNum.getLen() > 0:
                 if(preNum.isNumb() == True) and (not preNum.getText() == ""):
                     if(Year == ''):
@@ -3742,7 +3730,7 @@ class HebrewDictionary(App):
             self.FindHelper(look, pualW, self.Dict, Check)
             return pualW
             
-        if(len(word.getText()) > 4) and (self.prefixRuls(word, word.first(), False) == True) and (word.third() == 'ו') and (not((word.hasRoot == True) and (not((word.getRootFirst2()  == wordword.XtoY(1, 3)) or (word.getRootFirst2() == word.XtoY(2, 4)))))) and (self.num_of_a_roots(word.getText()[:-3]) < 3):
+        if(len(word.getText()) > 4) and (word.third() == 'ו') and (not((word.hasRoot == True) and (not((word.getRootFirst2()  == wordword.XtoY(1, 3)) or (word.getRootFirst2() == word.XtoY(2, 4)))))) and (self.num_of_a_roots(word.getText()[:-3]) < 3):
             pualW = Word("","")
             pualW.equalTo(word)
             pualW.setText(word.getText()[:-3] + word.nextToFirst() + word.first())
@@ -6865,7 +6853,7 @@ class HebrewDictionary(App):
             return False
         if (p in word.getPrixList()):
             return False
-        if ((p in prep) and (word.getPrixListEnd() in prep)): 
+        if ((p in prep) and (word.getPrixListEnd() in prep)) and (not((p == 'ב')and(word.getPrixListEnd() == 'מ'))): 
             return False
         if (word.isVavSeq() == True):
             return False
@@ -6910,7 +6898,7 @@ class HebrewDictionary(App):
                 preW = Word("","")
                 preW.equalTo(cPhrasePre)
                 preW.setText(cPhrasePre.getText()[:-2])
-                preW.setPrefix()
+                preW.setPrefixN(prefixV[cPhrasePre.first2()])
                 preW.addPre(cPhrasePre.first2())
                 preW.setText(self.revPhWords(preW.getText(), "-"))
                 
@@ -6929,22 +6917,7 @@ class HebrewDictionary(App):
                 preW = Word("","")
                 preW.equalTo(cPhrasePre)
                 preW.setText(cPhrasePre.getText()[:-1])
-                if(cPhrasePre.first() == "ה"):
-                    preW.setPrefixN(preW.heyVal)
-                elif(cPhrasePre.first() == 'ל'):
-                    preW.setPrefixN(preW.lamedVal)
-                elif(cPhrasePre.first() == 'ב'):
-                    preW.setPrefixN(preW.betVal)
-                elif(cPhrasePre.first() == 'ו'):
-                    preW.setPrefixN(preW.vavVal)
-                elif(cPhrasePre.first() == 'כ'):
-                    preW.setPrefixN(preW.cafVal)
-                elif(cPhrasePre.first() == 'מ'):
-                    preW.setPrefixN(preW.memVal)
-                elif(cPhrasePre.first() == 'ש'):
-                    preW.setPrefixN(preW.shinVal)
-                else:
-                    preW.setPrefix()
+                preW.setPrefixN(prefixV[cPhrasePre.first()])
                 preW.addPre(cPhrasePre.first())
                 preW.setText(self.revPhWords(preW.getText(), "-"))
                 
@@ -7008,7 +6981,7 @@ class HebrewDictionary(App):
                 else:
                     preW.setText(word.getText()[:-2])
                     
-                preW.setPrefix()
+                preW.setPrefixN(prefixV[word.first2()])
                 preW.addPre(word.first2())
                 self.FindHelper(look, preW, self.Dict, Check)
                 self.algorithm(look, preW, Check)
@@ -7030,23 +7003,8 @@ class HebrewDictionary(App):
                 if word.isVerb() == False:
                     preW.setNoun()
                 else:
-                    return word
-            if(word.first() == 'ה'):
-                preW.setPrefixN(preW.heyVal)
-            elif(word.first() == 'ל'):
-                preW.setPrefixN(preW.lamedVal)
-            elif(word.first() == 'ב'):
-                preW.setPrefixN(preW.betVal)
-            elif(word.first() == 'ו'):
-                preW.setPrefixN(preW.vavVal)
-            elif(word.first() == 'כ'):
-                preW.setPrefixN(preW.cafVal)
-            elif(word.first() == 'מ'):
-                preW.setPrefixN(preW.memVal)
-            elif(word.first() == 'ש'):
-                preW.setPrefixN(preW.shinVal)
-            else:
-                preW.setPrefix()
+                    return Word("","")
+            preW.setPrefixN(prefixV[word.first()])
             preW.addPre(word.first())
             self.FindHelper(look, preW, self.Dict, Check)
             self.algorithm(look, preW, Check)
