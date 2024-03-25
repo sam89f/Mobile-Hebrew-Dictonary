@@ -1103,6 +1103,12 @@ class SearchWord:
                 return i
         return -1
         
+    def indexComplWords(self, w):
+        for i in range(len(self.getWords())):
+            if w == self.getWords()[i]:
+                return i
+        return -1
+        
     def indexW_Plus(self, w):
         indexes = []
         for i in range(len(self.getWords())):
@@ -1171,7 +1177,7 @@ class SearchWord:
                 
     def find(self, w, Dict):
         if w in self.getWords():
-            index = self.indexWords(w)
+            index = self.indexComplWords(w)
             if self.Words[index].getValue() < w.getValue():
                 self.Words[index].setValue(w.getValue())
             return True
