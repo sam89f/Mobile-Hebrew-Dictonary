@@ -2790,9 +2790,9 @@ class HebrewDictionary(App):
                     nounW = Word("", "")
                     nounW.equalTo(word)
                     nounW.setNoun()
+                    nounW.setValue(INF)
                     rightW = Word("", "")
                     rightW.equalTo(nounW)
-                    rightW.setValue(INF)
                     look.find(rightW, self.Dict)
                     self.algorithm(look, nounW, False)
                     
@@ -2808,6 +2808,7 @@ class HebrewDictionary(App):
                 verbW = Word("", "")
                 verbW.equalTo(word)
                 verbW.setVerb()
+                verbW.setValue(INF)
                 rightW = Word("", "")  
                 rightW.equalTo(verbW)
                 rightW.setValue(INF)
