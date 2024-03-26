@@ -2832,12 +2832,12 @@ class HebrewDictionary(App):
               #based on the resalts from the context recognition part of the code
             if(isVerb == True) or (isNoun == True):
                 Check = True
-                word0.equalTo(rightW)
-            else:
-                rightW.equalTo(word0)
-                rightW.setValue(INF)
-                self.FindHelper(look, rightW, self.Dict, Check)
-                self.algorithm(look, rightW, Check) #determines the possible forms of the current word, and searches
+             #   word0.equalTo(rightW)
+            #else:
+            rightW.equalTo(word0)
+            rightW.setValue(INF)
+            self.FindHelper(look, rightW, self.Dict, Check)
+            self.algorithm(look, rightW, Check) #determines the possible forms of the current word, and searches
 
             # These three blocks gets rid of any quotation marks just in cases thay interfered with the processing of the word.
             # words must be searched with each single and double quotes missing and with both present (done above).
