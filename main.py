@@ -7153,6 +7153,7 @@ class HebrewDictionary(App):
                     self.FindHelper(look, suffWh2, self.Dict, Check)
                     self.prefix(look, suffWh2, False, Check)
                     self.verbForms(look, suffWh2, Check)
+                    self.participle(look, suffWh2, Check)
                     return suffWh2
                 
         return Word("","")
@@ -7769,6 +7770,7 @@ class HebrewDictionary(App):
                     dualW2.addToValue(1)
                     dualW2.setNoun()
                     self.FindHelper(look, dualW2, self.Dict, Check)
+                    self.participle(look, dualW2, Check)
                     
                     if(not(word.getRoot()[:2] == word.last2())):
                         dualW3 = Word("", "")
@@ -7781,6 +7783,7 @@ class HebrewDictionary(App):
                                 dualW3.setRoot(dualW3.last3())
                         self.FindHelper(look, dualW3, self.Dict, Check)
                         #self.algorithm(look, dualW3, Check)
+                        self.participle(look, dualW3, Check)
                     
                 else:  
                     if(word.getSuffix() == False) and (word.getHeyDir() == False) and (not(word.getRoot()[:2] == word.last2())):
@@ -7796,6 +7799,7 @@ class HebrewDictionary(App):
                             hollow.setRoot(hollow.getText())
                             self.FindHelper(look, hollow, self.Dict, Check)
                         self.FindHelper(look, constW, self.Dict, Check)
+                        self.participle(look, constW, Check)
                     
                     constW2 = Word("","")
                     constW2.equalTo(word)
@@ -7806,7 +7810,7 @@ class HebrewDictionary(App):
                         constW2.setConstruct()
                     constW2.setNoun()
                     self.FindHelper(look, constW2, self.Dict, Check)
-                    #self.algorithm(look, constW, Check)
+                    self.algorithm(look, constW, Check)
                     if(word.getSuffix() == False) and (word.getHeyDir() == False):
                         constW3 = Word("", "")
                         constW3.equalTo(word)
@@ -7817,7 +7821,7 @@ class HebrewDictionary(App):
                             if(constW3.getRoot()[1:] == constW3.last3()[1:]):
                                 constW3.setRoot(constW3.last3())
                         self.FindHelper(look, constW3, self.Dict, Check)
-                        #self.algorithm(look, constW3, Check)
+                        self.participle(look, constW3, Check)
                     
                 return constW
                 
@@ -7839,6 +7843,7 @@ class HebrewDictionary(App):
                     self.FindHelper(look, hollow, self.Dict, Check)
                     
                 self.FindHelper(look, constW, self.Dict, Check)
+                self.participle(look, constW, Check)
                 self.irreg(look, constW, Check)
                 
             constW2 = Word("", "")
