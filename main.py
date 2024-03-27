@@ -7217,6 +7217,7 @@ class HebrewDictionary(App):
                         self.FindHelper(look, suffWh2, self.Dict, Check)
                         self.prefix(look, suffWh2, False, Check)
                         self.verbForms(look, suffWh2, Check)
+                        self.participle(look, suffWh2, Check)
                         return suffWh2
 
         return Word("","")
@@ -7282,6 +7283,7 @@ class HebrewDictionary(App):
                         self.FindHelper(look, suffWh2, self.Dict, Check)
                         self.prefix(look, suffWh2, False, Check)
                         self.verbForms(look, suffWh2, Check)
+                        self.participle(look, suffWh2, Check)
                         return suffWh2
                 
         return Word("","")
