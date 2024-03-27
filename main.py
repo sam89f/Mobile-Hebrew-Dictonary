@@ -7738,7 +7738,7 @@ class HebrewDictionary(App):
     
         if(word.isPhrase()):
             return self.phCostr(look, word, Check)
-    
+        Rt = False
         if(word.getLen() > 2):
             if(word.last() == 'י') and ((self.CurrentWord.last() == 'י')or(word.getSuffix() == True)or(word.getHeyDir() == True)) and (not('ם' in word.getSufxList())) and (not(word.getPlural() == True)) and (not(word.getDual() == True)) and (not (word.getRoot()[:2] == word.last2())):
                 constW = Word("","")
@@ -7792,6 +7792,7 @@ class HebrewDictionary(App):
                         constW.setConstruct()
                         constW.setGender(0)                      
                         constW.setNoun()
+                        Rt = True
                         if(constW.getLen() == 2):
                             hollow  = Word("","")
                             hollow.equalTo(constW)
@@ -7800,7 +7801,7 @@ class HebrewDictionary(App):
                             hollow.setRoot(hollow.getText())
                             self.FindHelper(look, hollow, self.Dict, Check)
                         self.FindHelper(look, constW, self.Dict, Check)
-                        self.participle(look, constW, Check)
+                        self.algorithm(look, constW, Check)
                     
                     constW2 = Word("","")
                     constW2.equalTo(word)
@@ -7810,8 +7811,7 @@ class HebrewDictionary(App):
                     if(word.getSuffix() == False) and (word.getHeyDir() == False):  
                         constW2.setConstruct()
                     constW2.setNoun()
-                    self.FindHelper(look, constW2, self.Dict, Check)
-                    self.algorithm(look, constW, Check)
+                    self.FindHelper(look, constW2, self.Dict, Check)   
                     if(word.getSuffix() == False) and (word.getHeyDir() == False):
                         constW3 = Word("", "")
                         constW3.equalTo(word)
@@ -7824,7 +7824,8 @@ class HebrewDictionary(App):
                         self.FindHelper(look, constW3, self.Dict, Check)
                         self.participle(look, constW3, Check)
                     
-                return constW
+                    if Rt == True:
+                        return constW
                 
         if(word.getLen() > 2) and (word.last() == 'ת') and (self.CurrentWord.last() == 'ת'):
             if(not(word.getRoot()[:2] == word.last2())):
