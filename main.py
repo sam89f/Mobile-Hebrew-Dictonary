@@ -7300,7 +7300,7 @@ class HebrewDictionary(App):
         Holl = False
         
         if(word.getLen() == 2):
-            if((not(word.last() == 'ה')) or (not(word.last() == 'ת'))): 
+            if((not(word.last() == 'ה')) and (not(word.last() == 'ת')) and (not('ה' in word.getSufxList())) and (not('ת' in word.getSufxList()))): 
                 hollow.setGender(0)
             else:
                 hollow.setGender(1)
