@@ -344,12 +344,6 @@ class Word:
         else:
             return True
             
-    def isModrn(self):
-        if self.getModernW() == '':
-            return False
-        else:
-            return True
-
     def isPhrase(self):
         if(self.NumWsInPhr() > 1):
             return True
@@ -3203,7 +3197,7 @@ class HebrewDictionary(App):
             return look.find(w, Dict)
     
     def modern(self, look, word, Check):
-        if(word.getLen() < 3) or (word.isPhrase()) or (word.isTense() == True) or (word.isModrn() == True) or ((word.isVerbf() == True)and(not(word.getVerbform() == 'Qal'))):
+        if(word.getLen() < 3) or (word.isPhrase()) or (word.isTense() == True) or (word.getModern == True) or ((word.isVerbf() == True)and(not(word.getVerbform() == 'Qal'))):
             return Word("", "")
                 
         if(word.getPartiVal() == 0):
