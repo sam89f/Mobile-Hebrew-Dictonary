@@ -498,9 +498,10 @@ class Word:
         return False
         
     def getModern(self):
-        if(self.modern > 0):
-            return True
-        return False
+        if(self.mdrnW == ''):
+            return False
+        else:
+            return False
         
     def getPlural(self):
         if(self.plural > 0):
@@ -3198,7 +3199,7 @@ class HebrewDictionary(App):
             return look.find(w, Dict)
     
     def modern(self, look, word, Check):
-        if(word.getLen() < 3) or (word.isPhrase()) or (word.isTense() == True) or (word.getModern == True) or ((word.isVerbf() == True)and(not(word.getVerbform() == 'Qal'))):
+        if(word.getLen() < 3) or (word.isPhrase()) or (word.isTense() == True) or (word.getModern() == True) or ((word.isVerbf() == True)and(not(word.getVerbform() == 'Qal'))):
             return Word("", "")
                 
         if(word.getPartiVal() == 0):
