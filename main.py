@@ -117,7 +117,7 @@ class Word:
         self.root = "000"
         self.preW = []
         self.sufW = []
-        self.mdrnW = ''
+        self.mdrnW = '###'
         self.prefix = 0
         self.partiW = -1
         self.suffix1 = 0
@@ -498,10 +498,10 @@ class Word:
         return False
         
     def getModern(self):
-        if(self.mdrnW == ''):
+        if(self.mdrnW == '###'):
             return False
         else:
-            return False
+            return True
         
     def getPlural(self):
         if(self.plural > 0):
