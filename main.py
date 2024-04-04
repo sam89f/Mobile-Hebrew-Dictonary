@@ -5693,9 +5693,9 @@ class HebrewDictionary(App):
                         futurW2h.setVavSeq()
                     fh = self.FindHelper(look, futurW2h, self.Dict, Check)
                     self.irreg(look, futurW2h, Check)
-                return futurW2
             elif 'ו' in word.getPrixList():
                 self.irreg(look, futurW2, Check)
+            return futurW2
   
         if(word.first() == 'נ') and (self.imperRules(word, 'נ') == True)and (not(word.getRoot()[-2:] == word.first2())):
             futurW = Word("","")
@@ -8194,7 +8194,7 @@ class HebrewDictionary(App):
                 irregW.equalTo(word)
                 irregW.setText(word.getText() + 'ה')
                 irregW.setIrreg()
-                self.FindHelperCheck(look, irregW, self.Dict)
+                self.FindHelper(look, irregW, self.Dict, Check)
                 self.irreg(look, irregW, Check)
                 
             if(not(word.getVerbform() == 'Niphal')) and (not ((word.first() == 'נ') and (word.getIrregVal() > 0))) and (not(word.getVerbform() in Piel)) and (not(word.getPartiVal() == 0)):
