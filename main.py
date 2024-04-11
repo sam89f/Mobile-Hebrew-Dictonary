@@ -2995,20 +2995,23 @@ class HebrewDictionary(App):
                     suff = "modern suffix:"
                     sf7 = " [" + w.getModernW() + ']'
                     OutPut.append(suff + sf7)
-                if w.getSuffix() == True:
+                    
+                if w.getHey1() > 0:
                     suff = "suffix"
+                    sf7 = " [" + dirHey + ']'
+                    OutPut.append(suff + sf7)
+                    X += 'x'*math.floor(len(suff + sf7)/4)       
+                if w.getSuffix() == True:
+                    if w.getHey1() > 0:
+                        suff = ""
+                    else:
+                        suff = "suffix"
                     if w.getHey1() > 0:
                         sf7 = " [" + w.getSuffixW() + ',' + ' ' + dirHey + ']'  
                     else:
                         sf7 = " [" + w.getSuffixW() + ']'
                     X += 'x'*math.floor(len(suff + sf7)/4)
                     OutPut.append(suff + sf7)
-                else:       
-                    if w.getHey1() > 0:
-                        suff = "suffix"
-                        sf7 = " [" + dirHey + ']'
-                        OutPut.append(suff + sf7)
-                        X += 'x'*math.floor(len(suff + sf7)/4)
                    
                 speech = "" 
                 speechB = ""
@@ -6316,7 +6319,8 @@ class HebrewDictionary(App):
                 plWt.equalTo(plW)
                 if(change > 0):
                     plWt.setDual()
-                    plWt.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plWt.setNoun()
                     plWt.setText(self.revPhWords(plWt.getText(), "-"))
                     if (self.FindHelper(look, plWt, self.Dict, Check) == True):
                         return plWt
@@ -6329,7 +6333,8 @@ class HebrewDictionary(App):
                     plWc.setText(self.FinalChain(plWc.getText()))
                     plWc.setText(plWc.getText().replace(" ", "-"))
                     if(changC > 0):
-                        plWc.setNoun()
+                        if(not(word.getTense() == 'Participle')):
+                            plWc.setNoun()
                         plWc.setDual()
                         #plWc.setConstruct()
                         plWc.setText(self.revPhWords(plWc.getText(), "-"))
@@ -6340,7 +6345,8 @@ class HebrewDictionary(App):
                 plWh.equalTo(cPhrasePl)
                 plWh.setText(plWh.getText().replace("-םיי", "-ה"))
                 if(change > 0):
-                    plWh.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plWh.setNoun()
                     plWh.setDual2()
                     plWh.setText(self.revPhWords(plWh.getText(), "-"))
                     if(self.FindHelper(look, plWh, self.Dict, Check) == True):
@@ -6403,7 +6409,8 @@ class HebrewDictionary(App):
                         plWc.setText(plWc.getText().replace("-יי", " "))
                         plWc.setText(self.FinalChain(plWc.getText()))
                         plWc.setText(plWc.getText().replace(" ", "-"))
-                        plWc.setNoun()
+                        if(not(word.getTense() == 'Participle')):
+                            plWc.setNoun()
                         plWc.setDual()
                         
                         if(plWc.getLen() > 1):
@@ -6428,7 +6435,8 @@ class HebrewDictionary(App):
                     elif cPhrasePl.getLstLen() > 3:
                         plWh.setText('ה' + cPhrasePl.getText()[3:])
                     plWh.setText(plWh.getText().replace("-םיי", "-ה"))
-                    plWh.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plWh.setNoun()
                     plWh.setDual2()
                     plWh.setText(self.revPhWords(plWh.getText(), "-"))
                     self.algorithm(look, plWh, Check)
@@ -6498,7 +6506,8 @@ class HebrewDictionary(App):
                 if(change3 > 0):
                     plWt.setPlural()
                     plWt.setGender(0)
-                    plWt.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plWt.setNoun()
                     plWt.setText(self.revPhWords(plWt.getText(), "-"))
                     if(self.FindHelper(look, plWt, self.Dict, Check) == True):
                         return plWt
@@ -6511,10 +6520,10 @@ class HebrewDictionary(App):
                     plWc.setText(self.FinalChain(plWc.getText()))
                     plWc.setText(plWc.getText().replace(" ", "-"))
                     if(change3C > 0):
-                        plWc.setNoun()
+                        if(not(word.getTense() == 'Participle')):
+                            plWc.setNoun()
                         plWc.setPlural()
                         plWc.setGender(0)
-                        #plWc.setConstruct()
                         plWc.setText(self.revPhWords(plWc.getText(), "-"))
                         if(self.FindHelper(look, plWc, self.Dict, Check) == True):
                             return plWc
@@ -6523,7 +6532,8 @@ class HebrewDictionary(App):
                 plWh.equalTo(cPhrasePl)
                 plWh.setText(plWh.getText().replace("-םי", "-ה"))
                 if(change3 > 0):
-                    plWh.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plWh.setNoun()
                     plWh.setPlural2()
                     plWh.setGender(0)
                     plWh.setText(self.revPhWords(plWh.getText(), "-"))
@@ -6587,8 +6597,9 @@ class HebrewDictionary(App):
                             plWc.setText(self.Final(cPhrasePl.getText()[2:]))
                         plWc.setText(plWc.getText().replace("-י", " "))
                         plWc.setText(self.FinalChain(plWc.getText()))
-                        plWc.setText(plWc.getText().replace(" ", "-"))                         
-                        plWc.setNoun()
+                        plWc.setText(plWc.getText().replace(" ", "-")) 
+                        if(not(word.getTense() == 'Participle')):
+                            plWc.setNoun()
                         plWc.setPlural()
                         
                         if(plWc.getLstLen() > 1):
@@ -6615,7 +6626,8 @@ class HebrewDictionary(App):
                         plWh.setText('ה' + cPhrasePl.getText()[2:])
                     plWh.setText(plWh.getText().replace("-םי", "-ה"))
                     plWh.setPlural2()
-                    plWh.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plWh.setNoun()
                     plWh.setGender(0)
                     plWh.setText(self.revPhWords(plWh.getText(), "-"))
                     self.algorithm(look, plWh, Check)
@@ -6691,7 +6703,8 @@ class HebrewDictionary(App):
                 plW.setText(self.FinalChain(plW.getText()))
                 plW.setText(plW.getText().replace(" ", "-"))
                 if(changef > 0):
-                    plW.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plW.setNoun()
                     plW.setPlural2()
                     plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
@@ -6702,7 +6715,8 @@ class HebrewDictionary(App):
                 plW.equalTo(cPhrasePl2)
                 plW.setText(plW.getText().replace("-תו", "-ה"))
                 if(changef > 0):
-                    plW.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plW.setNoun()
                     plW.setPlural()
                     plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
@@ -6713,7 +6727,8 @@ class HebrewDictionary(App):
                 plW.equalTo(cPhrasePl2)
                 plW.setText(plW.getText().replace("-תו", "-ת"))
                 if(changef > 0):
-                    plW.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plW.setNoun()
                     plW.setPlural()
                     plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
@@ -6730,7 +6745,8 @@ class HebrewDictionary(App):
                     plW.setText(plW.getText().replace("-תו", " "))
                     plW.setText(self.FinalChain(plW.getText()))
                     plW.setText(plW.getText().replace(" ", "-"))
-                    plW.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plW.setNoun()
                     plW.setPlural2()
                     plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
@@ -6741,7 +6757,8 @@ class HebrewDictionary(App):
                     plW.equalTo(cPhrasePl2)
                     plW.setText('ה' + cPhrasePl2.getText()[2:])
                     plW.setText(plW.getText().replace("-תו", "-ה"))
-                    plW.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plW.setNoun()
                     plW.setPlural()
                     plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
@@ -6753,7 +6770,8 @@ class HebrewDictionary(App):
                     plW.setText('ת' + cPhrasePl2.getText()[2:])
                     plW.addToValue(2)
                     plW.setText(plW.getText().replace("-תו", "-ת"))
-                    plW.setNoun()
+                    if(not(word.getTense() == 'Participle')):
+                        plW.setNoun()
                     plW.setPlural()
                     plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
@@ -7040,12 +7058,16 @@ class HebrewDictionary(App):
         return Word("","")
         
     def dirHey(self, look, word, Check):
-        if(word.getLen() < 2) or ('ב' in word.getPrixList())or (word.getModern() == True) or (word.getVerbform() == 'Piel') or ('ל' in word.getPrixList()) or ('מ' in word.getPrixList()) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getTense() == 'Participle'):
+        if(word.getLen() < 2) or (word.getHeyDir() == True) or ('ב' in word.getPrixList())or (word.getModern() == True) or (word.getVerbform() == 'Piel') or ('ל' in word.getPrixList()) or ('מ' in word.getPrixList()) or (word.isVerb() == True) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getTense() == 'Participle'):
             return Word("","")
             
         cPhraseHey1 = Word("","")
         cPhraseHey1.equalTo(word)
         cPhraseHey1.setText(self.revPhWords(word.getText(), "-"))
+        
+        cPhraseHey2 = Word("","")
+        cPhraseHey2.equalTo(self.CurrentWord)
+        cPhraseHey2.setText(self.revPhWords(word.getText(), "-"))
         
         if(cPhraseHey1.getLstLen() < 3) and (word.isPhrase()):
             return Word("", "")
@@ -7053,7 +7075,7 @@ class HebrewDictionary(App):
             if(word.getRoot()[:2] == word.last2()):
                 return Word("", "")
         
-        if(cPhraseHey1.last() == 'ה'):
+        if(cPhraseHey2.last() == cPhraseHey1.last()) and (cPhraseHey1.last() == 'ה'):
             hey1W = Word("","")
             hey1W.equalTo(cPhraseHey1)
             hey1W.setText(self.Final(cPhraseHey1.getText()[1:]))
@@ -7101,7 +7123,7 @@ class HebrewDictionary(App):
         cPhraseSuf.equalTo(word)
         cPhraseSuf.setText(self.revPhWords(word.getText(), "-"))
         cPhraseSuf2 = Word("","")
-        cPhraseSuf2.equalTo(word)
+        cPhraseSuf2.equalTo(self.CurrentWord)
         cPhraseSuf2.setText(self.revPhWords(self.CurrentWord.getText(), "-"))
         
         if(cPhraseSuf.getLstLen() < 3):
@@ -7110,7 +7132,7 @@ class HebrewDictionary(App):
         if((cPhraseSuf.last() == 'ה') and (cPhraseSuf.getPlural() == True)) or (cPhraseSuf.getLen() < 3) or (word.getRoot()[:2] == word.last2()):
             return Word("","")
   
-        if(cPhraseSuf2.last() == cPhraseSuf.last()) and (cPhraseSuf.last() in suffix) and (not((cPhraseSuf2.nextToLast() == "י")and(cPhraseSuf.getVerbform() in Hiphil))):
+        if ((cPhraseSuf2.last() == cPhraseSuf.last()) or (word.getHeyDir() == True)) and (cPhraseSuf.last() in suffix) and (not((cPhraseSuf2.nextToLast() == "י")and(cPhraseSuf.getVerbform() in Hiphil))):
             suffW = Word("","")
             suffW.equalTo(cPhraseSuf)
             suffW.setText(self.Final(cPhraseSuf.getText()[1:]))
@@ -7166,13 +7188,13 @@ class HebrewDictionary(App):
         cPhraseSuf.equalTo(word)
         cPhraseSuf.setText(self.revPhWords(word.getText(), "-"))
         cPhraseSuf2 = Word("","")
-        cPhraseSuf2.equalTo(word)
+        cPhraseSuf2.equalTo(self.CurrentWord)
         cPhraseSuf2.setText(self.revPhWords(self.CurrentWord.getText(), "-"))
         
         if(cPhraseSuf.getLstLen() < 4):
             return Word("", "")
             
-        if(cPhraseSuf2.last2() == cPhraseSuf.last2()) and (cPhraseSuf.last2() in suffix) and (not((cPhraseSuf2.nextToLast() == "י")and(cPhraseSuf.getVerbform() in Hiphil))):
+        if ((cPhraseSuf2.last2() == cPhraseSuf.last2()) or (word.getHeyDir() == True)) and (cPhraseSuf.last2() in suffix) and (not((cPhraseSuf2.nextToLast() == "י")and(cPhraseSuf.getVerbform() in Hiphil))):
             suffW = Word("","")
             suffW.equalTo(cPhraseSuf)
             suffW.setText(self.Final(cPhraseSuf.getText()[2:]))
@@ -7230,13 +7252,13 @@ class HebrewDictionary(App):
         cPhraseSuf.equalTo(word)
         cPhraseSuf.setText(self.revPhWords(word.getText(), "-"))
         cPhraseSuf2 = Word("","")
-        cPhraseSuf2.equalTo(word)
+        cPhraseSuf2.equalTo(self.CurrentWord)
         cPhraseSuf2.setText(self.revPhWords(self.CurrentWord.getText(), "-"))
         
         if(cPhraseSuf.getLstLen() < 5):
             return Word("", "")
             
-        if(cPhraseSuf2.last3() == cPhraseSuf.last3()) and (cPhraseSuf.last3() in suffix) and (not(((cPhraseSuf2.thirdFromLast() == "י")or(cPhraseSuf2.fourthFromLast() == "י"))and(cPhraseSuf.getVerbform() in Hiphil))):
+        if ((cPhraseSuf2.last3() == cPhraseSuf.last3()) or (word.getHeyDir() == True)) and (cPhraseSuf.last3() in suffix) and (not(((cPhraseSuf2.thirdFromLast() == "י")or(cPhraseSuf2.fourthFromLast() == "י"))and(cPhraseSuf.getVerbform() in Hiphil))):
             suffW = Word("","")
             suffW.equalTo(cPhraseSuf)
             suffW.setText(self.Final(cPhraseSuf.getText()[3:]))
