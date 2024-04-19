@@ -7776,6 +7776,11 @@ class HebrewDictionary(App):
                         dualW.setDual()
                         dualW.setConstruct()
                         dualW.setNoun()
+                        if(dualW.last() == 'ת'):
+                            dualWt = Word("", "")
+                            dualWt.equalTo(dualW)
+                            dualWt.setText('ה' + dualW.getText()[1:])
+                            self.FindHelper(look, dualWt, self.Dict, Check)
                         if(dualW.getLen() == 2):
                             hollow  = Word("","")
                             hollow.equalTo(dualW)
@@ -7783,6 +7788,11 @@ class HebrewDictionary(App):
                             hollow.addToValue(1)
                             hollow.setRoot(hollow.getText())
                             self.FindHelper(look, hollow, self.Dict, Check)
+                            if(hollow.last() == 'ת'):
+                                hollowt = Word("", "")
+                                hollowt.equalTo(hollow)
+                                hollowt.setText('ה' + hollowt.getText()[1:])
+                                self.FindHelper(look, hollowt, self.Dict, Check)
                         self.FindHelper(look, dualW, self.Dict, Check)
                         self.algorithm(look, dualW, Check)
                     
@@ -7816,6 +7826,11 @@ class HebrewDictionary(App):
                         constW.setGender(0)                      
                         constW.setNoun()
                         Rt = True
+                        if(constW.last() == 'ת'):
+                            constWt = Word("", "")
+                            constWt.equalTo(constW)
+                            constWt.setText('ה' + constW.getText()[1:])
+                            self.FindHelper(look, constWt, self.Dict, Check)
                         if(constW.getLen() == 2):
                             hollow  = Word("","")
                             hollow.equalTo(constW)
@@ -7823,6 +7838,11 @@ class HebrewDictionary(App):
                             hollow.addToValue(1)
                             hollow.setRoot(hollow.getText())
                             self.FindHelper(look, hollow, self.Dict, Check)
+                            if(hollow.last() == 'ת'):
+                                hollowt = Word("", "")
+                                hollowt.equalTo(hollow)
+                                hollowt.setText('ה' + hollowt.getText()[1:])
+                                self.FindHelper(look, hollowt, self.Dict, Check)
                         self.FindHelper(look, constW, self.Dict, Check)
                         self.algorithm(look, constW, Check)
                     
