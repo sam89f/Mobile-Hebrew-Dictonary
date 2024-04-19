@@ -42,9 +42,9 @@ AlefBet = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'כ', 'ל
 Gender = ['m.', 'f.', '', '']
 Person = ['1st, sg.', '1st, pl.', '2nd, sg.', '2nd, pl.', '3rd, sg.', '3rd, pl.', '']
 tenses = ['Perfect', 'Imperfect', 'Participle', 'Infinitive', 'Imperative', 'Cohortative', 'Infinitive abs.', '']
-tenseVals = [3, 4, 4, 4, 3, 4, 4, 1]
+tenseVals = [3, 3, 3, 3, 2, 3, 3, 1]
 verbforms = ['Qal', 'Niphal', 'Piel', 'Pual', 'Hiphil', 'Hophal', 'Hithpeal', 'Hishtaphel', 'Pilpel', 'Nithpael', 'Pilel', 'Pulal', 'Tiphil', 'Hithpoel', 'Hithpolel', 'Hithpalpel', 'Hothpaal', '']
-verbformVals = [1, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 1]
+verbformVals = [1, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 1]
 millenn = ['ה','ד','ג', 'ב', 'א']
 Hithpeal = ['Hithpeal', 'Hithpalpel', 'Hithpoel', 'Hithpolel', 'Nithpael']
 Hiphil = ['Hiphil', 'Tiphil', 'Hishtaphel']
@@ -73,14 +73,14 @@ suffFactors = {"ןה":3, "הנה":5, "ן":4, "םה":3, "ם":4, "ומ":4, "ה":2,
 parti = {1:'Active', 0:'Passive', 2:''}
 gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
 brackets = ['(', ')', '[', ']', '{', '}']
-punctuation = ['\"', '\'', '.', '?', '׃', ';', ':', ')', '(', '[', ']', '}', '{', '!']
+punctuation = ['\"','”', '\'', '.', '?', '׃', ';', ':', ')', '(', '[', ']', '}', '{', '!']
 delimiter = [',', '־', ' ', '-', ')', '(', '[', ']', '}', '{']
 operators = ['&', '|', '∥', '+', '-', '*', '/', '>', '<', '¬', '=', '<>', '¬=', '¬<', '¬>', '**', '<=', '>=']
 special_char = ['#', ')', '$', '&', '@', '^', '%', '~', '`', '*']
-punctuation2 = ['\"', '\'', ',', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
+punctuation2 = ['\"','”', '\'', ',', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
 delimiter2 = ['–', ',', ':', ' ', '=', ';', '.', '%', '-', ')', '(', '[', ']', '}', '{']
 special_char2 = special_char+punctuation2+delimiter2+operators
-escape_char = ['\"', '\'', '\b', '\f', '\ooo', '\\', '\n', '\r', '\t']
+escape_char = ['\"','”', '\'', '\b', '\f', '\ooo', '\\', '\n', '\r', '\t']
 dirHey = "ה- to/toward"
 INF = 100000000000
 
@@ -3163,10 +3163,14 @@ class HebrewDictionary(App):
         if(not(word.getVerbform() in Hiphil)) and (not(word.getVerbform() == 'Hophal')) and (not(word.getVerbform() in Hithpeal)):
             self.participle(look, word, Check)
         
+        
+        if(word.isVerb() == False):
+            self.plural(look, word, Check)
+            
         self.suffix(look, word, 2, Check)
 
         if(word.isVerb() == False):
-            self.plural(look, word, Check)
+            #self.plural(look, word, Check)
             self.constr(look, word, Check)
             self.modern(look, word, Check)
             self.dirHey(look, word, Check)
