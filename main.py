@@ -3169,7 +3169,7 @@ class HebrewDictionary(App):
         if(not(word.getVerbform() in Hiphil)) and (not(word.getVerbform() == 'Hophal')) and (not(word.getVerbform() in Hithpeal)):
             self.participle(look, word, False)
         
-        
+        self.constr(look, word, Check)
         if(word.isVerb() == False):
             self.plural(look, word, Check)
             
@@ -8024,7 +8024,7 @@ class HebrewDictionary(App):
         return Word("", "")
      
     def constr(self, look, word, Check):
-        if(word.getLen() < 2) or (word.getConstruct() == True) or (word.getVerbform() in Piel) or (word.isVerb() == True) or (word.getTense() == 'Perfect') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Imperative') or (word.getTense() == 'Infinitive') or (word.getPartiVal() == 0) or ((not(word.getPartiVal() == -1))and(word.last() == 'ת')) or (word.getRoot()[:2] == word.last2()):
+        if(word.getLen() < 2) or (word.getConstruct() == True) or (word.getVerbform() in Piel) or (word.isVerb() == True) or (word.getTense() == 'Perfect') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Imperative') or (word.getTense() == 'Infinitive') or (word.getPartiVal() == 0) or ((not(word.getPartiVal() == 2))and(word.last() == 'ת')) or (word.getRoot()[:2] == word.last2()):
             return Word("", "")
     
         if(word.isPhrase()):
