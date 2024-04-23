@@ -3227,6 +3227,13 @@ class HebrewDictionary(App):
                 mdrnW.setNoun()
                 self.FindHelper(look, mdrnW, self.Dict, Check)
                 self.algorithm(look, mdrnW, Check)
+                if(word.last() == "ת"):
+                    mdrnWh = Word("","")
+                    mdrnWh.equalTo(mdrnW) 
+                    mdrnWh.setText('ה' + mdrnW.getText()[1:])
+                    mdrnWh.addToValue(0.5)
+                    self.algorithm(look, mdrnWh, Check)
+                    self.FindHelper(look, mdrnWh, self.Dict, Check)
                 if(not('ה' in word.getSufxList())):
                     mdrnWh = Word("","")
                     mdrnWh.equalTo(mdrnW)
@@ -3253,6 +3260,13 @@ class HebrewDictionary(App):
                 mdrnW.setNoun()
                 self.FindHelper(look, mdrnW, self.Dict, Check)
                 self.algorithm(look, mdrnW, Check)
+                if(word.last() == "ת"):
+                    mdrnWh = Word("","")
+                    mdrnWh.equalTo(mdrnW) 
+                    mdrnWh.setText('ה' + mdrnW.getText()[1:])
+                    mdrnWh.addToValue(0.5)
+                    self.algorithm(look, mdrnWh, Check)
+                    self.FindHelper(look, mdrnWh, self.Dict, Check)
                 if(not('ה' in word.getSufxList())):
                     mdrnWh = Word("","")
                     mdrnWh.equalTo(mdrnW)
@@ -3293,6 +3307,13 @@ class HebrewDictionary(App):
                 mdrnW2.setNoun()
                 self.FindHelper(look, mdrnW2, self.Dict, Check)
                 self.algorithm(look, mdrnW2, Check)
+                if(word.last() == "ת"):
+                    mdrnWh = Word("","")
+                    mdrnWh.equalTo(mdrnW) 
+                    mdrnWh.setText('ה' + mdrnW.getText()[1:])
+                    mdrnWh.addToValue(0.5)
+                    self.algorithm(look, mdrnWh, Check)
+                    self.FindHelper(look, mdrnWh, self.Dict, Check)
                 if(not('ה' in word.getSufxList())):
                     mdrnWh = Word("","")
                     mdrnWh.equalTo(mdrnW2)
@@ -3319,6 +3340,13 @@ class HebrewDictionary(App):
                 mdrnW.setNoun()
                 self.FindHelper(look, mdrnW, self.Dict, Check)
                 self.algorithm(look, mdrnW, Check)
+                if(word.last() == "ת"):
+                    mdrnWh = Word("","")
+                    mdrnWh.equalTo(mdrnW) 
+                    mdrnWh.setText('ה' + mdrnW.getText()[1:])
+                    mdrnWh.addToValue(0.5)
+                    self.algorithm(look, mdrnWh, Check)
+                    self.FindHelper(look, mdrnWh, self.Dict, Check)
                 if(not('ה' in word.getSufxList())):
                     mdrnWh = Word("","")
                     mdrnWh.equalTo(mdrnW)
@@ -3344,6 +3372,12 @@ class HebrewDictionary(App):
             mdrnW.setNoun()
             self.FindHelper(look, mdrnW, self.Dict, Check)
             self.algorithm(look, mdrnW, Check)
+            if(word.last() == "ת"):
+                mdrnWh = Word("","")
+                mdrnWh.equalTo(mdrnW) 
+                mdrnWh.setText('ה' + mdrnW.getText()[1:])
+                mdrnWh.addToValue(0.5)
+                self.algorithm(look, mdrnWh, Check)
             if(not('ה' in word.getSufxList())):
                 mdrnWh = Word("","")
                 mdrnWh.equalTo(mdrnW)
