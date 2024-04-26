@@ -342,7 +342,7 @@ class Word:
             return False
 
     def isParticiple(self):
-        if self.partiW == -1:
+        if self.partiW == 2:
             return False
         else:
             return True
