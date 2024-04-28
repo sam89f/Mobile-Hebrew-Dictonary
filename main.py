@@ -7909,7 +7909,7 @@ class HebrewDictionary(App):
                 return fimW
                 
             if(fimW.getLen() > 3) and (word.isVerbf() == False) or (word.getVerbform() in Qal) or (word.getVerbform() in Niphal):
-                if(fimW.nextToFirst() == 'ו') and ((word.isVerbf() == False) or (word.getVerbform() in Qal)) and (self.num_of_a_roots(word3.getText()[:-4]) == 0) and (not((fimW.hasRoot == True) and (not((fimW.getRootFirst2()  == fimW.first2()) or (fimW.getRootFirst2() == fimW.XtoY(1, 3)))))):
+                if(fimW.nextToFirst() == 'ו') and ((word.isVerbf() == False) or (word.getVerbform() in Qal)) and (self.num_of_a_roots(fimW.getText()[:-4]) == 0) and (not((fimW.hasRoot == True) and (not((fimW.getRootFirst2()  == fimW.first2()) or (fimW.getRootFirst2() == fimW.XtoY(1, 3)))))):
                     isPar = True
                     pfimW.equalTo(fimW)
                     pfimW.setText(fimW.getText()[:-2] + fimW.first())
