@@ -3539,17 +3539,13 @@ class HebrewDictionary(App):
                     tempWf.setVerbform(8)
                 else:
                     tempWf.setVerbform(rareVerbforms[word.getVerbform()])
-            self.FindHelper(look, tempWf, self.Dict, Check)
-            if(tempWf.getLen() > 2):
-                if(not(tempWf.hasRoot() and (not(tempWf.getRoot()[1:] == tempWf.last3()[1:])))) and (Stop == False):
-                    tempWf.setRoot(tempWf.last3())
-                self.verbForms(look, tempWf, Check)
-                self.irreg(look, tempWf, Check)
-                self.FindHelper(look, tempWf, self.Dict, Check)
-            else:
-                self.irreg(look, tempWf, Check)
-                self.FindHelper(look, tempWf, self.Dict, Check)
+
+            if(tempWf.getLen() < 3):
                 Stop = True
+                
+            self.verbForms(look, tempWf, Check)
+            self.irreg(look, tempWf, Check)
+            self.FindHelper(look, tempWf, self.Dict, Check)
                 
             if(not(tempW.last() == 'י')):
                 tempWf2 = Word("","")
@@ -3588,11 +3584,7 @@ class HebrewDictionary(App):
             else:
                 tempWf.setVerbform(rareVerbforms[word.getVerbform()])
                     
-            if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
-                if(tempWf.getLen() > 2):
-                    if(not(tempWf.hasRoot() and (not(tempWf.getRoot()[1:] == tempWf.last3()[1:])))):
-                        tempWf.setRoot(tempWf.last3())
-                    self.verbForms(look, tempWf, Check)
+            self.verbForms(look, tempWf, Check)
              
             if(not(word.getRoot()[:2] == word.last2())): 
                 tempWf2 = Word("","")
@@ -6110,12 +6102,19 @@ class HebrewDictionary(App):
             imperW.setPerson(3)
             imperW.setGender(0)
             
+            singleW = Word("","")
+            singleW.equalTo(imperW)
+            singleW.setText('ה' + self.unFinal(imperW.getText()))
+            singleW.addToValue(1)
+            self.FindHelper(look, singleW, self.Dict, Check)
+            
             if(imperW.first() == 'ה') and ((imperW.isVerbf() == False) or (imperW.getVerbformVal() == 0)):
                 if(imperW.getLen() < 3):
                     return self.nifal(look, imperW, Check)
                 self.nifal(look, imperW, Check)
                 
             self.FindHelper(look, imperW, self.Dict, Check)
+            self.verbForms(look, imperW, Check)
             self.irreg(look, imperW, Check)
             return imperW
             
@@ -6127,12 +6126,20 @@ class HebrewDictionary(App):
             imperW.setTense(4)
             imperW.setPerson(2)
             imperW.setGender(1)
+            
+            singleW = Word("","")
+            singleW.equalTo(imperW)
+            singleW.setText('ה' + self.unFinal(imperW.getText()))
+            singleW.addToValue(1)
+            self.FindHelper(look, singleW, self.Dict, Check)
+            
             if(imperW.first() == 'ה') and ((imperW.isVerbf() == False) or (imperW.getVerbformVal() == 0)):
                 if(imperW.getLen() < 3):
                     return self.nifal(look, imperW, Check)
                 self.nifal(look, imperW, Check)
                 
             self.FindHelper(look, imperW, self.Dict, Check)
+            self.verbForms(look, imperW, Check)
             self.irreg(look, imperW, Check)
             return imperW
         
@@ -6161,7 +6168,14 @@ class HebrewDictionary(App):
                             return self.nifal(look, imperW, Check)
                         self.nifal(look, imperW, Check)
                         
+                singleW = Word("","")
+                singleW.equalTo(imperW)
+                singleW.setText('ה' + self.unFinal(imperW.getText()))
+                singleW.addToValue(1)
+                self.FindHelper(look, singleW, self.Dict, Check)
+                        
                 self.FindHelper(look, imperW, self.Dict, Check)
+                self.verbForms(look, imperW, Check)
                 if(imperW.getLen() == 3):
                     imperW.setRoot(imperW.getText())
                 elif(imperW.getLen() == 2):
@@ -6197,6 +6211,7 @@ class HebrewDictionary(App):
                         self.nifal(look, imperW, Check)
                         
                     self.FindHelper(look, imperW, self.Dict, Check)
+                    self.verbForms(look, imperW, Check)
                     return imperW
      
         return Word("", "")
@@ -6276,7 +6291,7 @@ class HebrewDictionary(App):
                     else:
                         self.irreg(look, infW, Check)
                     
-                    if(word.getLen() > 5):
+                    if(singleW.getLen() < 4):
                         return singleW
                     else:
                         self.algorithm(look, singleW, Check)
@@ -6315,7 +6330,7 @@ class HebrewDictionary(App):
                         self.FindHelper(look, singleW2, self.Dict, Check)
                         self.irreg(look, singleW2, Check)
                         
-                    if(word.getLen() > 5):
+                    if(singleW.getLen() < 4):
                         return singleW
                     else:
                         self.algorithm(look, singleW, Check)
@@ -6373,7 +6388,7 @@ class HebrewDictionary(App):
                         self.FindHelper(look, singleW2, self.Dict, Check)
                         self.irreg(look, singleW2, Check)
 
-                    if(word.getLen() > 4):
+                    if(singleW.getLen() < 4):
                         return singleW
                     else:
                         self.algorithm(look, singleW, Check)
@@ -6403,7 +6418,7 @@ class HebrewDictionary(App):
                     else:
                         self.irreg(look, infW, Check)
                     
-                    if(word.getLen() > 4):
+                    if(singleW.getLen() < 4):
                         return singleW
                     else:
                         self.algorithm(look, singleW, Check)
@@ -6509,6 +6524,7 @@ class HebrewDictionary(App):
                         if(not(cohorW.hasRoot())) and (cohorW.getLen() > 2):
                             cohorW.setRoot(cohorW.last3())
                             
+                    self.verbForms(look, cohorW, Check)
                     self.FindHelper(look, cohorW, self.Dict, Check)
                     return cohorW          
                 elif 'ו' in word.getPrixList():
@@ -6546,7 +6562,8 @@ class HebrewDictionary(App):
                     
                     if(cohorW.getLen() > 2):
                         cohorW.setRoot(cohorW.last3())
-                    
+                        
+                self.verbForms(look, cohorW, Check)
                 self.FindHelper(look, cohorW, self.Dict, Check)
                 return cohorW
             elif 'ו' in word.getPrixList():
