@@ -7050,7 +7050,7 @@ class HebrewDictionary(App):
                 
                 plW.equalTo(cPhrasePl2)
                 plW.setText(plW.getText().replace("-תו", "-ה"))
-                plW.addToValue(-2)
+                plW.addToValue(-0.5)
                 if(changef > 0):
                     if(not(word.getTense() == 'Participle')):
                         plW.setNoun()
@@ -7060,14 +7060,14 @@ class HebrewDictionary(App):
                     self.algorithm(look, plW, Check)
                     if(self.FindHelper(look, plW, self.Dict, Check) == True):
                         return plW
-                        
+                       
                 plW.equalTo(cPhrasePl2)
                 plW.setText(plW.getText().replace("-תו", "-ת"))
                 if(changef > 0):
                     if(not(word.getTense() == 'Participle')):
                         plW.setNoun()
-                    plW.setPlural()
                     plW.setGender(1)
+                    plW.addToValue(0.5)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
                     self.algorithm(look, plW, Check)
                     if(self.FindHelper(look, plW, self.Dict, Check) == True):
@@ -7091,6 +7091,7 @@ class HebrewDictionary(App):
                     if(self.FindHelper(look, plW, self.Dict, Check) == True):
                         return plW
                     
+                    plW = Word("","")
                     plW.equalTo(cPhrasePl2)
                     plW.setText('ה' + cPhrasePl2.getText()[2:])
                     plW.setText(plW.getText().replace("-תו", "-ה"))
@@ -7098,7 +7099,7 @@ class HebrewDictionary(App):
                         plW.setNoun()
                     plW.setPlural()
                     plW.setGender(1)
-                    plW.addToValue(-2)
+                    plW.addToValue(-0.5)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
                     self.algorithm(look, plW, Check)
                     if(self.FindHelper(look, plW, self.Dict, Check) == True):
@@ -7106,11 +7107,11 @@ class HebrewDictionary(App):
                         
                     plW.equalTo(cPhrasePl2)
                     plW.setText('ת' + cPhrasePl2.getText()[2:])
-                    plW.addToValue(2)
+                    plW.addToValue(0.5)
                     plW.setText(plW.getText().replace("-תו", "-ת"))
                     if(not(word.getTense() == 'Participle')):
                         plW.setNoun()
-                    plW.setPlural()
+                    #plW.setPlural()
                     plW.setGender(1)
                     plW.setText(self.revPhWords(plW.getText(), "-"))
                     self.algorithm(look, plW, Check)
@@ -7141,7 +7142,7 @@ class HebrewDictionary(App):
                     if(not(cPhrasePl2.getRoot()[:2] == cPhrasePl2.last2())):
                         singleW.setText('ה' + self.unFinal(plW.getText()))
                         singleW.setPlural()
-                        singleW.addToValue(-2)
+                        singleW.addToValue(-0.5)
                         if(singleW.hasRoot()) and (singleW.getLen() > 2):
                             if(singleW.getRoot()[1:] == singleW.last3()[1:]):
                                 singleW.setRoot(singleW.last3())
