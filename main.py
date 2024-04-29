@@ -8135,7 +8135,10 @@ class HebrewDictionary(App):
                             pword2h = Word("","")
                             pword2h.equalTo(pword2)
                             pword2h.setText('ה' + self.unFinal(pword2.getText()))
-                            pword2h.addToValue(-1)
+                            if(word.last() == 'ת'):
+                                pword2h.addToValue(-4)
+                            else:
+                                pword2h.addToValue(1)
                             self.FindHelper(look, pword2h, self.Dict, Check)
                         self.FindHelper(look, pword2, self.Dict, Check)
                         #self.algorithm(look, pword2, Check)
