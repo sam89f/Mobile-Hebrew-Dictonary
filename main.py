@@ -32,10 +32,12 @@ Display_Size = 22
 # color values
 red = [1, 0, 0, 1]
 green = [0, 1, 0, 1]
+light_green = [2, 10, 2, 10]
 sky_biue = [135, 206, 235]
 blue = [0, 0, 1, 1]
 purple = [1, 0, 1, 1]
 white = [1, 1, 1, 1]
+bright = [10, 10, 10, 10]
 black = [0, 0, 0, 0]
 
 AlefBet = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ת', 'ך', 'ם', 'ן', 'ף', 'ץ']
@@ -742,6 +744,14 @@ class Word:
                 return self.text[-y:]
             else:
                 return self.text[-y:-x]
+                
+    def swap(self, x, y):
+        if len(self.text) < y:
+            raise Exception('Word object must not be less then {}'.format(y))
+        else:
+            if x == 0:
+                x = 1
+            return self.text[:-y] + self.getX(x) + self.XtoY(x+1, y-1) + self.getX(y) + firstX(x-1)
 
     def Final(self, text):
         if text[0] in finals.keys():
@@ -2381,15 +2391,16 @@ class DisplayWords(GridLayout):
     def __init__(self, instance, **kwargs):
         super(DisplayWords, self).__init__(**kwargs)
         self.cols = 1
+        self.background_color = light_green
         self.readText = TextInput(readonly=True, multiline=True, base_direction='rtl', size_hint=[5, 0.3], focus=True, font_name='data/fonts/times', font_size=Display_Size)
         self.display = TextInput(readonly=True, multiline=True, focus=True, size_hint_x=5, size_hint_y=None, font_name='data/fonts/times', font_size=Display_Size)
         self.display.bind(minimum_height=self.display.setter('height'))
         self.dRoot = ScrollView(size_hint=(5, 1), size=(Window.width, Window.height))
         self.dRoot.add_widget(self.display)
         self.SubPanal = GridLayout(rows=1, size_hint=[5, 0.1])
-        self.closeB = Button(text='[color=FFFFFF]Close[color=FFFFFF]', font_name='data/fonts/times', font_size=20, markup=True)
+        self.closeB = Button(text='[color=FFFFFF]Close[color=FFFFFF]', background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
         self.closeB.bind(on_press=instance.closeAction)
-        self.topB = Button(text='[color=FFFFFF]Top[color=FFFFFF]', font_name='data/fonts/times', font_size=20, markup=True)
+        self.topB = Button(text='[color=FFFFFF]Top[color=FFFFFF]', background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
         self.topB.bind(on_press=instance.topAction)
         self.SubPanal.add_widget(self.closeB)
         self.SubPanal.add_widget(self.topB)
@@ -2404,14 +2415,15 @@ class AddWord(GridLayout):
         super(AddWord, self).__init__(**kwargs)
         self.cols = 2
         
-        self.wLabel = Label(text='[color=3333ff]Word[color=3333ff]', outline_color=black, font_size=30, markup=True)
-        self.dLabel = Label(text='[color=3333ff]Diffinition[color=3333ff]', outline_color=black, font_size=30, markup=True)
+        self.background_color = light_green
+        self.wLabel = Label(text='[color=3333ff]Word[color=3333ff]', outline_color=black, outline_width=1.5, font_size=30, markup=True)
+        self.dLabel = Label(text='[color=3333ff]Diffinition[color=3333ff]', outline_color=black, outline_width=1.5, font_size=30, markup=True)
         self.Word = TextInput(text="", readonly=True, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         self.Definition= TextInput(text="", readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         
-        self.enterB = Button(text='[color=000000]Enter[color=000000]', font_name='data/fonts/times', font_size=20, markup=True)
+        self.enterB = Button(text='[color=000000]Enter[color=000000]', background_color=light_green, font_name='data/fonts/times', font_size=20, markup=True)
         self.enterB.bind(on_press=instance.enterAction) 
-        self.cancelB = Button(text='[color=000000]Cancel[color=000000]', font_name='data/fonts/times', font_size=20, markup=True)
+        self.cancelB = Button(text='[color=000000]Cancel[color=000000]', background_color=light_green, font_name='data/fonts/times', font_size=20, markup=True)
         self.cancelB.bind(on_press=instance.cancelAction)
         
         self.add_widget(self.wLabel)
@@ -2426,7 +2438,7 @@ class AddWord(GridLayout):
 class HebrewDictionary(App):
     
     def startInterface(self):
-    
+        Window.clearcolor = green
         self.Dict = {}
         self.AlefBet = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ת', 'ך', 'ם', 'ן', 'ף', 'ץ']
         self.Plural = ['םי', 'םיי', 'תו']
@@ -2439,25 +2451,24 @@ class HebrewDictionary(App):
             self.Dict.update(word)
             
         self.Word = AddWord(self)
-        self.popup = Popup(title='Add Word', content=self.Word)
+        self.popup = Popup(title='Add Word', background_color=light_green, content=self.Word)
         self.DWords = DisplayWords(self)
-        self.wordPopup = Popup(title='Word', content=self.DWords)
-        
+        self.wordPopup = Popup(title='Word', background_color=light_green, content=self.DWords)
         self.UserInterface = GridLayout(cols=1)
         self.MainPanal = GridLayout(cols=1)
         self.Input = CustomInput(readonly=False, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=Display_Size)
-        self.findB = Button(text='FindW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+        self.findB = Button(text='FindW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
         self.findB.bind(on_press=self.findAction)
-        self.addB = Button(text='AddW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+        self.addB = Button(text='AddW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
         self.addB.bind(on_press=self.addAction)
-        self.editB = Button(text='EditW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+        self.editB = Button(text='EditW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
         self.editB.bind(on_press=self.editAction)
-        self.removeB = Button(text='RemoveW', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+        self.removeB = Button(text='RemoveW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
         self.removeB.bind(on_press=self.removeAction)
-        self.exitB = Button(text='Exit', border=[1,1,1,1], font_name='data/fonts/times', font_size=20, markup=True)
+        self.exitB = Button(text='Exit', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
         self.exitB.bind(on_press=self.exitAction)
         self.KeyboardPanal = Keyboard(self)
-        self.MainPanal.add_widget(Label(text='[color=3333ff]Hebrew Dictionary[color=3333ff]', font_name='data/fonts/times', outline_color=white, outline_width=1, font_size=45, markup=True))
+        self.MainPanal.add_widget(Label(text='[color=3333ff]Hebrew Dictionary[color=3333ff]', font_name='data/fonts/times', outline_color=black, outline_width=1.5, font_size=45, markup=True))
         self.MainPanal.add_widget(self.Input)
         self.SubPanal = GridLayout(cols=5)
         self.SubPanal.add_widget(self.findB)
