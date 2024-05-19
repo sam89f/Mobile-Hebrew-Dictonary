@@ -5805,7 +5805,7 @@ class HebrewDictionary(App):
                     return futurW
                
         if(word.getLen() > 2):
-            if ('ו' in word.getPrixList()) and ((word.first2() == 'וי') and (self.imperRules(word, 'וי') == True) or (word.getPrixListEnd() == 'ו')and(word.first2() == 'יי') and (self.imperRules(word, 'יי') == True)) and (not(word.getRoot()[-2:] == word.first3()[:-1]) or (word.getRoot()[:2] == self.Final(word.first3()[:-1]))):
+            if ('ו' in word.getPrixListEnd()) and ((word.first2() == 'וי') and (self.imperRules(word, 'וי') == True) or (word.getPrixListEnd() == 'ו')and(word.first2() == 'יי') and (self.imperRules(word, 'יי') == True)) and (not(word.getRoot()[-2:] == word.first3()[:-1]) or (word.getRoot()[:2] == self.Final(word.first3()[:-1]))):
                 holl = True
                 futurW = Word("","")
                 futurW.equalTo(word)
@@ -6050,7 +6050,11 @@ class HebrewDictionary(App):
                 futurW.setText(self.Final(word.getText()[1:-1]))
                 futurW.setVerb()
                  
-                futurW.setTense(1)
+                if 'ו' in word.getPrixList():
+                    futurW.setTense(0)
+                    futurW.setVavSeq()
+                else:
+                    futurW.setTense(1)
                 futurW.setPerson(5)
                 futurW.setGender(0)
                 
@@ -6090,11 +6094,7 @@ class HebrewDictionary(App):
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
                     futurWh.addToValue(3)
-                    if(word.getPrixListEnd() == 'ו'):
-                        futurWh.setTense(0)
-                        futurWh.setVavSeq()
-                        if(not(futurWh.hasRoot())) and (futurWh.getLen() > 2):
-                            futurWh.setRoot(futurWh.last3())
+                    
                     if(futurWh.hasRoot()) and (futurWh.getLen() > 2):
                         if(futurWh.getRoot()[1:] == futurWh.last3()[1:]):
                             futurWh.setRoot(futurWh.last3())
@@ -6173,9 +6173,6 @@ class HebrewDictionary(App):
                     futurWh.equalTo(futurW)
                     futurWh.setText('ה' + self.unFinal(futurW.getText()))
                     futurWh.addToValue(3)
-                    if(word.getPrixListEnd() == 'ו'):
-                        futurWh.setTense(0)
-                        futurWh.setVavSeq()
                     fh = self.FindHelper(look, futurWh, self.Dict, Check)
                     self.irreg(look, futurWh, Check)
 
@@ -6193,6 +6190,7 @@ class HebrewDictionary(App):
              
             if 'ו' in word.getPrixList():
                 futurW.setTense(0)
+                futurW.setVavSeq()
             else:
                 futurW.setTense(1)
             futurW.setPerson(4)
