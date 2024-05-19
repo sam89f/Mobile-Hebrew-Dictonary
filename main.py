@@ -2699,6 +2699,20 @@ class HebrewDictionary(App):
         for i in range(end):
             N = 1
             s = 0
+
+            if(i < end-1):
+                for p in range(-3 , 0, 1):
+                    check2 = SearchWord()
+                    if(tempWs[i+1][p:] in prephrase) and (not (len(tempWs[i+1][:p]) < 2)):
+                        prePhrasee = tempWs[i] + "-" + tempWs[i+1][p:]
+                        prephraseW = Word(prePhrasee, "")
+                        zPhrasePre = Word(prephraseW.getText(), "")
+                        zPhrasePre.equalTo(self.prefix(check2, prephraseW, False, False))
+                        if (check2.find(prephraseW, self.Dict) == True) or (check2.getNumWds() > 0):
+                            tempWs[i] = prePhrasee
+                            tempWs[i+1] = tempWs[i+1]
+                            break  
+            
             while (N + i) < (end):
             
                 check = SearchWord()
@@ -2734,19 +2748,7 @@ class HebrewDictionary(App):
                     N = 1
                 else:
                     N = N + 1
-            k = 0
-            if(i < end-1):
-                for p in range(-3 , 0, 1):
-                    check2 = SearchWord()
-                    if(tempWs[i+1][p:] in prephrase) and (not (len(tempWs[i+1][:p]) < 2)):
-                        prePhrase = tempWs[i] + "-" + tempWs[i+1][p:]
-                        prephraseW = Word(prePhrase, "")
-                        zPhrasePre = Word(prephraseW, "")
-                        zPhrasePre.equalTo(self.prefix(check2, prephraseW, False, False))
-                        if (check2.find(prephraseW, self.Dict) == True) or (check2.getNumWds() > 0):
-                            tempWs[i] = prePhrase
-                            tempWs[i+1] = tempWs[i+1]
-                            break                   
+                             
         return tempWs[0:(end)]
         
     # This function is responsible for finding and displaying all the diffent possible words that the word, stored in text[i],
