@@ -3015,7 +3015,7 @@ class HebrewDictionary(App):
                     sf7 = " [" + w.getModernW() + ']'
                     OutPut.append(suff + sf7)
                     
-                if w.getHey1() > 0:
+                if (w.getHey1() > 0) and (w.getSuffix() == False):
                     suff = "suffix"
                     sf7 = " [" + dirHey + ']'
                     OutPut.append(suff + sf7)
@@ -3026,7 +3026,7 @@ class HebrewDictionary(App):
                     else:
                         suff = "suffix"
                     if w.getHey1() > 0:
-                        sf7 = " [" + w.getSuffixW() + ',' + ' ' + dirHey + ']'  
+                        sf7 = " [" + dirHey + ',' + ' ' + w.getSuffixW() + ']'  
                     else:
                         sf7 = " [" + w.getSuffixW() + ']'
                     X += 'x'*math.floor(len(suff + sf7)/4)
