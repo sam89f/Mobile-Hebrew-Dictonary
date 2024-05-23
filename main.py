@@ -8242,7 +8242,7 @@ class HebrewDictionary(App):
             if(rVcW.getText()[iM + 1] == "י"):
                 uther = True
         
-        if(word.last() == 'ת') and (not((word.third() == 'ו')and(not(word.first() == 'מ')))) and (not(word.getConstruct() == True)) and (not((word.getPlural() == True)and(word.getGender() == 'f.'))) and (not(word.getRoot()[:2] == word.last2())) and (word.getLen() > 4):
+        if(word.last() == 'ת') and (not((word.third() == 'ו')and(not(word.first() == 'מ'))and(self.CurrentWord.last ==  'ת'))) and (not(word.getConstruct() == True)) and (not((word.getPlural() == True)and(word.getGender() == 'f.'))) and (not(word.getRoot()[:2] == word.last2())) and (word.getLen() > 4):
             fimW = Word("","")
             fimW.equalTo(word)
             yod = False
