@@ -2716,12 +2716,12 @@ class HebrewDictionary(App):
             while (N + i) < (end):
             
                 check = SearchWord()
-                checkPl = SearchWord()
-                checkPre = SearchWord()
-                checkSuf = SearchWord()
-                checkPrePl = SearchWord()
-                checkSufPre = SearchWord()
-                checkPlPre = SearchWord()
+                #checkPl = SearchWord()
+                #checkPre = SearchWord()
+                #checkSuf = SearchWord()
+                #checkPrePl = SearchWord()
+                #checkSufPre = SearchWord()
+                #checkPlPre = SearchWord()
             
                 revPhrase = '-'.join(self.revWords(Ws2[i:(N+i+1)]))
                 fixedPhrase = '-'.join(tempWs[i:(N+i+1)])
@@ -8242,7 +8242,7 @@ class HebrewDictionary(App):
             if(rVcW.getText()[iM + 1] == "י"):
                 uther = True
         
-        if(word.last() == 'ת') and (not((word.third() == 'ו')and(not(word.first() == 'מ')))) and (not(word.getConstruct() == True)) and (not(word.getPlural() == True)) and (not(word.getRoot()[:2] == word.last2())) and (word.getLen() > 4):
+        if(word.last() == 'ת') and (not((word.third() == 'ו')and(not(word.first() == 'מ')))) and (not(word.getConstruct() == True)) and (not((word.getPlural() == True)and(word.getGender() == 'f.'))) and (not(word.getRoot()[:2] == word.last2())) and (word.getLen() > 4):
             fimW = Word("","")
             fimW.equalTo(word)
             yod = False
@@ -8561,7 +8561,7 @@ class HebrewDictionary(App):
             if(word.isVerbf() == False) or (word.getVerbform() in Qal) or (word.getVerbform() in Niphal):
                 word3 = Word("","")
                 word3.equalTo(word)
-                if(word.getLen() > 4) and ((word.last() == 'ת') or (word.last() == 'ה')) and (not(word.getPlural() == True)):
+                if(word.getLen() > 4) and ((word.last() == 'ת') or (word.last() == 'ה')) and (not((word.getPlural() == True)and(word.getGender() == 'f.'))):
                     word3.setText(self.Final(word.getText()[1:]))
                     word3.addToValue(1)
                     word3.setGender(1)
