@@ -6692,9 +6692,7 @@ class HebrewDictionary(App):
                     else:
                         self.irreg(look, infW, Check)
                     
-                    if(singleW.getLen() < 4):
-                        return singleW
-                    else:
+                    if(singleW.getLen() > 3):
                         self.algorithm(look, singleW, Check)
                             
                 if(infW.getLen() > 3):
@@ -6727,9 +6725,7 @@ class HebrewDictionary(App):
                         self.FindHelper(look, singleW2, self.Dict, Check)
                         self.irreg(look, singleW2, Check)
                         
-                    if(singleW.getLen() < 4):
-                        return singleW
-                    else:
+                    if(singleW.getLen() > 3):
                         self.algorithm(look, singleW, Check)
                         
                 if(infW.getLen() == 2):
