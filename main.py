@@ -3255,14 +3255,14 @@ class HebrewDictionary(App):
                     mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
                     mdrnWh.addToValue(2)
                     self.FindHelper(look, mdrnWh, self.Dict, Check)
-                    self.algorithm(look, mdrnWh, Check)
+                    #self.algorithm(look, mdrnWh, Check)
                 if(not('ת' in word.getSufxList())):
                     mdrnWt = Word("","")
                     mdrnWt.equalTo(mdrnW)
                     mdrnWt.setText('ת' + self.unFinal(mdrnW.getText()))
                     mdrnWt.addToValue(3)
                     self.FindHelper(look, mdrnWt, self.Dict, Check)
-                    self.algorithm(look, mdrnWt, Check)
+                    #self.algorithm(look, mdrnWt, Check)
                 return mdrnW
                 
         if(word.getLen() > 5):
@@ -3288,21 +3288,21 @@ class HebrewDictionary(App):
                     mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
                     mdrnWh.addToValue(2)
                     self.FindHelper(look, mdrnWh, self.Dict, Check)
-                    self.algorithm(look, mdrnWh, Check)
+                    #self.algorithm(look, mdrnWh, Check)
                 if(not('ת' in word.getSufxList())):
                     mdrnWt = Word("","")
                     mdrnWt.equalTo(mdrnW)
                     mdrnWt.setText('ת' + self.unFinal(mdrnW.getText()))
                     mdrnWt.addToValue(3)
                     self.FindHelper(look, mdrnWt, self.Dict, Check)
-                    self.algorithm(look, mdrnWt, Check)
+                    #self.algorithm(look, mdrnWt, Check)
                 if((word.getPlural() == False) or (not(word.getGenderVal() == 1))):
                     mdrnWth = Word("","")
                     mdrnWth.equalTo(mdrnW)
                     mdrnWth.setText('תו' + self.unFinal(mdrnW.getText()))
                     mdrnWth.addToValue(4)
                     self.FindHelper(look, mdrnWth, self.Dict, Check)
-                    self.algorithm(look, mdrnWth, Check)
+                    #self.algorithm(look, mdrnWth, Check)
                 return mdrnW
                 
         if(word.getLen() > 4):
@@ -3335,14 +3335,14 @@ class HebrewDictionary(App):
                     mdrnWh.setText('ה' + self.unFinal(mdrnW2.getText()))
                     mdrnWh.addToValue(2)
                     self.FindHelper(look, mdrnWh, self.Dict, Check)
-                    self.algorithm(look, mdrnWh, Check)
+                    #self.algorithm(look, mdrnWh, Check)
                 if(not('ת' in word.getSufxList())):
                     mdrnWt = Word("","")
                     mdrnWt.equalTo(mdrnW2)
                     mdrnWt.setText('ת' + self.unFinal(mdrnW2.getText()))
                     mdrnWt.addToValue(3)
                     self.FindHelper(look, mdrnWt, self.Dict, Check)
-                    self.algorithm(look, mdrnWt, Check)
+                    #self.algorithm(look, mdrnWt, Check)
                 #return mdrnW2
                 
         if(word.getLen() > 3):
@@ -3368,14 +3368,14 @@ class HebrewDictionary(App):
                     mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
                     mdrnWh.addToValue(2)
                     self.FindHelper(look, mdrnWh, self.Dict, Check)
-                    self.algorithm(look, mdrnWh, Check)
+                    #self.algorithm(look, mdrnWh, Check)
                 if(not('ת' in word.getSufxList())):
                     mdrnWt = Word("","")
                     mdrnWt.equalTo(mdrnW)
                     mdrnWt.setText('ת' + self.unFinal(mdrnW.getText()))
                     mdrnWt.addToValue(3)
                     self.FindHelper(look, mdrnWt, self.Dict, Check)
-                    self.algorithm(look, mdrnWt, Check)
+                    #self.algorithm(look, mdrnWt, Check)
                 return mdrnW
             
         if (word.last() in modernL):
@@ -3399,14 +3399,14 @@ class HebrewDictionary(App):
                 mdrnWh.setText('ה' + self.unFinal(mdrnW.getText()))
                 mdrnWh.addToValue(2)
                 self.FindHelper(look, mdrnWh, self.Dict, Check)
-                self.algorithm(look, mdrnWh, Check)
+                #self.algorithm(look, mdrnWh, Check)
             if(not('ת' in word.getSufxList())):
                 mdrnWt = Word("","")
                 mdrnWt.equalTo(mdrnW)
                 mdrnWt.setText('ת' + self.unFinal(mdrnW.getText()))
                 mdrnWt.addToValue(3)
                 self.FindHelper(look, mdrnWt, self.Dict, Check)
-                self.algorithm(look, mdrnWt, Check)
+                #self.algorithm(look, mdrnWt, Check)
                 
             return mdrnW
             
