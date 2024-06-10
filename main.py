@@ -4701,7 +4701,7 @@ class HebrewDictionary(App):
                 wordNun.equalTo(word)
                 wordNun.setText(word.getText()[:-3] + "נ" + word.first3())
                 if(word.getLen() == 5):
-                    wordNun.setRoot(self.Final(hishtaphelW.getText()[:-3]))
+                    wordNun.setRoot(self.Final(wordNun.getText()[:-3]))
                 self.hishtaphel(look, wordNun, Check)
                 
             hishtaphelW = Word("","") 
