@@ -7081,7 +7081,7 @@ class HebrewDictionary(App):
         return True
             
     def plural(self, look, word, Check):
-        if(word.getGrstphLen() < 3) or (word.isVerb() == True) or (word.getVerbform() in Piel) or ((word.getPlural() == True)and(not((word.getConstruct() == True)and(word.getSuffix() == True)))) or (word.getDual() == True) or ((word.getConstruct() == True)and(not((word.getPlural() == True)and(word.getSuffix() == True)))) or (word.getModern == True) or ((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:])) or (word.getPluralVal() > 3*word.plFactor):
+        if(word.getGrstphLen() < 3) or (word.isVerb() == True) or (word.getVerbform() in Piel) or (word.getVerbform() == 'Pilpel') or ((word.getPlural() == True)and(not((word.getConstruct() == True)and(word.getSuffix() == True)))) or (word.getDual() == True) or ((word.getConstruct() == True)and(not((word.getPlural() == True)and(word.getSuffix() == True)))) or (word.getModern == True) or ((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:])) or (word.getPluralVal() > 3*word.plFactor):
             return Word("", "")
             
         cPhrasePl = Word("","")
@@ -8132,14 +8132,14 @@ class HebrewDictionary(App):
                 hollow.setGender(1)
             Holl = True
         else:
-            if(word.last3() == 'םיי') and (word.getLen() > 4) and (word.getPlural() == False) and ((word.getSuffix() == False) and (word.getHeyDir() == False)):
+            if(word.last3() == 'םיי') and (not(word.getVerbform() == 'Pilpel')) and (word.getLen() > 4) and (word.getPlural() == False) and ((word.getSuffix() == False) and (word.getHeyDir() == False)):
                 if((not((word.getRoot()[:2] == self.Final(word.lastX(4)[2:])) or (word.getRoot()[-2:] == word.lastX(4)[2:]) or (word.getRoot() == word.last3())))):
                     hollow.setText(hollow.Final(hollow.getText()[3:]))
                     hollow.setDual()
                     if(hollow.getLen() > 2):
                         hollow.setRoot(hollow.last3())
                     Holl = True
-            elif(word.last2() == 'םי') and (word.getLen() > 3) and (word.getPlural() == False) and ((word.getSuffix() == False) and (word.getHeyDir() == False)):
+            elif(word.last2() == 'םי') and (not(word.getVerbform() == 'Pilpel')) and (word.getLen() > 3) and (word.getPlural() == False) and ((word.getSuffix() == False) and (word.getHeyDir() == False)):
                 if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
                     hollow.setText(hollow.Final(hollow.getText()[2:]))
                     hollow.setPlural()
@@ -8147,7 +8147,7 @@ class HebrewDictionary(App):
                         hollow.setRoot(hollow.last3())
                     hollow.setGender(0)
                     Holl = True
-            elif(word.last2() == 'תו') and (word.getLen() > 3) and (word.getPlural() == False):
+            elif(word.last2() == 'תו') and (not(word.getVerbform() == 'Pilpel')) and (word.getLen() > 3) and (word.getPlural() == False):
                 if(not((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:]))):
                     hollow.setText(hollow.Final(hollow.getText()[2:]))
                     hollow.setPlural()
@@ -8155,7 +8155,7 @@ class HebrewDictionary(App):
                         hollow.setRoot(hollow.last3())
                     hollow.setGender(1)
                     Holl = True
-            elif((word.last() == 'ת')or(word.last() == 'ה')) and (word.getLen() > 2) and (word.getPlural() == False):
+            elif((word.last() == 'ת')or(word.last() == 'ה')) and (not(word.getVerbform() == 'Pilpel')) and (word.getLen() > 2) and (word.getPlural() == False):
                 if(not(word.getRoot()[:2] == word.last2())):
                     hollow.setText(hollow.Final(hollow.getText()[1:])) 
                     hollow.addToValue(-2)
@@ -8626,7 +8626,7 @@ class HebrewDictionary(App):
         return Word("", "")
      
     def constr(self, look, word, Check):
-        if(word.getLen() < 2) or (word.getConstruct() == True) or (word.getVerbform() in Piel) or (word.isVerb() == True) or (word.getTense() == 'Perfect') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Imperative') or (word.getTense() == 'Infinitive') or (word.getPartiVal() == 0) or ((not(word.getPartiVal() == 2))and(word.last() == 'ת')) or (word.getRoot()[:2] == word.last2()):
+        if(word.getLen() < 2) or (word.getConstruct() == True) or (word.getVerbform() == 'Pilpel') or (word.getVerbform() in Piel) or (word.isVerb() == True) or (word.getTense() == 'Perfect') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Imperative') or (word.getTense() == 'Infinitive') or (word.getPartiVal() == 0) or ((not(word.getPartiVal() == 2))and(word.last() == 'ת')) or (word.getRoot()[:2] == word.last2()):
             return Word("", "")
     
         if(word.isPhrase()):
