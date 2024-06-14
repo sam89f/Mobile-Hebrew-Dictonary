@@ -954,9 +954,12 @@ class Word:
             self.suffix3 = 0
         self.value = self.value + (suffFactors[self.sufW[0]])
         self.sufW.pop(0)
-        
+    
     def setMdrn(self, modr):
-        self.mdrnW = modr
+        if self.mdrnW == '###':
+            self.mdrnW = modr
+        else:
+            self.mdrnW = self.mdrnW + modr
         
     def rm(self, pre):
         self.preW.remove(pre)
@@ -3224,9 +3227,15 @@ class HebrewDictionary(App):
             return False
         else:
             return look.find(w, Dict)
+            
+    def MdrnChecked(self, word):
+        Exceptions = ['תי', '###']
+        if(word.getModernW() in Exceptions) :
+            return False
+        return True
     
     def modern(self, look, word, Check):
-        if(word.getLen() < 3) or (word.isPhrase()) or (word.isTense() == True) or (word.getModern() == True) or ((word.isVerbf() == True)and(not(word.getVerbform() == 'Qal'))):
+        if(word.getLen() < 3) or (word.isPhrase()) or (word.isTense() == True) or (self.MdrnChecked(word) == True) or ((word.isVerbf() == True)and(not(word.getVerbform() == 'Qal'))):
             return Word("", "")
                 
         if(word.getPartiVal() == 0):
