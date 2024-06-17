@@ -7095,6 +7095,7 @@ class HebrewDictionary(App):
                 plWt.equalTo(plW)
                 if(change > 0):
                     plWt.setDual()
+                    plWt.setGender(0)
                     if(not(word.getTense() == 'Participle')):
                         plWt.setNoun()
                     plWt.setText(self.revPhWords(plWt.getText(), "-"))
@@ -7109,6 +7110,7 @@ class HebrewDictionary(App):
                     plWc.setText(self.FinalChain(plWc.getText()))
                     plWc.setText(plWc.getText().replace(" ", "-"))
                     if(changC > 0):
+                        plWc.setGender(0)
                         if(not(word.getTense() == 'Participle')):
                             plWc.setNoun()
                         plWc.setDual()
@@ -7122,6 +7124,7 @@ class HebrewDictionary(App):
                 plWh.setText(plWh.getText().replace("-םיי", "-ה"))
                 plWh.addToValue(1)
                 if(change > 0):
+                    plWh.setGender(0)
                     if(not(word.getTense() == 'Participle')):
                         plWh.setNoun()
                     plWh.setDual2()
@@ -7139,6 +7142,7 @@ class HebrewDictionary(App):
                     plW.equalTo(cPhrasePl)
                     plW.setText(self.Final(cPhrasePl.getText()[2:]))
                     cPhrasePl2.equalTo(plW)
+                    plW.setGender(0)
                     if(not(word.getTense() == 'Participle')):
                         plW.setNoun()
             else:
@@ -7184,7 +7188,7 @@ class HebrewDictionary(App):
                             plWc.setText(self.Final(cPhrasePl.getText()[2:]))
                         elif cPhrasePl.getLstLen() > 3:
                             plWc.setText(self.Final(cPhrasePl.getText()[3:]))
-                            plWc.setGender(0)
+                        plWc.setGender(0)
                         plWc.setText(plWc.getText().replace("-יי", " "))
                         plWc.setText(self.FinalChain(plWc.getText()))
                         plWc.setText(plWc.getText().replace(" ", "-"))
@@ -7213,7 +7217,7 @@ class HebrewDictionary(App):
                         plWh.setText('ה' + cPhrasePl.getText()[2:])
                     elif cPhrasePl.getLstLen() > 3:
                         plWh.setText('ה' + cPhrasePl.getText()[3:])
-                        plWh.setGender(0)
+                    plWh.setGender(0)
                     plWh.setText(plWh.getText().replace("-םיי", "-ה"))
                     plWh.addToValue(1)
                     if(not(word.getTense() == 'Participle')):
@@ -7335,6 +7339,7 @@ class HebrewDictionary(App):
                     plW = Word("","")
                     plW.equalTo(cPhrasePl)
                     plW.setText(self.Final(cPhrasePl.getText()[1:]))
+                    plW.setGender(0)
                     cPhrasePl2.equalTo(plW)
                     if(not(word.getTense() == 'Participle')):
                         plW.setNoun()
@@ -7358,11 +7363,11 @@ class HebrewDictionary(App):
                     plW.setText(plW.getText().replace("-םי", " "))
                     plW.setText(self.FinalChain(plW.getText()))
                     plW.setText(plW.getText().replace(" ", "-"))
+                    plW.setGender(0)
                     
                     plWt = Word("","")
                     plWt.equalTo(plW)
-                    plWt.setText(self.revPhWords(plWt.getText(), "-"))
-                    plWt.setGender(0)
+                    plWt.setText(self.revPhWords(plWt.getText(), "-"))                    
                     if(self.FindHelper(look, plWt, self.Dict, Check) == True) and (cPhrasePl.getSuffix() == False) and (cPhrasePl.getHeyDir() == False):
                         return plWt
                         
@@ -7380,10 +7385,10 @@ class HebrewDictionary(App):
                     if(changeC4 > -1) and (cPhrasePl.getLstLen() > 1):
                         plWc = Word("","")
                         plWc.equalTo(cPhrasePl)
+                        plWc.setGender(0)
                         if(cPhrasePl.getSuffix() == True) or (cPhrasePl.getHeyDir() == True):
                             plWc.setText(self.Final(cPhrasePl.getText()[1:]))
-                        else:
-                            plWc.setGender(0)
+                        else:                           
                             if cPhrasePl.getLstLen() > 2:
                                 plWc.setText(self.Final(cPhrasePl.getText()[2:]))
                         plWc.setText(plWc.getText().replace("-י", " "))
@@ -7412,13 +7417,13 @@ class HebrewDictionary(App):
                     plWh.equalTo(cPhrasePl)
                     if(cPhrasePl.getLstLen() > 1) and ((cPhrasePl.getSuffix() == True) or (cPhrasePl.getHeyDir() == True)):
                         plWh.setText('ה' + cPhrasePl.getText()[1:])
-                        plWh.addToValue(1)
+                        plWh.addToValue(1)                        
                     elif cPhrasePl.getLstLen() > 2:
-                        plWh.setText('ה' + cPhrasePl.getText()[2:])
-                        plWh.setGender(0)
+                        plWh.setText('ה' + cPhrasePl.getText()[2:])                       
                     plWh.setText(plWh.getText().replace("-םי", "-ה"))
                     plWh.addToValue(1)
                     plWh.setPlural2()
+                    plWh.setGender(0)
                     if(not(word.getTense() == 'Participle')):
                         plWh.setNoun()
                     plWh.setText(self.revPhWords(plWh.getText(), "-"))
