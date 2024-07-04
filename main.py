@@ -4725,7 +4725,7 @@ class HebrewDictionary(App):
                     wordNun.equalTo(word)
                     wordNun.setText(word.getText()[:-4] + "נ" + word.firstX(4))
                     if(word.getLen() == 6):
-                        wordNun.setRoot(self.Final(hishtaphelW.getText()[:-4]))
+                        wordNun.setRoot(self.Final(wordNun.getText()[:-4]))
                     self.hishtaphel(look, wordNun, Check)
                 
                 hishtaphelW = Word("","")
@@ -4752,7 +4752,7 @@ class HebrewDictionary(App):
                 wordNun.equalTo(word)
                 wordNun.setText(word.getText()[:-3] + "נ" + word.first3())
                 if(word.getLen() == 5):
-                    wordNun.setRoot(self.Final(hishtaphelW.getText()[:-3]))
+                    wordNun.setRoot(self.Final(wordNun.getText()[:-3]))
                 self.hishtaphel(look, wordNun, Check)
                 
             hishtaphelW = Word("","")
@@ -4773,7 +4773,7 @@ class HebrewDictionary(App):
                 wordNun.equalTo(word)
                 wordNun.setText(word.getText()[:-3] + "נ" + word.first3())
                 if(word.getLen() == 5):
-                    wordNun.setRoot(self.Final(hishtaphelW.getText()[:-3]))
+                    wordNun.setRoot(self.Final(wordNun.getText()[:-3]))
                 self.hishtaphel(look, wordNun, Check)
                 
             hishtaphelW = Word("","")
@@ -7144,7 +7144,7 @@ class HebrewDictionary(App):
                     if(not(word.getTense() == 'Participle')):
                         plW.setNoun()
             else:
-                if(cPhrasePl.last3() == 'םיי') and (cPhrasePl.getLstLen() > 4) and (not (cPhrasePl.getTense() == 'Perfect')):
+                if(cPhrasePl.last3() == 'םיי') and (cPhrasePl.getLstLen() > 3) and (not (cPhrasePl.getTense() == 'Perfect')):
                     plural = True
                     plW = Word("","")
                     plW.equalTo(cPhrasePl)
