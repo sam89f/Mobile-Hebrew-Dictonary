@@ -3320,7 +3320,7 @@ class HebrewDictionary(App):
                 if(mdrnW2.last() == "ת"):
                     mdrnWh = Word("","")
                     mdrnWh.equalTo(mdrnW2) 
-                    mdrnWh.setText('ה' + mdrnW.getText()[1:])
+                    mdrnWh.setText('ה' + mdrnW2.getText()[1:])
                     mdrnWh.addToValue(0.5)
                     self.algorithm(look, mdrnWh, Check)
                     self.FindHelper(look, mdrnWh, self.Dict, Check)
