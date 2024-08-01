@@ -4404,7 +4404,7 @@ class HebrewDictionary(App):
                     
                 self.FindHelper(look, hufalW, self.Dict, Check)
                 self.imperative(look, hufalW, Check)
-                self.infin_abs(look, hufalW, Check)
+                self.infinitiveAbs(look, hufalW, Check)
                 self.perfect(look, hufalW, Check)
                 hufalWy = Word("","")
                 hufalWy.equalTo(hufalW)
