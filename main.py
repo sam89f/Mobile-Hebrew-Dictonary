@@ -4112,7 +4112,7 @@ class HebrewDictionary(App):
                         else:
                             hifilW.setVerbform(rareVerbforms[word2.getVerbform()])
                             
-                        return self.smPrefix(look, hifilW, True, Check)
+                        return self.ssmPrefix(look, hifilW, True, Check)
                 
                 if(word2.nextToFirst() == 'ו'):
                     if(word2.first() == 'ה') and (not(word2.getRootFirst2() == word2.first2())):
@@ -4480,7 +4480,7 @@ class HebrewDictionary(App):
                     if(word.first() == 'ל'):
                         self.infinitive(look, hufalW, Check)
                     if(self.prefixRuls(word, word.first(), True) == True):
-                        return self.Prefix(look, hufalW, True, Check)
+                        return self.prefix(look, hufalW, True, Check)
                     else:
                         return hufalW
 
@@ -4602,12 +4602,12 @@ class HebrewDictionary(App):
                     
                     if(word.first() == 'ל'):
                         self.infinitive(look, hollow, False)
-                    self.Prefix(look, hollow, True, Check)
+                    self.prefix(look, hollow, True, Check)
                     
                 if(word.first() == 'ל'):
                     self.infinitive(look, hitpaelW, Check)
                 if(self.prefixRuls(word, word.first(), True) == True):
-                    return self.Prefix(look, hitpaelW, True, Check)
+                    return self.prefix(look, hitpaelW, True, Check)
                 else:
                     return hitpaelW
                 
