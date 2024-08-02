@@ -8618,10 +8618,10 @@ class HebrewDictionary(App):
                                 else:
                                     pwordh.addToValue(1)
                                 self.FindHelper(look, pwordh, self.Dict, Check)
+                            if(not(word3.getVerbform() in Qal)):
+                                self.algorithm(look, pword, Check)
                         self.FindHelper(look, pword, self.Dict, Check)
-                        if(not(word3.getVerbform() in Qal)):
-                            self.algorithm(look, pword, Check)
-                            
+                                              
                 if(word3.nextToLast() == 'ו') and (not((word3.hasRoot()) and (not((word3.getRootLast2() == self.Final(word3.last3()[1:])) or (word3.getRootLast2() == word3.last2()))))):# and (not(word3.last() == 'י')) and (not(word3.last() == 'ו')):
                     isPar = True
                     pword2 = Word("","")
