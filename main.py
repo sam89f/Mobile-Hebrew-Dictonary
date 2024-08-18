@@ -4112,7 +4112,7 @@ class HebrewDictionary(App):
                         else:
                             hifilW.setVerbform(rareVerbforms[word2.getVerbform()])
                             
-                        return self.ssmPrefix(look, hifilW, True, Check)
+                        return self.smPrefix(look, hifilW, True, Check)
                 
                 if(word2.nextToFirst() == 'ו'):
                     if(word2.first() == 'ה') and (not(word2.getRootFirst2() == word2.first2())):
