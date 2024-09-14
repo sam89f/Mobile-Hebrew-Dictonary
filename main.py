@@ -1,4 +1,4 @@
-#Hebrew Dictionary mobile aplication python file
+#Hebrew Dictionary mobile aplication python file (Phone Version)
 #==============================================================================
 
 #This file displays the UI, and the main fuction buttons and input text field, while the .kv file
@@ -27,7 +27,7 @@ import os
 import sys
 import unicodedata
 
-Display_Size = 22
+Display_Size = 50
 
 # color values
 red = [1, 0, 0, 1]
@@ -2428,9 +2428,9 @@ class DisplayWords(GridLayout):
         self.dRoot = ScrollView(size_hint=(5, 1), size=(Window.width, Window.height))
         self.dRoot.add_widget(self.display)
         self.SubPanal = GridLayout(rows=1, size_hint=[5, 0.1])
-        self.closeB = Button(text='[color=FFFFFF]Close[color=FFFFFF]', background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
+        self.closeB = Button(text='[color=FFFFFF]Close[color=FFFFFF]', background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=50, markup=True)
         self.closeB.bind(on_press=instance.closeAction)
-        self.topB = Button(text='[color=FFFFFF]Top[color=FFFFFF]', background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
+        self.topB = Button(text='[color=FFFFFF]Top[color=FFFFFF]', background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=50, markup=True)
         self.topB.bind(on_press=instance.topAction)
         self.SubPanal.add_widget(self.closeB)
         self.SubPanal.add_widget(self.topB)
@@ -2451,9 +2451,10 @@ class AddWord(GridLayout):
         self.Word = TextInput(text="", readonly=True, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         self.Definition= TextInput(text="", readonly=False, multiline=False, font_name='data/fonts/times', font_size=Display_Size)
         
-        self.enterB = Button(text='[color=000000]Enter[color=000000]', background_color=light_green, font_name='data/fonts/times', font_size=20, markup=True)
+
+        self.enterB = Button(text='[color=000000]Enter[color=000000]', background_color=light_green, font_name='data/fonts/times', font_size=50, markup=True)
         self.enterB.bind(on_press=instance.enterAction) 
-        self.cancelB = Button(text='[color=000000]Cancel[color=000000]', background_color=light_green, font_name='data/fonts/times', font_size=20, markup=True)
+        self.cancelB = Button(text='[color=000000]Cancel[color=000000]', background_color=light_green, font_name='data/fonts/times', font_size=50, markup=True)
         self.cancelB.bind(on_press=instance.cancelAction)
         
         self.add_widget(self.wLabel)
@@ -2487,18 +2488,18 @@ class HebrewDictionary(App):
         self.UserInterface = GridLayout(cols=1)
         self.MainPanal = GridLayout(cols=1)
         self.Input = CustomInput(readonly=False, multiline=False, base_direction='rtl', font_name='data/fonts/times', font_size=Display_Size)
-        self.findB = Button(text='FindW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
+        self.findB = Button(text='FindW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=50, markup=True)
         self.findB.bind(on_press=self.findAction)
-        self.addB = Button(text='AddW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
+        self.addB = Button(text='AddW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=50, markup=True)
         self.addB.bind(on_press=self.addAction)
-        self.editB = Button(text='EditW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
+        self.editB = Button(text='EditW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=50, markup=True)
         self.editB.bind(on_press=self.editAction)
-        self.removeB = Button(text='RemoveW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
+        self.removeB = Button(text='RemoveW', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=50, markup=True)
         self.removeB.bind(on_press=self.removeAction)
-        self.exitB = Button(text='Exit', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=20, markup=True)
+        self.exitB = Button(text='Exit', border=[1,1,1,1], background_color=light_green, font_name='data/fonts/times', outline_color=black, outline_width=1, font_size=50, markup=True)
         self.exitB.bind(on_press=self.exitAction)
         self.KeyboardPanal = Keyboard(self)
-        self.MainPanal.add_widget(Label(text='[color=3333ff]Hebrew Dictionary[color=3333ff]', font_name='data/fonts/times', outline_color=black, outline_width=1.5, font_size=45, markup=True))
+        self.MainPanal.add_widget(Label(text='[color=3333ff]Hebrew Dictionary[color=3333ff]', font_name='data/fonts/times', outline_color=black, outline_width=1.5, font_size=70, markup=True))
         self.MainPanal.add_widget(self.Input)
         self.SubPanal = GridLayout(cols=5)
         self.SubPanal.add_widget(self.findB)
@@ -3090,7 +3091,7 @@ class HebrewDictionary(App):
             self.wText += '\n'
             
         if k > 1:
-            self.wText += '\t\t'*(n+1) + "-"*181
+            self.wText += '\t\t'*(n+1) + "-"*177
             self.wText += '\n'
             Lwords = []
             t1 = text[i].split('-')[0]
@@ -3105,12 +3106,12 @@ class HebrewDictionary(App):
                     else:
                         self.wText += '\t\t'*(n+1) + "prefix " + '[' + Lwords[lw] + ']'
                     if not(lw == len(Lwords)-1):
-                        self.wText += '\t\t'*(n+1) + "-"*181
+                        self.wText += '\t\t'*(n+1) + "-"*177
                     self.wText += '\n'
                 else:
                     self.getWList(Lwords, lw, len(Lwords), len(Lwords[lw].split('-')), n+1)
                     if not(lw == len(Lwords)-1):
-                        self.wText += '\t\t'*(n+1) + "-"*181
+                        self.wText += '\t\t'*(n+1) + "-"*177
                         self.wText += '\n'
             
         #self.wText += "*********" + self.CurrentWord.last2() + "*********"
@@ -3178,6 +3179,7 @@ class HebrewDictionary(App):
     def num_of_a_roots(self, s):
         if len(s) == 0:
             return 0
+
         rev_s = self.rev(s)
         suf = ['ה', 'ת']
         n = 0
@@ -3222,7 +3224,7 @@ class HebrewDictionary(App):
         self.constr(look, word, Check)
         
         self.suffix(look, word, 2, Check)
-        
+
         if(word.isVerb() == False):
             self.plural(look, word, Check)
             self.constr(look, word, Check)
@@ -3239,7 +3241,7 @@ class HebrewDictionary(App):
         if Check == True:
             return self.FindHelperCheck(look, w, Dict)
             
-        if(((w.getText() == self.CurrentWord.getText()) and (look.findText(w) == True))) and (not(w.getTense() == 'Imperative')):
+        if(((w.getText() == self.CurrentWord.getText()) and (look.findText(w) == True))):
             return False
                 
         if((w.getLen() < 3) and ((w.getTense() == 'Participle')or(w.getVerbform() in Hiphil)or(w.getVerbform() in Pual)or((w.getVerbform() in Piel)and(not(w.getVerbform() == 'Pilpel'))))):
@@ -4729,7 +4731,7 @@ class HebrewDictionary(App):
             return self.future(look, hitpaelW, Check)
             
         return Word("", "")
-        
+       
     def metathesis(self, look, word):
         if(len(word.getText()) < 3):
             return Word("","")
@@ -6554,8 +6556,9 @@ class HebrewDictionary(App):
             return False
         return True
     
-    def imperative(self, look, word, Check): 
-        if(word.getLen() < 2) or (word.isPhrase() == True) or (word.TenChk() == True) or (self.impertvRules(word, word.last()) == False) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getVerbform() in Hophal) or (word.getVerbform() in Piel) or (word.getVerbform() in Niphal) or (word.getModern() == True):
+    def imperative(self, look, word, Check):
+        
+        if(word.getLen() < 2) or (word.isPhrase() == True) or (word.TenChk() == True) or (self.impertvRules(word, word.last()) == False) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getVerbform() in Hophal) or (word.getVerbform() in Piel) or (word.getVerbform() in Niphal) or (word.getModern == True):
             return Word("","")
         
         if(word.getLen() < 3):
@@ -6566,7 +6569,6 @@ class HebrewDictionary(App):
             imperW.setTense(4)
             imperW.setPerson(2)
             imperW.setGender(0)
-            self.FindHelper(look, imperW, self.Dict, Check)
             self.irreg(look, imperW, Check)
        
             hollow = Word("","")
@@ -6606,9 +6608,6 @@ class HebrewDictionary(App):
             imperW.setTense(4)
             imperW.setPerson(3)
             imperW.setGender(0)
-         
-            self.FindHelper(look, imperW, self.Dict, Check)
-            self.irreg(look, imperW, Check)
             
             singleW = Word("","")
             singleW.equalTo(imperW)
@@ -7186,7 +7185,7 @@ class HebrewDictionary(App):
         return True
             
     def plural(self, look, word, Check):
-        if(word.getGrstphLen() < 3) or (word.isVerb() == True) or (word.getVerbform() in Piel) or (word.getVerbform() == 'Pilpel') or ((word.getPlural() == True)and(not((word.getConstruct() == True)and(word.getSuffix() == True)))) or (word.getDual() == True) or ((word.getConstruct() == True)and(not((word.getPlural() == True)and(word.getSuffix() == True)))) or (word.getModern() == True) or ((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:])) or (word.getPluralVal() > 3*word.plFactor):
+        if(word.getGrstphLen() < 3) or (word.isVerb() == True) or (word.getVerbform() in Piel) or (word.getVerbform() == 'Pilpel') or ((word.getPlural() == True)and(not((word.getConstruct() == True)and(word.getSuffix() == True)))) or (word.getDual() == True) or ((word.getConstruct() == True)and(not((word.getPlural() == True)and(word.getSuffix() == True)))) or (word.getModern == True) or ((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:])) or (word.getPluralVal() > 3*word.plFactor):
             return Word("", "")
             
         cPhrasePl = Word("","")
@@ -7901,7 +7900,7 @@ class HebrewDictionary(App):
         return Word("", "")
 
     def smPrefix(self, look, word, h, Check):
-        if(word.getLen() < 2) or (not((self.CurrentWord.first() in prefixL) or (self.CurrentWord.first2() in prefixL))) or (word.isPhrase()): #or (word.getModern() == True):
+        if(word.getLen() < 2) or (not((self.CurrentWord.first() in prefixL) or (self.CurrentWord.first2() in prefixL))) or (word.isPhrase()): #or (word.getModern == True):
             return Word("","")
             
         if(word.getLen() > 2):
@@ -7947,11 +7946,10 @@ class HebrewDictionary(App):
         return Word("", "")  
     
     def suffix(self, look, word, p, Check):
-        if(word.getLen() < 3) or (word.getConstruct() == True) or (word.getModern() == True) or ('ה' in word.getPrixList()) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getVerbform() in Piel) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (not (word.getTenseVal() == -1)) or (word.getModern() == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
+        if(word.getLen() < 3) or (word.getConstruct() == True) or (word.getModern() == True) or ('ה' in word.getPrixList()) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getVerbform() in Piel) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (not (word.getTenseVal() == -1)) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
             return Word("","")
-           
+            
         suff1 = Word("","")
-        self.imperative(look, word, Check)
         suff2 = Word("","")
         suff1 = self.suffix1(look, word, Check)
         suff2 = self.suffix2(look, word, Check)
@@ -7972,7 +7970,7 @@ class HebrewDictionary(App):
             return suff2
         if not (suff1 == Word("","")):
             return suff1
-        
+                
         return Word("","")
         
     def dirHey(self, look, word, Check):
@@ -8036,7 +8034,7 @@ class HebrewDictionary(App):
         return Word("","")
             
     def suffix1(self, look, word, Check):
-        if(word.getLstLen() < 2) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern() == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
+        if(word.getLstLen() < 2) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
             return Word("","")
                 
         cPhraseSuf = Word("","")
@@ -8051,7 +8049,7 @@ class HebrewDictionary(App):
         
         if((cPhraseSuf.last() == 'ה') and (cPhraseSuf.getPlural() == True)) or (cPhraseSuf.getLen() < 3) or (word.getRoot()[:2] == word.last2()):
             return Word("","")
-        
+  
         if ((cPhraseSuf2.last() == cPhraseSuf.last()) or (word.getHeyDir() == True)) and (cPhraseSuf.last() in suffix) and (not((cPhraseSuf2.nextToLast() == "י")and(cPhraseSuf.getVerbform() in Hiphil))):
             suffW = Word("","")
             suffW.equalTo(cPhraseSuf)
@@ -8102,7 +8100,7 @@ class HebrewDictionary(App):
         return Word("","")
 
     def suffix2(self, look, word, Check):
-        if(word.getLstLen() < 3) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern() == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
+        if(word.getLstLen() < 3) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
             return Word("","")
 
         cPhraseSuf = Word("","")
@@ -8167,7 +8165,7 @@ class HebrewDictionary(App):
         return Word("","")
         
     def suffix3(self, look, word, Check):
-        if(word.getLstLen() < 4) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern() == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
+        if(word.getLstLen() < 4) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
             return Word("","")
 
         cPhraseSuf = Word("","")
@@ -8929,7 +8927,7 @@ class HebrewDictionary(App):
                 irregipW.equalTo(word)
                 irregipW.setText(word.getText() + 'ה')
                 irregipW.setIrreg()
-                self.FindHelper(look, irregipW, self.Dict, Check)
+                self.FindHelperCheck(look, irregipW, self.Dict)
                 self.irreg(look, irregipW, Check)
             
             if(not (word.first() == 'י')) and (not(word.getVerbform() in Piel)) and (not(word.getVerbform() in Pual)):
@@ -8937,7 +8935,7 @@ class HebrewDictionary(App):
                 irregipW2.equalTo(word)
                 irregipW2.setText(word.getText() + 'י')
                 irregipW2.setIrreg()
-                self.FindHelper(look, irregipW2, self.Dict, Check)
+                self.FindHelperCheck(look, irregipW2, self.Dict)
                 self.irreg(look, irregipW2, Check)
                 
             if(not (word.first() == 'נ')) and (word.getLen() < 3)and (not(word.getVerbform() in Piel)) and (not(word.getVerbform() in Pual)) and (not (word.getVerbform() == 'Niphal')):
@@ -8945,7 +8943,7 @@ class HebrewDictionary(App):
                 irregipW3.equalTo(word)
                 irregipW3.setText(word.getText() + 'נ')
                 irregipW3.setIrreg()
-                self.FindHelper(look, irregipW3, self.Dict, Check)
+                self.FindHelperCheck(look, irregipW3, self.Dict)
                 self.irreg(look, irregipW3, Check)
             if(word.getLen() > 1):
                 if(word.last() == 'י') and (not(word.getConstruct() == True)) and (not(self.CurrentWord.last() == 'י')) and (not(word.getRoot()[:2] == word.last2())) and (not(word.getPartiVal() == 0)):
