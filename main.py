@@ -7953,7 +7953,6 @@ class HebrewDictionary(App):
             return Word("","")
            
         suff1 = Word("","")
-        self.imperative(look, word, Check)
         suff2 = Word("","")
         suff1 = self.suffix1(look, word, Check)
         suff2 = self.suffix2(look, word, Check)
