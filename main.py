@@ -3222,7 +3222,7 @@ class HebrewDictionary(App):
         self.constr(look, word, Check)
         
         self.suffix(look, word, 2, Check)
-
+        
         if(word.isVerb() == False):
             self.plural(look, word, Check)
             self.constr(look, word, Check)
@@ -3239,7 +3239,7 @@ class HebrewDictionary(App):
         if Check == True:
             return self.FindHelperCheck(look, w, Dict)
             
-        if(((w.getText() == self.CurrentWord.getText()) and (look.findText(w) == True))):
+        if(((w.getText() == self.CurrentWord.getText()) and (look.findText(w) == True))) and (not(w.getTense() == 'Imperative')):
             return False
                 
         if((w.getLen() < 3) and ((w.getTense() == 'Participle')or(w.getVerbform() in Hiphil)or(w.getVerbform() in Pual)or((w.getVerbform() in Piel)and(not(w.getVerbform() == 'Pilpel'))))):
@@ -6554,9 +6554,8 @@ class HebrewDictionary(App):
             return False
         return True
     
-    def imperative(self, look, word, Check):
-        
-        if(word.getLen() < 2) or (word.isPhrase() == True) or (word.TenChk() == True) or (self.impertvRules(word, word.last()) == False) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getVerbform() in Hophal) or (word.getVerbform() in Piel) or (word.getVerbform() in Niphal) or (word.getModern == True):
+    def imperative(self, look, word, Check): 
+        if(word.getLen() < 2) or (word.isPhrase() == True) or (word.TenChk() == True) or (self.impertvRules(word, word.last()) == False) or (not(word.getTenseVal() == -1)) or (word.isNoun() == True) or (word.getVerbform() in Hophal) or (word.getVerbform() in Piel) or (word.getVerbform() in Niphal) or (word.getModern() == True):
             return Word("","")
         
         if(word.getLen() < 3):
@@ -6567,6 +6566,7 @@ class HebrewDictionary(App):
             imperW.setTense(4)
             imperW.setPerson(2)
             imperW.setGender(0)
+            self.FindHelper(look, imperW, self.Dict, Check)
             self.irreg(look, imperW, Check)
        
             hollow = Word("","")
@@ -6606,6 +6606,9 @@ class HebrewDictionary(App):
             imperW.setTense(4)
             imperW.setPerson(3)
             imperW.setGender(0)
+         
+            self.FindHelper(look, imperW, self.Dict, Check)
+            self.irreg(look, imperW, Check)
             
             singleW = Word("","")
             singleW.equalTo(imperW)
@@ -7183,7 +7186,7 @@ class HebrewDictionary(App):
         return True
             
     def plural(self, look, word, Check):
-        if(word.getGrstphLen() < 3) or (word.isVerb() == True) or (word.getVerbform() in Piel) or (word.getVerbform() == 'Pilpel') or ((word.getPlural() == True)and(not((word.getConstruct() == True)and(word.getSuffix() == True)))) or (word.getDual() == True) or ((word.getConstruct() == True)and(not((word.getPlural() == True)and(word.getSuffix() == True)))) or (word.getModern == True) or ((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:])) or (word.getPluralVal() > 3*word.plFactor):
+        if(word.getGrstphLen() < 3) or (word.isVerb() == True) or (word.getVerbform() in Piel) or (word.getVerbform() == 'Pilpel') or ((word.getPlural() == True)and(not((word.getConstruct() == True)and(word.getSuffix() == True)))) or (word.getDual() == True) or ((word.getConstruct() == True)and(not((word.getPlural() == True)and(word.getSuffix() == True)))) or (word.getModern() == True) or ((word.getRoot()[:2] == self.Final(word.last3()[1:])) or (word.getRoot()[-2:] == word.last3()[1:])) or (word.getPluralVal() > 3*word.plFactor):
             return Word("", "")
             
         cPhrasePl = Word("","")
@@ -7898,7 +7901,7 @@ class HebrewDictionary(App):
         return Word("", "")
 
     def smPrefix(self, look, word, h, Check):
-        if(word.getLen() < 2) or (not((self.CurrentWord.first() in prefixL) or (self.CurrentWord.first2() in prefixL))) or (word.isPhrase()): #or (word.getModern == True):
+        if(word.getLen() < 2) or (not((self.CurrentWord.first() in prefixL) or (self.CurrentWord.first2() in prefixL))) or (word.isPhrase()): #or (word.getModern() == True):
             return Word("","")
             
         if(word.getLen() > 2):
@@ -7944,10 +7947,11 @@ class HebrewDictionary(App):
         return Word("", "")  
     
     def suffix(self, look, word, p, Check):
-        if(word.getLen() < 3) or (word.getConstruct() == True) or (word.getModern() == True) or ('ה' in word.getPrixList()) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getVerbform() in Piel) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (not (word.getTenseVal() == -1)) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
+        if(word.getLen() < 3) or (word.getConstruct() == True) or (word.getModern() == True) or ('ה' in word.getPrixList()) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getVerbform() in Piel) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (not (word.getTenseVal() == -1)) or (word.getModern() == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
             return Word("","")
-            
+           
         suff1 = Word("","")
+        self.imperative(look, word, Check)
         suff2 = Word("","")
         suff1 = self.suffix1(look, word, Check)
         suff2 = self.suffix2(look, word, Check)
@@ -7968,7 +7972,7 @@ class HebrewDictionary(App):
             return suff2
         if not (suff1 == Word("","")):
             return suff1
-                
+        
         return Word("","")
         
     def dirHey(self, look, word, Check):
@@ -8032,7 +8036,7 @@ class HebrewDictionary(App):
         return Word("","")
             
     def suffix1(self, look, word, Check):
-        if(word.getLstLen() < 2) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
+        if(word.getLstLen() < 2) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern() == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
             return Word("","")
                 
         cPhraseSuf = Word("","")
@@ -8047,7 +8051,7 @@ class HebrewDictionary(App):
         
         if((cPhraseSuf.last() == 'ה') and (cPhraseSuf.getPlural() == True)) or (cPhraseSuf.getLen() < 3) or (word.getRoot()[:2] == word.last2()):
             return Word("","")
-  
+        
         if ((cPhraseSuf2.last() == cPhraseSuf.last()) or (word.getHeyDir() == True)) and (cPhraseSuf.last() in suffix) and (not((cPhraseSuf2.nextToLast() == "י")and(cPhraseSuf.getVerbform() in Hiphil))):
             suffW = Word("","")
             suffW.equalTo(cPhraseSuf)
@@ -8098,7 +8102,7 @@ class HebrewDictionary(App):
         return Word("","")
 
     def suffix2(self, look, word, Check):
-        if(word.getLstLen() < 3) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
+        if(word.getLstLen() < 3) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern() == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
             return Word("","")
 
         cPhraseSuf = Word("","")
@@ -8163,7 +8167,7 @@ class HebrewDictionary(App):
         return Word("","")
         
     def suffix3(self, look, word, Check):
-        if(word.getLstLen() < 4) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
+        if(word.getLstLen() < 4) or ((word.isVerb() == True)and(self.CurrentWord.isVerb() == False)) or (word.getSuffix() == True) or (word.getPlural() == True) or (word.getDual() == True) or (word.getConstruct() == True) or (word.getModern() == True) or (word.getPartiVal() == 0) or (word.getVerbform() in Pual):
             return Word("","")
 
         cPhraseSuf = Word("","")
@@ -8925,7 +8929,7 @@ class HebrewDictionary(App):
                 irregipW.equalTo(word)
                 irregipW.setText(word.getText() + 'ה')
                 irregipW.setIrreg()
-                self.FindHelperCheck(look, irregipW, self.Dict)
+                self.FindHelper(look, irregipW, self.Dict, Check)
                 self.irreg(look, irregipW, Check)
             
             if(not (word.first() == 'י')) and (not(word.getVerbform() in Piel)) and (not(word.getVerbform() in Pual)):
@@ -8933,7 +8937,7 @@ class HebrewDictionary(App):
                 irregipW2.equalTo(word)
                 irregipW2.setText(word.getText() + 'י')
                 irregipW2.setIrreg()
-                self.FindHelperCheck(look, irregipW2, self.Dict)
+                self.FindHelper(look, irregipW2, self.Dict, Check)
                 self.irreg(look, irregipW2, Check)
                 
             if(not (word.first() == 'נ')) and (word.getLen() < 3)and (not(word.getVerbform() in Piel)) and (not(word.getVerbform() in Pual)) and (not (word.getVerbform() == 'Niphal')):
@@ -8941,7 +8945,7 @@ class HebrewDictionary(App):
                 irregipW3.equalTo(word)
                 irregipW3.setText(word.getText() + 'נ')
                 irregipW3.setIrreg()
-                self.FindHelperCheck(look, irregipW3, self.Dict)
+                self.FindHelper(look, irregipW3, self.Dict, Check)
                 self.irreg(look, irregipW3, Check)
             if(word.getLen() > 1):
                 if(word.last() == 'י') and (not(word.getConstruct() == True)) and (not(self.CurrentWord.last() == 'י')) and (not(word.getRoot()[:2] == word.last2())) and (not(word.getPartiVal() == 0)):
