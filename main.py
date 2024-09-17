@@ -8898,7 +8898,7 @@ class HebrewDictionary(App):
             return Word("", "")
         
         if(word.getLen() < 3):
-            if(not(word.first() == 'נ'))  and (word.getPrefix() == True) and (not (word.getVerbform()in Niphal)) and (not((word.getVerbform() in Pual) or (word.getVerbform() in Piel) or (word.getPartiVal() == 1))):
+            if(word.isVerb() == True) and (not(word.first() == 'נ')) and (word.getPrefix() == True) and (not (word.getVerbform()in Niphal)) and (not((word.getVerbform() in Pual) or (word.getVerbform() in Piel) or (word.getPartiVal() == 1))):
                 irregW5 = Word("","")
                 irregW5.equalTo(word)
                 irregW5.setText(word.getText() + 'נ')
@@ -9127,8 +9127,8 @@ class HebrewDictionary(App):
             #        self.FindHelperCheck(look, irregWc, self.Dict)
      
         # checking to see if any letters have been assimilated from the beginning of the word.
-        if(word.getLen() < 3) and (((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')) or (word.getTense() == 'Participle') and (not(word.getVerbform() in Pual))):
-            if (not((word.getVerbform() in Hophal)or(word.getVerbform() in Hiphil)or(word.getVerbform() in Hithpeal))) and (not(word.getIrregVal() > 0)) and ((not ('ה' in word.getPrixList())) and (not (self.CurrentWord.first() == 'ה')) and (not (word.first() == 'ה'))) and (not(word.getVerbform() in Piel)):
+        if(word.isVerb() == True) and (word.getLen() < 3) and (((word.getPrefix() == True) or (word.getTense() == 'Infinitive') or (word.getTense() == 'Imperfect') or (word.getTense() == 'Cohortative')) or (word.getTense() == 'Participle') and (not(word.getVerbform() in Pual))):
+            if(not((word.getVerbform() in Hophal)or(word.getVerbform() in Hiphil)or(word.getVerbform() in Hithpeal))) and (not(word.getIrregVal() > 0)) and ((not ('ה' in word.getPrixList())) and (not (self.CurrentWord.first() == 'ה')) and (not (word.first() == 'ה'))) and (not(word.getVerbform() in Piel)):
                 irregW = Word("","")
                 irregW.equalTo(word)
                 irregW.setText(word.getText() + 'ה')
