@@ -8305,6 +8305,21 @@ class HebrewDictionary(App):
                     hollow2.setText('ה' + self.unFinal(hollow2.getText()))
                     hollow2.addToValue(-2)
                     self.FindHelper(look, hollow2, self.Dict, Check)
+                    
+            elif((hollow.getLen() == 3) and (hollow.first() == "מ")):
+                hollow2 = Word("","")
+                hollow2.equalTo(hollow)
+                if(hollow.hasRoot() == False):
+                    hollow2.setText(hollow.last() + 'ו' +  hollow.second())
+                    hollow2.addToValue(1) 
+                    hollow2.setRoot(hollow2.first3())
+                    #hollow2.setPar(1)
+                    self.FindHelper(look, hollow2, self.Dict, Check)
+                    if(word.last2() == 'תו') and (hollow.getPlural() == True):
+                        hollow2.setText('ה' + self.unFinal(hollow2.getText()))
+                        hollow2.addToValue(-2)
+                        self.FindHelper(look, hollow2, self.Dict, Check)
+                        
             elif((word.getVerbform() in Piel) or (word.getVerbform() in Hiphil)):
                 if(hollow.getLen() > 3) and (hollow.first() == "מ"):
                     hollow3 = Word("","")
@@ -8321,12 +8336,13 @@ class HebrewDictionary(App):
                             hollow3.setText('ה' + self.unFinal(hollow3.getText()))
                             hollow3.addToValue(-2)
                             self.FindHelper(look, hollow3, self.Dict, Check)
+                            
             elif((word.getVerbform() in Hophal) or (word.getVerbform() in Pual) or (word.getVerbform() in Hithpeal)):
                 if(hollow.getLen() > 2) and (hollow.first() == "מ"):
                     hollow4 = Word("","")
                     hollow4.equalTo(hollow)
                     if(hollow.getLen() == 3):
-                        hollow4.setText(hollow.last() + 'ו' +  hollow.first2())
+                        hollow4.setText(hollow.last() + 'ו' +  hollow.second())
                         hollow4.addToValue(1)
                         if(not(hollow.getRoot()[-2:] == hollow.first2())):
                             hollow4.setText(hollow4.getText()[:-1])
