@@ -9023,7 +9023,7 @@ class HebrewDictionary(App):
                 return Word("", "")
         
         if(word.getLen() == 2):
-            if(not(word.getTense() == 'Participle')) and (not(word.getVerbform() in Pual)) and (word.VerbChk() == True) and (word.TenChk() == True):
+            if(not(word.getTense() == 'Participle')) and (not(word.getVerbform() in Pual)):
                 irreg1 = Word("","")
                 irreg1.equalTo(word)
                 irreg1.setText(word.last() + 'ו' + word.first())
@@ -9032,7 +9032,7 @@ class HebrewDictionary(App):
                 irreg1.setIrreg()
                 self.FindHelperCheck(look, irreg1, self.Dict)
             
-            if(not(word.getVerbform() in Piel)) and (not(word.getTense() == "Participle")) and (word.VerbChk() == True) and (word.TenChk() == True):
+            if(not(word.getVerbform() in Piel)) and (not(word.getTense() == "Participle")):
                 irreg2 = Word("","")
                 irreg2.equalTo(word)
                 irreg2.setText(word.last() + 'י' + word.first())
