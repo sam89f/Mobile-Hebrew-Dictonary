@@ -8258,7 +8258,7 @@ class HebrewDictionary(App):
         
     def participle(self, look, word, Check):
         
-        if(word.getLen() < 2) or (word.isPhrase() == True) or (word.TenChk() == True) or (word.isTense() == True) or (word.getConstruct() == True):
+        if(word.getLen() < 2) or (word.isPhrase() == True) or (word.TenChk() == True) or (word.isTense() == True):
             return Word("","")
           
         hollow = Word("","")
@@ -8266,6 +8266,9 @@ class HebrewDictionary(App):
         hollow.setTenC()
         hollow.setTense(2)
         Holl = False
+        
+        if(hollow.getConstruct() == True) and (word.getGender() == 'f.'):
+            hollow.resetConstruct()
         
         if(word.getLen() < 10) and (word.getGenderVal() == -1):
             if(word.last() == 'ה') or (word.last() == 'ת') and (self.num_of_p_roots(word.getText()[1:]) < 3) and (word.getConstruct() == False) and ((word.getLen() > 2) and (word.getLen() < 8)):
