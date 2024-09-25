@@ -2985,13 +2985,17 @@ class HebrewDictionary(App):
                 ARROW = "  =>  "
                 X = ""
                 HR = False
+                construct = False
+                if(w.getConstruct() == True) and (not(w.isVerb() == True)):
+                    construct = True
+                    
                 #Val = "[" + str(w.getValue()) + "]"
                 #HR = w.hasRoot()
                 if(w.isRoot() == True):
                     isR = "(r) "# + Val + " "
                 #else:
                     #isR = " " + Val + " "
-                if(w.isVerbf() == True) or (w.isTense() == True) or (w.isPerson() == True) or (w.isGender() == True) or (w.getPlural() == True) or (w.getModern() == True) or (w.getDual() == True) or (w.getHey1() > 0) or (w.getSuffix() == True) or (w.getPrefix() == True) or (HR == True) or (w.getConstruct() == True):
+                if(w.isVerbf() == True) or (w.isTense() == True) or (w.isPerson() == True) or (w.isGender() == True) or (w.getPlural() == True) or (w.getModern() == True) or (w.getDual() == True) or (w.getHey1() > 0) or (w.getSuffix() == True) or (w.getPrefix() == True) or (HR == True) or (construct == True):
                     gr = True
 
 
@@ -3034,11 +3038,11 @@ class HebrewDictionary(App):
                     OutPut.append(person)
                     X += 'xxx'
                     
-                if (w.isGender() == True) and ((w.isTense() == True) or (w.getConstruct() == True) or (w.getPlural() == True) or (w.getDual() == True)):
+                if (w.isGender() == True) and ((w.isTense() == True) or (construct == True) or (w.getPlural() == True) or (w.getDual() == True)):
                     OutPut.append(gender)
                     X += 'xxx'
                     
-                if w.getConstruct() == True:
+                if (construct == True):
                     contr = "cnstr."
                     OutPut.append(contr)
                     X += 'xxx'
@@ -6763,7 +6767,9 @@ class HebrewDictionary(App):
                 infW.setText(word.getText()[:-1])
                 infW.setVerb()
                 infW.setTense(3)
-                infW.setGender(0)
+                if(word.isGender() == False):
+                    infW.setGender(0)
+                infW.resetConstruct()
                 if(infW.getLen() > 3):
                     if(infW.nextToLast() == 'ו') and (self.num_of_p_roots(infW.getText()[3:]) <= 1) and (not((infW.hasRoot()) and (not((infW.getRootLast2() == self.Final(infW.last3()[1:])) or (infW.getRootLast2() == infW.last2()))))):
                         infW.setText(infW.last() + infW.getText()[2:])
