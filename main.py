@@ -2990,7 +2990,7 @@ class HebrewDictionary(App):
                     isR = "(r) "# + Val + " "
                 #else:
                     #isR = " " + Val + " "
-                if(not(w.getVerbformVal() == -1)) or (not(w.getTenseVal() == -1)) or (not(w.getPersonVal() == -1)) or (not(w.getGenderVal() == -1)) or (w.getPlural() == True) or (w.getModern() == True) or (w.getDual() == True) or (w.getHey1() > 0) or (w.getSuffix() == True) or (w.getPrefix() == True) or (HR == True) or (w.getConstruct() == True):
+                if(w.isVerbf() == True) or (w.isTense() == True) or (w.isPerson() == True) or (w.isGender() == True) or (w.getPlural() == True) or (w.getModern() == True) or (w.getDual() == True) or (w.getHey1() > 0) or (w.getSuffix() == True) or (w.getPrefix() == True) or (HR == True) or (w.getConstruct() == True):
                     gr = True
 
 
@@ -3002,9 +3002,9 @@ class HebrewDictionary(App):
                     pl = "sg."
                     
                 definition = ", ".join(w.definition)
-                if gr == True:
-                    prL = '('
-                    prR = ')'
+                #if gr == True:
+                #    prL = '('
+                #    prR = ')'
                     
                 verbform = w.getVerbform()
                 #mult = 1
@@ -3033,7 +3033,7 @@ class HebrewDictionary(App):
                     OutPut.append(person)
                     X += 'xxx'
                     
-                if (not((w.getGenderVal() == -1)or(w.getGenderVal() == 2))) and ((not(w.getTenseVal() == -1)) or (w.getPlural() == True) or (w.getDual() == True)):
+                if (w.isGender() == True) and ((w.isTense() == True) or (w.getConstruct() == True) or (w.getPlural() == True) or (w.getDual() == True)):
                     OutPut.append(gender)
                     X += 'xxx'
                     
@@ -3068,6 +3068,10 @@ class HebrewDictionary(App):
                         sf7 = " [" + w.getSuffixW() + ']'
                     X += 'x'*math.floor(len(suff + sf7)/4)
                     OutPut.append(suff + sf7)
+                    
+                if len(OutPut) > 0:
+                    prL = '('
+                    prR = ')'
                    
                 speech = "" 
                 speechB = ""
@@ -3587,6 +3591,7 @@ class HebrewDictionary(App):
             if(not(wordf.getRoot()[:2] == wordf.last2())):
                 wordf.setText(self.Final(word.getText()[1:]))
                 wordf.setGender(1)
+                wordf.setConstruct2()
                 self.pilpel(look, wordf, Check)
                   
         Stop = False
