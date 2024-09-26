@@ -5864,9 +5864,7 @@ class HebrewDictionary(App):
                         self.irreg(look, futurW2h, Check)
 
                 if futurW2.getLen() < 3:
-                    return self.irreg(look, futurW2, Check)
-                else:
-                    return futurW2
+                    self.irreg(look, futurW2, Check)
                     
                 if(not('ונ' in word.getSufxList())) and (not('ןכ' in word.getSufxList())) and (not('ןה' in word.getSufxList())) and (not('ן' in word.getSufxList())) and (not('ינ' in word.getSufxList())) and (not('הנ' in word.getSufxList())):
                     imperwNun = Word("","")
