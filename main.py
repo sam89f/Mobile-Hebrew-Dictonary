@@ -41,6 +41,7 @@ bright = [10, 10, 10, 10]
 black = [0, 0, 0, 0]
 
 AlefBet = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ת', 'ך', 'ם', 'ן', 'ף', 'ץ']
+alef_bet = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר', 'ש', 'ת']
 Gender = ['m.', 'f.', '', '']
 Person = ['1st, sg.', '1st, pl.', '2nd, sg.', '2nd, pl.', '3rd, sg.', '3rd, pl.', '']
 tenses = ['Perfect', 'Imperfect', 'Participle', 'Infinitive', 'Imperative', 'Cohortative', 'Infinitive abs.', '']
@@ -2282,6 +2283,31 @@ class CustomInput(TextInput):
                         return False
         return False
     
+    def ck_each_car(self, w):
+        w = w.replace("אַיִ", "איי")
+        w = w.replace("בַיִ", "ביי")
+        w = w.replace("גַיִ", "גיי")
+        w = w.replace("דַיִ", "דיי")
+        w = w.replace("הַיִ", "היי")
+        w = w.replace("וַיִ", "ויי")
+        w = w.replace("זַיִ", "זיי")
+        w = w.replace("חַיִ", "חיי")
+        w = w.replace("טַיִ", "טיי")
+        w = w.replace("יַיִ", "ייי")
+        w = w.replace("כַיִ", "כיי")
+        w = w.replace("לַיִ", "ליי")
+        w = w.replace("מַיִ", "מיי")
+        w = w.replace("נַיִ", "ניי")
+        w = w.replace("סַיִ", "סיי")
+        w = w.replace("עַיִ", "עיי")
+        w = w.replace("פַיִ", "פיי")
+        w = w.replace("צַיִ", "ציי")
+        w = w.replace("קַיִ", "קיי")
+        w = w.replace("רַיִ", "ריי")
+        w = w.replace("שַיִ", "שיי")
+        w = w.replace("תַיִ", "תיי")
+        
+        return w
     
     def clean_vol(self, words):
         words2 = list(words)
@@ -2324,9 +2350,11 @@ class CustomInput(TextInput):
                         words2[w] = words2[w].replace("וֺ","ו")
                     word = words2[w]
 
+            words2[w] = self.ck_each_car(words2[w])
+            
             words2[w] = words2[w].replace("ֹ", "ו") 
             words2[w] = words2[w].replace("ֻ", "ו")
-            words2[w] = words2[w].replace("ֹיּ", "י")
+            words2[w] = words2[w].replace("ֹיּ", "י")           
             words2[w] = words2[w].replace("ִיַ", "יי")
             words2[w] = words2[w].replace("ֵ", "")
             words2[w] = words2[w].replace("ִ", "")
@@ -2387,6 +2415,8 @@ class CustomInput(TextInput):
                         words2[w] = words2[w].replace("וֺ","ו")
                     word = words2[w]
 
+            words2[w] = self.ck_each_car(words2[w])
+            
             words2[w] = words2[w].replace("ֹ", "ו") 
             words2[w] = words2[w].replace("ֻ", "ו")
             words2[w] = words2[w].replace("ֹיּ", "י")
@@ -2600,11 +2630,38 @@ class HebrewDictionary(App):
             if(e in g):
                 v.append(e)
         return v
-    
+
+    def ck_each_car(self, w): 
+        w = w.replace("אַיִ", "איי")
+        w = w.replace("בַיִ", "ביי")
+        w = w.replace("גַיִ", "גיי")
+        w = w.replace("דַיִ", "דיי")
+        w = w.replace("הַיִ", "היי")
+        w = w.replace("וַיִ", "ויי")
+        w = w.replace("זַיִ", "זיי")
+        w = w.replace("חַיִ", "חיי")
+        w = w.replace("טַיִ", "טיי")
+        w = w.replace("יַיִ", "ייי")
+        w = w.replace("כַיִ", "כיי")
+        w = w.replace("לַיִ", "ליי")
+        w = w.replace("מַיִ", "מיי")
+        w = w.replace("נַיִ", "ניי")
+        w = w.replace("סַיִ", "סיי")
+        w = w.replace("עַיִ", "עיי")
+        w = w.replace("פַיִ", "פיי")
+        w = w.replace("צַיִ", "ציי")
+        w = w.replace("קַיִ", "קיי")
+        w = w.replace("רַיִ", "ריי")
+        w = w.replace("שַיִ", "שיי")
+        w = w.replace("תַיִ", "תיי")
+        
+        return w
+        
     def clean(self, words):
         words2 = list(words)
         for w in range(len(words)):
             excep = punctuation+delimiter
+         
             words2[w] = words2[w].replace("וֹ", "ו")
             words2[w] = words2[w].replace("שׁ", "ש")
             words2[w] = words2[w].replace("שׂ", "ש")
@@ -2644,6 +2701,8 @@ class HebrewDictionary(App):
                         words2[w] = words2[w].replace("וֺ","ו")
                     word = words2[w]
                         
+            words2[w] = self.ck_each_car(words2[w])
+            
             words2[w] = words2[w].replace("[", " ")
             words2[w] = words2[w].replace("]", " ")
             words2[w] = words2[w].replace("”", "")
@@ -7302,6 +7361,9 @@ class HebrewDictionary(App):
                 singleW.equalTo(plW)
                     
                 plW.setDual()
+                plW.setPlural()
+                if(plW.getLen() < 3):
+                    self.irreg(look, plW, Check)
                 change2 = self.lstChain(cPhrasePl.getText(), cPhrasePl.last3())
                 if((cPhrasePl.isPhrase()) and (change2 > -1)):
                     plW.setText(plW.getText().replace("-םיי", " "))
@@ -7485,7 +7547,7 @@ class HebrewDictionary(App):
                     if(not(word.getTense() == 'Participle')):
                         plW.setNoun()
             else:            
-                if(cPhrasePl.getLstLen() > 2) and (cPhrasePl.last2() == 'םי') and (not (cPhrasePl.getTense() == 'Perfect')):
+                if(cPhrasePl.last2() == 'םי'):
                     plural = True
                     plW = Word("","")
                     plW.equalTo(cPhrasePl)
@@ -7499,6 +7561,9 @@ class HebrewDictionary(App):
                 singleW.equalTo(plW)
                     
                 plW.setPlural()
+                if(plW.getLen() < 3):
+                    self.irreg(look, plW, Check)
+                    
                 change4 = self.lstChain(cPhrasePl2.getText(), cPhrasePl2.last2())
                 if(((cPhrasePl2.isPhrase()) and ((change4) > -1)) and ((cPhrasePl2.getExphLen() > 2) or ((cPhrasePl2.getExphLen() > 1) and ((cPhrasePl2.getSuffix() == True) or (cPhrasePl2.getHeyDir() == True))))):
                     plW.setText(plW.getText().replace("-םי", " "))
@@ -9049,14 +9114,14 @@ class HebrewDictionary(App):
                 if irreg1.getTenseVal() == 2:
                     irreg1.setTense(-1)
                 irreg1.setIrreg()
-                self.FindHelperCheck(look, irreg1, self.Dict)
+                self.FindHelper(look, irreg1, self.Dict, Check)
             
             if(not(word.getVerbform() in Piel)) and (not(word.getTense() == "Participle")):
                 irreg2 = Word("","")
                 irreg2.equalTo(word)
                 irreg2.setText(word.last() + 'י' + word.first())
                 irreg2.setIrreg()
-                self.FindHelperCheck(look, irreg2, self.Dict)
+                self.FindHelper(look, irreg2, self.Dict, Check)
                 
             if(word.isVerb() == True) and (not('ן' in word.getSufxList())) and (not(word.last() == 'ן')):
                 irregWN = Word("","")
