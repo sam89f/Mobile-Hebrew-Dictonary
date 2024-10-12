@@ -8340,7 +8340,7 @@ class HebrewDictionary(App):
         if(hollow.getConstruct() == True) and (word.getGender() == 'f.'):
             hollow.resetConstruct()
         
-        if(word.getLen() < 10) and (word.getGenderVal() == -1):
+        if(word.getLen() < 10) and (word.getLen() > 3) and (word.getGenderVal() == -1):
             if(word.last() == 'ה') or (word.last() == 'ת') and (self.num_of_p_roots(word.getText()[1:]) < 3) and (word.getConstruct() == False) and ((word.getLen() > 2) and (word.getLen() < 8)):
                 hollow.setText(hollow.Final(hollow.getText()[1:])) 
                 hollow.addToValue(1)
@@ -8348,7 +8348,9 @@ class HebrewDictionary(App):
             else:
                 hollow.setGender(0)
             Holl = True
-                    
+        else:
+                hollow.setGender(0)
+                
         if(hollow.getVerbform() in Niphal):
             if(hollow.getLen() == 3):
                 hollow.setRoot(hollow.getText())
@@ -8370,7 +8372,22 @@ class HebrewDictionary(App):
                     hollow2.setText('ה' + self.unFinal(hollow2.getText()))
                     hollow2.addToValue(-2)
                     self.FindHelper(look, hollow2, self.Dict, Check)
-                    
+                  
+            if(hollow.getLen() == 3) and (hollow.second() == "ו") and ((not(hollow.first() == "מ")) or ((word.isVerbf() == False)or(word.getVerbform() in Qal))):
+                hollow2 = Word("","")
+                hollow2.equalTo(hollow)
+                hollow2.setText(hollow.last() + 'י' +  hollow.first())
+                hollow2.addToValue(1)
+                #hollow2.setPar(2)
+                hollow2.setRoot(hollow2.first3())      
+                if(hollow2.isVerbf() == False):
+                    hollow2.setVerbform(0)
+                self.FindHelper(look, hollow2, self.Dict, Check)
+                if(word.last2() == 'תו') and (hollow.getPlural() == True):
+                    hollow2.setText('ה' + self.unFinal(hollow2.getText()))
+                    hollow2.addToValue(-2)
+                    self.FindHelper(look, hollow2, self.Dict, Check)
+                     
             elif((hollow.getLen() == 3) and (hollow.first() == "מ")):
                 hollow2 = Word("","")
                 hollow2.equalTo(hollow)
@@ -9116,7 +9133,6 @@ class HebrewDictionary(App):
                 irreg1.setIrreg()
                 self.FindHelper(look, irreg1, self.Dict, Check)
             
-            if(not(word.getVerbform() in Piel)) and (not(word.getTense() == "Participle")):
                 irreg2 = Word("","")
                 irreg2.equalTo(word)
                 irreg2.setText(word.last() + 'י' + word.first())
