@@ -1101,6 +1101,8 @@ class Word:
         if gemontria[n] >= 100:
             return 2
 
+# This class is intended to represent a group of indices mapping to a set of Word-objects which share a mutual text-fields.
+# which is then represented by the text-field of this class.
 class Word_ref:
     
     def __init__(self, Index):
@@ -1127,15 +1129,18 @@ class Word_ref:
         self.index = newIndex
 
 # This is a helper class which contain the methods for searching and choosing words. 
-# It also has at least one container to store and sort certain Word objects.
+# It also has at least one container to store and sort certain Word-objects.
 class SearchWord:
 
     def __init__(self):
+        
+        # an array which holds Word-objects which has a text-field matching or corresponding to a text-entry in the Dictionary-object.
         self.Words = []
     
     def getWords(self):
         return list(self.Words.copy())
         
+    # returns the number of Word-objects in the Words array
     def getNumWds(self):
         return len(self.Words)
         
@@ -1145,25 +1150,34 @@ class SearchWord:
     def getValue(self, word):
         return word.getValue()
         
+    # returns the index of the first occurrence of a Word-object in the Words array with a matching text-field of the Word-object 'w'
+    # returns -1 if there are no occurrences of a Word-object in the Words array with a matching text-field of the Word-object 'w'
     def indexWords(self, w):
         for i in range(len(self.getWords())):
             if w.getText() == self.getWords()[i].getText():
                 return i
         return -1
-        
+    
+    # returns the index of the first occurrence of a Word-object in the Words array with most of it's field-attributes matching the corresponding attributes of the Word-object 'w'
+    # returns -1 if there are no occurrences of a Word-object in the Words array with most of it's field-attributes matching the corresponding attributes of the Word-object 'w'
     def indexComplWords(self, w):
         for i in range(len(self.getWords())):
             if w == self.getWords()[i]:
                 return i
         return -1
-        
+      
+    # returns an array of indices of all of the Word-objects in the Words array with a matching text-field of the Word-object 'w'
+    # returns the empty array if there are no occurrences of a Word-object in the Words array with a matching text-field of the Word-object 'w'
     def indexW_Plus(self, w):
-        indexes = []
+        indices = []
         for i in range(len(self.getWords())):
             if w.getText() == self.getWords()[i].getText():
-                indexes.append(i)
-        return indexes
+                indices.append(i)
+        return indices
                 
+                
+    # returns 'True' if there is a Word-object in the 'Words' array with a matching text-field of the Word-object 'w'
+    # returns 'False' if there are no occurrences of a Word-object in the 'Words' array with a matching text-field of the Word-object 'w'
     def findText(self, w):
         for word in self.getWords():
             if (w.getText() == word.getText()):
@@ -1175,6 +1189,8 @@ class SearchWord:
             return True
         return False
         
+    # returns 'True' if there is a Word-object in the 'refW' array (passed as a parameter) with a matching text-field of the Word-object 'w'
+    # returns 'False' if there are no occurrences of a Word-object in the 'refW' array (passed as a parameter) with a matching text-field of the Word-object 'w'
     def findref_Text(self, w, refW):
         for word in refW:
             if (w.getText() == word.getText()):
@@ -1183,18 +1199,28 @@ class SearchWord:
         
     def sumOfV(self, index):
         sumV = 0
-        start = False
-        largest = 0
+        wghtd_length = 0
+        #start = False
+        #largest = 0
+        
         for i in index:
-            if start == False:
-                largest = self.Words[i].getValue()
-                start = True
-            elif largest < self.Words[i].getValue():
-                largest = self.Words[i].getValue()
             
-            sumV = sumV + self.Words[i].getValue()
+            sumV = sumV + ((self.Words[i].getValue()) * (1 / (math.pow(2, i))))
             
-        return largest + sumV/((len(index)))
+            wghtd_length = wghtd_length + (1 / (math.pow(2, i)))
+            
+        return sumV/wghtd_length
+        
+        #for i in index:
+        #    if start == False:
+        #        largest = self.Words[i].getValue()
+        #        start = True
+        #    elif largest < self.Words[i].getValue():
+        #        largest = self.Words[i].getValue()
+        #    
+        #    sumV = sumV + self.Words[i].getValue()
+            
+        #return largest + sumV/((len(index)))
         
     def getSumOfV(self, ref):
         return ref.getVal()
@@ -1202,14 +1228,22 @@ class SearchWord:
     def getValPerIndex(self, iV):
         return self.getWords()[iV].getValue()
     
+    # This method traverse every Word-object in the Words array (or 'Words') - pointed to by the iterator called 'word', for each one, compiling an index-list, called 'index'.
+    # All the elements of 'index' are locations in 'Words' of all the Word-objects with text-fields matching the text-field of 'word'.
+    # Then 'index' is sorted according to the value of the Word-objects in the Words array that each list-entry in 'index' points to.
+    # So 'index' is used with the Word_ref class to group the Word-objects from the Words array into a set of Word-objects with a mutual text-field; indicated by the Word_ref-object 'new_ref'.
+    # new_ref is then added to another array representing a list of groups, where each group is a list indices pointing to words in the Words array with mutual text-fields.
+    # This is done for each object in 'Words' or for each iteration of the outer-loop. After which 'W_ref' is sorted according to the value calculated for each group (or member of 'W_ref').
+    # Finaly the Words array is re-organized so that Word-objects with matching text-fields will always be positioned next to one another.
+    
     def group(self):
         temp_Words = []
-        W_ref = []
+        W_ref = [] # an array of Word_ref-objects (each representing a group of Word-objects with matching text-fields)
         
         for word in self.getWords():
             if(self.findref_Text(word, W_ref) == False):
-                index = self.indexW_Plus(word)
-                index.sort(key=self.getValPerIndex, reverse = True)
+                index = self.indexW_Plus(word) # 'index' is a list of indices where all the Word-objects in the Words array with the same text-field as 'word' are located.
+                index.sort(key=self.getValPerIndex, reverse = True) # sorting the 'index' list according to the value of each Word-object in the Words array that each list-entry in 'index' points to
                 new_ref = Word_ref(index)
                 new_ref.setText(word.getText())
                 new_ref.setVal(self.sumOfV(index))
@@ -1218,11 +1252,20 @@ class SearchWord:
         W_ref.sort(key=self.getSumOfV, reverse = True)
         
         for ref in W_ref:
-            for i in ref.getIndex():
+            for i in ref.getIndex(): # each index 'i' from the list of indices 'ref.getIndex()' correspons to the position
+                                     # in the Words array of a Word-object in the group 'ref'.
                 temp_Words.append(self.Words[i])
         
         self.Words = temp_Words.copy()
                 
+    # This method first checks to see if there's a Word-object already in the Words array with most of it's field-attributes matching the corresponding attributes of the Word-object 'w'.
+    # If there is a match, it checks to see if the Word-object in the Words array has a value-field less then the corresponding value-field of 'w'; as the value-field doesn't have to match when searching Word-objects.
+    # And if the Word-object in the Words array has a value-field smaller then the corresponding value-field of 'w', then the Word-object already in the array takes on the larger of the two values.
+    # Then the method terminates by returning 'True'.
+    # If there's not a Word-object already in the Words array with most of it's field-attributes matching the corresponding attributes of the Word-object 'w', then it searches the Dictionary-object
+    # for a matching text-entry of 'w's text-field. And if there's a matching entry in the Dictionary-object, then 'w' is added as a new
+    # entry to the Words array, inheriting the definition from the matching text-entry of the Dictionary-object, and the method terminates by returning 'True'.
+    # 'False' is returned if there's no matching text-entry in the Dictionary-object of the Word-object 'w's text-field. 
     def find(self, w, Dict):
         if w in self.getWords():
             index = self.indexComplWords(w)
@@ -3303,6 +3346,9 @@ class HebrewDictionary(App):
         self.irreg(look, word, Check)
                 
     def FindHelper(self, look, w, Dict, Check):
+        #if(w.getText() == self.CurrentWord.getText()):
+        #    w.setValue(INF)
+            
         if Check == True:
             return self.FindHelperCheck(look, w, Dict)
             
@@ -3315,7 +3361,9 @@ class HebrewDictionary(App):
             return look.find(w, Dict)
             
     def FindHelperCheck(self, look, w, Dict):
-
+        #if(w.getText() == self.CurrentWord.getText()):
+        #    w.setValue(INF)
+            
         if(look.findText(w) == True):
             return False
                 
@@ -4891,7 +4939,7 @@ class HebrewDictionary(App):
             return self.future(look, hitpaelW, Check)
             
         return Word("", "")
-        
+       
     def metathesis(self, look, word):
         if(len(word.getText()) < 3):
             return Word("","")
