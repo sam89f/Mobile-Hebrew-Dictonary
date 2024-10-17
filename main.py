@@ -6058,7 +6058,7 @@ class HebrewDictionary(App):
                     imperwNun.addToValue(5)
                     self.irreg(look, imperwNun, Check)
                     
-            if(word.getPrixListEnd() == 'ו') and ((word.first2() == 'וי') and (word.last() == 'ו') and (self.imperRules(word, 'ו') == True)) or ((word.first2() == 'יי') and (word.last() == 'ו') and (self.imperRules(word, 'ו') == True)) and (not(word.getRoot()[-2:] == word.first3()[:-1]) or (word.getRoot()[:2] == self.Final(word.first3()[:-1]))) and (not(word.getRoot()[:2] == word.last2())):
+            if(word.getPrixListEnd() == 'ו') and ((self.imperRules(word, 'ו') == True) and (((word.first2() == 'וי') and (word.last() == 'ו')) or ((word.first2() == 'יי') and (word.last() == 'ו')))) and (not(word.getRoot()[-2:] == word.first3()[:-1]) or (word.getRoot()[:2] == self.Final(word.first3()[:-1]))) and (not(word.getRoot()[:2] == word.last2())):
                 futurW = Word("","")                                                                                                                                                                                                                                                                                      
                 futurW.equalTo(word)
                 futurW.setTenC()
@@ -6548,7 +6548,7 @@ class HebrewDictionary(App):
                 
             return futurW
   
-        if(word.first() == 'ת') and (self.imperRules(word, 'ת') == True) and (not(word.getRoot()[-2:] == word.first2())):
+        if(word.first() == 'ת') and (not(word.getRoot()[-2:] == word.first2())):
             futurW = Word("","")
             futurW.equalTo(word)
             futurW.setTenC()
@@ -6676,7 +6676,7 @@ class HebrewDictionary(App):
                 self.irreg(look, futurW2, Check)
             return futurW2
   
-        if(word.first() == 'נ') and (self.imperRules(word, 'נ') == True)and (not(word.getRoot()[-2:] == word.first2())):
+        if(word.first() == 'נ') and (not(word.getRoot()[-2:] == word.first2())):
             futurW = Word("","")
             futurW.equalTo(word)
             futurW.setTenC()
