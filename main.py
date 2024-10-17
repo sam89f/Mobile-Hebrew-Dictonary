@@ -4686,7 +4686,7 @@ class HebrewDictionary(App):
                     self.imperative(look, hollow, Check)   
                     self.FindHelper(look, hollow, self.Dict, Check)
                     
-                    if(not(hollow.last() == 'ה')) and (hollow.getHeyDir() == False) and (not(hollow.getGender() == 'f.')) and ((not(self.CurrentWord.last() == word.last()))or(word.getVerbform() == 'Pilpel')):
+                    if(not(hollow.last() == 'ה')) and (hollow.getHeyDir() == False) and (not(hollow.getGender() == 'f.')):
                         hollowh = Word("","")
                         hollowh.equalTo(hollow)
                         hollowh.setText('ה' + self.unFinal(hollow.getText()))
@@ -4708,7 +4708,7 @@ class HebrewDictionary(App):
                     self.infinitiveAbs(look, hollow, Check)
                     self.FindHelper(look, hollow, self.Dict, Check)
                     
-                    if(not(hollow.last() == 'ה')) and (hollow.getHeyDir() == False) and (not(hollow.getGender() == 'f.')) and ((not(self.CurrentWord.last() == word.last()))or(word.getVerbform() == 'Pilpel')):
+                    if(not(hollow.last() == 'ה')) and (hollow.getHeyDir() == False) and (not(hollow.getGender() == 'f.')):
                         hollowh = Word("","")
                         hollowh.equalTo(hollow)
                         hollowh.setText('ה' + self.unFinal(hollow.getText()))
@@ -4724,7 +4724,7 @@ class HebrewDictionary(App):
             self.irreg(look, hitpaelW, Check)
             self.FindHelper(look, hitpaelW, self.Dict, Check)
             
-            if(not(hitpaelW.last() == 'ה')) and (hitpaelW.getHeyDir() == False) and (not(hitpaelW.getGender() == 'f.')) and ((word.getTense() == 'Perfect')and(not(self.CurrentWord.last() == word.last()))):
+            if(not(hitpaelW.last() == 'ה')) and (hitpaelW.getHeyDir() == False) and (not(hitpaelW.getGender() == 'f.')):
                 hitpaelWh = Word("","")
                 hitpaelWh.equalTo(hitpaelW)
                 hitpaelWh.setText('ה' + self.unFinal(hitpaelW.getText()))
@@ -4854,7 +4854,7 @@ class HebrewDictionary(App):
                         hollow.setRoot(self.Final(hollow.first3()))
                     self.FindHelper(look, hollow, self.Dict, Check)
                     self.imperative(look, hollow, Check)
-                    if(not (hollow.last() == 'ה')) and (not(hollow.getGender() == 'f.')) and (hollow.getHeyDir() == False) and ((word.getTense() == 'Perfect')and(not(self.CurrentWord.last() == word.last()))):
+                    if(not (hollow.last() == 'ה')) and (not(hollow.getGender() == 'f.')) and (hollow.getHeyDir() == False):
                         hollowh = Word("","")
                         hollowh.equalTo(hollow)
                         hollowh.setText('ה' + self.unFinal(hollow.getText()))
@@ -4872,7 +4872,7 @@ class HebrewDictionary(App):
                         hollow.setRoot(self.Final(hollow.first3()))
                     self.FindHelper(look, hollow, self.Dict, Check)
                     self.imperative(look, hollow, Check)
-                    if(not (hollow.last() == 'ה')) and (not(hollow.getGender() == 'f.')) and (hollow.getHeyDir() == False) and ((word.getTense() == 'Perfect')and(not(self.CurrentWord.last() == word.last()))):
+                    if(not (hollow.last() == 'ה')) and (not(hollow.getGender() == 'f.')) and (hollow.getHeyDir() == False):
                         hollowh = Word("","")
                         hollowh.equalTo(hollow)
                         hollowh.setText('ה' + self.unFinal(hollow.getText()))
@@ -4883,7 +4883,7 @@ class HebrewDictionary(App):
             
             self.FindHelper(look, nithpaelW, self.Dict, Check)
             self.imperative(look, nithpaelW, Check)
-            if(not(nithpaelW.last() == 'ה')) and (nithpaelW.getHeyDir() == False) and (not(nithpaelW.getGender() == 'f.')) and ((word.getTense() == 'Perfect')and(not(self.CurrentWord.last() == word.last()))):
+            if(not(nithpaelW.last() == 'ה')) and (nithpaelW.getHeyDir() == False) and (not(nithpaelW.getGender() == 'f.')):
                 nithpaelWh = Word("","")
                 nithpaelWh.equalTo(nithpaelW)
                 nithpaelWh.setText('ה' + self.unFinal(nithpaelW.getText()))
