@@ -8843,11 +8843,11 @@ class HebrewDictionary(App):
                             if(not(word3.getVerbform() in Qal)):
                                 self.algorithm(look, pword, Check)
                         else:
+                            pword.addToValue(2)
                             if(word.getLen() > 4) and (word.last() == 'ה'):
                                 pword.setText('ה' + self.unFinal(pword.getText()))
                                 
                         self.FindHelper(look, pword, self.Dict, Check)
-                        
                         Sword.equalTo(pword)
                                               
                 if(word3.nextToLast() == 'ו') and (not((word3.hasRoot()) and (not((word3.getRootLast2() == self.Final(word3.last3()[1:])) or (word3.getRootLast2() == word3.last2()))))):# and (not(word3.last() == 'י')) and (not(word3.last() == 'ו')):
@@ -8878,6 +8878,7 @@ class HebrewDictionary(App):
                             #        pword2h.addToValue(1)
                             #    self.FindHelper(look, pword2h, self.Dict, Check)
                         else:
+                            pword2.addToValue(2)
                             if(word.getLen() > 4) and (word.last() == 'ה'):
                                 pword2.setText('ה' + self.unFinal(pword2.getText()))
                                     
