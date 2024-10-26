@@ -78,13 +78,15 @@ suffFactors = {"ןה":5, "הנה":7, "ן":6, "םה":5, "ם":6, "ומ":6, "ה":4,
 #suffixObj = {"וה":"him", "וי":"his/him", "ינ":"me", "ה":"her", "ו":"his/him", "ך":"you/your"}
 parti = {1:'Active', 0:'Passive', 2:''}
 gemontria = {'א':1, 'ב':2, 'ג':3, 'ד':4, 'ה':5, 'ו':6, 'ז':7, 'ח':8, 'ט':9, 'י':10, 'כ':20, 'ל':30, 'מ':40, 'נ':50, 'ס':60, 'ע':70, 'פ':80, 'צ':90, 'ק':100, 'ר':200, 'ש':300, 'ת':400, 'ך':20, 'ם':40, 'ן':50, 'ף':80, 'ץ':90}
+no_yod_pos = ['הנה', 'ןמ', 'םע', 'םא', 'איה', 'יכ', 'הוהי']
+no_yod = ['הנה', 'מן', 'עם', 'אם', 'היא', 'כי', 'יהוה']
 brackets = ['(', ')', '[', ']', '{', '}']
 punctuation = ['\"','”', '\'', '.', '?', '׃', ';', ':', ')', '(', '[', ']', '}', '{', '!']
 delimiter = [',', '־', ' ', '-', ')', '(', '[', ']', '}', '{']
 operators = ['&', '|', '∥', '+', '-', '*', '/', '>', '<', '¬', '=', '<>', '¬=', '¬<', '¬>', '**', '<=', '>=']
 special_char = ['#', ')', '$', '&', '@', '^', '%', '~', '`', '*']
 punctuation2 = ['\"','”', '\'', ',', '.', '?', ';', ':', ')', '(', '[', ']', '}', '{', '!']
-delimiter2 = ['–', ',', ':', ' ', '=', ';', '.', '%', '-', ')', '(', '[', ']', '}', '{']
+delimiter2 = ['–', ',', ':', ' ', '=', ';', '.', '!', '%', '-', ')', '(', '[', ']', '}', '{']
 special_char2 = special_char+punctuation2+delimiter2+operators
 escape_char = ['\"','”', '\'', '\b', '\f', '\ooo', '\\', '\n', '\r', '\t']
 dirHey = "ה- to/toward"
@@ -1666,7 +1668,164 @@ class Keyboard(GridLayout):
         for i in range(len(text)):
             revText += text[end-i]
         return str(revText)
+    
+    def remove_niqqud_from_word(self, word):
+        new_string = ""
+        new_list = []
+        Space = ''
         
+        for c in word:
+            if(1488 <= ord(c) <= 1514):
+                new_list.append(c)
+            else:
+                new_list.append('')
+                
+        new_string = Space.join(new_list)
+        
+        return new_string
+        
+    def remove_continents_from_word(self, word):
+        new_string = ""
+        new_list = []
+        Space = ''
+        
+        for c in word:
+            if(1457 <= ord(c) <= 1469):
+                new_list.append(c)
+            else:
+                new_list.append('')
+                
+        new_string = Space.join(new_list)
+        
+        return new_string
+  
+    def pre_list(self, start, word):
+        temp = ""
+        for c in range(start, -1, -1):
+            if(word[c] in AlefBet):
+                temp = temp + word[c]
+                
+        return temp
+        
+    def suff_list(self, start, word):
+        temp = ""
+        for c in range(start, len(word), 1):
+            if(word[c] in AlefBet):
+                temp = word[c] + temp
+                
+        return temp
+        
+    def next_continent(self, start, word):
+        s = 0
+        temp = ""
+        for c in range(start, len(word)):
+            if(word[c] in AlefBet):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+        
+    def next2_continents(self, start, word):
+        s = 1
+        temp = ""
+        for c in range(start, len(word)):
+            if(word[c] in AlefBet):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+    
+    def next_niqqud(self, start, word):
+        s = 0
+        temp = ""
+        for c in range(start, len(word)):
+            if(1457 <= ord(word[c]) <= 1469):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+    
+    def next2_niqqudim(self, start, word):
+        s = 1
+        temp = ""
+        for c in range(start, len(word)):
+            if(1457 <= ord(word[c]) <= 1469):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+    
+    def prvs_continent(self, start, word):
+        for c in range(start, -1, -1):
+            if(word[c] in AlefBet):
+                return word[c]
+                
+        
+    
+    def ck_each_car(self, w):
+        impL = ['י', 'ת', 'א', 'נ']
+        
+        # pi'el construction
+        if("ִ" in w) and (not(self.remove_niqqud_from_word(w) in no_yod)):
+            tempW = ""
+            end = len(w) - 1
+            for c in range(end):
+                if(w[c] in AlefBet) and (w[c + 1] == "ִ"):
+                    if(((len(self.remove_niqqud_from_word(w)) > 3) and (c == 0)) or ((self.pre_list(c-1, w) == 'ו')and(len(self.remove_niqqud_from_word(w)) > 4))) and (w[c] in prefixL+impL):
+                        tempW = tempW + w[c]
+                        continue 
+                    if((self.suff_list(c, w) in no_yod_pos)and(self.pre_list(c-1, w) == 'ו')):
+                        tempW = tempW + w[c]
+                        continue
+                    if((w[c] == 'מ') or (w[c] == 'ה')):
+                        tempW = tempW + w[c]
+                        continue
+                    if(self.suff_list(c, w) in suffix):
+                        tempW = tempW + w[c]
+                        continue
+                    if((c + 3) < (end + 1)):
+                        if(w[c + 3] == "ְ"):
+                            tempW = tempW + w[c]
+                            continue
+                    if((self.next2_continents(c+2, w)) == "יו"):
+                        tempW = tempW + w[c]
+                        continue
+                    if(c == end - 1):
+                       w = w[0:c+1] + 'י' + w[end]
+                    else:
+                        w = w[0:c+1] + 'י' + w[c+2:end+1]
+                    tempW = tempW + w[c]
+                else:
+                    tempW = tempW + w[c]
+                    
+            tempW = tempW + w[end]
+            w = tempW
+        #w = w.replace("ִ", "")            
+        #וו & יי        
+        if(not(self.remove_niqqud_from_word(w) in no_yod)):
+            end = len(w) - 1
+            for c in range(end):
+                if(c > 0) and (len(self.suff_list(c, w)) > 1):
+                    if((self.suff_list(c, w) in no_yod_pos)and(self.pre_list(c-1, w) == 'ו')):
+                        continue
+                    if(w[c] == 'ו') and (1457 <= ord(w[c+1]) <= 1469) and (not(self.next_continent(c+1, w) == 'ו')) and (not(self.prvs_continent(c-1, w) == 'ו')):
+                        if(c == end - 1):
+                           w = w[0:c+1] + 'ו'
+                        else:
+                            w = w[0:c+1] + 'ו' + w[c+2:end+1]
+                        c = c + 2
+                    elif(w[c] == 'י') and (1457 <= ord(w[c+1]) <= 1469):
+                        if(c < end - 1):
+                            if(len(self.suff_list(c+1, w)) > 1) and (w[c+1] == 'ו') and (1457 <= ord(w[(c+1)+1]) <= 1469):
+                                continue
+                        if(c == end - 1):
+                           w = w[0:c+1] + 'י' + w[end]
+                        else:
+                            w = w[0:c+1] + 'י' + w[c+2:end+1]
+                        c = c + 1
+         
+        return w
+    
     def clean_vol(self, words):
         words2 = list(words)
         for w in range(len(words)):
@@ -1707,9 +1866,13 @@ class Keyboard(GridLayout):
                     if(word[l] + word[l+1] == "וֺ")and(word[l-1] in AlefBet):
                         words2[w] = words2[w].replace("וֺ","ו")
                     word = words2[w]
+                    
+            words2[w] = words2[w].replace("ֻ", "ו")
+
+            words2[w] = self.ck_each_car(words2[w])
 
             words2[w] = words2[w].replace("ֹ", "ו") 
-            words2[w] = words2[w].replace("ֻ", "ו")
+            #words2[w] = words2[w].replace("ֻ", "ו")
             words2[w] = words2[w].replace("ֹיּ", "י")
             words2[w] = words2[w].replace("ִיַ", "יי")
             words2[w] = words2[w].replace("ֵ", "")
@@ -2326,31 +2489,165 @@ class CustomInput(TextInput):
                         return False
         return False
     
-    def ck_each_car(self, w):
-        w = w.replace("אַיִ", "איי")
-        w = w.replace("בַיִ", "ביי")
-        w = w.replace("גַיִ", "גיי")
-        w = w.replace("דַיִ", "דיי")
-        w = w.replace("הַיִ", "היי")
-        w = w.replace("וַיִ", "ויי")
-        w = w.replace("זַיִ", "זיי")
-        w = w.replace("חַיִ", "חיי")
-        w = w.replace("טַיִ", "טיי")
-        w = w.replace("יַיִ", "ייי")
-        w = w.replace("כַיִ", "כיי")
-        w = w.replace("לַיִ", "ליי")
-        w = w.replace("מַיִ", "מיי")
-        w = w.replace("נַיִ", "ניי")
-        w = w.replace("סַיִ", "סיי")
-        w = w.replace("עַיִ", "עיי")
-        w = w.replace("פַיִ", "פיי")
-        w = w.replace("צַיִ", "ציי")
-        w = w.replace("קַיִ", "קיי")
-        w = w.replace("רַיִ", "ריי")
-        w = w.replace("שַיִ", "שיי")
-        w = w.replace("תַיִ", "תיי")
+  # def remove_niqqud_from_string(my_string):
+  #     return ''.join(['' if  1456 <= ord(c) <= 1479 else c for c in my_string])
+  
+    def remove_niqqud_from_word(self, word):
+        new_string = ""
+        new_list = []
+        Space = ''
         
-        return w
+        for c in word:
+            if(1488 <= ord(c) <= 1514):
+                new_list.append(c)
+            else:
+                new_list.append('')
+                
+        new_string = Space.join(new_list)
+        
+        return new_string
+        
+    def remove_continents_from_word(self, word):
+        new_string = ""
+        new_list = []
+        Space = ''
+        
+        for c in word:
+            if(1457 <= ord(c) <= 1469):
+                new_list.append(c)
+            else:
+                new_list.append('')
+                
+        new_string = Space.join(new_list)
+        
+        return new_string
+  
+    def pre_list(self, start, word):
+        temp = ""
+        for c in range(start, -1, -1):
+            if(word[c] in AlefBet):
+                temp = temp + word[c]
+                
+        return temp
+        
+    def suff_list(self, start, word):
+        temp = ""
+        for c in range(start, len(word), 1):
+            if(word[c] in AlefBet):
+                temp = word[c] + temp
+                
+        return temp
+        
+    def next_continent(self, start, word):
+        s = 0
+        temp = ""
+        for c in range(start, len(word)):
+            if(word[c] in AlefBet):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+        
+    def next2_continents(self, start, word):
+        s = 1
+        temp = ""
+        for c in range(start, len(word)):
+            if(word[c] in AlefBet):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+    
+    def next_niqqud(self, start, word):
+        s = 0
+        temp = ""
+        for c in range(start, len(word)):
+            if(1457 <= ord(word[c]) <= 1469):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+    
+    def next2_niqqudim(self, start, word):
+        s = 1
+        temp = ""
+        for c in range(start, len(word)):
+            if(1457 <= ord(word[c]) <= 1469):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+    
+    def prvs_continent(self, start, word):
+        for c in range(start, -1, -1):
+            if(word[c] in AlefBet):
+                return word[c]
+                
+        
+    
+    def ck_each_car(self, w):
+        impL = ['י', 'ת', 'א', 'נ']
+        
+        # pi'el construction
+        if("ִ" in w) and (not(self.remove_niqqud_from_word(w) in no_yod)):
+            tempW = ""
+            end = len(w) - 1
+            for c in range(end):
+                if(w[c] in AlefBet) and (w[c + 1] == "ִ"):
+                    if(((len(self.remove_niqqud_from_word(w)) > 3) and (c == 0)) or ((self.pre_list(c-1, w) == 'ו')and(len(self.remove_niqqud_from_word(w)) > 4))) and (w[c] in prefixL+impL):
+                        tempW = tempW + w[c]
+                        continue 
+                    if((self.suff_list(c, w) in no_yod_pos)and(self.pre_list(c-1, w) == 'ו')):
+                        tempW = tempW + w[c]
+                        continue
+                    if((w[c] == 'מ') or (w[c] == 'ה')):
+                        tempW = tempW + w[c]
+                        continue
+                    if(self.suff_list(c, w) in suffix):
+                        tempW = tempW + w[c]
+                        continue
+                    if((c + 3) < (end + 1)):
+                        if(w[c + 3] == "ְ"):
+                            tempW = tempW + w[c]
+                            continue
+                    if((self.next2_continents(c+2, w)) == "יו"):
+                        tempW = tempW + w[c]
+                        continue
+                    if(c == end - 1):
+                       w = w[0:c+1] + 'י' + w[end]
+                    else:
+                        w = w[0:c+1] + 'י' + w[c+2:end+1]
+                    tempW = tempW + w[c]
+                else:
+                    tempW = tempW + w[c]
+                    
+            tempW = tempW + w[end]
+            w = tempW
+        #w = w.replace("ִ", "")            
+        #וו & יי        
+        if(not(self.remove_niqqud_from_word(w) in no_yod)):
+            end = len(w) - 1
+            for c in range(end):
+                if(c > 0) and (len(self.suff_list(c, w)) > 1):
+                    if((self.suff_list(c, w) in no_yod_pos)and(self.pre_list(c-1, w) == 'ו')):
+                        continue
+                    if(w[c] == 'ו') and (1457 <= ord(w[c+1]) <= 1469) and (not(self.next_continent(c+1, w) == 'ו')) and (not(self.prvs_continent(c-1, w) == 'ו')):
+                        if(c == end - 1):
+                           w = w[0:c+1] + 'ו'
+                        else:
+                            w = w[0:c+1] + 'ו' + w[c+2:end+1]
+                        c = c + 2
+                    elif(w[c] == 'י') and (1457 <= ord(w[c+1]) <= 1469):
+                        if(c < end - 1):
+                            if(len(self.suff_list(c+1, w)) > 1) and (w[c+1] == 'ו') and (1457 <= ord(w[(c+1)+1]) <= 1469):
+                                continue
+                        if(c == end - 1):
+                           w = w[0:c+1] + 'י' + w[end]
+                        else:
+                            w = w[0:c+1] + 'י' + w[c+2:end+1]
+                        c = c + 1
+         
+        return w                  
     
     def clean_vol(self, words):
         words2 = list(words)
@@ -2393,10 +2690,12 @@ class CustomInput(TextInput):
                         words2[w] = words2[w].replace("וֺ","ו")
                     word = words2[w]
 
+            words2[w] = words2[w].replace("ֻ", "ו")
+
             words2[w] = self.ck_each_car(words2[w])
             
             words2[w] = words2[w].replace("ֹ", "ו") 
-            words2[w] = words2[w].replace("ֻ", "ו")
+            #words2[w] = words2[w].replace("ֻ", "ו")
             words2[w] = words2[w].replace("ֹיּ", "י")           
             words2[w] = words2[w].replace("ִיַ", "יי")
             words2[w] = words2[w].replace("ֵ", "")
@@ -2458,10 +2757,18 @@ class CustomInput(TextInput):
                         words2[w] = words2[w].replace("וֺ","ו")
                     word = words2[w]
 
+            for j in range(len(excep)):
+                words2[w] = words2[w].strip(excep[j])
+                
+            for j in range(len(excep)):
+                words2[w] = words2[w].strip(excep[j])
+                    
+            words2[w] = words2[w].replace("ֻ", "ו")
+
             words2[w] = self.ck_each_car(words2[w])
             
             words2[w] = words2[w].replace("ֹ", "ו") 
-            words2[w] = words2[w].replace("ֻ", "ו")
+            #words2[w] = words2[w].replace("ֻ", "ו")
             words2[w] = words2[w].replace("ֹיּ", "י")
             words2[w] = words2[w].replace("ִיַ", "יי")
             words2[w] = words2[w].replace("ֵ", "")
@@ -2477,14 +2784,6 @@ class CustomInput(TextInput):
             words2[w] = words2[w].replace("ֳ", "")
             words2[w] = words2[w].replace("ֽ", "")
             words2[w] = words2[w].replace("ֺ", "ו")
-            
-        for i in range(len(words2)):
-            for j in range(len(excep)):
-                words2[i] = words2[i].strip(excep[j])
-                    
-        for i in range(len(words2)):
-            for j in range(len(excep)):
-                words2[i] = words2[i].strip(excep[j])
             
         return words2
         
@@ -2672,30 +2971,163 @@ class HebrewDictionary(App):
             if(e in g):
                 v.append(e)
         return v
+        
+    def remove_niqqud_from_word(self, word):
+        new_string = ""
+        new_list = []
+        Space = ''
+        
+        for c in word:
+            if(1488 <= ord(c) <= 1514):
+                new_list.append(c)
+            else:
+                new_list.append('')
+                
+        new_string = Space.join(new_list)
+        
+        return new_string
+        
+    def remove_continents_from_word(self, word):
+        new_string = ""
+        new_list = []
+        Space = ''
+        
+        for c in word:
+            if(1457 <= ord(c) <= 1469):
+                new_list.append(c)
+            else:
+                new_list.append('')
+                
+        new_string = Space.join(new_list)
+        
+        return new_string
+  
+    def pre_list(self, start, word):
+        temp = ""
+        for c in range(start, -1, -1):
+            if(word[c] in AlefBet):
+                temp = temp + word[c]
+                
+        return temp
+        
+    def suff_list(self, start, word):
+        temp = ""
+        for c in range(start, len(word), 1):
+            if(word[c] in AlefBet):
+                temp = word[c] + temp
+                
+        return temp
+        
+    def next_continent(self, start, word):
+        s = 0
+        temp = ""
+        for c in range(start, len(word)):
+            if(word[c] in AlefBet):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+        
+    def next2_continents(self, start, word):
+        s = 1
+        temp = ""
+        for c in range(start, len(word)):
+            if(word[c] in AlefBet):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+    
+    def next_niqqud(self, start, word):
+        s = 0
+        temp = ""
+        for c in range(start, len(word)):
+            if(1457 <= ord(word[c]) <= 1469):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
+    
+    def next2_niqqudim(self, start, word):
+        s = 1
+        temp = ""
+        for c in range(start, len(word)):
+            if(1457 <= ord(word[c]) <= 1469):
+                temp = temp + word[c]
+                if(len(temp) > s):
+                    return temp
+        return ""
 
-    def ck_each_car(self, w): 
-        w = w.replace("אַיִ", "איי")
-        w = w.replace("בַיִ", "ביי")
-        w = w.replace("גַיִ", "גיי")
-        w = w.replace("דַיִ", "דיי")
-        w = w.replace("הַיִ", "היי")
-        w = w.replace("וַיִ", "ויי")
-        w = w.replace("זַיִ", "זיי")
-        w = w.replace("חַיִ", "חיי")
-        w = w.replace("טַיִ", "טיי")
-        w = w.replace("יַיִ", "ייי")
-        w = w.replace("כַיִ", "כיי")
-        w = w.replace("לַיִ", "ליי")
-        w = w.replace("מַיִ", "מיי")
-        w = w.replace("נַיִ", "ניי")
-        w = w.replace("סַיִ", "סיי")
-        w = w.replace("עַיִ", "עיי")
-        w = w.replace("פַיִ", "פיי")
-        w = w.replace("צַיִ", "ציי")
-        w = w.replace("קַיִ", "קיי")
-        w = w.replace("רַיִ", "ריי")
-        w = w.replace("שַיִ", "שיי")
-        w = w.replace("תַיִ", "תיי")
+    def prvs_continent(self, start, word):
+        for c in range(start, -1, -1):
+            if(word[c] in AlefBet):
+                return word[c]
+                
+        return ""
+                
+    def ck_each_car(self, w):
+        impL = ['י', 'ת', 'א', 'נ']
+   #     קָרָאתִיו
+        #שומִפֶּח   
+            
+        # pi'el construction
+        if("ִ" in w) and (not(self.remove_niqqud_from_word(w) in no_yod)):
+            tempW = ""
+            end = len(w) - 1
+            for c in range(end):
+                if(w[c] in AlefBet) and (w[c + 1] == "ִ"):
+                    if(((len(self.remove_niqqud_from_word(w)) > 3) and (c == 0)) or ((self.pre_list(c-1, w) == 'ו')and(len(self.remove_niqqud_from_word(w)) > 4))) and (w[c] in prefixL+impL):
+                        tempW = tempW + w[c]
+                        continue
+                    if((self.suff_list(c, w) in no_yod_pos)and(self.pre_list(c-1, w) == 'ו')):
+                        tempW = tempW + w[c]
+                        continue
+                    if(self.suff_list(c, w) in suffix):
+                        tempW = tempW + w[c]
+                        continue
+                    if((c + 3) < (end + 1)):
+                        if(w[c + 3] == "ְ"):
+                            tempW = tempW + w[c]
+                            continue
+                    if((w[c] == 'מ') or (w[c] == 'ה')):
+                        tempW = tempW + w[c]
+                        continue
+                    if((self.next2_continents(c+2, w)) == "יו"):
+                        tempW = tempW + w[c]
+                        continue
+                    if(c == end - 1):
+                       w = w[0:c+1] + 'י' + w[end]
+                    else:
+                        w = w[0:c+1] + 'י' + w[c+2:end+1]
+                    tempW = tempW + w[c]
+                else:
+                    tempW = tempW + w[c]
+                    
+            tempW = tempW + w[end]
+            w = tempW
+        #w = w.replace("ִ", "")
+        #וו & יי          
+        if(not(self.remove_niqqud_from_word(w) in no_yod)):
+            end = len(w) - 1
+            for c in range(end):
+                if(c > 0) and (len(self.suff_list(c, w)) > 1):
+                    if((self.suff_list(c, w) in no_yod_pos)and(self.pre_list(c-1, w) == 'ו')):
+                        continue
+                    if(w[c] == 'ו') and (1457 <= ord(w[c+1]) <= 1469) and (not(self.next_continent(c+1, w) == 'ו')) and (not(self.prvs_continent(c-1, w) == 'ו')):
+                        if(c == end - 1):
+                           w = w[0:c+1] + 'ו'
+                        else:
+                            w = w[0:c+1] + 'ו' + w[c+2:end+1]
+                        c = c + 2
+                    elif(w[c] == 'י') and (1457 <= ord(w[c+1]) <= 1469):
+                        if(c < end - 1):
+                            if(len(self.suff_list(c+1, w)) > 1) and (w[c+1] == 'ו') and (1457 <= ord(w[(c+1)+1]) <= 1469):
+                                continue
+                        if(c == end - 1):
+                           w = w[0:c+1] + 'י' + w[end]
+                        else:
+                            w = w[0:c+1] + 'י' + w[c+2:end+1]
+                        c = c + 1
         
         return w
         
@@ -2742,7 +3174,21 @@ class HebrewDictionary(App):
                     if(word[l] + word[l+1] == "וֺ")and(word[l-1] in AlefBet):
                         words2[w] = words2[w].replace("וֺ","ו")
                     word = words2[w]
+                    
+            for j in range(len(excep)):
+                if(excep[j] =="'"):
+                    continue
+                else:
+                    words2[w] = words2[w].strip(excep[j])
+                
+            for j in range(len(excep)):
+                if(excep[j] =="'"):
+                    continue
+                else:
+                    words2[w] = words2[w].strip(excep[j])
                         
+            words2[w] = words2[w].replace("ֻ", "ו")
+            
             words2[w] = self.ck_each_car(words2[w])
             
             words2[w] = words2[w].replace("[", " ")
@@ -2751,7 +3197,7 @@ class HebrewDictionary(App):
             words2[w] = words2[w].replace("״", "\"")
             words2[w] = words2[w].replace("׳", "\'")
             words2[w] = words2[w].replace("ֹ", "ו") 
-            words2[w] = words2[w].replace("ֻ", "ו")
+            #words2[w] = words2[w].replace("ֻ", "ו")
             words2[w] = words2[w].replace("ִיַ", "יי")
             words2[w] = words2[w].replace("ֵ", "")
             words2[w] = words2[w].replace("ִ", "")
@@ -2767,19 +3213,7 @@ class HebrewDictionary(App):
             words2[w] = words2[w].replace("ֽ", "")
             words2[w] = words2[w].replace("ֺ", "ו")
             
-        for i in range(len(words2)):
-            for j in range(len(excep)):
-                if(excep[j] =="'"):
-                    continue
-                else:
-                    words2[i] = words2[i].strip(excep[j])
-                    
-        for i in range(len(words2)):
-            for j in range(len(excep)):
-                if(excep[j] =="'"):
-                    continue
-                else:
-                    words2[i] = words2[i].strip(excep[j])
+        
         
         return words2
 
