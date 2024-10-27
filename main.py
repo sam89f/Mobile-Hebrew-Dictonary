@@ -8388,6 +8388,7 @@ class HebrewDictionary(App):
                         self.FindHelper(look, singleW, self.Dict, Check)
                         self.FindHelper(look, singleWt, self.Dict, Check)
                         self.algorithm(look, singleW, Check)
+                        self.algorithm(look, singleWt, Check)
                     if(cPhrasePl2.getLen() > 3) and (not((cPhrasePl2.getRoot()[:2] == self.Final(cPhrasePl2.last3()[1:])) or (cPhrasePl2.getRoot()[-2:] == cPhrasePl2.last3()[1:]))):
                         if(plW.last() == 'י') and (plW.getLstLen() > 1):
                             if(not(plW.getRoot()[:2] == plW.last2())):
@@ -8748,7 +8749,7 @@ class HebrewDictionary(App):
                     self.FindHelper(look, suffWh2, self.Dict, Check)
                     #self.prefix(look, suffWh2, False, Check)
                     #self.verbForms(look, suffWh2, Check)
-                    #self.participle(look, suffWh2, False)
+                    self.participle(look, suffWh2, False)
                     return suffWh2
                 
         return Word("","")
@@ -8813,7 +8814,7 @@ class HebrewDictionary(App):
                         self.FindHelper(look, suffWh2, self.Dict, Check)
                         #self.prefix(look, suffWh2, False, Check)
                         #self.verbForms(look, suffWh2, Check)
-                        #self.participle(look, suffWh2, False)
+                        self.participle(look, suffWh2, False)
                         return suffWh2
 
         return Word("","")
@@ -8880,7 +8881,7 @@ class HebrewDictionary(App):
                         self.FindHelper(look, suffWh2, self.Dict, Check)
                         #self.prefix(look, suffWh2, False, Check)
                         #self.verbForms(look, suffWh2, Check)
-                        #self.participle(look, suffWh2, False)
+                        self.participle(look, suffWh2, False)
                         return suffWh2
                 
         return Word("","")
@@ -9707,7 +9708,7 @@ class HebrewDictionary(App):
                 self.FindHelperCheck(look, irregWN, self.Dict)
                 
         if(word.getLen() > 2):
-            if(word.nextToFirst() == 'נ') and (word.VerbChk() == True) and (word.TenChk() == True) and (not((word.getVerbform() in Pual) or (word.getVerbform() in Piel) or (word.getVerbform() in Hiphil) or (word.isParticiple() == True))) and (not(word.getRoot()[-2:] == word.first2())):
+            if(word.nextToFirst() == 'נ') and (not((word.getVerbform() in Pual) or (word.getVerbform() in Piel) or (word.getVerbform() in Hiphil) or (word.isParticiple() == True))) and (not(word.getRoot()[-2:] == word.first2())):
                 irregWN = Word("","")
                 irregWN.equalTo(word)
                 irregWN.setText(word.getText()[:-2] + word.first())
